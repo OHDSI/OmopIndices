@@ -1,4 +1,4 @@
 library(testthat)
-library(EmptyPackage)
+library(OmopIndexes)
 
-test_check("EmptyPackage")
+test_check("OmopIndexes")

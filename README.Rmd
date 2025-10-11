@@ -1,24 +1,32 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # OmopIndexes
 
 <!-- badges: start -->
-
-[![CRAN
-status](https://www.r-pkg.org/badges/version/OmopIndexes)](https://CRAN.R-project.org/package=OmopIndexes)
+[![CRAN status](https://www.r-pkg.org/badges/version/OmopIndexes)](https://CRAN.R-project.org/package=OmopIndexes)
 [![R-CMD-check](https://github.com/OHDSI/OmopIndexes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/OmopIndexes/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of **OmopIndexes** is to … *clearly state the main goal of the
-package*
+The goal of **OmopIndexes** is to ... *clearly state the main goal of the package*
 
 ## Installation
 
-You can install the development version of OmopIndexes from
-[GitHub](https://github.com/) with:
+You can install the development version of OmopIndexes from [GitHub](https://github.com/) with:
 
-``` r
+```{r, eval=FALSE}
 # install.packages("pak")
 pak::pkg_install("OHDSI/OmopIndexes")
 ```
@@ -27,6 +35,6 @@ pak::pkg_install("OHDSI/OmopIndexes")
 
 This is a basic example which shows you how to solve a common problem:
 
-``` r
+```{r}
 library(OmopIndexes)
 ```
