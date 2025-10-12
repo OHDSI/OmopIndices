@@ -1,17 +1,18 @@
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  workflow_dispatch:
-  schedule:
-    - cron: "0 6 * * *"
+name: Reusable test workflow
 
-name: duckdb-CDMConnector
+on:
+  workflow_call:
+    inputs:
+      test_env:
+        required: true
+        type: string
 
 jobs:
-  duckdb-CDMConnector:
+  run-tests:
     runs-on: ubuntu-latest
+
+    env:
+      DB_TO_TEST: ${{ inputs.db_to_test }}
 
     strategy:
       fail-fast: true
@@ -35,9 +36,8 @@ jobs:
           extra-packages: any::devtools
           needs: check
 
-      - name: Run tests with duckdb source
+      - name: Run tests with local source
         run: |
-          Sys.setenv("DB_TO_TEST" = "duckdb CDMConnector")
           x <- devtools::test()
           error <- sum(as.numeric(dplyr::as_tibble(x)$error))
           failed <- sum(as.numeric(dplyr::as_tibble(x)$failed))
