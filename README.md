@@ -5,9 +5,13 @@
 
 <!-- badges: start -->
 
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/OmopIndexes)](https://CRAN.R-project.org/package=OmopIndexes)
 [![R-CMD-check](https://github.com/OHDSI/OmopIndexes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/OmopIndexes/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/OHDSI/OmopIndexes/graph/badge.svg)](https://app.codecov.io/gh/OHDSI/OmopIndexes)
 <!-- badges: end -->
 
 The goal of **OmopIndexes** is to … *clearly state the main goal of the
