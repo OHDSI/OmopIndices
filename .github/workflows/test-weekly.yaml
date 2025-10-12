@@ -7,11 +7,11 @@ name: weekly-tests
 
 jobs:
   duckdb-CDMConnector:
-    uses: ./.github/workflows/test-template.yml
+    uses: ./.github/workflows/test-template.yaml
     with:
       DB_TO_TEST: duckdb-CDMConnector
 
   local-omopgenerics:
-    uses: ./.github/workflows/test-template.yml
+    uses: ./.github/workflows/test-template.yaml
     with:
       DB_TO_TEST: local-omopgenerics
