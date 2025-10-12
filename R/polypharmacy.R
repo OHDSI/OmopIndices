@@ -49,8 +49,8 @@ addPolypharmacyCount <- function(x,
       by = personId
     ) |>
     dplyr::filter(
-      clock::date_count_between(start = .data[[ids[1]]], end = .data[[indexDate]], precision = "day") >= .env$win1 &
-        clock::date_count_between(start = .data[[indexDate]], end = .data[[ids[2]]], precision = "day") >= .env$win2
+      clock::date_count_between(start = .data[[indexDate]], end = .data[[ids[2]]], precision = "day") >= .env$win1 &
+        clock::date_count_between(start = .data[[indexDate]], end = .data[[ids[1]]], precision = "day") <= .env$win2
     ) |>
     dplyr::compute(name = nm1)
 
