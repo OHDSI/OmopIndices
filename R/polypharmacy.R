@@ -15,6 +15,12 @@ addPolypharmacyCount <- function(x,
   omopgenerics::assertCharacter(x = nameStyle, length = 1)
   nameStyle <- omopgenerics::toSnakeCase(x = nameStyle)
 
+  if (nameStyle %in% colnames(x)) {
+    cli::cli_warn(c("!" = "column {.var {nameStyle}} will be overwritten."))
+    x <- x |>
+      dplyr::select(!dplyr::all_of(nameStyle))
+  }
+
   cdm <- omopgenerics::cdmReference(table = x)
 
   # check drug_era is empty

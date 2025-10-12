@@ -1,5 +1,6 @@
-test_that("multiplication works", {
-  cdm <- omock::mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+test_that("polypharmacy works", {
+  cdm <- omock::mockCdmFromDataset(datasetName = "GiBleed", source = "local") |>
+    copyCdm()
 
   cdm$my_cohort <- CohortConstructor::conceptCohort(
     cdm = cdm,
@@ -8,4 +9,14 @@ test_that("multiplication works", {
   )
 
   expect_no_error(x <- addPolypharmacyCount(cdm$my_cohort))
+  expect_warning(x <- addPolypharmacyCount(x))
+  expect_error(addPolypharmacyCount(cdm$my_cohort, window = list(c(0, 0), c(0, 90))))
+
+  cdm$drug_era <- cdm$drug_era |>
+    dplyr::filter(.data$drug_concept_id == 0L)
+
+  expect_warning(x <- addPolypharmacyCount(cdm$my_cohort))
+  expect_warning(x <- addPolypharmacyCount(x))
+
+  dropCreatedTables(cdm = cdm)
 })
