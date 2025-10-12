@@ -17,6 +17,13 @@ coverage](https://codecov.io/gh/OHDSI/OmopIndexes/graph/badge.svg)](https://app.
 The goal of **OmopIndexes** is to … *clearly state the main goal of the
 package*
 
+## Tested sources
+
+| Source                      | Driver | CDM reference                   | Status                                                                                                                            |
+|-----------------------------|--------|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Local R dataframe           | N/A    | `omopgenerics::cdmFromTables()` | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndexes/test-weekly.yaml?branch=main&job=local-omopgenerics)  |
+| In-memory duckdb datatabase | duckdb | `CDMConnector::cdmFromCon()`    | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndexes/test-weekly.yaml?branch=main&job=duckdb-CDMConnector) |
+
 ## Installation
 
 You can install the development version of OmopIndexes from
