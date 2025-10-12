@@ -36,8 +36,12 @@ jobs:
           extra-packages: any::devtools
           needs: check
 
-      - name: Run tests with local source
+      - name: Run tests with source
         run: |
+          td <- file.path(tempdir(), "mockDatasets")
+          dir.create(td)
+          Sys.setenv(MOCK_DATASETS_FOLDER = td)
+          omock::downloadMockDataset(datasetName = "GiBleed")
           x <- devtools::test()
           error <- sum(as.numeric(dplyr::as_tibble(x)$error))
           failed <- sum(as.numeric(dplyr::as_tibble(x)$failed))
