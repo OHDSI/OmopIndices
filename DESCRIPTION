@@ -14,8 +14,11 @@ Suggests:
     CDMConnector,
     CodelistGenerator,
     CohortConstructor,
+    DBI,
     duckdb,
+    odbc,
     omock,
+    RPostgres,
     testthat
 URL: https://OHDSI.github.io/OmopIndexes/
 BugReports: https://github.com/OHDSI/OmopIndexes/issues

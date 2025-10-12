@@ -1,13 +1,13 @@
 
-dbToTest <- Sys.getenv("DB_TO_TEST", "duckdb")
+dbToTest <- Sys.getenv("DB_TO_TEST", "duckdb CDMConnector")
 copyCdm <- function(cdm) {
   pref <- "oi_"
-  if (dbToTest == "duckdb") {
+  if (dbToTest == "duckdb CDMConnector") {
     to <- CDMConnector::dbSource(
       con = duckdb::dbConnect(drv = duckdb::duckdb(dbdir = ":memory:")),
       writeSchema = c(schema = "main", prefix = pref)
     )
-  } else if (dbToTest == "sql server") {
+  } else if (dbToTest == "sql server CDMConnector") {
     to <- CDMConnector::dbSource(
       con = DBI::dbConnect(
         odbc::odbc(),
@@ -24,7 +24,7 @@ copyCdm <- function(cdm) {
         prefix = pref
       )
     )
-  } else if (dbToTest == "redshift") {
+  } else if (dbToTest == "redshift CDMConnector") {
     to <- CDMConnector::dbSource(
       con = DBI::dbConnect(
         RPostgres::Redshift(),
@@ -39,9 +39,9 @@ copyCdm <- function(cdm) {
         prefix = pref
       )
     )
-  } else if (dbToTest == "postgres") {
+  } else if (dbToTest == "postgres CDMConnector") {
     # TODO
-  } else if (dbToTest != "local") {
+  } else if (dbToTest != "local omopgenerics") {
     cli::cli_abort(c(x = "Not supported dbToTest: {.pkg {dbToTest}}"))
   }
 
