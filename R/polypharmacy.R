@@ -1,4 +1,30 @@
 
+#' Add the maximum number of ingredients an individual is exposed simultaneouly
+#' in a certain window.
+#'
+#' @param x A `cdm_table` object.
+#' @param indexDate Name of a 'date' column that indicates the index date.
+#' @param window Window of interest.
+#' @param nameStyle Name of the new column.
+#' @param name Name of the new table.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' library(OmopIndexes)
+#' library(omock)
+#' library(dplyr)
+#'
+#' cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+#'
+#' cdm$condition_occurrence |>
+#'   slice_sample(n = 10) |>
+#'   select("person_id", "condition_start_date") |>
+#'   addPolypharmacyCount(indexDate = "condition_start_date")
+#' }
+#'
 addPolypharmacyCount <- function(x,
                                  indexDate = "cohort_start_date",
                                  window = c(0, 0),
