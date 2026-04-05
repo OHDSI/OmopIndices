@@ -28,7 +28,7 @@ validateConceptSet <- function(conceptSet, nms, cdm, call = parent.frame()) {
 validateBmiThreshold <- function(bmiThreshold, call = parent.frame()) {
   if (is.null(bmiThreshold)) {
     cli::cli_inform(c(i = "Using internal {.pkg bmiThreshold} for BMI cut-offs."))
-    bmiThreshold <- OmopConcepts::bmiThreshold
+    bmiThreshold <- OmopIndexes::bmiThreshold
   }
   msg <- paste0(
     "`bmiThreshold` must be a single number or a tibble with the columns: ",

@@ -139,15 +139,27 @@ filterWindow <- function(x, index, date, window) {
     if (!is.infinite(window[2])) {
       x <- x |>
         dplyr::filter(
-          clock::date_count_between(start = .data[[index]], end = .data[[date]]) <= !!window[2]
+          clock::date_count_between(
+            start = .data[[index]],
+            end = .data[[date]],
+            precision = "day"
+          ) <= !!window[2]
         )
     }
   } else {
     if (is.infinite(window[2])) {
       x <- x |>
         dplyr::filter(
-          clock::date_count_between(start = .data[[index]], end = .data[[date]]) >= !!window[1] &
-            clock::date_count_between(start = .data[[index]], end = .data[[date]]) <= !!window[2]
+          clock::date_count_between(
+            start = .data[[index]],
+            end = .data[[date]],
+            precision = "day"
+          ) >= !!window[1] &
+            clock::date_count_between(
+              start = .data[[index]],
+              end = .data[[date]],
+              precision = "day"
+            ) <= !!window[2]
         )
     } else {
       x <- x |>
