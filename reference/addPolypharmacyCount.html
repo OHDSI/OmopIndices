@@ -74,6 +74,11 @@ in a certain window.</p>
 <dd><p>Name of the new table.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>The table `x` with a new column column with the number of
+ingredients used in the window of interest.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -100,20 +105,20 @@ in a certain window.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="st">"person_id"</span>, <span class="st">"condition_start_date"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">addPolypharmacyCount</span><span class="op">(</span>indexDate <span class="op">=</span> <span class="st">"condition_start_date"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   table&lt;og_003_1775335765&gt; [?? x 3]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1008-azure:R 4.5.3//tmp/RtmpOSqaQk/file1d0c5b85e4bd.duckdb]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Source:   table&lt;og_003_1775427364&gt; [?? x 3]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1008-azure:R 4.5.3//tmp/RtmpQ09Jdl/file1c99703702e4.duckdb]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    person_id condition_start_date polypharmacy_count</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>      <span style="text-decoration: underline;">1</span>761 1962-12-04                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>      <span style="text-decoration: underline;">2</span>786 1965-04-17                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>      <span style="text-decoration: underline;">2</span>540 2003-08-27                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>      <span style="text-decoration: underline;">2</span>736 1981-09-07                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>      <span style="text-decoration: underline;">3</span>022 1978-11-05                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>      <span style="text-decoration: underline;">3</span>984 1956-08-28                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>      <span style="text-decoration: underline;">4</span>732 1964-07-06                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>      <span style="text-decoration: underline;">4</span>077 1976-12-03                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>      <span style="text-decoration: underline;">4</span>241 1972-12-15                            0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>      <span style="text-decoration: underline;">5</span>063 1981-09-11                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>       202 1962-09-27                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>       662 2001-05-29                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>      <span style="text-decoration: underline;">1</span>692 2015-10-31                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>      <span style="text-decoration: underline;">2</span>172 1996-11-20                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>      <span style="text-decoration: underline;">2</span>633 1950-03-16                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>      <span style="text-decoration: underline;">3</span>759 2008-06-19                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>      <span style="text-decoration: underline;">3</span>250 2017-04-24                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>      <span style="text-decoration: underline;">5</span>333 1952-07-04                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>      <span style="text-decoration: underline;">5</span>240 1988-07-30                            0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>      <span style="text-decoration: underline;">5</span>222 1956-05-24                            0</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
