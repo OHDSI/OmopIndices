@@ -18,20 +18,30 @@ addObesity(
 \item{x}{A `cdm_table` object, it mus contain `person_id` or `subject_id` as
 columns.}
 
-\item{indexDate}{indexDate}
+\item{indexDate}{A character string that points to a `Date` column in the `x`
+table.}
 
 \item{window}{`r documentationWindow("obesity")`}
 
-\item{conceptSet}{conceptSet}
+\item{conceptSet}{`r documentationConceptSet(c("obesity", "bmi"))`}
 
-\item{bmiThreshold}{bmiThreshold}
+\item{bmiThreshold}{Argument to indicate the thresholds for the obesity using
+BMI measurements. It can be:
 
-\item{nameStyle}{nameStyle}
+- A single number, any BMI measurement above the threshold will be consider
+as an obesity record.
+- A tibble with the columns `bmi_threshold`, `sex`, `age_min` and `age_max`,
+to use age and sex specific thresholds.
+- NULL the table `OmopIndexes::bmiThreshold` will be used.}
 
-\item{name}{name}
+\item{nameStyle}{A character string with the name of the new column.}
+
+\item{name}{A character string with the name of the new table. If `NULL` a
+temporary table will be created.}
 }
 \value{
-The table `x` with a new column
+The table `x` with a new column column indicating if subjects have
+an obesity record in the window of interest.
 }
 \description{
 Add obesity flag
