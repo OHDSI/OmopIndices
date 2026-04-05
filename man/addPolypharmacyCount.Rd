@@ -24,6 +24,10 @@ addPolypharmacyCount(
 
 \item{name}{Name of the new table.}
 }
+\value{
+The table `x` with a new column column with the number of
+ingredients used in the window of interest.
+}
 \description{
 Add the maximum number of ingredients an individual is exposed simultaneouly
 in a certain window.

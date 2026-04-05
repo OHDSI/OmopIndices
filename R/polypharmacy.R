@@ -8,7 +8,8 @@
 #' @param nameStyle Name of the new column.
 #' @param name Name of the new table.
 #'
-#' @return
+#' @returns The table `x` with a new column column with the number of
+#' ingredients used in the window of interest.
 #' @export
 #'
 #' @examples
