@@ -26,7 +26,9 @@ Imports:
     cli,
     clock,
     dplyr,
+    OmopConcepts,
     omopgenerics,
+    PatientProfiles,
     rlang
 Depends: 
     R (>= 3.5)
