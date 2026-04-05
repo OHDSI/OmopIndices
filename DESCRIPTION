@@ -30,3 +30,5 @@ Imports:
     rlang
 Depends: 
     R (>= 3.5)
+Remotes:
+    ohdsi/OmopConcepts
