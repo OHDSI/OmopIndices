@@ -3,7 +3,7 @@
 #'
 #' @inheritParams xDoc
 #' @param from Character to indicate how to retrieve location, if multiple
-#' values are provided,
+#' values are provided different sources will be tried sequentially.
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
 #' @param missingLocationValue Character to coaslesce missing values.
@@ -76,7 +76,7 @@ addLocation <- function(x,
       cli::cli_inform(c("v" = "Location added from {.emph {fr}}."))
       break
     } else {
-      cli::cli_inform(c("!" = "Location could not be added from {.emph {fr}}."))
+      cli::cli_inform(c("x" = "Location could not be added from {.emph {fr}}."))
       if (fr == from[length(from)]) {
         cli::cli_inform(c("!" = "No location found, variable will be filled with {.var {missingLocationValue}}."))
       }
