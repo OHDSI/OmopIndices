@@ -4,6 +4,8 @@
 <url><loc>https://OHDSI.github.io/OmopIndexes/authors.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndexes/index.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndexes/reference/OmopIndexes-package.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndexes/reference/addEthnicity.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndexes/reference/addLocation.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndexes/reference/addObesity.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndexes/reference/addPolypharmacyCount.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndexes/reference/bmiThreshold.html</loc></url>

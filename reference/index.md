@@ -2,6 +2,10 @@
 
 ## All functions
 
+- [`addEthnicity()`](https://OHDSI.github.io/OmopIndexes/reference/addEthnicity.md)
+  : Add the ethnicity records to a table
+- [`addLocation()`](https://OHDSI.github.io/OmopIndexes/reference/addLocation.md)
+  : Add the location to a table
 - [`addObesity()`](https://OHDSI.github.io/OmopIndexes/reference/addObesity.md)
   : Add obesity flag
 - [`addPolypharmacyCount()`](https://OHDSI.github.io/OmopIndexes/reference/addPolypharmacyCount.md)
