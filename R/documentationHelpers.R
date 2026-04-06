@@ -19,8 +19,8 @@ NULL
 
 documentationWindow <- function(fun) {
   paste0(
-    "Window to asses `", fun, "` in, it must be a vector of two numeric",
-    " values `c(min, max)`. Window times refer to days since `indexDate`."
+    "Window to asses `", fun, "` in, it must be a vector of two numeric ",
+    "values `c(min, max)`. Window times refer to days since `indexDate`."
   )
 }
 
@@ -28,8 +28,8 @@ documentationConceptSet <- function(cs) {
   paste0(
     "It can either be a <codelist>, <codelist_with_details> or ",
     "<concept_set_expression> object. It must contain `",
-    paste0(cs, collapse = "`, `"), "` as concepts. If `NULL` concepts will be
-    retrieved using the OmopConcepts package."
+    paste0(cs, collapse = "`, `"), "` as concepts. If `NULL` concepts will be ",
+    "retrieved using the OmopConcepts package."
   )
 }
 

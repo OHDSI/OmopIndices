@@ -77,7 +77,7 @@ addEthnicity <- function(x,
     }
 
     # check if it was successful
-    if (omopgenerics::numberRecords(indLoc) > 0) {
+    if (omopgenerics::numberRecords(indEth) > 0) {
       cli::cli_inform(c("v" = "Ethnicity added from {.emph {fr}}."))
       break
     } else {
@@ -102,6 +102,7 @@ addEthnicity <- function(x,
     dplyr::compute(name = name)
 
   # drop tables
+  cdm <- omopgenerics::cdmReference(x)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
   return(x)

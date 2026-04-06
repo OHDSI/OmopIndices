@@ -97,6 +97,7 @@ addLocation <- function(x,
     dplyr::compute(name = name)
 
   # drop tables
+  cdm <- omopgenerics::cdmReference(x)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
   return(x)
