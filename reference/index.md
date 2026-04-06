@@ -2,6 +2,8 @@
 
 ## All functions
 
+- [`addCharlsonIndex()`](https://OHDSI.github.io/OmopIndexes/reference/addCharlsonIndex.md)
+  : Add Charlson index value
 - [`addEthnicity()`](https://OHDSI.github.io/OmopIndexes/reference/addEthnicity.md)
   : Add the ethnicity records to a table
 - [`addLocation()`](https://OHDSI.github.io/OmopIndexes/reference/addLocation.md)
