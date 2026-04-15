@@ -5,14 +5,14 @@
 \alias{bmiThreshold}
 \title{BMI obesity thresholds}
 \format{
-A [`tibble`][tibble::tibble] with `r nrow(bmiThreshold)` rows
-  and `r ncol(bmiThreshold)` columns:
-  \describe{
-    \item{`age_min`}{Double. Minimum age of the threshold.}
-    \item{`age_max`}{Double. Maximum age of the threshold.}
-    \item{`sex`}{Character. Either Female or Male.}
-    \item{`bmi_threshold`}{Double. BMI threshold.}
-  }
+A \code{\link[tibble:tibble]{tibble}} with 36 rows
+and 4 columns:
+\describe{
+\item{\code{age_min}}{Double. Minimum age of the threshold.}
+\item{\code{age_max}}{Double. Maximum age of the threshold.}
+\item{\code{sex}}{Character. Either Female or Male.}
+\item{\code{bmi_threshold}}{Double. BMI threshold.}
+}
 }
 \usage{
 bmiThreshold

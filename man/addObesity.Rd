@@ -15,32 +15,33 @@ addObesity(
 )
 }
 \arguments{
-\item{x}{A `cdm_table` object, it mus contain `person_id` or `subject_id` as
+\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
 columns.}
 
-\item{indexDate}{A character string that points to a `Date` column in the `x`
+\item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
 table.}
 
-\item{window}{`r documentationWindow("obesity")`}
+\item{window}{Window to asses \code{bmi} in, it must be a vector of two numeric values \code{c(min, max)}. Window times refer to days since \code{indexDate}.}
 
-\item{conceptSet}{`r documentationConceptSet(c("obesity", "bmi"))`}
+\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{bmi} as concepts. If \code{NULL} concepts will be retrieved using the OmopConcepts package.}
 
 \item{bmiThreshold}{Argument to indicate the thresholds for the obesity using
 BMI measurements. It can be:
-
-- A single number, any BMI measurement above the threshold will be consider
+\itemize{
+\item A single number, any BMI measurement above the threshold will be consider
 as an obesity record.
-- A tibble with the columns `bmi_threshold`, `sex`, `age_min` and `age_max`,
+\item A tibble with the columns \code{bmi_threshold}, \code{sex}, \code{age_min} and \code{age_max},
 to use age and sex specific thresholds.
-- NULL the table `OmopIndices::bmiThreshold` will be used.}
+\item NULL the table \code{OmopIndices::bmiThreshold} will be used.
+}}
 
 \item{nameStyle}{A character string with the name of the new column.}
 
-\item{name}{A character string with the name of the new table. If `NULL` a
+\item{name}{A character string with the name of the new table. If \code{NULL} a
 temporary table will be created.}
 }
 \value{
-The table `x` with a new column column indicating if subjects have
+The table \code{x} with a new column column indicating if subjects have
 an obesity record in the window of interest.
 }
 \description{

@@ -2,12 +2,12 @@
 % Please edit documentation in R/documentationHelpers.R
 \name{nameDoc}
 \alias{nameDoc}
-\title{Helper for consistent documentation of `name` argument}
+\title{Helper for consistent documentation of \code{name} argument}
 \arguments{
-\item{name}{A character string with the name of the new table. If `NULL` a
+\item{name}{A character string with the name of the new table. If \code{NULL} a
 temporary table will be created.}
 }
 \description{
-Helper for consistent documentation of `name` argument
+Helper for consistent documentation of \code{name} argument
 }
 \keyword{internal}

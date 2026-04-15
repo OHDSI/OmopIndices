@@ -3,8 +3,8 @@
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
-#' @param window `r documentationWindow("obesity")`
-#' @param conceptSet `r documentationConceptSet(c("obesity", "bmi"))`
+#' @param window `r documentationWindow("bmi")`
+#' @param conceptSet `r documentationConceptSet("bmi")`
 #' @param bmiThreshold Argument to indicate the thresholds for the obesity using
 #' BMI measurements. It can be:
 #'
