@@ -96,3 +96,6 @@ validateName <- function(name, call = parent.frame()) {
   }
   omopgenerics::validateNameArgument(name = name, null = TRUE, call = call)
 }
+validateCategories <- function(categories, call = parent.frame()) {
+  omopgenerics::assertList(categories, call = call)
+}

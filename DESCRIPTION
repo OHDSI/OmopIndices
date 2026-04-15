@@ -30,6 +30,7 @@ Imports:
     OmopConcepts,
     omopgenerics,
     PatientProfiles,
+    purrr,
     rlang
 Depends: 
     R (>= 3.5)
