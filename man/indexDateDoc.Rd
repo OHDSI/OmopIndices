@@ -2,12 +2,12 @@
 % Please edit documentation in R/documentationHelpers.R
 \name{indexDateDoc}
 \alias{indexDateDoc}
-\title{Helper for consistent documentation of `indexDate` argument}
+\title{Helper for consistent documentation of \code{indexDate} argument}
 \arguments{
-\item{indexDate}{A character string that points to a `Date` column in the `x`
+\item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
 table.}
 }
 \description{
-Helper for consistent documentation of `indexDate` argument
+Helper for consistent documentation of \code{indexDate} argument
 }
 \keyword{internal}

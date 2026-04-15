@@ -9,6 +9,7 @@ Description: More about what it does (maybe more than one line)
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: 
     CDMConnector,
@@ -29,6 +30,7 @@ Imports:
     OmopConcepts,
     omopgenerics,
     PatientProfiles,
+    purrr,
     rlang
 Depends: 
     R (>= 3.5)

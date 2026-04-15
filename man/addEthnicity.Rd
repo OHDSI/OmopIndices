@@ -14,7 +14,7 @@ addEthnicity(
 )
 }
 \arguments{
-\item{x}{A `cdm_table` object, it mus contain `person_id` or `subject_id` as
+\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
 columns.}
 
 \item{from}{Character to indicate how to retrieve ethnicity, if multiple
@@ -22,13 +22,13 @@ values are provided different sources will be tried sequentially.}
 
 \item{nameStyle}{A character string with the name of the new column.}
 
-\item{name}{A character string with the name of the new table. If `NULL` a
+\item{name}{A character string with the name of the new table. If \code{NULL} a
 temporary table will be created.}
 
 \item{missingEthnicityValue}{Character to coaslesce missing values.}
 }
 \value{
-The `x` table with a new column added with the ethnicity of the
+The \code{x} table with a new column added with the ethnicity of the
 patient.
 }
 \description{

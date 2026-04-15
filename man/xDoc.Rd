@@ -2,12 +2,12 @@
 % Please edit documentation in R/documentationHelpers.R
 \name{xDoc}
 \alias{xDoc}
-\title{Helper for consistent documentation of `x` argument}
+\title{Helper for consistent documentation of \code{x} argument}
 \arguments{
-\item{x}{A `cdm_table` object, it mus contain `person_id` or `subject_id` as
+\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
 columns.}
 }
 \description{
-Helper for consistent documentation of `x` argument
+Helper for consistent documentation of \code{x} argument
 }
 \keyword{internal}

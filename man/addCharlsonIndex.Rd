@@ -14,23 +14,23 @@ addCharlsonIndex(
 )
 }
 \arguments{
-\item{x}{A `cdm_table` object, it mus contain `person_id` or `subject_id` as
+\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
 columns.}
 
-\item{indexDate}{A character string that points to a `Date` column in the `x`
+\item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
 table.}
 
-\item{window}{`r documentationWindow("Charlson index")`}
+\item{window}{Window to asses \verb{Charlson index} in, it must be a vector of two numeric values \code{c(min, max)}. Window times refer to days since \code{indexDate}.}
 
-\item{conceptSet}{`r documentationConceptSet(charlsonConcepts)`}
+\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{myocardial_infarction}, \code{congestive_heart_failure}, \code{peripheral_vascular_disease}, \code{cerebrovacular_accident}, \code{transient_ischemic_attack}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{peptic_ulcer_disease}, \code{mild_liver_disease}, \code{severe_liver_disease}, \code{diabetes_mellitus}, \code{end_organ_diabetes_mellitus}, \code{hemiplegia}, \code{estimated_glomerular_filtration_rate}, \code{severe_chronic_kidney_disease}, \code{localised_solid_tumor}, \code{metastatic_solid_tumor}, \code{leukemia}, \code{lymphoma}, \code{aids} as concepts. If \code{NULL} concepts will be retrieved using the OmopConcepts package.}
 
 \item{nameStyle}{A character string with the name of the new column.}
 
-\item{name}{A character string with the name of the new table. If `NULL` a
+\item{name}{A character string with the name of the new table. If \code{NULL} a
 temporary table will be created.}
 }
 \value{
-The table `x` with a new column column with the corresponding
+The table \code{x} with a new column column with the corresponding
 Charlson index value.
 }
 \description{

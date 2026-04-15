@@ -14,7 +14,7 @@ addPolypharmacyCount(
 )
 }
 \arguments{
-\item{x}{A `cdm_table` object.}
+\item{x}{A \code{cdm_table} object.}
 
 \item{indexDate}{Name of a 'date' column that indicates the index date.}
 
@@ -25,7 +25,7 @@ addPolypharmacyCount(
 \item{name}{Name of the new table.}
 }
 \value{
-The table `x` with a new column column with the number of
+The table \code{x} with a new column column with the number of
 ingredients used in the window of interest.
 }
 \description{

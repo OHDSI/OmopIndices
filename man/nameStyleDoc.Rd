@@ -2,11 +2,11 @@
 % Please edit documentation in R/documentationHelpers.R
 \name{nameStyleDoc}
 \alias{nameStyleDoc}
-\title{Helper for consistent documentation of `nameStyle` argument}
+\title{Helper for consistent documentation of \code{nameStyle} argument}
 \arguments{
 \item{nameStyle}{A character string with the name of the new column.}
 }
 \description{
-Helper for consistent documentation of `nameStyle` argument
+Helper for consistent documentation of \code{nameStyle} argument
 }
 \keyword{internal}
