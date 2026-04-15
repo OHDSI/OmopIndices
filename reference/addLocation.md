@@ -18,8 +18,8 @@ addLocation(
 
 - x:
 
-  A \`cdm_table\` object, it mus contain \`person_id\` or \`subject_id\`
-  as columns.
+  A `cdm_table` object, it mus contain `person_id` or `subject_id` as
+  columns.
 
 - from:
 
@@ -32,7 +32,7 @@ addLocation(
 
 - name:
 
-  A character string with the name of the new table. If \`NULL\` a
+  A character string with the name of the new table. If `NULL` a
   temporary table will be created.
 
 - missingLocationValue:
@@ -41,8 +41,7 @@ addLocation(
 
 ## Value
 
-The \`x\` table with a new column added with the location of the
-patient.
+The `x` table with a new column added with the location of the patient.
 
 ## Examples
 
@@ -67,7 +66,7 @@ cdm$condition_occurrence |>
 #> ! No location found, variable will be filled with `Missing`.
 #> Rows: ??
 #> Columns: 17
-#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/Rtmptx4SBk/file1b3218a570dd.duckdb]
+#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/Rtmp1OlsD6/file1a47238c04e5.duckdb]
 #> $ condition_occurrence_id       <int> 4483, 4657, 4815, 4981, 5153, 5313, 5513…
 #> $ person_id                     <int> 263, 273, 283, 293, 304, 312, 326, 334, …
 #> $ condition_concept_id          <int> 4112343, 192671, 28060, 378001, 257012, …

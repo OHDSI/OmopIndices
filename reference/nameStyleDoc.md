@@ -1,6 +1,6 @@
-# Helper for consistent documentation of \`nameStyle\` argument
+# Helper for consistent documentation of `nameStyle` argument
 
-Helper for consistent documentation of \`nameStyle\` argument
+Helper for consistent documentation of `nameStyle` argument
 
 ## Arguments
 

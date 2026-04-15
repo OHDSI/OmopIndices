@@ -19,7 +19,7 @@ addPolypharmacyCount(
 
 - x:
 
-  A \`cdm_table\` object.
+  A `cdm_table` object.
 
 - indexDate:
 
@@ -39,7 +39,7 @@ addPolypharmacyCount(
 
 ## Value
 
-The table \`x\` with a new column column with the number of ingredients
+The table `x` with a new column column with the number of ingredients
 used in the window of interest.
 
 ## Examples
@@ -60,19 +60,19 @@ cdm$condition_occurrence |>
   slice_sample(n = 10) |>
   select("person_id", "condition_start_date") |>
   addPolypharmacyCount(indexDate = "condition_start_date")
-#> # Source:   table<og_011_1776280783> [?? x 3]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/Rtmptx4SBk/file1b32290f67c4.duckdb]
+#> # Source:   table<og_011_1776288990> [?? x 3]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/Rtmp1OlsD6/file1a4755b37901.duckdb]
 #>    person_id condition_start_date polypharmacy_count
 #>        <int> <date>                            <int>
-#>  1       486 1987-10-28                            0
-#>  2      1004 1997-05-27                            0
-#>  3       654 2001-10-12                            0
-#>  4      1328 2008-02-17                            0
-#>  5      2012 1971-05-10                            0
-#>  6      2603 1975-05-07                            0
-#>  7      3686 2008-08-06                            0
-#>  8      3570 2004-06-29                            0
-#>  9      4040 2015-03-12                            0
-#> 10      3803 2016-09-04                            0
+#>  1       582 1977-06-08                            0
+#>  2       606 1999-03-28                            0
+#>  3       836 2010-02-21                            0
+#>  4      1571 1974-08-29                            0
+#>  5      1973 1995-09-22                            0
+#>  6      3079 1947-04-17                            0
+#>  7      3418 1991-07-09                            0
+#>  8      3658 1999-09-01                            0
+#>  9      4214 1991-02-22                            0
+#> 10      5317 1976-03-08                            0
 # }
 ```

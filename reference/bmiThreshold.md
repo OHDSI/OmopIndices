@@ -11,21 +11,21 @@ bmiThreshold
 
 ## Format
 
-A \[\`tibble\`\]\[tibble::tibble\] with \`r nrow(bmiThreshold)\` rows
-and \`r ncol(bmiThreshold)\` columns:
+A [`tibble`](https://tibble.tidyverse.org/reference/tibble.html) with 36
+rows and 4 columns:
 
-- \`age_min\`:
+- `age_min`:
 
   Double. Minimum age of the threshold.
 
-- \`age_max\`:
+- `age_max`:
 
   Double. Maximum age of the threshold.
 
-- \`sex\`:
+- `sex`:
 
   Character. Either Female or Male.
 
-- \`bmi_threshold\`:
+- `bmi_threshold`:
 
   Double. BMI threshold.

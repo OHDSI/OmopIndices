@@ -2,6 +2,8 @@
 
 ## All functions
 
+- [`addBMI()`](https://OHDSI.github.io/OmopIndices/reference/addBMI.md)
+  : Add Body Mass Index measurement
 - [`addCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addCharlsonIndex.md)
   : Add Charlson index value
 - [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)

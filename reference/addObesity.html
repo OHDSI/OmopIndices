@@ -54,31 +54,31 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A `cdm_table` object, it mus contain `person_id` or `subject_id` as
+<dd><p>A <code>cdm_table</code> object, it mus contain <code>person_id</code> or <code>subject_id</code> as
 columns.</p></dd>
 
 
 <dt id="arg-indexdate">indexDate<a class="anchor" aria-label="anchor" href="#arg-indexdate"></a></dt>
-<dd><p>A character string that points to a `Date` column in the `x`
+<dd><p>A character string that points to a <code>Date</code> column in the <code>x</code>
 table.</p></dd>
 
 
 <dt id="arg-window">window<a class="anchor" aria-label="anchor" href="#arg-window"></a></dt>
-<dd><p>`r documentationWindow("obesity")`</p></dd>
+<dd><p>Window to asses <code>bmi</code> in, it must be a vector of two numeric values <code>c(min, max)</code>. Window times refer to days since <code>indexDate</code>.</p></dd>
 
 
 <dt id="arg-conceptset">conceptSet<a class="anchor" aria-label="anchor" href="#arg-conceptset"></a></dt>
-<dd><p>`r documentationConceptSet(c("obesity", "bmi"))`</p></dd>
+<dd><p>It can either be a <codelist>, &lt;codelist_with_details&gt; or &lt;concept_set_expression&gt; object. It must contain <code>bmi</code> as concepts. If <code>NULL</code> concepts will be retrieved using the OmopConcepts package.</codelist></p></dd>
 
 
 <dt id="arg-bmithreshold">bmiThreshold<a class="anchor" aria-label="anchor" href="#arg-bmithreshold"></a></dt>
 <dd><p>Argument to indicate the thresholds for the obesity using
-BMI measurements. It can be:</p>
-<p>- A single number, any BMI measurement above the threshold will be consider
-as an obesity record.
-- A tibble with the columns `bmi_threshold`, `sex`, `age_min` and `age_max`,
-to use age and sex specific thresholds.
-- NULL the table `OmopIndices::bmiThreshold` will be used.</p></dd>
+BMI measurements. It can be:</p><ul><li><p>A single number, any BMI measurement above the threshold will be consider
+as an obesity record.</p></li>
+<li><p>A tibble with the columns <code>bmi_threshold</code>, <code>sex</code>, <code>age_min</code> and <code>age_max</code>,
+to use age and sex specific thresholds.</p></li>
+<li><p>NULL the table <code><a href="bmiThreshold.html">OmopIndices::bmiThreshold</a></code> will be used.</p></li>
+</ul></dd>
 
 
 <dt id="arg-namestyle">nameStyle<a class="anchor" aria-label="anchor" href="#arg-namestyle"></a></dt>
@@ -86,13 +86,13 @@ to use age and sex specific thresholds.
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
-<dd><p>A character string with the name of the new table. If `NULL` a
+<dd><p>A character string with the name of the new table. If <code>NULL</code> a
 temporary table will be created.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The table `x` with a new column column indicating if subjects have
+    <p>The table <code>x</code> with a new column column indicating if subjects have
 an obesity record in the window of interest.</p>
     </div>
 
