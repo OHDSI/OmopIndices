@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' \donttest{
-#' library(OmopIndexes)
+#' library(OmopIndices)
 #' library(omock)
 #' library(dplyr)
 #'

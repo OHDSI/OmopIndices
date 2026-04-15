@@ -37,7 +37,7 @@ Charlson index value.
 Add Charlson index value
 }
 \examples{
-library(OmopIndexes)
+library(OmopIndices)
 
 
 

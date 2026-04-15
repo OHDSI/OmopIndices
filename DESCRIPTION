@@ -1,4 +1,4 @@
-Package: OmopIndexes
+Package: OmopIndices
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
@@ -20,8 +20,8 @@ Suggests:
     omock,
     RPostgres,
     testthat
-URL: https://OHDSI.github.io/OmopIndexes/
-BugReports: https://github.com/OHDSI/OmopIndexes/issues
+URL: https://OHDSI.github.io/OmopIndices/
+BugReports: https://github.com/OHDSI/OmopIndices/issues
 Imports: 
     cli,
     clock,

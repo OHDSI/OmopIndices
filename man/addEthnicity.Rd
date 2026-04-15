@@ -35,7 +35,7 @@ patient.
 Add the ethnicity records to a table
 }
 \examples{
-library(OmopIndexes)
+library(OmopIndices)
 library(omock)
 library(dplyr)
 
