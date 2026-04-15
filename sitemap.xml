@@ -1,20 +1,20 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>https://OHDSI.github.io/OmopIndexes/404.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/LICENSE.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/authors.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/index.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/OmopIndexes-package.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/addCharlsonIndex.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/addEthnicity.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/addLocation.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/addObesity.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/addPolypharmacyCount.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/bmiThreshold.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/index.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/indexDateDoc.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/nameDoc.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/nameStyleDoc.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/reexports.html</loc></url>
-<url><loc>https://OHDSI.github.io/OmopIndexes/reference/xDoc.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/404.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/LICENSE.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/authors.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/index.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/OmopIndices-package.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/addCharlsonIndex.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/addEthnicity.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/addLocation.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/addObesity.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/addPolypharmacyCount.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/bmiThreshold.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/index.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/indexDateDoc.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/nameDoc.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/nameStyleDoc.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/reexports.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/reference/xDoc.html</loc></url>
 </urlset>
 

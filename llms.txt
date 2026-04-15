@@ -1,23 +1,23 @@
-# OmopIndexes
+# OmopIndices
 
-The goal of **OmopIndexes** is to … *clearly state the main goal of the
+The goal of **OmopIndices** is to … *clearly state the main goal of the
 package*
 
 ## Tested sources
 
 | Source                      | Driver | CDM reference                                                                                            | Status                                                                                                                            |
 |-----------------------------|--------|----------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| Local R dataframe           | N/A    | [`omopgenerics::cdmFromTables()`](https://darwin-eu.github.io/omopgenerics/reference/cdmFromTables.html) | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndexes/test-weekly.yaml?branch=main&job=local-omopgenerics)  |
-| In-memory duckdb datatabase | duckdb | [`CDMConnector::cdmFromCon()`](https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html)       | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndexes/test-weekly.yaml?branch=main&job=duckdb-CDMConnector) |
+| Local R dataframe           | N/A    | [`omopgenerics::cdmFromTables()`](https://darwin-eu.github.io/omopgenerics/reference/cdmFromTables.html) | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=local-omopgenerics)  |
+| In-memory duckdb datatabase | duckdb | [`CDMConnector::cdmFromCon()`](https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html)       | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=duckdb-CDMConnector) |
 
 ## Installation
 
-You can install the development version of OmopIndexes from
+You can install the development version of OmopIndices from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
-pak::pkg_install("OHDSI/OmopIndexes")
+pak::pkg_install("OHDSI/OmopIndices")
 ```
 
 ## Example
@@ -25,24 +25,24 @@ pak::pkg_install("OHDSI/OmopIndexes")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(OmopIndexes)
+library(OmopIndices)
 ```
 
 # Package index
 
 ## All functions
 
-- [`addCharlsonIndex()`](https://OHDSI.github.io/OmopIndexes/reference/addCharlsonIndex.md)
+- [`addCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addCharlsonIndex.md)
   : Add Charlson index value
-- [`addEthnicity()`](https://OHDSI.github.io/OmopIndexes/reference/addEthnicity.md)
+- [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)
   : Add the ethnicity records to a table
-- [`addLocation()`](https://OHDSI.github.io/OmopIndexes/reference/addLocation.md)
+- [`addLocation()`](https://OHDSI.github.io/OmopIndices/reference/addLocation.md)
   : Add the location to a table
-- [`addObesity()`](https://OHDSI.github.io/OmopIndexes/reference/addObesity.md)
+- [`addObesity()`](https://OHDSI.github.io/OmopIndices/reference/addObesity.md)
   : Add obesity flag
-- [`addPolypharmacyCount()`](https://OHDSI.github.io/OmopIndexes/reference/addPolypharmacyCount.md)
+- [`addPolypharmacyCount()`](https://OHDSI.github.io/OmopIndices/reference/addPolypharmacyCount.md)
   : Add the maximum number of ingredients an individual is exposed
   simultaneouly in a certain window.
-- [`bmiThreshold`](https://OHDSI.github.io/OmopIndexes/reference/bmiThreshold.md)
+- [`bmiThreshold`](https://OHDSI.github.io/OmopIndices/reference/bmiThreshold.md)
   : BMI obesity thresholds
 

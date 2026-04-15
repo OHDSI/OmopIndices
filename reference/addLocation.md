@@ -47,7 +47,7 @@ patient.
 ## Examples
 
 ``` r
-library(OmopIndexes)
+library(OmopIndices)
 library(omock)
 library(dplyr)
 
@@ -67,7 +67,7 @@ cdm$condition_occurrence |>
 #> ! No location found, variable will be filled with `Missing`.
 #> Rows: ??
 #> Columns: 17
-#> Database: DuckDB 1.5.1 [unknown@Linux 6.17.0-1008-azure:R 4.5.3//tmp/RtmpWPSFYV/file1c29ccc6ecf.duckdb]
+#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/Rtmptx4SBk/file1b3218a570dd.duckdb]
 #> $ condition_occurrence_id       <int> 4483, 4657, 4815, 4981, 5153, 5313, 5513…
 #> $ person_id                     <int> 263, 273, 283, 293, 304, 312, 326, 334, …
 #> $ condition_concept_id          <int> 4112343, 192671, 28060, 378001, 257012, …

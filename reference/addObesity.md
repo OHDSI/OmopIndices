@@ -45,7 +45,7 @@ addObesity(
   consider as an obesity record. - A tibble with the columns
   \`bmi_threshold\`, \`sex\`, \`age_min\` and \`age_max\`, to use age
   and sex specific thresholds. - NULL the table
-  \`OmopIndexes::bmiThreshold\` will be used.
+  \`OmopIndices::bmiThreshold\` will be used.
 
 - nameStyle:
 
@@ -64,7 +64,7 @@ obesity record in the window of interest.
 ## Examples
 
 ``` r
-library(OmopIndexes)
+library(OmopIndices)
 
 
 ```

@@ -52,7 +52,7 @@ index value.
 ## Examples
 
 ``` r
-library(OmopIndexes)
+library(OmopIndices)
 
 
 ```
