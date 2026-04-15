@@ -12,7 +12,7 @@
 #' as an obesity record.
 #' - A tibble with the columns `bmi_threshold`, `sex`, `age_min` and `age_max`,
 #' to use age and sex specific thresholds.
-#' - NULL the table `OmopIndexes::bmiThreshold` will be used.
+#' - NULL the table `OmopIndices::bmiThreshold` will be used.
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
 #'
@@ -22,7 +22,7 @@
 #' @export
 #'
 #' @examples
-#' library(OmopIndexes)
+#' library(OmopIndices)
 #'
 #'
 #'

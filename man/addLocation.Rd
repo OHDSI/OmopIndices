@@ -34,7 +34,7 @@ patient.
 Add the location to a table
 }
 \examples{
-library(OmopIndexes)
+library(OmopIndices)
 library(omock)
 library(dplyr)
 

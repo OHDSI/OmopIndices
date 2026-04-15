@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' library(OmopIndexes)
+#' library(OmopIndices)
 #' library(omock)
 #' library(dplyr)
 #'

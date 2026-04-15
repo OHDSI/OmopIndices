@@ -32,7 +32,7 @@ BMI measurements. It can be:
 as an obesity record.
 - A tibble with the columns `bmi_threshold`, `sex`, `age_min` and `age_max`,
 to use age and sex specific thresholds.
-- NULL the table `OmopIndexes::bmiThreshold` will be used.}
+- NULL the table `OmopIndices::bmiThreshold` will be used.}
 
 \item{nameStyle}{A character string with the name of the new column.}
 
@@ -47,7 +47,7 @@ an obesity record in the window of interest.
 Add obesity flag
 }
 \examples{
-library(OmopIndexes)
+library(OmopIndices)
 
 
 

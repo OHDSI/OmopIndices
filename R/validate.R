@@ -28,13 +28,13 @@ validateConceptSet <- function(conceptSet, nms, cdm, call = parent.frame()) {
 validateBmiThreshold <- function(bmiThreshold, call = parent.frame()) {
   if (is.null(bmiThreshold)) {
     cli::cli_inform(c(i = "Using internal {.pkg bmiThreshold} for BMI cut-offs."))
-    bmiThreshold <- OmopIndexes::bmiThreshold
+    bmiThreshold <- OmopIndices::bmiThreshold
   }
   msg <- paste0(
     "`bmiThreshold` must be a single number or a tibble with the columns: ",
     "`bmi_threshold` for the threshold; use `sex` to use sex specific ",
     "thresholds; use `age_min` and `age_max` to use age specific thresholds. ",
-    "Leave it `NULL` to use `OmopIndexes::bmiThreshold`."
+    "Leave it `NULL` to use `OmopIndices::bmiThreshold`."
   )
   if (is.numeric(bmiThreshold)) {
     if (length(bmiThreshold) != 1) {

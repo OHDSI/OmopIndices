@@ -1,4 +1,4 @@
 library(testthat)
-library(OmopIndexes)
+library(OmopIndices)
 
-test_check("OmopIndexes")
+test_check("OmopIndices")
