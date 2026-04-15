@@ -30,7 +30,6 @@ addCharlsonIndex <- function(x,
   indexDate <- validateIndexDate(indexDate, x)
   window <- validateWindow(window)
   conceptSet <- validateConceptSet(conceptSet, charlsonConcepts, cdm)
-  bmiThreshold <- validateBmiThreshold(bmiThreshold)
   nameStyle <- validateNameStyle(nameStyle, x)
   x <- omopgenerics::validateNewColumn(x, nameStyle)
   name <- validateName(name)
