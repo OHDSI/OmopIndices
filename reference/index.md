@@ -12,4 +12,4 @@
   : Add the location to a table
 - [`addPolypharmacyCount()`](https://OHDSI.github.io/OmopIndices/reference/addPolypharmacyCount.md)
   : Add the maximum number of ingredients an individual is exposed
-  simultaneouly in a certain window.
+  simultaneously in a certain window.
