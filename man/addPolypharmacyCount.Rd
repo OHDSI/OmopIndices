@@ -2,7 +2,7 @@
 % Please edit documentation in R/polypharmacy.R
 \name{addPolypharmacyCount}
 \alias{addPolypharmacyCount}
-\title{Add the maximum number of ingredients an individual is exposed simultaneouly
+\title{Add the maximum number of ingredients an individual is exposed simultaneously
 in a certain window.}
 \usage{
 addPolypharmacyCount(
@@ -10,7 +10,7 @@ addPolypharmacyCount(
   indexDate = "cohort_start_date",
   window = c(0, 0),
   nameStyle = "polypharmacy_count",
-  name = NULL
+  name = tableName(x)
 )
 }
 \arguments{
@@ -29,7 +29,7 @@ The table \code{x} with a new column column with the number of
 ingredients used in the window of interest.
 }
 \description{
-Add the maximum number of ingredients an individual is exposed simultaneouly
+Add the maximum number of ingredients an individual is exposed simultaneously
 in a certain window.
 }
 \examples{

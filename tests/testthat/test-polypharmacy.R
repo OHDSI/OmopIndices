@@ -18,7 +18,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
   cdm <- omopgenerics::insertTable(
     cdm = cdm,
     name = "toy_table",
-    table = tibble::tibble(
+    table = dplyr::tibble(
       person_id = c(1L, 2L),
       my_date = as.Date(c("2000-01-31", "2000-01-31"))
     )
@@ -27,7 +27,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
   cdm <- omopgenerics::insertTable(
     cdm = cdm,
     name = "my_cohort",
-    table = tibble::tibble(
+    table = dplyr::tibble(
       cohort_definition_id = 1L,
       subject_id = c(1L, 2L),
       cohort_start_date = as.Date(c("2000-01-31", "2000-01-31")),
