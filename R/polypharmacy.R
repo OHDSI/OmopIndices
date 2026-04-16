@@ -1,5 +1,5 @@
 
-#' Add the maximum number of ingredients an individual is exposed simultaneouly
+#' Add the maximum number of ingredients an individual is exposed simultaneously
 #' in a certain window.
 #'
 #' @param x A `cdm_table` object.
@@ -30,7 +30,7 @@ addPolypharmacyCount <- function(x,
                                  indexDate = "cohort_start_date",
                                  window = c(0, 0),
                                  nameStyle = "polypharmacy_count",
-                                 name = NULL) {
+                                 name = tableName(x)) {
   # input check
   x <- omopgenerics::validateCdmTable(table = x)
   personId <- omopgenerics::getPersonIdentifier(x = x)
@@ -41,6 +41,9 @@ addPolypharmacyCount <- function(x,
   }
   omopgenerics::assertCharacter(x = nameStyle, length = 1)
   nameStyle <- omopgenerics::toSnakeCase(x = nameStyle)
+  if (is.na(name)) {
+    name <- NULL
+  }
 
   if (nameStyle %in% colnames(x)) {
     cli::cli_warn(c("!" = "column {.var {nameStyle}} will be overwritten."))
@@ -88,19 +91,19 @@ addPolypharmacyCount <- function(x,
     dplyr::compute(name = nm1)
 
   # calculate number ingredients
-  q <- "max(.data$flag, na.rm = TRUE)" |>
+  q <- "-min(.data$flag, na.rm = TRUE)" |>
     rlang::set_names(nm = nameStyle) |>
     rlang::parse_exprs()
   x_counts <- x_counts |>
     dplyr::select(dplyr::all_of(c(personId, indexDate, "date" = ids[1]))) |>
-    dplyr::mutate(flag = 1L) |>
+    dplyr::mutate(flag = -1L) |>
     dplyr::union_all(
       x_counts |>
         dplyr::select(dplyr::all_of(c(personId, indexDate, "date" = ids[2]))) |>
-        dplyr::mutate(flag = -1L)
+        dplyr::mutate(flag = 1L)
     ) |>
     dplyr::group_by(.data[[personId]], .data[[indexDate]]) |>
-    dplyr::arrange(.data$date) |>
+    dplyr::arrange(.data$date, .data$flag) |>
     dplyr::mutate(flag = cumsum(.data$flag)) |>
     dplyr::summarise(!!!q) |>
     dplyr::compute(name = nm2)
