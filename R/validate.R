@@ -29,7 +29,7 @@ validateConceptSet <- function(conceptSet, nms, cdm, call = parent.frame()) {
   if (length(notPresent) > 0) {
     cli::cli_abort(c(x = "{.pkg {notPresent}} not found in `conceptSet`."), call = call)
   }
-  return(conceptSet)
+  return(conceptSet[nms])
 }
 validateNameStyle <- function(nameStyle, x, ..., call = parent.frame()) {
   omopgenerics::assertCharacter(nameStyle, length = 1, call = call)
