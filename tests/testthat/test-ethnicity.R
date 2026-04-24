@@ -35,7 +35,7 @@ test_that("ethnicity works", {
 
   # add ethnicity via ethnicity_source_concept_id
   cdm$person <- cdm$person |>
-    dplyr::mutate(location_id = dplyr::case_when(
+    dplyr::mutate(ethnicity_source_concept_id = dplyr::case_when(
       person_id %in% 1:4 ~ 8515L,
       person_id %in% 5:6 ~ 8522L,
       person_id == 7 ~ 8527L,
@@ -49,71 +49,19 @@ test_that("ethnicity works", {
     cdm$cohort |>
       dplyr::collect() |>
       dplyr::arrange(.data$subject_id) |>
-      dplyr::pull("location") |>
+      dplyr::pull("ethnicity") |>
       unique(),
-    c("zone", "location1", "Missing", "UK")
-  )
-
-  # add care_site results should not change
-  cdm$person <- cdm$person |>
-    dplyr::mutate(care_site_id = dplyr::case_when(
-      person_id %in% 1:2 ~ 1L,
-      person_id %in% 3:4 ~ 2L,
-      person_id %in% 5:6 ~ 3L,
-      person_id %in% 7:8 ~ 4L,
-      person_id %in% 9:10 ~ 5L
-    ))
-  expect_warning(
-    cdm$cohort <- cdm$cohort |>
-      addLocation()
-  )
-  expect_identical(
-    cdm$cohort |>
-      dplyr::collect() |>
-      dplyr::arrange(.data$subject_id) |>
-      dplyr::pull("location") |>
-      unique(),
-    c("zone", "location1", "Missing", "UK")
-  )
-
-  # force location via care_site
-  expect_warning(
-    cdm$cohort <- cdm$cohort |>
-      addLocation(from = "care_site_id")
-  )
-  expect_identical(
-    cdm$cohort |>
-      dplyr::collect() |>
-      dplyr::arrange(.data$subject_id) |>
-      dplyr::pull("location") |>
-      unique(),
-    c("location1", "Catalunya")
-  )
-
-  # remove location_id
-  cdm$person <- cdm$person |>
-    dplyr::mutate(location_id = NA_integer_)
-  expect_warning(
-    cdm$cohort <- cdm$cohort |>
-      addLocation()
-  )
-  expect_identical(
-    cdm$cohort |>
-      dplyr::collect() |>
-      dplyr::arrange(.data$subject_id) |>
-      dplyr::pull("location") |>
-      unique(),
-    c("location1", "Catalunya")
+    c("Asian", "Other Race", "White", "Native Hawaiian or Other Pacific Islander")
   )
 
   # expect all missing if no from is supplied
   expect_warning(
     cdm$cohort <- cdm$cohort |>
-      addLocation(from = character())
+      addEthnicity(from = character())
   )
   expect_identical(
     cdm$cohort |>
-      dplyr::pull("location") |>
+      dplyr::pull("ethnicity") |>
       unique(),
     "Missing"
   )

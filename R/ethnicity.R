@@ -18,10 +18,11 @@
 #' column `ethnicity_source_value` in the person table.
 #' - **race_source_value** to assign ethnicity using the value of the
 #' column `race_source_value` in the person table.
-#' - **nhs-categories** to assign ethnicity using the broad categories as
-#' described in <10.1038/s41597-024-02958-1>.
-#' - **nhs-groups** to assign ethnicity using the broad groups as described in
-#' <10.1038/s41597-024-02958-1>.
+#' - **nhs-categories** to assign ethnicity using
+#' [NHS Ethnic Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category).
+#' - **nhs-groups** to assign ethnicity using broad groups of
+#' [NHS Ethnic Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category)
+#' as described in <https://doi.org/10.1038/s41597-024-02958-1>.
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
 #' @param missingEthnicityValue Character to coaslesce missing values.

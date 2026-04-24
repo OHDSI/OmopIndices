@@ -34,10 +34,11 @@ associated with the \code{race_source_concept_id} column of person table.
 column \code{ethnicity_source_value} in the person table.
 \item \strong{race_source_value} to assign ethnicity using the value of the
 column \code{race_source_value} in the person table.
-\item \strong{nhs-categories} to assign ethnicity using the broad categories as
-described in <10.1038/s41597-024-02958-1>.
-\item \strong{nhs-groups} to assign ethnicity using the broad groups as described in
-<10.1038/s41597-024-02958-1>.
+\item \strong{nhs-categories} to assign ethnicity using
+\href{https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category}{NHS Ethnic Category}.
+\item \strong{nhs-groups} to assign ethnicity using the broad groups of
+\href{https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category}{NHS Ethnic Category}
+as described in \url{https://doi.org/10.1038/s41597-024-02958-1}.
 }}
 
 \item{nameStyle}{A character string with the name of the new column.}
