@@ -17,7 +17,7 @@
 addSocioEconomicStatus <- function(x,
                                    indexDate = "cohort_start_date",
                                    window = c(-Inf, Inf),
-                                   order = "last", # first, last, last-before, first-after
+                                   order = "last",
                                    from = c("imd", "townsend"),
                                    nameStyle = "socio_economic_status",
                                    name = tableName(x),
@@ -99,6 +99,9 @@ addSocioEconomicStatusFrom <- function(x,
                                        call = parent.frame()) {
   # initial checks
   x <- validateX(x, call = call)
+  indexDate <- omopgenerics::validateColumn(indexDate, x, "date")
+  window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE)[[1]]
+  omopgenerics::assertChoice(order, c("first", "last"), length = 1, call = call)
   opts <- c("imd", "townsend")
   omopgenerics::assertChoice(from, opts, call = call)
   nameStyle <- validateNameStyle(nameStyle, x, call = call)
@@ -107,15 +110,150 @@ addSocioEconomicStatusFrom <- function(x,
   omopgenerics::assertCharacter(missingSocioEconomicStatusValue, length = 1, call = call)
 
   if (length(from) == 0) {
-    q <- ".env$missingSocioEconomicStatusValue" |>
-      rlang::parse_exprs() |>
-      rlang::set_names(nameStyle)
-    x <- x |>
-      dplyr::mutate(!!!q) |>
-      dplyr::compute(name = name)
+    x <- addMissingColumn(x, name, nameStyle, missingSocioEconomicStatusValue)
     return(x)
   }
 
   id <- omopgenerics::getPersonIdentifier(x)
   sel <- rlang::set_names(id, "person_id")
+
+  nm1 <- omopgenerics::uniqueTableName()
+  nm2 <- omopgenerics::uniqueTableName()
+
+  # prepare data
+  xs <- x |>
+    dplyr::select(dplyr::all_of(c(sel, indexDate))) |>
+    dplyr::distinct() |>
+    dplyr::compute(name = nm1)
+  col <- omopgenerics::uniqueId(exclude = colnames(xs))
+
+  for (fr in from) {
+
+    cli::cli_inform(c(i = "Trying to add Socio-economic status from {.pkg {fr}}."))
+
+    if (fr == "townsend") {
+      table <- "measurement"
+      concept <- 715996L
+    } else if (fr == "imd") {
+      table <- "observation"
+      concept <- 35812882L
+    }
+    date <- omopgenerics::omopColumns(table = table, field = "start_date")
+    con <- omopgenerics::omopColumns(table = table, field = "standard_concept")
+    sel <- c("person_id", date, "value_as_number") |>
+      rlang::set_names(c("person_id", col, nameStyle))
+
+    # find ses records
+    ses <- cdm[[table]] |>
+      dplyr::filter(.data[[con]] == !!.env$concept) |>
+      dplyr::select(dplyr::all_of(sel)) |>
+      dplyr::filter(!is.na(.data[[nameStyle]])) |>
+      dplyr::inner_join(xs, by = "person_id") |>
+      dplyr::compute(name = nm2) |>
+      # subset by window and order
+      dplyr::mutate(!!col := clock::date_count_between(
+        start = .data[[indexDate]],
+        end = .data[[col]],
+        precision = "day"
+      )) |>
+      filterWindow(col, window) |>
+      filterOrder(col, order) |>
+      dplyr::compute(name = nm2) |>
+      # remove duplicates
+      dplyr::group_by(.data$person_id) |>
+      dplyr::filter(dplyr::n() == 1) |>
+      dplyr::compute(name = nm2) |>
+      # group records
+      groupRecords(fr, nameStyle) |>
+      dplyr::compute(name = nm2)
+
+    # check if there are records
+    if (omopgenerics::isTableEmpty(ses)) {
+      added <- FALSE
+      cli::cli_inform(c("!" = "Socio-economic status could not be added from {.pkg {fr}}."))
+    } else {
+      added <- TRUE
+      cli::cli_inform(c("v" = "Socio-economic status added from {.pkg {fr}}."))
+      break
+    }
+  }
+
+  if (added) {
+    sel <- c("person_id", indexDate, nameStyle) |>
+      rlang::set_names(c(id, indexDate, nameStyle))
+    x <- x |>
+      dplyr::left_join(
+        ses |>
+          dplyr::select(dplyr::all_of(sel)),
+        by = c(id, indexDate)
+      ) |>
+      dplyr::mutate(!!nameStyle := dplyr::coalesce(
+        .data[[nameStyle]], .env$missingSocioEconomicStatusValue
+      )) |>
+      dplyr::compute(name = name)
+  } else {
+    x <- addMissingColumn(x, name, nameStyle, missingSocioEconomicStatusValue)
+  }
+
+  cdm <- omopgenerics::dropSourceTable(cdm = cdm, name = c(nm1, nm2))
+
+  return(x)
+}
+filterWindow <- function(x, diff, window) {
+  if (is.infinite(window[1])) {
+    if (!is.infinite(window[2])) {
+      x <- x |>
+        dplyr::filter(.data[[diff]] <= !!.env$window[2])
+    }
+  } else {
+    if (is.infinite(window[2])) {
+      x <- x |>
+        dplyr::filter(!!.env$window[1] <= .data[[diff]])
+    } else {
+      x <- x |>
+        dplyr::filter(
+          !!.env$window[1] <= .data[[diff]] & .data[[diff]] <= !!.env$window[2]
+        )
+    }
+  }
+  x
+}
+filterOrder <- function(x, diff, order) {
+  q <- switch(order,
+              "first" = ".data[[diff]] == min(.data[[diff]], na.rm = TRUE)",
+              "last" = ".data[[diff]] == max(.data[[diff]], na.rm = TRUE)") |>
+    rlang::parse_expr()
+  x |>
+    dplyr::group_by(.data$person_id) |>
+    dplyr::filter(!!!q)
+}
+groupRecords <- function(x, from, ses) {
+  if (from == "townsend") {
+    x <- x |>
+      dplyr::mutate(!!ses := dplyr::case_when(
+        .data[[ses]] %in% c(1, 2)  ~ "Q1",
+        .data[[ses]] %in% c(3, 4)  ~ "Q2",
+        .data[[ses]] %in% c(5, 6)  ~ "Q3",
+        .data[[ses]] %in% c(7, 8)  ~ "Q4",
+        .data[[ses]] %in% c(9, 10) ~ "Q5"
+      ))
+  } else if (from == "imd") {
+    x <- x |>
+      dplyr::mutate(!!ses := dplyr::case_when(
+        .data[[ses]] == 1 ~ "Q1",
+        .data[[ses]] == 2 ~ "Q2",
+        .data[[ses]] == 3 ~ "Q3",
+        .data[[ses]] == 4 ~ "Q4",
+        .data[[ses]] == 5 ~ "Q5"
+      ))
+  }
+  x
+}
+addMissingColumn <- function(x, name, nameStyle, missing) {
+  q <- ".env$missing" |>
+    rlang::parse_exprs() |>
+    rlang::set_names(nameStyle)
+  x |>
+    dplyr::mutate(!!!q) |>
+    dplyr::compute(name = name)
 }
