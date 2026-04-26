@@ -56,18 +56,20 @@ addHospitalFrailtyRiskScore <- function(x,
       name = nm,
       nameStyle = "{concept_name}"
     ) |>
-    dplyr::mutate(!!!q) |>
-    dplyr::select(dplyr::all_of(c(id, indexDate, nameStyle))) |>
-    dplyr::compute(name = nm)
+    dplyr::mutate(!!!q)
 
   if (!is.null(categories)) {
-    q <- qCategories(categories) |>
+    qc <- qCategories(categories) |>
       rlang::set_names(nameStyle) |>
       rlang::parse_exprs()
     hfrs <- hfrs |>
-      dplyr::mutate(!!!q) |>
-      dplyr::compute(name = nm)
+      dplyr::mutate(!!!qc)
   }
+
+  hfrs <- hfrs |>
+    dplyr::select(dplyr::all_of(c(id, indexDate, nameStyle))) |>
+    dplyr::compute(name = nm)
+
 
   # add hfrs to x
   x <- x |>
