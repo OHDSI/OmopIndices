@@ -228,6 +228,9 @@ filterWindow <- function(x, diff, window) {
   x
 }
 filterOrder <- function(x, diff, order, indexDate) {
+  if (inherits(x, "data.frame")) {
+    if (nrow(x) == 0) return(x)
+  }
   q <- switch(order,
               "first" = ".data[[diff]] == min(.data[[diff]], na.rm = TRUE)",
               "last" = ".data[[diff]] == max(.data[[diff]], na.rm = TRUE)") |>
