@@ -61,18 +61,18 @@ cdm$condition_occurrence |>
   select("person_id", "condition_start_date") |>
   addPolypharmacyCount(indexDate = "condition_start_date")
 #> # Source:   table<results.test_condition_occurrence> [?? x 3]
-#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpQdRolM/file1bd33717ef83.duckdb]
+#> # Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpfnAWS3/file1a2053478613.duckdb]
 #>    person_id condition_start_date polypharmacy_count
 #>        <int> <date>                            <int>
-#>  1       893 1976-05-01                            0
-#>  2      1309 1967-09-06                            0
-#>  3      1335 2010-09-28                            0
-#>  4      3098 1996-02-18                            0
-#>  5      2906 1938-04-26                            0
-#>  6      3084 2010-01-17                            0
-#>  7      3248 1951-08-12                            0
-#>  8      3820 2015-12-11                            0
-#>  9      4260 2001-12-29                            0
-#> 10      5329 2001-09-01                            0
+#>  1       430 1948-06-27                            0
+#>  2       388 1966-08-03                            0
+#>  3       670 2015-09-19                            0
+#>  4      1854 1993-05-07                            0
+#>  5      1137 1956-11-18                            0
+#>  6      3363 1964-05-27                            0
+#>  7      3483 2018-07-22                            0
+#>  8      4560 1999-08-30                            0
+#>  9      4852 1990-09-17                            0
+#> 10      5315 1957-07-05                            0
 # }
 ```
