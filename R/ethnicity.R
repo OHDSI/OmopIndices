@@ -1,9 +1,28 @@
 
-#' Add the ethnicity records to a table
+#' Add the ethnicity of a person to a table
 #'
 #' @inheritParams xDoc
 #' @param from Character to indicate how to retrieve ethnicity, if multiple
-#' values are provided different sources will be tried sequentially.
+#' values are provided different sources will be tried sequentially. Available
+#' options are:
+#' - **ethnicity_concept_id** to assign ethnicity using the `concept_name`
+#' associated with the `ethnicity_concept_id` column of person table.
+#' - **ethnicity_source_concept_id** to assign ethnicity using the
+#' `concept_name` associated with the `ethnicity_source_concept_id` column of
+#' person table.
+#' - **race_concept_id** to assign ethnicity using the `concept_name` associated
+#' with the `race_concept_id` column of person table.
+#' - **race_source_concept_id** to assign ethnicity using the `concept_name`
+#' associated with the `race_source_concept_id` column of person table.
+#' - **ethnicity_source_value** to assign ethnicity using the value of the
+#' column `ethnicity_source_value` in the person table.
+#' - **race_source_value** to assign ethnicity using the value of the
+#' column `race_source_value` in the person table.
+#' - **nhs-categories** to assign ethnicity using
+#' [NHS Ethnic Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category).
+#' - **nhs-groups** to assign ethnicity using broad groups of
+#' [NHS Ethnic Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category)
+#' as described in <https://doi.org/10.1038/s41597-024-02958-1>.
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
 #' @param missingEthnicityValue Character to coaslesce missing values.
@@ -30,12 +49,13 @@ addEthnicity <- function(x,
                           ),
                          nameStyle = "ethnicity",
                          name = tableName(x),
-                         missingEthnicityValue = "Missing") {
+                         missingEthnicityValue = "Missing") { # Missing vs Unknown
   # initial checks
   x <- validateX(x)
   opts <- c(
     "ethnicity_concept_id", "ethnicity_source_concept_id", "race_concept_id",
-    "race_source_concept_id"
+    "race_source_concept_id", "ethnicity_source_value", "race_source_value",
+    "nhs-categories", "nhs-groups"
   )
   # TODO add observation option
   omopgenerics::assertChoice(from, opts)
@@ -72,8 +92,14 @@ addEthnicity <- function(x,
       indEth <- ind |>
         addEthnicityFromCol(fr, nameStyle) |>
         dplyr::compute(name = omopgenerics::uniqueTableName(pref))
-    } else if (fr == "observation") {
-      # TODO
+    } else if (endsWith(fr, "value")) {
+      indEth <- ind |>
+        addEthnicityFromValue(fr, nameStyle) |>
+        dplyr::compute(name = omopgenerics::uniqueTableName(pref))
+    } else if (grepl("nhs", fr)) {
+      indEth <- ind |>
+        addNhsCategories(fr, nameStyle) |>
+        dplyr::compute(name = omopgenerics::uniqueTableName(pref))
     }
 
     # check if it was successful
@@ -122,6 +148,60 @@ addEthnicityFromCol <- function(x, col, nameStyle) {
             dplyr::select(dplyr::all_of(sel)),
           by = "concept_id"
         ) |>
+        dplyr::select(dplyr::all_of(c("person_id", nameStyle))),
+      by = "person_id"
+    )
+}
+addEthnicityFromValue <- function(x, col, nameStyle) {
+  cdm <- omopgenerics::cdmReference(x)
+  sel <- rlang::set_names(col, nameStyle)
+  x |>
+    dplyr::inner_join(
+      cdm$person |>
+        dplyr::select("person_id", dplyr::all_of(sel)) |>
+        dplyr::filter(!is.na(.data[[nameStyle]]) & .data[[nameStyle]] != ""),
+      by = "person_id"
+    )
+}
+addNhsCategories <- function(x, from, nameStyle) {
+  cdm <- omopgenerics::cdmReference(x)
+  if (from == "nhs-categories") {
+    q <- "dplyr::case_when(
+      .data$race_source_concept_id == 700362L ~ 'Asian or Asian British - Any other Asian background',
+      .data$race_source_concept_id == 700363L ~ 'Asian or Asian British - Pakistani',
+      .data$race_source_concept_id == 700364L ~ 'Asian or Asian British - Bangladeshi',
+      .data$race_source_concept_id == 700365L ~ 'Asian or Asian British - Any other Asian background',
+      .data$race_source_concept_id == 700366L ~ 'Black or Black British - Caribbean',
+      .data$race_source_concept_id == 700367L ~ 'Black or Black British - African',
+      .data$race_source_concept_id == 700368L ~ 'Black or Black British - Any other Black background',
+      .data$race_source_concept_id == 700369L ~ 'Other Ethnic Groups - Chinese',
+      .data$race_source_concept_id == 700385L ~ 'White - British',
+      .data$race_source_concept_id == 700386L ~ 'White - Irish',
+      .data$race_source_concept_id == 700387L ~ 'White - Any other White background',
+      .data$race_source_concept_id == 700388L ~ 'Mixed - White and Black Caribbean',
+      .data$race_source_concept_id == 700389L ~ 'Mixed - White and Black African',
+      .data$race_source_concept_id == 700390L ~ 'Mixed - White and Asian',
+      .data$race_source_concept_id == 700391L ~ 'Mixed - Any other mixed background',
+      .default = NA_character_
+    )"
+  } else if (from == "nhs-groups") {
+    q <- "dplyr::case_when(
+      .data$race_source_concept_id %in% c(700385L, 700386L, 700387L) ~ 'White',
+      .data$race_source_concept_id %in% c(700390L, 700391L, 700389L, 700388L) ~ 'Mix',
+      .data$race_source_concept_id %in% c(700369L) ~ 'Other',
+      .data$race_source_concept_id %in% c(700364L, 700362L, 700363L, 700365L) ~ 'Asian',
+      .data$race_source_concept_id %in% c(700367L, 700366L, 700368L) ~ 'Black',
+      .default = NA_character_
+    )"
+  }
+  q <- q |>
+    rlang::parse_exprs() |>
+    rlang::set_names(nameStyle)
+  x |>
+    dplyr::inner_join(
+      cdm$person |>
+        dplyr::mutate(!!!q) |>
+        dplyr::filter(!is.na(.data[[nameStyle]])) |>
         dplyr::select(dplyr::all_of(c("person_id", nameStyle))),
       by = "person_id"
     )

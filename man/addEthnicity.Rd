@@ -2,7 +2,7 @@
 % Please edit documentation in R/ethnicity.R
 \name{addEthnicity}
 \alias{addEthnicity}
-\title{Add the ethnicity records to a table}
+\title{Add the ethnicity of a person to a table}
 \usage{
 addEthnicity(
   x,
@@ -18,7 +18,28 @@ addEthnicity(
 columns.}
 
 \item{from}{Character to indicate how to retrieve ethnicity, if multiple
-values are provided different sources will be tried sequentially.}
+values are provided different sources will be tried sequentially. Available
+options are:
+\itemize{
+\item \strong{ethnicity_concept_id} to assign ethnicity using the \code{concept_name}
+associated with the \code{ethnicity_concept_id} column of person table.
+\item \strong{ethnicity_source_concept_id} to assign ethnicity using the
+\code{concept_name} associated with the \code{ethnicity_source_concept_id} column of
+person table.
+\item \strong{race_concept_id} to assign ethnicity using the \code{concept_name} associated
+with the \code{race_concept_id} column of person table.
+\item \strong{race_source_concept_id} to assign ethnicity using the \code{concept_name}
+associated with the \code{race_source_concept_id} column of person table.
+\item \strong{ethnicity_source_value} to assign ethnicity using the value of the
+column \code{ethnicity_source_value} in the person table.
+\item \strong{race_source_value} to assign ethnicity using the value of the
+column \code{race_source_value} in the person table.
+\item \strong{nhs-categories} to assign ethnicity using
+\href{https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category}{NHS Ethnic Category}.
+\item \strong{nhs-groups} to assign ethnicity using the broad groups of
+\href{https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category}{NHS Ethnic Category}
+as described in \url{https://doi.org/10.1038/s41597-024-02958-1}.
+}}
 
 \item{nameStyle}{A character string with the name of the new column.}
 
@@ -32,7 +53,7 @@ The \code{x} table with a new column added with the ethnicity of the
 patient.
 }
 \description{
-Add the ethnicity records to a table
+Add the ethnicity of a person to a table
 }
 \examples{
 library(OmopIndices)
