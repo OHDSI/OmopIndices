@@ -2,7 +2,7 @@
 % Please edit documentation in R/socioEconomicStatus.R
 \name{addSocioEconomicStatus}
 \alias{addSocioEconomicStatus}
-\title{Title}
+\title{Add Socio-economic status as a column to a table}
 \usage{
 addSocioEconomicStatus(
   x,
@@ -24,21 +24,26 @@ table.}
 
 \item{window}{Window to asses \code{socio_economic_status} in, it must be a vector of two numeric values \code{c(min, max)}. Window times refer to days since \code{indexDate}.}
 
-\item{order}{Order}
+\item{order}{Character to indicate which of the records to select if multiple
+records are found.}
 
-\item{from}{From}
+\item{from}{Character indicating where to extract Socio-economic status from:
+\itemize{
+\item \strong{townsed} to use records from the \href{https://athena.ohdsi.org/search-terms/terms/715996}{Townsend deprivation index}
+\item \strong{imd} to use records from the \href{https://athena.ohdsi.org/search-terms/terms/35812882}{Index of Multiple Deprivation}
+}}
 
 \item{nameStyle}{A character string with the name of the new column.}
 
 \item{name}{A character string with the name of the new table. If \code{NULL} a
 temporary table will be created.}
 
-\item{missingSocioEconomicStatusValue}{Missing value}
+\item{missingSocioEconomicStatusValue}{Character to assign missing values.}
 }
 \value{
 The \code{x} table with a new column added with the socio-economic status
 of the patient.
 }
 \description{
-Title
+Add Socio-economic status as a column to a table
 }

@@ -1,17 +1,21 @@
 
-#' Title
+#' Add Socio-economic status as a column to a table
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("socio_economic_status")`
-#' @param order Order
-#' @param from From
+#' @param order Character to indicate which of the records to select if multiple
+#' records are found.
+#' @param from Character indicating where to extract Socio-economic status from:
+#' - **townsed** to use records from the [Townsend deprivation index](https://athena.ohdsi.org/search-terms/terms/715996)
+#' - **imd** to use records from the [Index of Multiple Deprivation](https://athena.ohdsi.org/search-terms/terms/35812882)
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
-#' @param missingSocioEconomicStatusValue Missing value
+#' @param missingSocioEconomicStatusValue Character to assign missing values.
 #'
 #' @returns The `x` table with a new column added with the socio-economic status
 #' of the patient.
+#'
 #' @export
 #'
 addSocioEconomicStatus <- function(x,
@@ -34,18 +38,20 @@ addSocioEconomicStatus <- function(x,
   )
 }
 
-#' Title
+#' Add Socio-economic status as a column to a table using the
+#' [Townsend deprivation index](https://athena.ohdsi.org/search-terms/terms/715996)
 #'
 #' @inheritParams addSocioEconomicStatus
 #'
 #' @returns The `x` table with a new column added with the socio-economic status
 #' (townsend index) of the patient.
+#'
 #' @export
 #'
 addTownsend <- function(x,
                         indexDate = "cohort_start_date",
                         window = c(-Inf, Inf),
-                        order = "last", # first, last, last-before, first-after
+                        order = "last",
                         nameStyle = "socio_economic_status",
                         name = tableName(x),
                         missingSocioEconomicStatusValue = "Missing") {
@@ -61,12 +67,14 @@ addTownsend <- function(x,
   )
 }
 
-#' Title
+#' Add Socio-economic status as a column to a table using the
+#' [Index of Multiple Deprivation](https://athena.ohdsi.org/search-terms/terms/35812882)
 #'
 #' @inheritParams addSocioEconomicStatus
 #'
 #' @returns The `x` table with a new column added with the socio-economic status
 #' (index of multiple deprivation) of the patient.
+#'
 #' @export
 #'
 addIndexOfMultipleDeprivation <- function(x,
