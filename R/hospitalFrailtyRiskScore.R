@@ -39,7 +39,7 @@ addHospitalFrailtyRiskScore <- function(x,
   omopgenerics::assertList(categories, named = TRUE, class = "numeric", null = TRUE)
 
   id <- omopgenerics::getPersonIdentifier(x)
-  q <- getHFRSFormula() |>
+  q <- hfrsFormula |>
     rlang::set_names(nameStyle) |>
     rlang::parse_exprs()
 
@@ -69,11 +69,6 @@ addHospitalFrailtyRiskScore <- function(x,
   omopgenerics::dropSourceTable(cdm = cdm, name = nm)
 
   return(x)
-}
-frailtyConcepts <- colnames(OmopIndices::hospitalFrailtyRiskScore)
-getHFRSFormula <- function() {
-  x <- OmopIndices::hospitalFrailtyRiskScore
-  paste0(x$points, " * ", x$concept_set, collapse = " + ")
 }
 
 #' Hospital Frailty Risk Score data set
