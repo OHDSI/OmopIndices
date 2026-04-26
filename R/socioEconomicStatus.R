@@ -107,6 +107,7 @@ addSocioEconomicStatusFrom <- function(x,
                                        call = parent.frame()) {
   # initial checks
   x <- validateX(x, call = call)
+  cdm <- omopgenerics::cdmReference(x)
   indexDate <- omopgenerics::validateColumn(indexDate, x, "date")
   window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE)[[1]]
   omopgenerics::assertChoice(order, c("first", "last"), length = 1, call = call)
@@ -153,7 +154,7 @@ addSocioEconomicStatusFrom <- function(x,
 
     # find ses records
     ses <- cdm[[table]] |>
-      dplyr::filter(.data[[con]] == !!.env$concept) |>
+      dplyr::filter(.data[[con]] == .env$concept) |>
       dplyr::select(dplyr::all_of(sel)) |>
       dplyr::filter(!is.na(.data[[nameStyle]])) |>
       dplyr::inner_join(xs, by = "person_id") |>
@@ -165,10 +166,10 @@ addSocioEconomicStatusFrom <- function(x,
         precision = "day"
       )) |>
       filterWindow(col, window) |>
-      filterOrder(col, order) |>
+      filterOrder(col, order, indexDate) |>
       dplyr::compute(name = nm2) |>
       # remove duplicates
-      dplyr::group_by(.data$person_id) |>
+      dplyr::group_by(.data$person_id, .data[[indexDate]]) |>
       dplyr::filter(dplyr::n() == 1) |>
       dplyr::compute(name = nm2) |>
       # group records
@@ -211,28 +212,28 @@ filterWindow <- function(x, diff, window) {
   if (is.infinite(window[1])) {
     if (!is.infinite(window[2])) {
       x <- x |>
-        dplyr::filter(.data[[diff]] <= !!.env$window[2])
+        dplyr::filter(.data[[diff]] <= !!window[2])
     }
   } else {
     if (is.infinite(window[2])) {
       x <- x |>
-        dplyr::filter(!!.env$window[1] <= .data[[diff]])
+        dplyr::filter(!!window[1] <= .data[[diff]])
     } else {
       x <- x |>
         dplyr::filter(
-          !!.env$window[1] <= .data[[diff]] & .data[[diff]] <= !!.env$window[2]
+          !!window[1] <= .data[[diff]] & .data[[diff]] <= !!window[2]
         )
     }
   }
   x
 }
-filterOrder <- function(x, diff, order) {
+filterOrder <- function(x, diff, order, indexDate) {
   q <- switch(order,
               "first" = ".data[[diff]] == min(.data[[diff]], na.rm = TRUE)",
               "last" = ".data[[diff]] == max(.data[[diff]], na.rm = TRUE)") |>
-    rlang::parse_expr()
+    rlang::parse_exprs()
   x |>
-    dplyr::group_by(.data$person_id) |>
+    dplyr::group_by(.data$person_id, .data[[indexDate]]) |>
     dplyr::filter(!!!q)
 }
 groupRecords <- function(x, from, ses) {
