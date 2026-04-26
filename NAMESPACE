@@ -3,6 +3,7 @@
 export(addBMI)
 export(addCharlsonIndex)
 export(addEthnicity)
+export(addHospitalFrailtyRiskScore)
 export(addIndexOfMultipleDeprivation)
 export(addLocation)
 export(addPolypharmacyCount)

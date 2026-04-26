@@ -36,7 +36,7 @@ column \code{ethnicity_source_value} in the person table.
 column \code{race_source_value} in the person table.
 \item \strong{nhs-categories} to assign ethnicity using
 \href{https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category}{NHS Ethnic Category}.
-\item \strong{nhs-groups} to assign ethnicity using the broad groups of
+\item \strong{nhs-groups} to assign ethnicity using broad groups of
 \href{https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category}{NHS Ethnic Category}
 as described in \url{https://doi.org/10.1038/s41597-024-02958-1}.
 }}
