@@ -60,6 +60,15 @@ addHospitalFrailtyRiskScore <- function(x,
     dplyr::select(dplyr::all_of(c(id, indexDate, nameStyle))) |>
     dplyr::compute(name = nm)
 
+  if (!is.null(categories)) {
+    q <- qCategories(categories) |>
+      rlang::set_names(nameStyle) |>
+      rlang::parse_exprs()
+    hfrs <- hfrs |>
+      dplyr::mutate(!!!q) |>
+      dplyr::compute(name = nm)
+  }
+
   # add hfrs to x
   x <- x |>
     dplyr::inner_join(hfrs, by = c(id, indexDate)) |>
@@ -69,6 +78,21 @@ addHospitalFrailtyRiskScore <- function(x,
   omopgenerics::dropSourceTable(cdm = cdm, name = nm)
 
   return(x)
+}
+qCategories <- function(categories) {
+  q <- categories |>
+    purrr::imap(\(win, nm) {
+      paste0(windowCondition(win), " ~ '", nm, "'")
+    }) |>
+    paste0(", ")
+  paste0("dplyr::case_when(", q, ")")
+}
+windowCondition <- function(window) {
+  if (is.infinite(window[2])) {
+    paste0(window[1], " <= .data[[nameStyle]]")
+  } else {
+    paste0(window[1], " <= .data[[nameStyle]] & .data[[nameStyle]] <= ", window[2])
+  }
 }
 
 #' Hospital Frailty Risk Score data set
