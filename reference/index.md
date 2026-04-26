@@ -7,7 +7,7 @@
 - [`addCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addCharlsonIndex.md)
   : Add Charlson index value
 - [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)
-  : Add the ethnicity records to a table
+  : Add the ethnicity of a person to a table
 - [`addLocation()`](https://OHDSI.github.io/OmopIndices/reference/addLocation.md)
   : Add the location to a table
 - [`addPolypharmacyCount()`](https://OHDSI.github.io/OmopIndices/reference/addPolypharmacyCount.md)

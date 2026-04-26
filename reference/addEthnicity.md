@@ -1,6 +1,6 @@
-# Add the ethnicity records to a table
+# Add the ethnicity of a person to a table
 
-Add the ethnicity records to a table
+Add the ethnicity of a person to a table
 
 ## Usage
 
@@ -25,7 +25,37 @@ addEthnicity(
 - from:
 
   Character to indicate how to retrieve ethnicity, if multiple values
-  are provided different sources will be tried sequentially.
+  are provided different sources will be tried sequentially. Available
+  options are:
+
+  - **ethnicity_concept_id** to assign ethnicity using the
+    `concept_name` associated with the `ethnicity_concept_id` column of
+    person table.
+
+  - **ethnicity_source_concept_id** to assign ethnicity using the
+    `concept_name` associated with the `ethnicity_source_concept_id`
+    column of person table.
+
+  - **race_concept_id** to assign ethnicity using the `concept_name`
+    associated with the `race_concept_id` column of person table.
+
+  - **race_source_concept_id** to assign ethnicity using the
+    `concept_name` associated with the `race_source_concept_id` column
+    of person table.
+
+  - **ethnicity_source_value** to assign ethnicity using the value of
+    the column `ethnicity_source_value` in the person table.
+
+  - **race_source_value** to assign ethnicity using the value of the
+    column `race_source_value` in the person table.
+
+  - **nhs-categories** to assign ethnicity using [NHS Ethnic
+    Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category).
+
+  - **nhs-groups** to assign ethnicity using the broad groups of [NHS
+    Ethnic
+    Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category)
+    as described in <https://doi.org/10.1038/s41597-024-02958-1>.
 
 - nameStyle:
 
@@ -79,7 +109,7 @@ cdm$condition_occurrence |>
 #> ! No ethnicity found, variable will be filled with `Missing`.
 #> Rows: ??
 #> Columns: 17
-#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.5.3//tmp/RtmpQncwPK/file19a247a3da8a.duckdb]
+#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpQdRolM/file1bd3acb8b06.duckdb]
 #> $ condition_occurrence_id       <int> 4483, 4657, 4815, 4981, 5153, 5313, 5513…
 #> $ person_id                     <int> 263, 273, 283, 293, 304, 312, 326, 334, …
 #> $ condition_concept_id          <int> 4112343, 192671, 28060, 378001, 257012, …
