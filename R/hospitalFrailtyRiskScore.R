@@ -25,76 +25,18 @@ addHospitalFrailtyRiskScore <- function(x,
                                           "intermediate" = c(5, 15),
                                           "high" = c(15, Inf)
                                         ),
-                                        nameStyle = "hf_risk",
+                                        nameStyle = "hfrs",
                                         name = tableName(x)) {
-  # initial checks
-  x <- validateX(x)
-  cdm <- omopgenerics::cdmReference(x)
-  indexDate <- omopgenerics::validateColumn(indexDate, x, "date")
-  window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE)[[1]]
-  conceptSet <- validateConceptSet(conceptSet, frailtyConcepts, cdm)
-  nameStyle <- validateNameStyle(nameStyle, x)
-  x <- omopgenerics::validateNewColumn(x, nameStyle)
-  name <- validateName(name)
-  omopgenerics::assertList(categories, named = TRUE, class = "numeric", null = TRUE)
-
-  id <- omopgenerics::getPersonIdentifier(x)
-  q <- hfrsFormula |>
-    rlang::set_names(nameStyle) |>
-    rlang::parse_exprs()
-
-  # calculate score
-  nm <- omopgenerics::uniqueTableName()
-  hfrs <- x |>
-    dplyr::select(dplyr::any_of(c(id, indexDate))) |>
-    dplyr::distinct() |>
-    dplyr::compute(name = nm) |>
-    PatientProfiles::addConceptIntersectFlag(
-      conceptSet = conceptSet,
-      indexDate = indexDate,
-      window = window,
-      name = nm,
-      nameStyle = "{concept_name}"
-    ) |>
-    dplyr::mutate(!!!q)
-
-  if (!is.null(categories)) {
-    qc <- qCategories(categories) |>
-      rlang::set_names(nameStyle) |>
-      rlang::parse_exprs()
-    hfrs <- hfrs |>
-      dplyr::mutate(!!!qc)
-  }
-
-  hfrs <- hfrs |>
-    dplyr::select(dplyr::all_of(c(id, indexDate, nameStyle))) |>
-    dplyr::compute(name = nm)
-
-
-  # add hfrs to x
-  x <- x |>
-    dplyr::inner_join(hfrs, by = c(id, indexDate)) |>
-    dplyr::compute(name = name)
-
-  # drop intermediate table
-  omopgenerics::dropSourceTable(cdm = cdm, name = nm)
-
-  return(x)
-}
-qCategories <- function(categories) {
-  q <- categories |>
-    purrr::imap(\(win, nm) {
-      paste0(windowCondition(win), " ~ '", nm, "'")
-    }) |>
-    paste0(", ")
-  paste0("dplyr::case_when(", q, ")")
-}
-windowCondition <- function(window) {
-  if (is.infinite(window[2])) {
-    paste0(window[1], " <= .data[[nameStyle]]")
-  } else {
-    paste0(window[1], " <= .data[[nameStyle]] & .data[[nameStyle]] <= ", window[2])
-  }
+  addIndex(
+    x = x,
+    type = "hfrs",
+    indexDate = indexDate,
+    window = window,
+    conceptSet = conceptSet,
+    categories = categories,
+    nameStyle = nameStyle,
+    name = name
+  )
 }
 
 #' Hospital Frailty Risk Score data set
