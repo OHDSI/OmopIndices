@@ -1,0 +1,110 @@
+concept_set,points,icd10_code,icd_description
+abnormal_results_of_function_studies,1.4,R94,Abnormal results of function studies
+abnormalities_of_gait_and_mobility,2.6,R26,Abnormalities of gait and mobility
+abnormalities_of_heart_beat,0.7,R00,Abnormalities of heart beat
+acute_renal_failure,1.8,N17,Acute renal failure
+agent_resistant_to_penicillin_and_related_antibiotics,0.8,U80,Agent resistant to penicillin and related antibiotics
+alzheimers_disease,4,G30,Alzheimer's disease
+artificial_opening_status,1,Z93,Artificial opening status
+blindness_and_low_vision,1.9,H54,Blindness and low vision
+calculus_of_kidney_and_ureter,0.7,N20,Calculus of kidney and ureter
+care_involving_use_of_rehabilitation_procedures,2.1,Z50,Care involving use of rehabilitation procedures
+carrier_of_infectious_disease,1.7,Z22,Carrier of infectious disease
+cellulitis,2,L03,Cellulitis
+cerebral_infarction,0.8,I63,Cerebral Infarction
+cerebral_ischaemic_attacks,1.2,G45,Transient cerebral ischaemic attacks and related syndromes
+chronic_renal_failure,1.4,N18,Chronic renal failure
+cognitive_functions_and_awareness,2.7,R41,Other symptoms and signs involving cognitive functions and awareness
+convulsions_not_elsewhere_classified,2.6,R56,"Convulsions, not elsewhere classified"
+decubitus_ulcer,1.7,L89,Decubitus ulcer
+deficiency_of_other_b_group_vitamins,1.9,E53,Deficiency of other B group vitamins
+degenerative_diseases_of_nervous_system,1.2,G31,"Other degenerative diseases of nervous system, not elsewhere classified"
+delirium,3.2,F05,"Delirium, not induced by alcohol and other psychoactive substances"
+dementia_in_alzheimers_disease,7.1,F00,Dementia in Alzheimer's disease
+dependence_on_enabling_machines_and_devices,0.8,Z99,Dependence on enabling machines and devices
+depressive_episode,0.5,F32,Depressive episode
+diarrhoea_and_gastroenteritis,1.1,A09,Diarrhoea and gastroenteritis of presumed infectious origin
+disorders_of_kidney_and_ureter,1.3,N28,"Other disorders of kidney and ureter, not elsewhere classified"
+disorders_of_mineral_metabolism,0.4,E83,Disorders of mineral metabolism
+duodenal_ulcer,1.6,K26,Duodenal ulcer
+dysphagia,0.8,R13,Dysphagia
+epilepsy,1.5,G40,Epilepsy
+exposure_to_unspecified_factor,1.5,X59,Exposure to unspecified factor
+fall,0.9,W01,"Fall on same level from slipping, tripping and stumbling"
+fall_involving_bed,1.1,W06,Fall involving bed
+fall_on_and_from_stairs_and_steps,0.9,W10,Fall on and from stairs and steps
+fever_of_unknown_origin,0.1,R50,Fever of unknown origin
+fluid_electrolyte_and_acid_base_balance,2.3,E87,"Other disorders of fluid, electrolyte and acid-base balance"
+fracture_of_femur,1.4,S72,Fracture of femur
+fracture_of_lumbar_spine_and_pelvis,1.4,S32,Fracture of lumbar spine and pelvis
+fracture_of_ribs_sternum_and_thoracic_spine,1.8,S22,"Fracture of rib(s), sternum and thoracic spine"
+fracture_of_shoulder_and_upper_arm,2.3,S42,Fracture of shoulder and upper arm
+gangrene_not_elsewhere_classified,1,R02,"Gangrene, not elsewhere classified"
+general_sensations_and_perceptions,1.6,R44,Other symptoms and signs involving general sensations and perceptions
+hemiplegia,4.4,G81,Hemiplegia
+hypotension,1.6,I95,Hypotension
+infections_of_skin,0.4,L08,Other local infections of skin and subcutaneous tissue
+intracranial_injury,2.4,S06,Intracranial injury
+mental_and_behavioural_disorders_due_to_use_of_alcohol,0.7,F10,Mental and behavioural disorders due to use of alcohol
+nausea_and_vomiting,0.3,R11,Nausea and vomiting
+nervous_and_musculoskeletal_systems_r_29_6_tendency_to_fall,3.6,R29,Other symptoms and signs involving the nervous and musculoskeletal systems (R29·6 Tendency to fall)
+nosocomial_condition,1.2,Y95,Nosocomial condition
+open_wound_of_forearm,0.5,S51,Open wound of forearm
+open_wound_of_head,1.1,S01,Open wound of head
+osteoporosis_with_pathological_fracture,0.8,M80,Osteoporosis with pathological fracture
+osteoporosis_without_pathological_fracture,1.4,M81,Osteoporosis without pathological fracture
+other_abnormal_findings_of_blood_chemistry,0.6,R79,Other abnormal findings of blood chemistry
+other_anaemias,0.4,D64,Other anaemias
+other_and_unspecified_injuries_of_head,1.2,S09,Other and unspecified injuries of head
+other_arthrosis,1.5,M19,Other arthrosis
+other_bacterial_agents,2.9,B96,Other bacterial agents as the cause of diseases classified to other chapters (secondary code)
+other_bacterial_intestinal_infections,1.1,A04,Other bacterial intestinal infections
+other_cerebrovascular_diseases,2.6,I67,Other cerebrovascular diseases
+other_diseases_of_digestive_system,0.8,K92,Other diseases of digestive system
+other_disorders_of_pancreatic_internal_secretion,1.4,E16,Other disorders of pancreatic internal secretion
+other_disorders_of_urinary_system,3.2,N39,Other disorders of urinary system (includes urinary tract infection and urinary incontinence)
+other_fall_on_same_level,2.1,W18,Other fall on same level
+other_functional_intestinal_disorders,1.8,K59,Other functional intestinal disorders
+other_hearing_loss,0.9,H91,Other hearing loss
+other_joint_disorders_not_elsewhere_classified,2.3,M25,"Other joint disorders, not elsewhere classified"
+other_medical_procedures,0.7,Y84,Other medical procedures as the cause of abnormal reaction of the patient
+other_noninfective_gastroenteritis_and_colitis,0.3,K52,Other noninfective gastroenteritis and colitis
+other_septicaemia,1.6,A41,Other septicaemia
+other_soft_tissue_disorders_not_elsewhere_classified,1.1,M79,"Other soft tissue disorders, not elsewhere classified"
+parkinsons_disease,1.8,G20,Parkinson's disease
+personal_history_of_other_diseases_and_conditions,1.5,Z87,Personal history of other diseases and conditions
+personal_history_of_risk_factors,0.5,Z91,"Personal history of risk-factors, not elsewhere classified"
+pneumonia_organism_unspecified,1.1,J18,"Pneumonia, organism unspecified"
+pneumonitis_due_to_solids_and_liquids,1,J69,Pneumonitis due to solids and liquids
+polyarthrosis,0.4,M15,Polyarthrosis
+problems_related_to_care_provider_dependency,1.1,Z74,Problems related to care-provider dependency
+problems_related_to_life_management_difficulty,0.6,Z73,Problems related to life-management difficulty
+problems_related_to_medical_facilities_and_other_health_care,2,Z75,Problems related to medical facilities and other health care
+problems_related_to_social_environment,1.8,Z60,Problems related to social environment
+prosthetic_devices_implants,2.4,T83,"Complications of genitourinary prosthetic devices, implants and grafts"
+respiratory_failure_not_elsewhere_classified,1.5,J96,"Respiratory failure, not elsewhere classified"
+retention_of_urine,1.3,R33,Retention of urine
+scoliosis,0.9,M41,Scoliosis
+senility,2.2,R54,Senility
+sequelae_of_cerebrovascular_disease,3.7,I69,Sequelae of cerebrovascular disease
+somnolence_stupor_and_coma,2.5,R40,"Somnolence, stupor and coma"
+speech_disturbances_not_elsewhere_classified,1,R47,"Speech disturbances, not elsewhere classified"
+spinal_stenosis_secondary_code_only,0.5,M48,Spinal stenosis (secondary code only)
+streptococcus_and_staphylococcus,1.7,B95,Streptococcus and staphylococcus as the cause of diseases classified to other chapters
+superficial_injury_of_head,3.2,S00,Superficial injury of head
+superficial_injury_of_lower_leg,2,S80,Superficial injury of lower leg
+symptoms_and_signs_concerning_food_and_fluid_intake,0.9,R63,Symptoms and signs concerning food and fluid intake
+symptoms_and_signs_involving_emotional_state,1.2,R45,Symptoms and signs involving emotional state
+syncope_and_collapse,1.8,R55,Syncope and collapse
+thyrotoxicosis_hyperthyroidism,0.9,E05,Thyrotoxicosis [hyperthyroidism]
+ulcer_of_lower_limb_not_elsewhere_classified,1.6,L97,"Ulcer of lower limb, not elsewhere classified"
+unknown_and_unspecified_causes_of_morbidity,1.3,R69,Unknown and unspecified causes of morbidity
+unspecified_acute_lower_respiratory_infection,0.7,J22,Unspecified acute lower respiratory infection
+unspecified_dementia,2.1,F03,Unspecified dementia
+unspecified_fall,3.2,W19,Unspecified fall
+unspecified_haematuria,3,R31,Unspecified haematuria
+unspecified_renal_failure,1.6,N19,Unspecified renal failure
+unspecified_urinary_incontinence,1.2,R32,Unspecified urinary incontinence
+vascular_dementia,2,F01,Vascular dementia
+vitamin_d_deficiency,1,E55,Vitamin D deficiency
+volume_depletion,2.3,E86,Volume depletion

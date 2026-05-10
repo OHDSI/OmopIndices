@@ -49,3 +49,12 @@ NULL
 #' @name nameDoc
 #' @keywords internal
 NULL
+
+#' Helper for consistent documentation of `categories` argument
+#'
+#' @param categories Named list of categories to group the values. If NULL the
+#' risk score is returned as numeric.
+#'
+#' @name categoriesDoc
+#' @keywords internal
+NULL
