@@ -6,8 +6,7 @@
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("hospital frailty risk score")`
 #' @param conceptSet `r documentationConceptSet(frailtyConcepts)`
-#' @param categories Named list of categories to group the values. If NULL the
-#' risk score is returned as numeric.
+#' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
 #'

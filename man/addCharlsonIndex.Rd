@@ -10,6 +10,7 @@ addCharlsonIndex(
   window = c(-Inf, 0),
   conceptSet = NULL,
   nameStyle = "charlson_index",
+  categories = NULL,
   name = tableName(x)
 )
 }
@@ -25,6 +26,9 @@ table.}
 \item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{myocardial_infarction}, \code{congestive_heart_failure}, \code{peripheral_vascular_disease}, \code{cerebrovacular_accident}, \code{transient_ischemic_attack}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{peptic_ulcer_disease}, \code{mild_liver_disease}, \code{severe_liver_disease}, \code{diabetes_mellitus}, \code{end_organ_diabetes_mellitus}, \code{hemiplegia}, \code{estimated_glomerular_filtration_rate}, \code{severe_chronic_kidney_disease}, \code{localised_solid_tumor}, \code{metastatic_solid_tumor}, \code{leukemia}, \code{lymphoma}, \code{aids} as concepts. If \code{NULL} concepts will be retrieved using the OmopConcepts package.}
 
 \item{nameStyle}{A character string with the name of the new column.}
+
+\item{categories}{Named list of categories to group the values. If NULL the
+risk score is returned as numeric.}
 
 \item{name}{A character string with the name of the new table. If \code{NULL} a
 temporary table will be created.}
