@@ -11,6 +11,7 @@ addCharlsonIndex(
   window = c(-Inf, 0),
   conceptSet = NULL,
   nameStyle = "charlson_index",
+  categories = NULL,
   name = tableName(x)
 )
 ```
@@ -50,6 +51,11 @@ addCharlsonIndex(
 - nameStyle:
 
   A character string with the name of the new column.
+
+- categories:
+
+  Named list of categories to group the values. If NULL the risk score
+  is returned as numeric.
 
 - name:
 

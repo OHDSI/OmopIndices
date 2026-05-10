@@ -2,6 +2,11 @@
 
 ## All functions
 
+- [`addAdaptedElectronicRiskScore()`](https://OHDSI.github.io/OmopIndices/reference/addAdaptedElectronicRiskScore.md)
+  :
+
+  Add the adapted electronic risk score as defined in Politi et al:
+
 - [`addBMI()`](https://OHDSI.github.io/OmopIndices/reference/addBMI.md)
   : Add Body Mass Index measurement
 
@@ -10,6 +15,12 @@
 
 - [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)
   : Add the ethnicity of a person to a table
+
+- [`addHospitalFrailtyRiskScore()`](https://OHDSI.github.io/OmopIndices/reference/addHospitalFrailtyRiskScore.md)
+  :
+
+  Add the hospital frailty risk score as defined in Gilbert et al:
+  <https://doi.org/10.1016/S0140-6736(18)30668-8>
 
 - [`addIndexOfMultipleDeprivation()`](https://OHDSI.github.io/OmopIndices/reference/addIndexOfMultipleDeprivation.md)
   :
@@ -33,3 +44,6 @@
 
   Add Socio-economic status as a column to a table using the [Townsend
   deprivation index](https://athena.ohdsi.org/search-terms/terms/715996)
+
+- [`hospitalFrailtyRiskScore`](https://OHDSI.github.io/OmopIndices/reference/hospitalFrailtyRiskScore.md)
+  : Hospital Frailty Risk Score data set

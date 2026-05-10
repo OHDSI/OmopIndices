@@ -52,8 +52,7 @@ addEthnicity(
   - **nhs-categories** to assign ethnicity using [NHS Ethnic
     Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category).
 
-  - **nhs-groups** to assign ethnicity using the broad groups of [NHS
-    Ethnic
+  - **nhs-groups** to assign ethnicity using broad groups of [NHS Ethnic
     Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category)
     as described in <https://doi.org/10.1038/s41597-024-02958-1>.
 
@@ -109,7 +108,7 @@ cdm$condition_occurrence |>
 #> ! No ethnicity found, variable will be filled with `Missing`.
 #> Rows: ??
 #> Columns: 17
-#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpfnAWS3/file1a2010f6386b.duckdb]
+#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/Rtmpl5NqCC/file1b503193c755.duckdb]
 #> $ condition_occurrence_id       <int> 4483, 4657, 4815, 4981, 5153, 5313, 5513…
 #> $ person_id                     <int> 263, 273, 283, 293, 304, 312, 326, 334, …
 #> $ condition_concept_id          <int> 4112343, 192671, 28060, 378001, 257012, …

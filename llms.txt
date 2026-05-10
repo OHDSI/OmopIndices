@@ -5,10 +5,10 @@ package*
 
 ## Tested sources
 
-| Source                      | Driver | CDM reference                                                                                            | Status                                                                                                                            |
-|-----------------------------|--------|----------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| Local R dataframe           | N/A    | [`omopgenerics::cdmFromTables()`](https://darwin-eu.github.io/omopgenerics/reference/cdmFromTables.html) | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=local-omopgenerics)  |
-| In-memory duckdb datatabase | duckdb | [`CDMConnector::cdmFromCon()`](https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html)       | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=duckdb-CDMConnector) |
+| Source | Driver | CDM reference | Status |
+|----|----|----|----|
+| Local R dataframe | N/A | [`omopgenerics::cdmFromTables()`](https://darwin-eu.github.io/omopgenerics/reference/cdmFromTables.html) | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=local-omopgenerics) |
+| In-memory duckdb datatabase | duckdb | [`CDMConnector::cdmFromCon()`](https://darwin-eu.github.io/CDMConnector/reference/cdmFromCon.html) | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=duckdb-CDMConnector) |
 
 ## Installation
 
@@ -16,6 +16,7 @@ You can install the development version of OmopIndices from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pkg_install("OHDSI/OmopIndices")
 ```
@@ -25,12 +26,18 @@ pak::pkg_install("OHDSI/OmopIndices")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
+
 library(OmopIndices)
 ```
 
 # Package index
 
 ## All functions
+
+- [`addAdaptedElectronicRiskScore()`](https://OHDSI.github.io/OmopIndices/reference/addAdaptedElectronicRiskScore.md)
+  :
+
+  Add the adapted electronic risk score as defined in Politi et al:
 
 - [`addBMI()`](https://OHDSI.github.io/OmopIndices/reference/addBMI.md)
   : Add Body Mass Index measurement
@@ -40,6 +47,12 @@ library(OmopIndices)
 
 - [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)
   : Add the ethnicity of a person to a table
+
+- [`addHospitalFrailtyRiskScore()`](https://OHDSI.github.io/OmopIndices/reference/addHospitalFrailtyRiskScore.md)
+  :
+
+  Add the hospital frailty risk score as defined in Gilbert et al:
+  <https://doi.org/10.1016/S0140-6736(18)30668-8>
 
 - [`addIndexOfMultipleDeprivation()`](https://OHDSI.github.io/OmopIndices/reference/addIndexOfMultipleDeprivation.md)
   :
@@ -63,4 +76,7 @@ library(OmopIndices)
 
   Add Socio-economic status as a column to a table using the [Townsend
   deprivation index](https://athena.ohdsi.org/search-terms/terms/715996)
+
+- [`hospitalFrailtyRiskScore`](https://OHDSI.github.io/OmopIndices/reference/hospitalFrailtyRiskScore.md)
+  : Hospital Frailty Risk Score data set
 

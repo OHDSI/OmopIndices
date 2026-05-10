@@ -44,6 +44,7 @@
 <span>  window <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  conceptSet <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nameStyle <span class="op">=</span> <span class="st">"charlson_index"</span>,</span>
+<span>  categories <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/tableName.html" class="external-link">tableName</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -72,6 +73,11 @@ table.</p></dd>
 
 <dt id="arg-namestyle">nameStyle<a class="anchor" aria-label="anchor" href="#arg-namestyle"></a></dt>
 <dd><p>A character string with the name of the new column.</p></dd>
+
+
+<dt id="arg-categories">categories<a class="anchor" aria-label="anchor" href="#arg-categories"></a></dt>
+<dd><p>Named list of categories to group the values. If NULL the
+risk score is returned as numeric.</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
