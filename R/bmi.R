@@ -155,7 +155,7 @@ subsetRecords <- function(x, order, nm) {
       rlang::parse_expr()
     x <- x |>
       dplyr::group_by(.data$person_id, .data$index_date) |>
-      dplyr::filter(!!!q) |>
+      dplyr::filter(!!q) |>
       dplyr::distinct() |>
       dplyr::compute(name = nm)
   }

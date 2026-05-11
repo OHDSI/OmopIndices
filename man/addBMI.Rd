@@ -12,6 +12,7 @@ addBMI(
   order = "last",
   nameStyle = "bmi",
   categories = NULL,
+  inObservation = TRUE,
   name = tableName(x)
 )
 }
@@ -38,6 +39,9 @@ per person:
 \item{nameStyle}{A character string with the name of the new column.}
 
 \item{categories}{List to group the \code{bmi} records into categories.}
+
+\item{inObservation}{Whether to restrict to records within the observation
+period.}
 
 \item{name}{A character string with the name of the new table. If \code{NULL} a
 temporary table will be created.}
