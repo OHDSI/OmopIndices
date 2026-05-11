@@ -13,6 +13,7 @@
 #'   - `min`: Minimum value within the window.
 #' @param categories List to group the `bmi` records into categories.
 #' @inheritParams nameStyleDoc
+#' @inheritParams inObservationDoc
 #' @inheritParams nameDoc
 #'
 #' @returns A new table with the new column.
@@ -28,6 +29,7 @@ addBMI <- function(x,
                    order = "last",
                    nameStyle = "bmi",
                    categories = NULL,
+                   inObservation = TRUE,
                    name = tableName(x)) {
   # initial checks
   x <- validateX(x)
@@ -54,6 +56,7 @@ addBMI <- function(x,
   nm <- omopgenerics::uniqueTableName()
   bmiRecords <- tablesToSubset(conceptSet, cdm) |>
     getRecords(cdm, conceptSet, records, window, nm) |>
+    subsetInObservation(inObservation, nm) |>
     subsetRecords(order, nm)
 
   # add bmi
@@ -71,12 +74,12 @@ addBMI <- function(x,
 
   # add categories
   if (!is.null(categories)) {
+    qc <- qCategories(categories) |>
+      rlang::set_names(nameStyle) |>
+      rlang::parse_exprs()
     x <- x |>
-      PatientProfiles::addCategories(
-        variable = nameStyle,
-        categories = categories,
-        name = name
-      )
+      dplyr::mutate(!!!qc) |>
+      dplyr::compute(name = name)
   }
 
   return(x)
@@ -86,6 +89,7 @@ tablesToSubset <- function(conceptSet, cdm) {
     dplyr::filter(.data$concept_id %in% .env$conceptSet$bmi) |>
     dplyr::distinct(.data$domain_id) |>
     dplyr::pull() |>
+    tolower() |>
     purrr::keep(\(x) x %in% c("measurement", "observation"))
 }
 getRecords <- function(tables, cdm, conceptSet, records, window, nm) {
@@ -99,18 +103,19 @@ getRecords <- function(tables, cdm, conceptSet, records, window, nm) {
         bmi = NA_real_
       ) |>
       dplyr::compute(name = nm)
+    return(cdm[[nm]])
   }
   tables |>
     purrr::map(\(x) {
       date <- omopgenerics::omopColumns(table = x, field = "start_date")
       concept <- omopgenerics::omopColumns(table = x, field = "standard_concept")
       rec <- cdm[[x]] |>
+        dplyr::filter(
+          .data[[concept]] %in% .env$conceptSet$bmi & !is.na(.data$value_as_number)
+        ) |>
         dplyr::select(dplyr::all_of(c(
           "person_id", bmi_date = date, bmi = "value_as_number"
         ))) |>
-        dplyr::filter(
-          .data[[concept]] %in% .env$conceptSet$bmi & !is.na(.data$bmi)
-        ) |>
         dplyr::inner_join(records, by = "person_id")
       if (!all(is.infinite(window))) {
         rec <- rec |>
@@ -119,16 +124,16 @@ getRecords <- function(tables, cdm, conceptSet, records, window, nm) {
           ))
         if (is.infinite(window[1])) {
           rec <- rec |>
-            dplyr::filter(.data$date_diff <= !!.env$window[2])
+            dplyr::filter(.data$date_diff <= !!window[2])
         } else {
           if (is.infinite(window[2])) {
             rec <- rec |>
-              dplyr::filter(!!.env$window[1] <= .data$date_diff)
+              dplyr::filter(!!window[1] <= .data$date_diff)
           } else {
             rec <- rec |>
               dplyr::filter(
                 !!.env$window[1] <= .data$date_diff &
-                  .data$date_diff <= !!.env$window[2]
+                  .data$date_diff <= !!window[2]
               )
           }
         }
@@ -169,10 +174,18 @@ subsetRecords <- function(x, order, nm) {
     cli::cli_warn(c("!" = mes))
     x <- x |>
       dplyr::group_by(.data$person_id, .data$index_date) |>
-      dplyr::filter(.data$bmi == min(.data$bmi, na.rm = TRUE)) |>
+      dplyr::filter(.data$bmi == max(.data$bmi, na.rm = TRUE)) |>
       dplyr::distinct() |>
       dplyr::compute(name = nm)
   }
 
+  return(x)
+}
+subsetInObservation <- function(x, inObservation, nm) {
+  if (inObservation) {
+    x <- x |>
+      PatientProfiles::filterInObservation(indexDate = "bmi_date") |>
+      dplyr::compute(name = nm)
+  }
   return(x)
 }
