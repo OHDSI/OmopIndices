@@ -58,3 +58,12 @@ NULL
 #' @name categoriesDoc
 #' @keywords internal
 NULL
+
+#' Helper for consistent documentation of `inObservation` argument
+#'
+#' @param inObservation Whether to restrict to records within the observation
+#' period.
+#'
+#' @name inObservationDoc
+#' @keywords internal
+NULL
