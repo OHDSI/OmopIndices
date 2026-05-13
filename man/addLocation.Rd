@@ -9,6 +9,7 @@ addLocation(
   from = c("location_id", "care_site_id"),
   nameStyle = "location",
   name = tableName(x),
+  locationSource = "location_source_value",
   missingLocationValue = "Missing"
 )
 }
@@ -24,7 +25,10 @@ values are provided different sources will be tried sequentially.}
 \item{name}{A character string with the name of the new table. If \code{NULL} a
 temporary table will be created.}
 
-\item{missingLocationValue}{Character to coaslesce missing values.}
+\item{locationSource}{Character with the column in \code{location} table that we
+want to retrive.}
+
+\item{missingLocationValue}{Character to coalesce missing values.}
 }
 \value{
 The \code{x} table with a new column added with the location of the

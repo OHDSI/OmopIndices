@@ -5,7 +5,7 @@
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("adapted electronic risk score")`
-#' @param conceptSet `r documentationConceptSet(frailtyConcepts)`
+#' @param conceptSet `r documentationConceptSet(aersConcepts)`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc

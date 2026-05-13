@@ -6,7 +6,9 @@
 #' values are provided different sources will be tried sequentially.
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
-#' @param missingLocationValue Character to coaslesce missing values.
+#' @param locationSource Character with the column in `location` table that we
+#' want to retrive.
+#' @param missingLocationValue Character to coalesce missing values.
 #'
 #' @returns The `x` table with a new column added with the location of the
 #' patient.
@@ -28,6 +30,7 @@ addLocation <- function(x,
                         from = c("location_id", "care_site_id"),
                         nameStyle = "location",
                         name = tableName(x),
+                        locationSource = "location_source_value",
                         missingLocationValue = "Missing") {
   # initial checks
   x <- validateX(x)
@@ -36,6 +39,10 @@ addLocation <- function(x,
   x <- omopgenerics::validateNewColumn(x, nameStyle)
   name <- validateName(name)
   omopgenerics::assertCharacter(missingLocationValue, length = 1)
+  omopgenerics::assertChoice(locationSource, c(
+    "location_id", "city", "state", "zip", "county", "location_source_value",
+    "country_concept_id", "country_source_value"
+  ), length = 1)
 
   if (length(from) == 0) {
     q <- ".env$missingLocationValue" |>
@@ -63,11 +70,11 @@ addLocation <- function(x,
     # try to add location
     if (fr == "location_id") {
       indLoc <- ind |>
-        addLocationFromLocationId(nameStyle) |>
+        addLocationFromLocationId(locationSource, nameStyle) |>
         dplyr::compute(name = omopgenerics::uniqueTableName(pref))
     } else if (fr == "care_site_id") {
       indLoc <- ind |>
-        addLocationFromCareSiteId(nameStyle) |>
+        addLocationFromCareSiteId(locationSource, nameStyle) |>
         dplyr::compute(name = omopgenerics::uniqueTableName(pref))
     }
 
@@ -103,27 +110,42 @@ addLocation <- function(x,
   return(x)
 }
 
-addLocationFromLocationId <- function(x, nameStyle) {
+locationTable <- function(cdm, locationSource, nameStyle) {
+  if (locationSource == "country_concept_id") {
+    sel1 <- c("location_id", "country_concept_id") |>
+      rlang::set_names(c("location_id", "concept_id"))
+    sel2 <- c("concept_id", "concept_name") |>
+      rlang::set_names(c("concept_id", nameStyle))
+    loc <- cdm$location |>
+      dplyr::select(dplyr::all_of(sel1)) |>
+      dplyr::inner_join(
+        cdm$concept |>
+          dplyr::select(dplyr::all_of(sel2)),
+        by = "concept_id"
+      )
+  } else {
+    sel <- c("location_id", locationSource) |>
+      rlang::set_names(c("location_id", nameStyle))
+    loc <- cdm$location |>
+      dplyr::select(dplyr::all_of(sel))
+  }
+  return(loc)
+}
+addLocationFromLocationId <- function(x, locationSource, nameStyle) {
   cdm <- omopgenerics::cdmReference(x)
-  sel <- c("location_id", "location_source_value") |>
-    rlang::set_names(c("location_id", nameStyle))
+  loc <- locationTable(cdm, locationSource, nameStyle)
   x |>
     dplyr::inner_join(
       cdm$person |>
         dplyr::select("person_id", "location_id") |>
-        dplyr::inner_join(
-          cdm$location |>
-            dplyr::select(dplyr::all_of(sel)),
-          by = "location_id"
-        ) |>
+        dplyr::inner_join(loc, by = "location_id") |>
         dplyr::select(dplyr::all_of(c("person_id", nameStyle))),
       by = "person_id"
     )
 }
-addLocationFromCareSiteId <- function(x, nameStyle) {
+addLocationFromCareSiteId <- function(x, locationSource, nameStyle) {
   cdm <- omopgenerics::cdmReference(x)
-  sel <- c("location_id", "location_source_value") |>
-    rlang::set_names(c("location_id", nameStyle))
+  loc <- locationTable(cdm, locationSource, nameStyle)
   x |>
     dplyr::inner_join(
       cdm$person |>
@@ -131,11 +153,7 @@ addLocationFromCareSiteId <- function(x, nameStyle) {
         dplyr::inner_join(
           cdm$care_site |>
             dplyr::select("care_site_id", "location_id") |>
-            dplyr::inner_join(
-              cdm$location |>
-                dplyr::select(dplyr::all_of(sel)),
-              by = "location_id"
-            ),
+            dplyr::inner_join(loc, by = "location_id"),
           by = "care_site_id"
         ) |>
         dplyr::select(dplyr::all_of(c("person_id", nameStyle))),
