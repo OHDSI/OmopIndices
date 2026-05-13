@@ -10,6 +10,7 @@ addLocation(
   from = c("location_id", "care_site_id"),
   nameStyle = "location",
   name = tableName(x),
+  locationSource = "location_source_value",
   missingLocationValue = "Missing"
 )
 ```
@@ -35,9 +36,13 @@ addLocation(
   A character string with the name of the new table. If `NULL` a
   temporary table will be created.
 
+- locationSource:
+
+  Character with the column in `location` table that we want to retrive.
+
 - missingLocationValue:
 
-  Character to coaslesce missing values.
+  Character to coalesce missing values.
 
 ## Value
 
@@ -66,7 +71,7 @@ cdm$condition_occurrence |>
 #> ! No location found, variable will be filled with `Missing`.
 #> Rows: ??
 #> Columns: 17
-#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpGpMJ1y/file1aaf6f232933.duckdb]
+#> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpsVUH2y/file1a6d4858285e.duckdb]
 #> $ condition_occurrence_id       <int> 4483, 4657, 4815, 4981, 5153, 5313, 5513…
 #> $ person_id                     <int> 263, 273, 283, 293, 304, 312, 326, 334, …
 #> $ condition_concept_id          <int> 4112343, 192671, 28060, 378001, 257012, …

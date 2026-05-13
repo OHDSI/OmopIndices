@@ -43,6 +43,7 @@
 <span>  from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"location_id"</span>, <span class="st">"care_site_id"</span><span class="op">)</span>,</span>
 <span>  nameStyle <span class="op">=</span> <span class="st">"location"</span>,</span>
 <span>  name <span class="op">=</span> <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/tableName.html" class="external-link">tableName</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  locationSource <span class="op">=</span> <span class="st">"location_source_value"</span>,</span>
 <span>  missingLocationValue <span class="op">=</span> <span class="st">"Missing"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -70,8 +71,13 @@ values are provided different sources will be tried sequentially.</p></dd>
 temporary table will be created.</p></dd>
 
 
+<dt id="arg-locationsource">locationSource<a class="anchor" aria-label="anchor" href="#arg-locationsource"></a></dt>
+<dd><p>Character with the column in <code>location</code> table that we
+want to retrive.</p></dd>
+
+
 <dt id="arg-missinglocationvalue">missingLocationValue<a class="anchor" aria-label="anchor" href="#arg-missinglocationvalue"></a></dt>
-<dd><p>Character to coaslesce missing values.</p></dd>
+<dd><p>Character to coalesce missing values.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -102,7 +108,7 @@ patient.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No location found, variable will be filled with `Missing`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rows: ??</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpGpMJ1y/file1aaf6f232933.duckdb]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Database: DuckDB 1.5.2 [unknown@Linux 6.17.0-1010-azure:R 4.6.0//tmp/RtmpsVUH2y/file1a6d4858285e.duckdb]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ condition_occurrence_id       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 4483<span style="color: #949494;">, </span>4657<span style="color: #949494;">, </span>4815<span style="color: #949494;">, </span>4981<span style="color: #949494;">, </span>5153<span style="color: #949494;">, </span>5313<span style="color: #949494;">, </span>5513…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ person_id                     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 263<span style="color: #949494;">, </span>273<span style="color: #949494;">, </span>283<span style="color: #949494;">, </span>293<span style="color: #949494;">, </span>304<span style="color: #949494;">, </span>312<span style="color: #949494;">, </span>326<span style="color: #949494;">, </span>334<span style="color: #949494;">, </span>…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ condition_concept_id          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 4112343<span style="color: #949494;">, </span>192671<span style="color: #949494;">, </span>28060<span style="color: #949494;">, </span>378001<span style="color: #949494;">, </span>257012<span style="color: #949494;">, </span>…</span>
