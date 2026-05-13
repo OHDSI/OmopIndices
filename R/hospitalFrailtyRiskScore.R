@@ -5,7 +5,7 @@
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("hospital frailty risk score")`
-#' @param conceptSet `r documentationConceptSet(frailtyConcepts)`
+#' @param conceptSet `r documentationConceptSet(hfrsConcepts)`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
