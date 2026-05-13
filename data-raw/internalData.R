@@ -19,7 +19,10 @@ aersConcepts <- c(
   "urinary_system_disease", "visual_impairment", "weight_loss_anorexia"
 )
 
-aersFormula <- paste0("1/35 * .data$", riskConcepts, collapse = " + ")
+aersFormula <- paste0(
+  paste0("1/36 * .data$", aersConcepts, collapse = " + "),
+  " + dplyr::if_else(.data$polypharmacy_count >= 5, 1/36, 0)"
+)
 
 charlsonConcepts <- c(
   "myocardial_infarction", "congestive_heart_failure",
