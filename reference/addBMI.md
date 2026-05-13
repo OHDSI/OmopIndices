@@ -13,6 +13,7 @@ addBMI(
   order = "last",
   nameStyle = "bmi",
   categories = NULL,
+  inObservation = TRUE,
   name = tableName(x)
 )
 ```
@@ -60,6 +61,10 @@ addBMI(
 - categories:
 
   List to group the `bmi` records into categories.
+
+- inObservation:
+
+  Whether to restrict to records within the observation period.
 
 - name:
 

@@ -46,6 +46,7 @@
 <span>  order <span class="op">=</span> <span class="st">"last"</span>,</span>
 <span>  nameStyle <span class="op">=</span> <span class="st">"bmi"</span>,</span>
 <span>  categories <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inObservation <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  name <span class="op">=</span> <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/tableName.html" class="external-link">tableName</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -87,6 +88,11 @@ per person:</p><ul><li><p><code>last</code>: Latest value within the window.</p>
 
 <dt id="arg-categories">categories<a class="anchor" aria-label="anchor" href="#arg-categories"></a></dt>
 <dd><p>List to group the <code>bmi</code> records into categories.</p></dd>
+
+
+<dt id="arg-inobservation">inObservation<a class="anchor" aria-label="anchor" href="#arg-inobservation"></a></dt>
+<dd><p>Whether to restrict to records within the observation
+period.</p></dd>
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
