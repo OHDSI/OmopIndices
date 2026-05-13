@@ -52,7 +52,7 @@ dplyr::case_when(
   .data$localised_solid_tumor == 1L ~ 2L,
   .default = 0L
 ) +
-data$myocardial_infarction + .data$congestive_heart_failure +
+.data$myocardial_infarction + .data$congestive_heart_failure +
 .data$peripheral_vascular_disease + .data$cerebrovacular_accident +
 .data$transient_ischemic_attack + .data$dementia +
 .data$chronic_pulmonary_disease + .data$connective_tissue_disease +
