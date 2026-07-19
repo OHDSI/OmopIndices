@@ -23,7 +23,7 @@ table.}
 
 \item{window}{Window to asses \verb{Charlson index} in, it must be a vector of two numeric values \code{c(min, max)}. Window times refer to days since \code{indexDate}.}
 
-\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{myocardial_infarction}, \code{congestive_heart_failure}, \code{peripheral_vascular_disease}, \code{cerebrovacular_accident}, \code{transient_ischemic_attack}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{peptic_ulcer_disease}, \code{mild_liver_disease}, \code{severe_liver_disease}, \code{diabetes_mellitus}, \code{end_organ_diabetes_mellitus}, \code{hemiplegia}, \code{estimated_glomerular_filtration_rate}, \code{severe_chronic_kidney_disease}, \code{localised_solid_tumor}, \code{metastatic_solid_tumor}, \code{leukemia}, \code{lymphoma}, \code{aids} as concepts. If \code{NULL} concepts will be retrieved using the OmopConcepts package.}
+\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{myocardial_infarction}, \code{congestive_heart_failure}, \code{peripheral_vascular_disease}, \code{cerebrovascular_disease}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{peptic_ulcer_disease}, \code{mild_liver_disease}, \code{diabetes_without_complication}, \code{hemiplegia}, \code{severe_chronic_kidney_disease}, \code{diabetes_with_complication}, \code{any_malignancy}, \code{moderate_or_severe_liver_disease}, \code{metastatic_solid_tumor}, \code{aids} as concepts. If \code{NULL} concepts will be retrieved using the OmopConcepts package.}
 
 \item{nameStyle}{A character string with the name of the new column.}
 
@@ -41,8 +41,34 @@ Charlson index value.
 Add Charlson index value
 }
 \examples{
+{
 library(OmopIndices)
+library(omock)
 
+cdm <- mockCdmFromDataset()
+cdm <- cdm |>
+ mockCohort()
 
+conceptSet <- list(
+ "myocardial_infarction" = 4116491L,
+ "congestive_heart_failure" = 4113008L,
+ "peripheral_vascular_disease" = 4156265L,
+ "cerebrovascular_disease" = 4155034L,
+ "dementia" = 4094814L,
+ "chronic_pulmonary_disease" = 4048695L,
+ "connective_tissue_disease" = 40486433L,
+ "peptic_ulcer_disease" = 4051466L,
+ "mild_liver_disease" = 4142905L,
+ "moderate_or_severe_liver_disease" = 4144583L,
+ "diabetes_without_complication" = 4144583L,
+ "diabetes_with_complication" = 4144583L,
+ "hemiplegia" = 4144583L,
+ "severe_chronic_kidney_disease" = 4144583L,
+ "any_malignancy" = 4144583L,
+  "metastatic_solid_tumor" = 4144583L,
+ "aids" = 4144583L)
 
+cdm$cohort |>
+  addCharlsonIndex(conceptSet = conceptSet)
+}
 }

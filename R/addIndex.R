@@ -23,6 +23,7 @@ addIndex <- function(x,
     reqConcepts <- charlsonConcepts
     formula <- charlsonFormula
   }
+
   conceptSet <- validateConceptSet(conceptSet, reqConcepts, cdm, call = call)
   nameStyle <- validateNameStyle(nameStyle, x, call = call)
   x <- omopgenerics::validateNewColumn(x, nameStyle, call = call)

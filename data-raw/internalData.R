@@ -26,13 +26,13 @@ aersFormula <- paste0(
 
 charlsonConcepts <- c(
   "myocardial_infarction", "congestive_heart_failure",
-  "peripheral_vascular_disease", "cerebrovacular_accident",
-  "transient_ischemic_attack", "dementia", "chronic_pulmonary_disease",
+  "peripheral_vascular_disease", "cerebrovascular_disease",
+  "dementia", "chronic_pulmonary_disease",
   "connective_tissue_disease", "peptic_ulcer_disease", "mild_liver_disease",
-  "severe_liver_disease", "diabetes_mellitus", "end_organ_diabetes_mellitus",
-  "hemiplegia", "estimated_glomerular_filtration_rate",
-  "severe_chronic_kidney_disease", "localised_solid_tumor",
-  "metastatic_solid_tumor", "leukemia", "lymphoma", "aids"
+  "diabetes_without_complication", "hemiplegia",
+  "severe_chronic_kidney_disease",   "diabetes_with_complication",
+  "any_malignancy", "moderate_or_severe_liver_disease",
+  "metastatic_solid_tumor", "aids"
 )
 
 charlsonFormula <- "dplyr::case_when(
@@ -43,22 +43,27 @@ charlsonFormula <- "dplyr::case_when(
   .data$age_group == 'g5' ~ 4L
 ) +
 dplyr::case_when(
-  .data$end_organ_diabetes_mellitus == 1L ~ 2L,
-  .data$diabetes_mellitus == 1L ~ 1L,
+  .data$diabetes_with_complication == 1L ~ 2L,
+  .data$diabetes_without_complication == 1L & .data$diabetes_with_complication == 0L ~ 1L,
   .default = 0L
 ) +
 dplyr::case_when(
   .data$metastatic_solid_tumor == 1L ~ 6L,
-  .data$localised_solid_tumor == 1L ~ 2L,
+  .data$any_malignancy == 1L & .data$metastatic_solid_tumor == 0L ~ 2L,
+  .default = 0L
+) +
+dplyr::case_when(
+  .data$moderate_or_severe_liver_disease == 1L ~ 3L,
+  .data$mild_liver_disease == 1L & .data$moderate_or_severe_liver_disease == 0L ~ 1L,
   .default = 0L
 ) +
 .data$myocardial_infarction + .data$congestive_heart_failure +
-.data$peripheral_vascular_disease + .data$cerebrovacular_accident +
-.data$transient_ischemic_attack + .data$dementia +
+.data$peripheral_vascular_disease + .data$cerebrovascular_disease +
+.data$dementia +
 .data$chronic_pulmonary_disease + .data$connective_tissue_disease +
-.data$peptic_ulcer_disease + .data$liver + 2 * .data$hemiplegia +
-2 * .data$severe_chronic_kidney_disease + 2 * .data$leukemia +
-2 * .data$lymphoma + 6 * .data$aids"
+.data$peptic_ulcer_disease + 2 * .data$hemiplegia +
+2 * .data$severe_chronic_kidney_disease + 2 * .data$any_malignancy +
+6 * .data$aids"
 
 usethis::use_data(
   hfrsConcepts,
