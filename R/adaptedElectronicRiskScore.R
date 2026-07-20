@@ -35,6 +35,7 @@ addAdaptedElectronicRiskScore <- function(x,
     conceptSet = conceptSet,
     categories = categories,
     nameStyle = nameStyle,
+    ageAdjusted = FALSE,
     name = name
   )
 }

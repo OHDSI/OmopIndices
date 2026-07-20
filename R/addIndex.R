@@ -6,6 +6,7 @@ addIndex <- function(x,
                      conceptSet,
                      categories,
                      nameStyle,
+                     ageAdjusted,
                      name,
                      call = parent.frame()) {
   # initial checks
@@ -21,7 +22,7 @@ addIndex <- function(x,
     formula <- hfrsFormula
   } else if (type == "charlson") {
     reqConcepts <- charlsonConcepts
-    formula <- charlsonFormula
+    formula <- if(isTRUE(ageAdjusted)) charlsonFormulaAgeAdjusted else charlsonFormula
   }
 
   conceptSet <- validateConceptSet(conceptSet, reqConcepts, cdm, call = call)
