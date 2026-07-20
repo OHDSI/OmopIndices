@@ -53,7 +53,7 @@ cdm <- cdm |>
  mockCohort()
 
 conceptSet <- list(
- "congestive_heart_failure" = 319835L,,
+ "congestive_heart_failure" = 319835L,
  "dementia" = 4182210L,
  "chronic_pulmonary_disease" = 255573L,
  "connective_tissue_disease" = 4134537L,
