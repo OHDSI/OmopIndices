@@ -1,5 +1,4 @@
-
-#' Add Charlson index value
+#' Add Charlson Comorbidity Index (CCI) value based on Charlson et al. (1987) or Charlson et al. (1994) (age-adjusted) version.
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc

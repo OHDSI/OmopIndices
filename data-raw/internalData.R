@@ -59,11 +59,9 @@ dplyr::case_when(
 ) +
 .data$myocardial_infarction + .data$congestive_heart_failure +
 .data$peripheral_vascular_disease + .data$cerebrovascular_disease +
-.data$dementia +
-.data$chronic_pulmonary_disease + .data$connective_tissue_disease +
-.data$peptic_ulcer_disease + 2 * .data$hemiplegia +
-2 * .data$severe_chronic_kidney_disease + 2 * .data$any_malignancy +
-6 * .data$aids"
+.data$dementia + .data$chronic_pulmonary_disease + .data$connective_tissue_disease +
+.data$peptic_ulcer_disease +
+2 * .data$hemiplegia + 2 * .data$severe_chronic_kidney_disease + 6 * .data$aids"
 
 charlsonFormula <- "dplyr::case_when(
   .data$diabetes_with_complication == 1L ~ 2L,
@@ -82,11 +80,9 @@ dplyr::case_when(
 ) +
 .data$myocardial_infarction + .data$congestive_heart_failure +
 .data$peripheral_vascular_disease + .data$cerebrovascular_disease +
-.data$dementia +
-.data$chronic_pulmonary_disease + .data$connective_tissue_disease +
-.data$peptic_ulcer_disease + 2 * .data$hemiplegia +
-2 * .data$severe_chronic_kidney_disease + 2 * .data$any_malignancy +
-6 * .data$aids"
+.data$dementia + .data$chronic_pulmonary_disease + .data$connective_tissue_disease +
+.data$peptic_ulcer_disease +
+2 * .data$hemiplegia + 2 * .data$severe_chronic_kidney_disease + 6 * .data$aids"
 
 usethis::use_data(
   hfrsConcepts,
