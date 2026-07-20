@@ -23,6 +23,9 @@ addIndex <- function(x,
   } else if (type == "charlson") {
     reqConcepts <- charlsonConcepts
     formula <- if(isTRUE(ageAdjusted)) charlsonFormulaAgeAdjusted else charlsonFormula
+  } else if (type == "updatedCharlson") {
+    reqConcepts <- updatedCharlsonConcepts
+    formula <- if(isTRUE(ageAdjusted)) updatedCharlsonFormulaAgeAdjusted else updatedCharlsonFormula
   }
 
   conceptSet <- validateConceptSet(conceptSet, reqConcepts, cdm, call = call)
@@ -50,7 +53,7 @@ addIndex <- function(x,
       nameStyle = "{concept_name}"
     )
 
-  if (type == "charlson") {
+  if (type %in% c("updatedCharlson", "charlson") & isTRUE(ageAdjusted)) {
     index <- index |>
       PatientProfiles::addAge(
         indexDate = indexDate,

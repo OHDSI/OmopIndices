@@ -75,7 +75,6 @@ test_that("CCI works", {
     "valid_end_date" = as.Date("2099-01-01")
   )
 
-
   cdm <- omopgenerics::cdmFromTables("tables" = list("person" = person,
                                               "observation_period" = observation_period,
                                               "condition_occurrence" = condition_occurrence,
