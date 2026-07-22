@@ -1,4 +1,3 @@
-
 addIndex <- function(x,
                      type,
                      indexDate,
@@ -14,9 +13,9 @@ addIndex <- function(x,
   cdm <- omopgenerics::cdmReference(x)
   indexDate <- omopgenerics::validateColumn(indexDate, x, "date", call = call)
   window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE, call = call)[[1]]
-  if (type == "aers") {
-    reqConcepts <- aersConcepts
-    formula <- aersFormula
+  if (type == "efi") {
+    reqConcepts <- efiConcepts
+    formula <- efiFormula
   } else if (type == "hfrs") {
     reqConcepts <- hfrsConcepts
     formula <- hfrsFormula
@@ -60,7 +59,7 @@ addIndex <- function(x,
         ageGroup = list("g1"= c(0, 49), "g2" = c(50, 59), "g3" = c(60, 69), "g4" = c(70, 79), "g5" = c(80, Inf)),
         name = nm
       )
-  } else if (type == "aers") {
+  } else if (type == "efi") {
     # TODO use internal functions to skip validation
     index <- index |>
       addPolypharmacyCount(
