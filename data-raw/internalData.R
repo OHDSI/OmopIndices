@@ -45,17 +45,17 @@ updatedCharlsonConcepts <- c(
 
 charlsonFormula <- "dplyr::case_when(
   .data$diabetes_with_complication == 1L ~ 2L,
-  .data$diabetes_without_complication == 1L & .data$diabetes_with_complication == 0L ~ 1L,
+  .data$diabetes_without_complication == 1L == 0L ~ 1L,
   .default = 0L
 ) +
 dplyr::case_when(
   .data$metastatic_solid_tumor == 1L ~ 6L,
-  .data$any_malignancy == 1L & .data$metastatic_solid_tumor == 0L ~ 2L,
+  .data$any_malignancy == 1L == 0L ~ 2L,
   .default = 0L
 ) +
 dplyr::case_when(
   .data$moderate_or_severe_liver_disease == 1L ~ 3L,
-  .data$mild_liver_disease == 1L & .data$moderate_or_severe_liver_disease == 0L ~ 1L,
+  .data$mild_liver_disease == 1L ~ 1L,
   .default = 0L
 ) +
 .data$myocardial_infarction + .data$congestive_heart_failure +
@@ -77,12 +77,12 @@ charlsonFormulaAgeAdjusted <- paste0(
 
 updatedCharlsonFormula <- "dplyr::case_when(
   .data$metastatic_solid_tumor == 1L ~ 6L,
-  .data$any_malignancy == 1L & .data$metastatic_solid_tumor == 0L ~ 2L,
+  .data$any_malignancy == 1L ~ 2L,
   .default = 0L
 ) +
 dplyr::case_when(
   .data$moderate_or_severe_liver_disease == 1L ~ 4L,
-  .data$mild_liver_disease == 1L & .data$moderate_or_severe_liver_disease == 0L ~ 2L,
+  .data$mild_liver_disease == 1L ~ 2L,
   .default = 0L
 ) +
 2 * .data$congestive_heart_failure + 2 * .data$dementia +
