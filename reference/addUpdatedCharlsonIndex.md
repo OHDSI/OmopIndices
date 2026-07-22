@@ -1,12 +1,12 @@
-# Add Charlson Comorbidity Index (CCI) value based on Charlson et al. (1987) or Charlson et al. (1994) (age-adjusted) version.
+# Add Updated Charlson Comorbidity Index (CCI) value based on Quan et al. (2011)
 
-Add Charlson Comorbidity Index (CCI) value based on Charlson et al.
-(1987) or Charlson et al. (1994) (age-adjusted) version.
+Add Updated Charlson Comorbidity Index (CCI) value based on Quan et al.
+(2011)
 
 ## Usage
 
 ``` r
-addCharlsonIndex(
+addUpdatedCharlsonIndex(
   x,
   indexDate = "cohort_start_date",
   ageAdjusted = TRUE,
@@ -44,11 +44,8 @@ addCharlsonIndex(
 
   It can either be a , \<codelist_with_details\> or
   \<concept_set_expression\> object. It must contain
-  `myocardial_infarction`, `congestive_heart_failure`,
-  `peripheral_vascular_disease`, `cerebrovascular_disease`, `dementia`,
-  `chronic_pulmonary_disease`, `connective_tissue_disease`,
-  `peptic_ulcer_disease`, `mild_liver_disease`,
-  `diabetes_without_complication`, `hemiplegia`,
+  `congestive_heart_failure`, `dementia`, `chronic_pulmonary_disease`,
+  `connective_tissue_disease`, `mild_liver_disease`, `hemiplegia`,
   `severe_chronic_kidney_disease`, `diabetes_with_complication`,
   `any_malignancy`, `moderate_or_severe_liver_disease`,
   `metastatic_solid_tumor`, `aids` as concepts. If `NULL` concepts will
@@ -85,17 +82,12 @@ cdm <- cdm |>
  mockCohort()
 
 conceptSet <- list(
- "myocardial_infarction" = 329847L,
  "congestive_heart_failure" = 319835L,
- "peripheral_vascular_disease" = 321052L,
- "cerebrovascular_disease" = 381591L,
  "dementia" = 4182210L,
  "chronic_pulmonary_disease" = 255573L,
  "connective_tissue_disease" = 4134537L,
- "peptic_ulcer_disease" = 4027663L,
  "mild_liver_disease" = 194984L,
  "moderate_or_severe_liver_disease" = 4212540L,
- "diabetes_without_complication" = 201820L,
  "diabetes_with_complication" = 42538715L,
  "hemiplegia" = 374022L,
  "severe_chronic_kidney_disease" = 46271022L,
@@ -104,29 +96,29 @@ conceptSet <- list(
  "aids" = 4267414L)
 
 cdm$cohort |>
-  addCharlsonIndex(conceptSet = conceptSet)
+  addUpdatedCharlsonIndex(conceptSet = conceptSet)
 }
 #> ℹ Loading bundled GiBleed tables from package data.
 #> ℹ Adding drug_strength table.
 #> ℹ Creating local <cdm_reference> object.
-#> Warning: 16 unique codelist concept IDs are not present in `cdm$concept`.
-#> Warning: 16 unique codelist concept IDs are not present in `cdm$concept`.
-#> ! 16 concept(s) from domain NA eliminated as it is not supported.
+#> Warning: 12 unique codelist concept IDs are not present in `cdm$concept`.
+#> Warning: 12 unique codelist concept IDs are not present in `cdm$concept`.
+#> ! 12 concept(s) from domain NA eliminated as it is not supported.
 #> ℹ Supported domains are: device, specimen, measurement, drug, condition,
 #>   observation, procedure, episode, and visit.
 #> # A tibble: 2,694 × 5
 #>    cohort_definition_id subject_id cohort_start_date cohort_end_date
 #>  *                <int>      <int> <date>            <date>         
-#>  1                    1          1 1992-08-21        2001-11-26     
-#>  2                    1          2 1986-05-10        2000-03-13     
-#>  3                    1          7 1971-04-25        1977-08-27     
-#>  4                    1          9 1991-08-07        2003-06-27     
-#>  5                    1          9 2009-09-14        2010-09-07     
-#>  6                    1         11 1993-11-14        1999-06-12     
-#>  7                    1         11 1999-06-13        2012-03-19     
-#>  8                    1         12 2007-06-30        2010-06-05     
-#>  9                    1         12 2010-06-06        2010-08-27     
-#> 10                    1         16 1990-08-22        1994-07-07     
+#>  1                    1          1 1992-09-10        1999-11-07     
+#>  2                    1          5 1979-12-31        2010-02-08     
+#>  3                    1          6 2003-03-02        2005-04-21     
+#>  4                    1         16 1975-01-07        1997-08-24     
+#>  5                    1         16 2006-09-12        2010-04-03     
+#>  6                    1         16 2010-04-04        2016-03-08     
+#>  7                    1         17 2011-12-22        2014-12-13     
+#>  8                    1         18 1983-06-19        1984-10-24     
+#>  9                    1         18 1984-10-25        2003-05-21     
+#> 10                    1         18 2004-11-04        2010-08-07     
 #> # ℹ 2,684 more rows
 #> # ℹ 1 more variable: charlson_index <dbl>
 ```

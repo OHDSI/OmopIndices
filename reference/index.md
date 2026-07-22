@@ -2,16 +2,16 @@
 
 ## All functions
 
-- [`addAdaptedElectronicRiskScore()`](https://OHDSI.github.io/OmopIndices/reference/addAdaptedElectronicRiskScore.md)
-  :
-
-  Add the adapted electronic risk score as defined in Politi et al:
-
 - [`addBMI()`](https://OHDSI.github.io/OmopIndices/reference/addBMI.md)
   : Add Body Mass Index measurement
 
 - [`addCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addCharlsonIndex.md)
-  : Add Charlson index value
+  : Add Charlson Comorbidity Index (CCI) value based on Charlson et
+  al. (1987) or Charlson et al. (1994) (age-adjusted) version.
+
+- [`addElectronicFrailtyIndex()`](https://OHDSI.github.io/OmopIndices/reference/addElectronicFrailtyIndex.md)
+  : Add Electronic Frailty Index (eFI) value based Clegg et al. (2016)
+  definition
 
 - [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)
   : Add the ethnicity of a person to a table
@@ -44,6 +44,10 @@
 
   Add Socio-economic status as a column to a table using the [Townsend
   deprivation index](https://athena.ohdsi.org/search-terms/terms/715996)
+
+- [`addUpdatedCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addUpdatedCharlsonIndex.md)
+  : Add Updated Charlson Comorbidity Index (CCI) value based on Quan et
+  al. (2011)
 
 - [`hospitalFrailtyRiskScore`](https://OHDSI.github.io/OmopIndices/reference/hospitalFrailtyRiskScore.md)
   : Hospital Frailty Risk Score data set

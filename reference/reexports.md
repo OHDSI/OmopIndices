@@ -5,4 +5,4 @@ to see their documentation.
 
 - omopgenerics:
 
-  [`tableName`](https://darwin-eu.github.io/omopgenerics/reference/tableName.html)
+  [`tableName()`](https://darwin-eu.github.io/omopgenerics/reference/tableName.html)
