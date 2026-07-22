@@ -1,4 +1,3 @@
-
 addIndex <- function(x,
                      type,
                      indexDate,
@@ -6,6 +5,7 @@ addIndex <- function(x,
                      conceptSet,
                      categories,
                      nameStyle,
+                     ageAdjusted,
                      name,
                      call = parent.frame()) {
   # initial checks
@@ -13,16 +13,20 @@ addIndex <- function(x,
   cdm <- omopgenerics::cdmReference(x)
   indexDate <- omopgenerics::validateColumn(indexDate, x, "date", call = call)
   window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE, call = call)[[1]]
-  if (type == "aers") {
-    reqConcepts <- aersConcepts
-    formula <- aersFormula
+  if (type == "efi") {
+    reqConcepts <- efiConcepts
+    formula <- efiFormula
   } else if (type == "hfrs") {
     reqConcepts <- hfrsConcepts
     formula <- hfrsFormula
   } else if (type == "charlson") {
     reqConcepts <- charlsonConcepts
-    formula <- charlsonFormula
+    formula <- if(isTRUE(ageAdjusted)) charlsonFormulaAgeAdjusted else charlsonFormula
+  } else if (type == "updatedCharlson") {
+    reqConcepts <- updatedCharlsonConcepts
+    formula <- if(isTRUE(ageAdjusted)) updatedCharlsonFormulaAgeAdjusted else updatedCharlsonFormula
   }
+
   conceptSet <- validateConceptSet(conceptSet, reqConcepts, cdm, call = call)
   nameStyle <- validateNameStyle(nameStyle, x, call = call)
   x <- omopgenerics::validateNewColumn(x, nameStyle, call = call)
@@ -48,14 +52,14 @@ addIndex <- function(x,
       nameStyle = "{concept_name}"
     )
 
-  if (type == "charlson") {
+  if (type %in% c("updatedCharlson", "charlson") & isTRUE(ageAdjusted)) {
     index <- index |>
       PatientProfiles::addAge(
         indexDate = indexDate,
         ageGroup = list("g1"= c(0, 49), "g2" = c(50, 59), "g3" = c(60, 69), "g4" = c(70, 79), "g5" = c(80, Inf)),
         name = nm
       )
-  } else if (type == "aers") {
+  } else if (type == "efi") {
     # TODO use internal functions to skip validation
     index <- index |>
       addPolypharmacyCount(
