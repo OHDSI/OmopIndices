@@ -10,7 +10,7 @@ test_that("efi works", {
     "dizziness" = 4223938L,
     "dyspnea" = 312437L,
     "falls" = 4059015L,
-    "foot_problem" = 4101512L,
+    "foot_problems" = 4101512L,
     "fragility_fracture" = 3170964L,
     "hearing_impairment" = 4234647L,
     "heart_failure" = 316139L,
@@ -50,7 +50,7 @@ test_that("efi works", {
   condition_occurrence <- dplyr::tibble(
     "condition_occurrence_id" = seq(1L, 46L, 1L),
     "person_id" = c(rep(1L, 3), rep(2L, 35), rep(3L, 7), rep(4L, 1)),
-    "condition_concept_id" = c(unlist(conceptSet[c("foot_problem",
+    "condition_concept_id" = c(unlist(conceptSet[c("foot_problems",
                                                    "mobility_transfer",
                                                    "urinary_incontinence")]),
                                unlist(conceptSet),

@@ -45,12 +45,12 @@ updatedCharlsonConcepts <- c(
 
 charlsonFormula <- "dplyr::case_when(
   .data$diabetes_with_complication == 1L ~ 2L,
-  .data$diabetes_without_complication == 1L == 0L ~ 1L,
+  .data$diabetes_without_complication == 1L ~ 1L,
   .default = 0L
 ) +
 dplyr::case_when(
   .data$metastatic_solid_tumor == 1L ~ 6L,
-  .data$any_malignancy == 1L == 0L ~ 2L,
+  .data$any_malignancy == 1L ~ 2L,
   .default = 0L
 ) +
 dplyr::case_when(

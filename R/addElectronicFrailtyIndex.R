@@ -12,7 +12,7 @@
 #' @returns The `x` table with a new column added with the eFI of the patient.
 #'
 #' @export
-#' @example{
+#' @examples{
 #' library(OmopIndices)
 #' library(omock)
 #'
@@ -30,7 +30,7 @@
 #'    "dizziness" = 4223938L,
 #'    "dyspnea" = 312437L,
 #'    "falls" = 4059015L,
-#'    "foot_problem" = 4101512L,
+#'    "foot_problems" = 4101512L,
 #'    "fragility_fracture" = 3170964L,
 #'    "hearing_impairment" = 4234647L,
 #'    "heart_failure" = 316139L,
