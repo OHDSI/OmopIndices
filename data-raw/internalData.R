@@ -24,20 +24,6 @@ efiFormula <- paste0(
   " + dplyr::if_else(.data$polypharmacy_count >= 5, 1/36, 0)"
 )
 
-efi2Concepts <- c(
-  "activity_limitation", "alcohol_harmful_intake", "alcohol_missing",
-  "alcohol_previous_harmful_higher", "atrial_fibrillation", "cancer",
-  "cognitive_impairment", "copd", "dementia", "dressing_grooming_problems",
-  "environment_problems", "falls", "fracture", "fragility_fracture",
-  "heart_failure", "housebound", "hypotension_syncope", "liver_problems",
-  "medication_management_problems", "memory_concerns", "mobility_problems",
-  "motor_neuron_disease", "bmi_missing", "bmi_underweight", "palliative_care",
-  "parkinsonism_tremor", "peptic_ulcer_disease", "peripheral_vascular_disease",
-  "requirement_for_care", "respiratory_disease", "seizures", "self_harm",
-  "skin_ulcer", "smoker_current", "social_vulnerability", "stroke",
-  "transient_ischemic_attack", "weight_loss"
-)
-
 efi2Weights <- c(
   activity_limitation = "0.15284 / 8.429",
   alcohol_harmful_intake = "0.23107 / 8.429",
@@ -79,8 +65,10 @@ efi2Weights <- c(
   weight_loss = "0.19256 / 8.429"
 )
 
+efi2Concepts <- names(efi2Weights)
+
 efi2Formula <- paste0(
-  paste0(efi2Weights[efi2Concepts], " * .data$", efi2Concepts, collapse = " + "),
+  paste0(efi2Weights, " * .data$", names(efi2Weights), collapse = " + "),
   " + dplyr::case_when(
     .data$polypharmacy_count >= 10 ~ 0.50801 / 8.429,
     .data$polypharmacy_count >= 5 ~ 0.32301 / 8.429,
