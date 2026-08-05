@@ -16,8 +16,10 @@ Suggests:
     CohortConstructor,
     DBI,
     duckdb,
+    knitr,
     odbc,
     omock,
+    rmarkdown,
     RPostgres,
     testthat
 URL: https://OHDSI.github.io/OmopIndices/
@@ -36,3 +38,4 @@ Depends:
 Remotes:
     ohdsi/OmopConcepts
 Config/roxygen2/version: 8.0.0
+VignetteBuilder: knitr
