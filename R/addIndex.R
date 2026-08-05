@@ -16,6 +16,9 @@ addIndex <- function(x,
   if (type == "efi") {
     reqConcepts <- efiConcepts
     formula <- efiFormula
+  } else if (type == "efi2") {
+    reqConcepts <- efi2Concepts
+    formula <- efi2Formula
   } else if (type == "hfrs") {
     reqConcepts <- hfrsConcepts
     formula <- hfrsFormula
@@ -59,7 +62,7 @@ addIndex <- function(x,
         ageGroup = list("g1"= c(0, 49), "g2" = c(50, 59), "g3" = c(60, 69), "g4" = c(70, 79), "g5" = c(80, Inf)),
         name = nm
       )
-  } else if (type == "efi") {
+  } else if (type %in% c("efi", "efi2")) {
     # TODO use internal functions to skip validation
     index <- index |>
       addPolypharmacyCount(

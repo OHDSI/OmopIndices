@@ -24,6 +24,69 @@ efiFormula <- paste0(
   " + dplyr::if_else(.data$polypharmacy_count >= 5, 1/36, 0)"
 )
 
+efi2Concepts <- c(
+  "activity_limitation", "alcohol_harmful_intake", "alcohol_missing",
+  "alcohol_previous_harmful_higher", "atrial_fibrillation", "cancer",
+  "cognitive_impairment", "copd", "dementia", "dressing_grooming_problems",
+  "environment_problems", "falls", "fracture", "fragility_fracture",
+  "heart_failure", "housebound", "hypotension_syncope", "liver_problems",
+  "medication_management_problems", "memory_concerns", "mobility_problems",
+  "motor_neuron_disease", "bmi_missing", "bmi_underweight", "palliative_care",
+  "parkinsonism_tremor", "peptic_ulcer_disease", "peripheral_vascular_disease",
+  "requirement_for_care", "respiratory_disease", "seizures", "self_harm",
+  "skin_ulcer", "smoker_current", "social_vulnerability", "stroke",
+  "transient_ischemic_attack", "weight_loss"
+)
+
+efi2Weights <- c(
+  activity_limitation = 0.15284,
+  alcohol_harmful_intake = 0.23107,
+  alcohol_missing = 0.13175,
+  alcohol_previous_harmful_higher = 1.36434,
+  atrial_fibrillation = 0.13025,
+  cancer = 0.2406,
+  cognitive_impairment = 0.10985,
+  copd = 0.11683,
+  dementia = 0.41715,
+  dressing_grooming_problems = 0.05422,
+  environment_problems = 0.11886,
+  falls = 0.62743,
+  fracture = 0.07353,
+  fragility_fracture = 0.17425,
+  heart_failure = 0.11086,
+  housebound = 0.33254,
+  hypotension_syncope = 0.18253,
+  liver_problems = 0.23787,
+  medication_management_problems = 0.32125,
+  memory_concerns = 0.11915,
+  mobility_problems = 0.46836,
+  motor_neuron_disease = 0.35347,
+  bmi_missing = 0.25318,
+  bmi_underweight = 0.4417,
+  palliative_care = 0.5145,
+  parkinsonism_tremor = 0.03537,
+  peptic_ulcer_disease = 0.05427,
+  peripheral_vascular_disease = 0.02672,
+  requirement_for_care = 0.21428,
+  respiratory_disease = 0.01049,
+  seizures = 0.02885,
+  self_harm = 0.009,
+  skin_ulcer = 0.21935,
+  smoker_current = 0.10291,
+  social_vulnerability = 0.23585,
+  stroke = 0.10565,
+  transient_ischemic_attack = 0.02305,
+  weight_loss = 0.19256
+) / 8.429
+
+efi2Formula <- paste0(
+  paste0(efi2Weights[efi2Concepts], " * .data$", efi2Concepts, collapse = " + "),
+  " + dplyr::case_when(",
+  ".data$polypharmacy_count >= 10 ~ 0.50801 / 8.429, ",
+  ".data$polypharmacy_count >= 5 ~ 0.32301 / 8.429, .default = 0)",
+  ""
+)
+
 charlsonConcepts <- c(
   "myocardial_infarction", "congestive_heart_failure",
   "peripheral_vascular_disease", "cerebrovascular_disease",
@@ -106,6 +169,8 @@ usethis::use_data(
   hfrsFormula,
   efiConcepts,
   efiFormula,
+  efi2Concepts,
+  efi2Formula,
   charlsonConcepts,
   updatedCharlsonConcepts,
   charlsonFormulaAgeAdjusted,
