@@ -13,6 +13,10 @@
   : Add Electronic Frailty Index (eFI) value based Clegg et al. (2016)
   definition
 
+- [`addElectronicFrailtyIndex2()`](https://OHDSI.github.io/OmopIndices/reference/addElectronicFrailtyIndex2.md)
+  : Add Electronic Frailty Index 2 (eFI2) value based on Best et al.
+  (2025)
+
 - [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)
   : Add the ethnicity of a person to a table
 
