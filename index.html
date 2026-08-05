@@ -32,6 +32,13 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/add_indices.html">add_indices</a></li>
+    <li><a class="dropdown-item" href="articles/omop_indices_concepts.html">omop_indices_concepts</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -102,6 +109,50 @@
 <div class="section level2">
 <h2 id="main-functionality">Main functionality<a class="anchor" aria-label="anchor" href="#main-functionality"></a>
 </h2>
+<p>OmopIndices adds patient-level measures to an existing <code>cdm_table</code>. Each function returns the input table with one or more columns added, so functions can be composed with the pipe operator. The input table must contain <code>person_id</code> (or <code>subject_id</code>) and, for index-based measures, a <code>Date</code> column that identifies the index date.</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr>
+<th>Group</th>
+<th>Functions</th>
+<th>Output</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Comorbidity and frailty</td>
+<td>
+<code><a href="reference/addCharlsonIndex.html">addCharlsonIndex()</a></code>, <code><a href="reference/addUpdatedCharlsonIndex.html">addUpdatedCharlsonIndex()</a></code>, <code><a href="reference/addElectronicFrailtyIndex.html">addElectronicFrailtyIndex()</a></code>, <code><a href="reference/addHospitalFrailtyRiskScore.html">addHospitalFrailtyRiskScore()</a></code>
+</td>
+<td>Numeric score, optionally with a categorical column</td>
+</tr>
+<tr>
+<td>Clinical covariates</td>
+<td>
+<code><a href="reference/addBMI.html">addBMI()</a></code>, <code><a href="reference/addPolypharmacyCount.html">addPolypharmacyCount()</a></code>
+</td>
+<td>BMI and maximum simultaneous ingredient count</td>
+</tr>
+<tr>
+<td>Demographics</td>
+<td>
+<code><a href="reference/addEthnicity.html">addEthnicity()</a></code>, <code><a href="reference/addLocation.html">addLocation()</a></code>
+</td>
+<td>Person-level ethnicity and location fields</td>
+</tr>
+<tr>
+<td>Socioeconomic status</td>
+<td>
+<code><a href="reference/addSocioEconomicStatus.html">addSocioEconomicStatus()</a></code>, <code><a href="reference/addTownsend.html">addTownsend()</a></code>, <code><a href="reference/addIndexOfMultipleDeprivation.html">addIndexOfMultipleDeprivation()</a></code>
+</td>
+<td>Townsend or IMD value</td>
+</tr>
+</tbody>
+</table>
+<p>The index functions use OMOP concepts from the supplied <code>conceptSet</code> to find records in the requested window. When <code>conceptSet = NULL</code>, the package uses the corresponding concept sets from <code>OmopConcepts</code> where available. A concept set can also be supplied as a <code>codelist</code>, <code>codelist_with_details</code>, or <code>concept_set_expression</code> object.</p>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -129,6 +180,49 @@
 <code>addLocation()</code><a class="anchor" aria-label="anchor" href="#addlocation"></a>
 </h3>
 </div>
+</div>
+<div class="section level2">
+<h2 id="a-complete-example">A complete example<a class="anchor" aria-label="anchor" href="#a-complete-example"></a>
+</h2>
+<p>The following example derives several measures for a cohort. The default index date is <code>cohort_start_date</code>; use <code>indexDate</code> to point to another date column. Windows are expressed in days relative to the index date, so <code>c(-365, 0)</code> means the year before and including the index date.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cohort</span> <span class="op">&lt;-</span> <span class="va">cdm</span><span class="op">$</span><span class="va">cohort</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/addCharlsonIndex.html">addCharlsonIndex</a></span><span class="op">(</span>ageAdjusted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/addElectronicFrailtyIndex.html">addElectronicFrailtyIndex</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/addHospitalFrailtyRiskScore.html">addHospitalFrailtyRiskScore</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/addBMI.html">addBMI</a></span><span class="op">(</span>window <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">365</span>, <span class="fl">0</span><span class="op">)</span>, order <span class="op">=</span> <span class="st">"last"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/addPolypharmacyCount.html">addPolypharmacyCount</a></span><span class="op">(</span>window <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">30</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/addEthnicity.html">addEthnicity</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/addLocation.html">addLocation</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cohort</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">person_id</span>, <span class="va">cohort_start_date</span>, <span class="va">charlson_index</span>, <span class="va">efi</span>, <span class="va">hfrs</span>, <span class="va">bmi</span>,</span>
+<span>         <span class="va">polypharmacy_count</span>, <span class="va">ethnicity</span>, <span class="va">location</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="choosing-options">Choosing options<a class="anchor" aria-label="anchor" href="#choosing-options"></a>
+</h2>
+<p>For reproducible analyses, specify the concept set and output names explicitly when defaults do not match the study protocol. Index functions accept a named <code>categories</code> list to add labelled categories alongside the score, for example:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cohort</span> <span class="op">&lt;-</span> <span class="va">cdm</span><span class="op">$</span><span class="va">cohort</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/addHospitalFrailtyRiskScore.html">addHospitalFrailtyRiskScore</a></span><span class="op">(</span></span>
+<span>    window <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">365</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    categories <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      low <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>      intermediate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">15</span><span class="op">)</span>,</span>
+<span>      high <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="cn">Inf</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    nameStyle <span class="op">=</span> <span class="st">"hospital_frailty_risk"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><code><a href="reference/addBMI.html">addBMI()</a></code> can select the first, last, minimum, or maximum measurement in a window. <code><a href="reference/addEthnicity.html">addEthnicity()</a></code> and <code><a href="reference/addLocation.html">addLocation()</a></code> try the values in <code>from</code> sequentially, which makes it possible to provide fallbacks. Missing values are filled with the corresponding <code>missing*Value</code> argument.</p>
+</div>
+<div class="section level2">
+<h2 id="function-reference">Function reference<a class="anchor" aria-label="anchor" href="#function-reference"></a>
+</h2>
+<p>See the <a href="https://ohdsi.github.io/OmopIndices/reference/" class="external-link">reference site</a> for complete argument descriptions, accepted input types, and examples for every exported function. The package is designed to work with local data frames and database-backed OMOP CDM sources supported by <code>omopgenerics</code>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

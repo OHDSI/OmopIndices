@@ -1,6 +1,9 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://OHDSI.github.io/OmopIndices/404.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndices/LICENSE.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/articles/add_indices.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/articles/index.html</loc></url>
+<url><loc>https://OHDSI.github.io/OmopIndices/articles/omop_indices_concepts.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndices/authors.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndices/index.html</loc></url>
 <url><loc>https://OHDSI.github.io/OmopIndices/reference/OmopIndices-package.html</loc></url>

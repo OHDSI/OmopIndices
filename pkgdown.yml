@@ -1,8 +1,10 @@
 pandoc: 3.8.3
 pkgdown: 2.2.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2026-07-22T22:54Z
+articles:
+  add_indices: add_indices.html
+  omop_indices_concepts: omop_indices_concepts.html
+last_built: 2026-08-05T09:47Z
 urls:
   reference: https://OHDSI.github.io/OmopIndices/reference
   article: https://OHDSI.github.io/OmopIndices/articles

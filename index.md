@@ -39,6 +39,25 @@ pak::pkg_install("OHDSI/OmopIndices")
 
 ## Main functionality
 
+OmopIndices adds patient-level measures to an existing `cdm_table`. Each
+function returns the input table with one or more columns added, so
+functions can be composed with the pipe operator. The input table must
+contain `person_id` (or `subject_id`) and, for index-based measures, a
+`Date` column that identifies the index date.
+
+| Group | Functions | Output |
+|----|----|----|
+| Comorbidity and frailty | [`addCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addCharlsonIndex.md), [`addUpdatedCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addUpdatedCharlsonIndex.md), [`addElectronicFrailtyIndex()`](https://OHDSI.github.io/OmopIndices/reference/addElectronicFrailtyIndex.md), [`addHospitalFrailtyRiskScore()`](https://OHDSI.github.io/OmopIndices/reference/addHospitalFrailtyRiskScore.md) | Numeric score, optionally with a categorical column |
+| Clinical covariates | [`addBMI()`](https://OHDSI.github.io/OmopIndices/reference/addBMI.md), [`addPolypharmacyCount()`](https://OHDSI.github.io/OmopIndices/reference/addPolypharmacyCount.md) | BMI and maximum simultaneous ingredient count |
+| Demographics | [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md), [`addLocation()`](https://OHDSI.github.io/OmopIndices/reference/addLocation.md) | Person-level ethnicity and location fields |
+| Socioeconomic status | [`addSocioEconomicStatus()`](https://OHDSI.github.io/OmopIndices/reference/addSocioEconomicStatus.md), [`addTownsend()`](https://OHDSI.github.io/OmopIndices/reference/addTownsend.md), [`addIndexOfMultipleDeprivation()`](https://OHDSI.github.io/OmopIndices/reference/addIndexOfMultipleDeprivation.md) | Townsend or IMD value |
+
+The index functions use OMOP concepts from the supplied `conceptSet` to
+find records in the requested window. When `conceptSet = NULL`, the
+package uses the corresponding concept sets from `OmopConcepts` where
+available. A concept set can also be supplied as a `codelist`,
+`codelist_with_details`, or `concept_set_expression` object.
+
 ## Examples
 
 ### Mock data
@@ -64,3 +83,67 @@ cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 ```
 
 ### `addLocation()`
+
+## A complete example
+
+The following example derives several measures for a cohort. The default
+index date is `cohort_start_date`; use `indexDate` to point to another
+date column. Windows are expressed in days relative to the index date,
+so `c(-365, 0)` means the year before and including the index date.
+
+``` r
+
+library(dplyr)
+
+cohort <- cdm$cohort |>
+  addCharlsonIndex(ageAdjusted = TRUE) |>
+  addElectronicFrailtyIndex() |>
+  addHospitalFrailtyRiskScore() |>
+  addBMI(window = c(-365, 0), order = "last") |>
+  addPolypharmacyCount(window = c(-30, 0)) |>
+  addEthnicity() |>
+  addLocation()
+
+cohort |>
+  select(person_id, cohort_start_date, charlson_index, efi, hfrs, bmi,
+         polypharmacy_count, ethnicity, location) |>
+  glimpse()
+```
+
+## Choosing options
+
+For reproducible analyses, specify the concept set and output names
+explicitly when defaults do not match the study protocol. Index
+functions accept a named `categories` list to add labelled categories
+alongside the score, for example:
+
+``` r
+
+cohort <- cdm$cohort |>
+  addHospitalFrailtyRiskScore(
+    window = c(-365, 0),
+    categories = list(
+      low = c(0, 5),
+      intermediate = c(5, 15),
+      high = c(15, Inf)
+    ),
+    nameStyle = "hospital_frailty_risk"
+  )
+```
+
+[`addBMI()`](https://OHDSI.github.io/OmopIndices/reference/addBMI.md)
+can select the first, last, minimum, or maximum measurement in a window.
+[`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)
+and
+[`addLocation()`](https://OHDSI.github.io/OmopIndices/reference/addLocation.md)
+try the values in `from` sequentially, which makes it possible to
+provide fallbacks. Missing values are filled with the corresponding
+`missing*Value` argument.
+
+## Function reference
+
+See the [reference site](https://ohdsi.github.io/OmopIndices/reference/)
+for complete argument descriptions, accepted input types, and examples
+for every exported function. The package is designed to work with local
+data frames and database-backed OMOP CDM sources supported by
+`omopgenerics`.

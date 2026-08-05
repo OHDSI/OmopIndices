@@ -55,24 +55,32 @@ cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 #> ℹ Adding drug_strength table.
 #> ℹ Creating local <cdm_reference> object.
 #> ℹ Inserting <cdm_reference> into duckdb.
+#> duckdb keeps downloaded extensions and secrets in a temporary directory:
+#> ℹ /tmp/Rtmp3FgSpM/duckdb
+#> This is removed when the R session ends.
+#> • Extensions are re-downloaded each session.
+#> • Secrets are lost.
+#> ℹ Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).
+#> ℹ Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).
+#> ℹ See ?duckdb_storage for details and alternatives.
 
 cdm$condition_occurrence |>
   slice_sample(n = 10) |>
   select("person_id", "condition_start_date") |>
   addPolypharmacyCount(indexDate = "condition_start_date")
 #> # A query:  ?? x 3
-#> # Database: DuckDB 1.5.4 [unknown@Linux 6.17.0-1020-azure:R 4.6.1//tmp/RtmpljfKV1/file1af8249b8b9a.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1//tmp/Rtmp3FgSpM/file1baa2c5f9a2b.duckdb]
 #>    person_id condition_start_date polypharmacy_count
 #>        <int> <date>                            <int>
-#>  1       672 2017-07-07                            0
-#>  2      5051 2011-08-13                            0
-#>  3      1989 2017-05-27                            0
-#>  4       484 2011-03-02                            0
-#>  5      4123 2018-08-10                            0
-#>  6      2836 2002-04-13                            0
-#>  7      3030 2015-10-16                            0
-#>  8       784 1992-08-06                            0
-#>  9      1088 1975-08-18                            0
-#> 10      3661 1995-10-16                            0
+#>  1      3076 1974-03-22                            0
+#>  2      2373 1992-10-08                            0
+#>  3       744 1994-07-01                            0
+#>  4      1266 2004-12-11                            0
+#>  5      3699 2013-05-20                            0
+#>  6      1593 1945-03-17                            0
+#>  7      3592 1989-01-12                            0
+#>  8      5334 1983-09-21                            0
+#>  9      4606 1992-05-12                            0
+#> 10      4837 1954-07-16                            0
 # }
 ```
