@@ -153,6 +153,8 @@ updatedCharlsonFormulaAgeAdjusted <- paste0(
   updatedCharlsonFormula
 )
 
+source(file = here::here("data-raw", "concepts.R"))
+
 usethis::use_data(
   hfrsConcepts,
   hfrsFormula,
@@ -166,6 +168,7 @@ usethis::use_data(
   updatedCharlsonConcepts,
   updatedCharlsonFormula,
   updatedCharlsonFormulaAgeAdjusted,
+  concepts,
   internal = TRUE,
   overwrite = TRUE
 )

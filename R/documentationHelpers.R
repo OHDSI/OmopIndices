@@ -67,3 +67,18 @@ NULL
 #' @name inObservationDoc
 #' @keywords internal
 NULL
+
+#' Helper for consistent documentation of `index` argument
+#'
+#' @param index A choice between the different indexes: `r indexOptions()`.
+#'
+#' @name indexDoc
+#' @keywords internal
+NULL
+
+indexOptions <- function() {
+  indices <- unique(concepts$index)
+  indices <- paste0("`\"", indices, "\"`")
+  indices[length(indices)] <- paste0("and ", indices[length(indices)])
+  paste0(indices, collapse = ", ")
+}

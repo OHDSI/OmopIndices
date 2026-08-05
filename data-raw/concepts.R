@@ -1,4 +1,3 @@
-
 # read Charlson and Updated Charlson concepts
 charlson <- readr::read_csv(
   file = here::here("data-raw", "concepts", "charlson.csv"),
@@ -38,7 +37,3 @@ x <- concepts |>
 if (nrow(x) > 0) {
   cli::cli_abort(c(x = "There are concepts that are not present in cdm."))
 }
-
-indicesConcepts <- concepts
-
-usethis::use_data(indicesConcepts, overwrite = TRUE)
