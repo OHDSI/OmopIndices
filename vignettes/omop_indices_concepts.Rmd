@@ -60,9 +60,9 @@ makeConceptSelector <- function(data, id) {
       style = if (is.null(display)) NULL else paste0("display:", display, ";"),
       visOmopResults::formatTable(
         data |>
-          dplyr::filter(.data$codelist_name == .env$x),
-        type = "gt",
-        hide = "codelist_name"
+          dplyr::filter(.data$codelist_name == .env$x) |>
+          dplyr::select(!"codelist_name"),
+        type = "gt"
       )
     )
   })
@@ -94,7 +94,7 @@ makeConceptSelector <- function(data, id) {
         var target = this.options[this.selectedIndex].dataset.target;
         document.getElementById(target).style.display = 'block';
       });",
-      id, id, id
+      id, id
     )))
   )
 }
