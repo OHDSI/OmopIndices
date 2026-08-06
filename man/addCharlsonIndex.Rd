@@ -2,7 +2,10 @@
 % Please edit documentation in R/addCharlsonIndex.R
 \name{addCharlsonIndex}
 \alias{addCharlsonIndex}
-\title{Add Charlson Comorbidity Index (CCI) value based on Charlson et al. (1987) or Charlson et al. (1994) (age-adjusted) version.}
+\title{Add Charlson Comorbidity Index (CCI) value based on
+\href{https://doi.org/10.1016/0021-9681(87)90171-8}{Charlson et al. (1987)} and
+\href{https://doi.org/10.1016/0895-4356(94)90129-5}{Charlson et al. (1994)}
+(age-adjusted) version.}
 \usage{
 addCharlsonIndex(
   x,
@@ -41,7 +44,10 @@ The table \code{x} with a new column column with the corresponding
 Charlson index value.
 }
 \description{
-Add Charlson Comorbidity Index (CCI) value based on Charlson et al. (1987) or Charlson et al. (1994) (age-adjusted) version.
+Add Charlson Comorbidity Index (CCI) value based on
+\href{https://doi.org/10.1016/0021-9681(87)90171-8}{Charlson et al. (1987)} and
+\href{https://doi.org/10.1016/0895-4356(94)90129-5}{Charlson et al. (1994)}
+(age-adjusted) version.
 }
 \examples{
 {

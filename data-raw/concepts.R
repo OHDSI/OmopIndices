@@ -5,6 +5,20 @@ charlson <- readr::read_csv(
 )
 
 # read Hospital Frailty Risk Score
+hfrs <- list.files(
+  path = here::here("data-raw", "concepts"),
+  pattern = "^hfrs",
+  full.names = TRUE
+) |>
+  rlang::set_names() |>
+  purrr::map(\(x) readr::read_csv(file = x, col_types = c(concept_id = "i"))) |>
+  dplyr::bind_rows(.id = "icd10_code") |>
+  dplyr::mutate(icd10_code = toupper(substr(basename(.data$icd10_code), 6, 8))) |>
+  dplyr::left_join(
+    hfrs |>
+      dplyr::select("codelist_name" = "concept_set", "icd10_code"),
+    by = "icd10_code"
+  )
 
 # create concept dataset
 concepts <- charlson |>
@@ -15,6 +29,11 @@ concepts <- charlson |>
       dplyr::select("codelist_name", "concept_id") |>
       dplyr::filter(.data$codelist_name %in% .env$updatedCharlsonConcepts) |>
       dplyr::mutate(index = "updatedCharlson")
+  ) |>
+  dplyr::union_all(
+    hfrs |>
+      dplyr::select("codelist_name", "concept_id") |>
+      dplyr::mutate(index = "hfrs")
   ) |>
   dplyr::select("index", "codelist_name", "concept_id") |>
   dplyr::arrange(.data$index, .data$codelist_name, .data$concept_id)

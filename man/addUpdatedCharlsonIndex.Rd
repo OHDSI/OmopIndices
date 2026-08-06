@@ -2,7 +2,8 @@
 % Please edit documentation in R/addUpdatedCharlsonIndex.R
 \name{addUpdatedCharlsonIndex}
 \alias{addUpdatedCharlsonIndex}
-\title{Add Updated Charlson Comorbidity Index (CCI) value based on Quan et al. (2011)}
+\title{Add Updated Charlson Comorbidity Index (CCI) value based on
+\href{https://doi.org/10.1093/aje/kwq433}{Quan et al. (2011)}}
 \usage{
 addUpdatedCharlsonIndex(
   x,
@@ -41,7 +42,8 @@ The table \code{x} with a new column column with the corresponding
 Charlson index value.
 }
 \description{
-Add Updated Charlson Comorbidity Index (CCI) value based on Quan et al. (2011)
+Add Updated Charlson Comorbidity Index (CCI) value based on
+\href{https://doi.org/10.1093/aje/kwq433}{Quan et al. (2011)}
 }
 \examples{
 {

@@ -1,4 +1,5 @@
-#' Add Updated Charlson Comorbidity Index (CCI) value based on Quan et al. (2011)
+#' Add Updated Charlson Comorbidity Index (CCI) value based on
+#' [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc

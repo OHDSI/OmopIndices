@@ -1,5 +1,8 @@
 
-hfrs <- readr::read_csv("data-raw/hospital_frailty_risk_score.csv")
+hfrs <- readr::read_csv(
+  file = "data-raw/hospital_frailty_risk_score.csv",
+  show_col_types = FALSE
+)
 
 hfrsConcepts <- hfrs |>
   dplyr::pull("concept_set")

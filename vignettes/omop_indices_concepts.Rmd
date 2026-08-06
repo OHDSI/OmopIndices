@@ -1,6 +1,8 @@
 ---
-title: "omop_indices_concepts"
-output: rmarkdown::html_vignette
+title: "OmopIndices default concepts"
+output:
+  rmarkdown::html_vignette:
+    tabset: true
 vignette: >
   %\VignetteIndexEntry{omop_indices_concepts}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,6 +16,93 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+The core functions in **OmopIndices** add indexes to a table:
+
+- `addCharlsonIndex()`
+- `addUpdatedCharlsonIndex()`
+- `addHospitalFrailtyRiskScore()`
+- `addElectronicFrailtyIndex()`
+- `addElectronicFrailtyIndex2()`
+
+These indices depend on a set of codelists, these codelist can be provided by
+the user using the `conceptSet` argument. If not provided the package contain
+its own definition for each one of the codelist.
+
+You can get the default codelists of a given index with `getIndexCodelist()`:
+
+```{r}
 library(OmopIndices)
+
+getIndexCodelist("charlson")
 ```
+
+You can explore the different codelists here:
+
+```{r, echo=FALSE}
+x <- OmopIndices:::concepts |>
+  dplyr::group_by(.data$index) |>
+  dplyr::group_split() |>
+  as.list()
+names(x) <- purrr::map_chr(x, \(xx) unique(xx$index))
+x <- x |>
+  purrr::map(\(xx) dplyr::select(xx, !"index"))
+```
+
+## Overview of codelists {.tabset}
+
+### Charlson Index
+
+```{r, echo=FALSE}
+visOmopResults::formatTable(x$charlson, type = "reactable", groupColumn = "codelist_name")
+```
+
+### Updated Charlson Index
+
+```{r, echo=FALSE}
+visOmopResults::formatTable(x$updatedCharlson, type = "reactable", groupColumn = "codelist_name")
+```
+
+## {-}
+
+## Diagnostics of codelists {.tabset}
+
+You might want to perform diagnostics on the mapping of your source data and
+assess how well the involved codelists are recorded you can easily do that using
+**CodelistGenerator** or **PhenotypeR**.
+
+### CodelistGenerator
+
+```{r, eval=FALSE}
+library(CodelistGenerator)
+library(OmopIndices)
+library(omock)
+
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+
+codelist <- getIndexCodelist("charlson")
+
+codeUse <- summariseCodeUse(x = codelist, cdm = cdm)
+
+tableCodeUse(result = codeUse)
+```
+
+### PhenotypeR
+
+```{r, eval=FALSE}
+library(PhenotypeR)
+library(CohortConstructor)
+library(OmopIndices)
+library(omock)
+
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+
+codelist <- getIndexCodelist("charlson")
+
+cdm$my_cohort <- conceptCohort(cdm = cdm, conceptSet = codelist, name = "my_cohort")
+
+results <- phenotypeDiagnostics(cohort = cdm$my_cohort)
+
+shinyDiagnostics(result = results, directory = getwd())
+```
+
+## {-}
