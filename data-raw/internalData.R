@@ -151,7 +151,7 @@ efi2 <- c(
 )
 requiredConcepts$electronic_frailty_index_2 <- names(efi2)
 formulas$electronic_frailty_index_2 <- paste0(
-  paste0(uname(efi2), " * .data$", names(efi2), collapse = " + "),
+  paste0(unname(efi2), " * .data$", names(efi2), collapse = " + "),
   " + dplyr::case_when(
     .data$polypharmacy_count >= 10 ~ 0.50801 / 8.429,
     .data$polypharmacy_count >= 5 ~ 0.32301 / 8.429,

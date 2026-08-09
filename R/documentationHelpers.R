@@ -77,7 +77,7 @@ NULL
 NULL
 
 indexOptions <- function() {
-  indices <- unique(concepts$index)
+  indices <- unique(internalConcepts$index)
   indices <- paste0("`\"", indices, "\"`")
   indices[length(indices)] <- paste0("and ", indices[length(indices)])
   paste0(indices, collapse = ", ")

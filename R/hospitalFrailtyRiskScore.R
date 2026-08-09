@@ -38,16 +38,3 @@ addHospitalFrailtyRiskScore <- function(x,
     name = name
   )
 }
-
-#' Hospital Frailty Risk Score data set
-#'
-#' @format ## `hospitalFrailtyRiskScore`
-#' A data frame with 109 rows and 4 columns:
-#' \describe{
-#'   \item{concept_set}{The name of the concept set to be provided}
-#'   \item{points}{Number of points associated with the codelist}
-#'   \item{icd10_code}{ICD-10 code used}
-#'   \item{icd_description}{Name of the ICD-10 code}
-#' }
-#' @source <https://doi.org/10.1016/S0140-6736(18)30668-8>
-"hospitalFrailtyRiskScore"
