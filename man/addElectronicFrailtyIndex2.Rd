@@ -8,7 +8,7 @@ addElectronicFrailtyIndex2(
   x,
   indexDate = "cohort_start_date",
   window = c(-365, 0),
-  conceptSet = NULL,
+  conceptSet = getIndexCodelist("electronic_frailty_index_2"),
   categories = list(robust = c(0, 0.0857), mild = c(0.0857, 0.1624), moderate = c(0.1624,
     0.2392), severe = c(0.2392, Inf)),
   nameStyle = "efi2",
@@ -24,7 +24,7 @@ table.}
 
 \item{window}{Window to asses \verb{electronic frailty index 2} in, it must be a vector of two numeric values \code{c(min, max)}. Window times refer to days since \code{indexDate}.}
 
-\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{activity_limitation}, \code{alcohol_harmful_intake}, \code{alcohol_missing}, \code{alcohol_previous_harmful_higher}, \code{atrial_fibrillation}, \code{cancer}, \code{cognitive_impairment}, \code{copd}, \code{dementia}, \code{dressing_grooming_problems}, \code{environment_problems}, \code{falls}, \code{fracture}, \code{fragility_fracture}, \code{heart_failure}, \code{housebound}, \code{hypotension_syncope}, \code{liver_problems}, \code{medication_management_problems}, \code{memory_concerns}, \code{mobility_problems}, \code{motor_neuron_disease}, \code{bmi_missing}, \code{bmi_underweight}, \code{palliative_care}, \code{parkinsonism_tremor}, \code{peptic_ulcer_disease}, \code{peripheral_vascular_disease}, \code{requirement_for_care}, \code{respiratory_disease}, \code{seizures}, \code{self_harm}, \code{skin_ulcer}, \code{smoker_current}, \code{social_vulnerability}, \code{stroke}, \code{transient_ischemic_attack}, \code{weight_loss} as concepts. If \code{NULL} internal conceptswill be used. Internal concepts can be checked with \code{getIndexCodelist()}.}
+\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{activity_limitation}, \code{alcohol_harmful_intake}, \code{alcohol_missing}, \code{alcohol_previous_harmful_higher}, \code{atrial_fibrillation}, \code{cancer}, \code{cognitive_impairment}, \code{copd}, \code{dementia}, \code{dressing_grooming_problems}, \code{environment_problems}, \code{falls}, \code{fracture}, \code{fragility_fracture}, \code{heart_failure}, \code{housebound}, \code{hypotension_syncope}, \code{liver_problems}, \code{medication_management_problems}, \code{memory_concerns}, \code{mobility_problems}, \code{motor_neuron_disease}, \code{palliative_care}, \code{parkinsonism_tremor}, \code{peptic_ulcer}, \code{peripheral_vascular_disease}, \code{care_requirement}, \code{respiratory_disease}, \code{seizures}, \code{self_harm}, \code{skin_ulcer}, \code{smoker_current}, \code{social_vulnerability}, \code{stroke}, \code{transient_ischemic_attack}, \code{weight_loss_anorexia}, \code{bmi} as concepts. If \code{NULL} internal conceptswill be used. Internal concepts can be checked with \code{getIndexCodelist()}.}
 
 \item{categories}{Named list of categories to group the values. If NULL the
 risk score is returned as numeric.}

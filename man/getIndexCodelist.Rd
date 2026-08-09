@@ -7,7 +7,7 @@
 getIndexCodelist(index)
 }
 \arguments{
-\item{index}{A choice between the different indexes: \code{"body_mass_index"}, \code{"charlson"}, \code{"electronic_frailty_index"}, \code{"hospital_frailty_risk_score"}, and \code{"updated_charlson"}.}
+\item{index}{A choice between the different indexes: \code{"body_mass_index"}, \code{"charlson"}, \code{"electronic_frailty_index"}, \code{"electronic_frailty_index_2"}, \code{"hospital_frailty_risk_score"}, and \code{"updated_charlson"}.}
 }
 \value{
 A codelist used for the index.

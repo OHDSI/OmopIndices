@@ -10,7 +10,7 @@ addUpdatedCharlsonIndex(
   indexDate = "cohort_start_date",
   ageAdjusted = TRUE,
   window = c(-Inf, 0),
-  conceptSet = NULL,
+  conceptSet = getIndexCodelist("updated_charlson"),
   nameStyle = "charlson_index",
   categories = NULL,
   name = tableName(x)

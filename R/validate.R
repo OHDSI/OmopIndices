@@ -13,19 +13,8 @@ validateWindow <- function(window, call = parent.frame()) {
   }
   return(window[[1]])
 }
-validateConceptSet <- function(conceptSet, nm, cdm, call = parent.frame()) {
-  nms <- requiredConcepts(nm)
-  if (is.null(conceptSet)) {
-    # if (!identical(getOption("omop.concepts.source"), "OmopConcepts")) {
-    #   cli::cli_inform(c(
-    #     "!" = "`conceptSet` is `NULL`, the conceptSet will be downloaded using {.pkg OmopConcepts}",
-    #     "i" = "Set `options('omop.concepts.source' = 'OmopConcepts')` to silence this message."
-    #   ))
-    # }
-    # rlang::check_installed("OmopConcepts", reason = "download concept sets")
-    # conceptSet <- OmopConcepts::downloadConceptSet(conceptSetName = nms)
-    conceptSet
-  }
+validateConceptSet <- function(conceptSet, type, cdm, call = parent.frame()) {
+  nms <- requiredConcepts[[type]]
   conceptSet <- omopgenerics::validateConceptSetArgument(conceptSet, cdm, call = call)
   notPresent <- nms[!nms %in% names(conceptSet)]
   if (length(notPresent) > 0) {
@@ -44,8 +33,4 @@ validateName <- function(name, call = parent.frame()) {
 }
 validateCategories <- function(categories, call = parent.frame()) {
   omopgenerics::assertList(categories, null = TRUE, named = TRUE, call = call)
-}
-
-requiredConcepts <- function(nm) {
-
 }

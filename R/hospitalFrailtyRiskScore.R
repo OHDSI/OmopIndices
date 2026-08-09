@@ -5,7 +5,8 @@
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("hospital frailty risk score")`
-#' @param conceptSet `r documentationConceptSet(hfrsConcepts)`
+#' @param conceptSet
+#' `r documentationConceptSet(requiredConcepts$hospital_frailty_risk_score)`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -18,7 +19,7 @@
 addHospitalFrailtyRiskScore <- function(x,
                                         indexDate = "cohort_start_date",
                                         window = c(-365, 0),
-                                        conceptSet = NULL,
+                                        conceptSet = getIndexCodelist("hospital_frailty_risk_score"),
                                         categories = list(
                                           "low" = c(0, 5),
                                           "intermediate" = c(5, 15),

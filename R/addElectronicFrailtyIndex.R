@@ -4,7 +4,8 @@
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("electronic frailty index")`
-#' @param conceptSet `r documentationConceptSet(efiConcepts)`
+#' @param conceptSet
+#' `r documentationConceptSet(requiredConcepts$electronic_frailty_index)`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -66,7 +67,7 @@
 addElectronicFrailtyIndex <- function(x,
                                       indexDate = "cohort_start_date",
                                       window = c(-365, 0),
-                                      conceptSet = NULL,
+                                      conceptSet = getIndexCodelist("electronic_frailty_index"),
                                       categories = list(
                                         "fit" = c(0, 0.12),
                                         "mild" = c(0.12, 0.24),

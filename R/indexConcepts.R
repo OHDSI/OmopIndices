@@ -14,10 +14,10 @@
 #'
 getIndexCodelist <- function(index) {
   # input check
-  indices <- unique(concepts$index)
+  indices <- unique(internalConcepts$index)
   omopgenerics::assertChoice(index, indices, length = 1)
 
-  concepts |>
+  internalConcepts |>
     dplyr::filter(.data$index == .env$index) |>
     dplyr::select("codelist_name", "concept_id") |>
     omopgenerics::newCodelist()

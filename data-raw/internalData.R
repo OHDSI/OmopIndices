@@ -132,8 +132,6 @@ efi2 <- c(
   memory_concerns = "0.11915 / 8.429",
   mobility_problems = "0.46836 / 8.429",
   motor_neuron_disease = "0.35347 / 8.429",
-  bmi_missing = "0.25318 / 8.429",
-  bmi_underweight = "0.4417 / 8.429",
   palliative_care = "0.5145 / 8.429",
   parkinsonism_tremor = "0.03537 / 8.429",
   peptic_ulcer = "0.05427 / 8.429",
@@ -149,10 +147,14 @@ efi2 <- c(
   transient_ischemic_attack = "0.02305 / 8.429",
   weight_loss_anorexia = "0.19256 / 8.429"
 )
-requiredConcepts$electronic_frailty_index_2 <- names(efi2)
+requiredConcepts$electronic_frailty_index_2 <- c(names(efi2), "bmi")
 formulas$electronic_frailty_index_2 <- paste0(
   paste0(unname(efi2), " * .data$", names(efi2), collapse = " + "),
   " + dplyr::case_when(
+    is.na(.data$bmi) ~ 0.25318 / 8.429,
+    .data$bmi < 18.5  ~ 0.4417 / 8.429,
+    .default = 0
+  ) + dplyr::case_when(
     .data$polypharmacy_count >= 10 ~ 0.50801 / 8.429,
     .data$polypharmacy_count >= 5 ~ 0.32301 / 8.429,
     .default = 0
@@ -176,7 +178,7 @@ internalConcepts$updated_charlson <- internalConcepts$charlson |>
 ## Hospital Frailty Risk Score ----
 internalConcepts$hospital_frailty_risk_score <- list.files(
   path = here::here("data-raw", "concepts"),
-  pattern = "^hfrs",
+  pattern = "^hfrs_",
   full.names = TRUE
 ) |>
   rlang::set_names() |>
@@ -198,7 +200,7 @@ internalConcepts$body_mass_index <- here::here("data-raw", "concepts", "bmi.csv"
 ## Electronic Frailty Index ----
 internalConcepts$electronic_frailty_index <- list.files(
   path = here::here("data-raw", "concepts"),
-  pattern = "^efi",
+  pattern = "^efi_",
   full.names = TRUE
 ) |>
   omopgenerics::importConceptSetExpression() |>
@@ -210,8 +212,23 @@ internalConcepts$electronic_frailty_index <- list.files(
   dplyr::filter(!.data$concept_id %in% c(42593547, 42598600, 42600089, 42600293, 42600389))
 
 ## Electronic Frailty Index 2 ----
+internalConcepts$electronic_frailty_index_2 <- list.files(
+  path = here::here("data-raw", "concepts"),
+  pattern = "^efi2_",
+  full.names = TRUE
+) |>
+  omopgenerics::importConceptSetExpression() |>
+  # there is a warning because we do not use SNOMED veterinary
+  CodelistGenerator::asCodelist(cdm = cdm) |>
+  dplyr::as_tibble() |>
+  dplyr::mutate(codelist_name = stringr::str_remove(string = .data$codelist_name, pattern = "^efi2_")) |>
+  dplyr::union_all(
+    internalConcepts$electronic_frailty_index |>
+      dplyr::filter(.data$codelist_name %in% .env$requiredConcepts$electronic_frailty_index_2)
+  ) |>
+  dplyr::union_all(internalConcepts$body_mass_index)
 
-## Prepare intenal concepts ----
+## Prepare internal concepts ----
 internalConcepts <- internalConcepts |>
   dplyr::bind_rows(.id = "index") |>
   dplyr::select("index", "codelist_name", "concept_id") |>
@@ -230,6 +247,8 @@ x <- internalConcepts |>
 if (nrow(x) > 0) {
   cli::cli_abort(c(x = "There are concepts that are not present in cdm."))
 }
+# check missing definitions
+# check extra definitions
 
 # Save internal data ----
 usethis::use_data(

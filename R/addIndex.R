@@ -13,24 +13,10 @@ addIndex <- function(x,
   cdm <- omopgenerics::cdmReference(x)
   indexDate <- omopgenerics::validateColumn(indexDate, x, "date", call = call)
   window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE, call = call)[[1]]
-  if (type == "efi") {
-    reqConcepts <- efiConcepts
-    formula <- efiFormula
-  } else if (type == "efi2") {
-    reqConcepts <- efi2Concepts
-    formula <- efi2Formula
-  } else if (type == "hfrs") {
-    reqConcepts <- hfrsConcepts
-    formula <- hfrsFormula
-  } else if (type == "charlson") {
-    reqConcepts <- charlsonConcepts
-    formula <- if(isTRUE(ageAdjusted)) charlsonFormulaAgeAdjusted else charlsonFormula
-  } else if (type == "updatedCharlson") {
-    reqConcepts <- updatedCharlsonConcepts
-    formula <- if(isTRUE(ageAdjusted)) updatedCharlsonFormulaAgeAdjusted else updatedCharlsonFormula
-  }
+  formulaKey <- paste0(type, if_else(ageAdjusted, "_age_adjusted", ""))
+  formula <- formulas[[formulaKey]]
 
-  conceptSet <- validateConceptSet(conceptSet, reqConcepts, cdm, call = call)
+  conceptSet <- validateConceptSet(conceptSet, type, cdm, call = call)
   nameStyle <- validateNameStyle(nameStyle, x, call = call)
   x <- omopgenerics::validateNewColumn(x, nameStyle, call = call)
   name <- validateName(name, call = call)
@@ -55,7 +41,7 @@ addIndex <- function(x,
       nameStyle = "{concept_name}"
     )
 
-  if (type %in% c("updatedCharlson", "charlson") & isTRUE(ageAdjusted)) {
+  if (type %in% c("updated_charlson", "charlson") & isTRUE(ageAdjusted)) {
     index <- index |>
       PatientProfiles::addAge(
         indexDate = indexDate,
@@ -68,7 +54,18 @@ addIndex <- function(x,
       addPolypharmacyCount(
         indexDate = indexDate,
         window = window,
-        nameStyle = "polypharmacy_count"
+        nameStyle = "polypharmacy_count",
+        name = nm
+      )
+  }
+  if (type == "efi2") {
+    index <- index |>
+      addBMI(
+        indexDate = indexDate,
+        conceptSet = conceptSet,
+        window = window,
+        nameStyle = "bmi",
+        name = nm
       )
   }
 

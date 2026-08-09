@@ -7,7 +7,7 @@
 #' @inheritParams indexDateDoc
 #' @param ageAdjusted Whether to calculate the Age-Adjusted Comorbidity Index (TRUE) or not (FALSE)
 #' @param window `r documentationWindow("Charlson index")`
-#' @param conceptSet `r documentationConceptSet(charlsonConcepts)`
+#' @param conceptSet `r documentationConceptSet(requiredConcepts)`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -51,7 +51,7 @@ addCharlsonIndex <- function(x,
                              indexDate = "cohort_start_date",
                              ageAdjusted = TRUE,
                              window = c(-Inf, 0),
-                             conceptSet = NULL,
+                             conceptSet = getIndexCodelist("charlson"),
                              nameStyle = "charlson_index",
                              categories = NULL,
                              name = tableName(x)) {

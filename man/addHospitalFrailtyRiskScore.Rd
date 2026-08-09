@@ -9,7 +9,7 @@ addHospitalFrailtyRiskScore(
   x,
   indexDate = "cohort_start_date",
   window = c(-365, 0),
-  conceptSet = NULL,
+  conceptSet = getIndexCodelist("hospital_frailty_risk_score"),
   categories = list(low = c(0, 5), intermediate = c(5, 15), high = c(15, Inf)),
   nameStyle = "hfrs",
   name = tableName(x)
