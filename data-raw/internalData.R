@@ -84,72 +84,14 @@ formulas$updated_charlson_age_adjusted <- paste0(
 
 ## Hospital Frailty Risk Score ----
 hfrsData <- readr::read_csv(
-  file = "data-raw/hospital_frailty_risk_score.csv",
+  file = "inst/hospital_frailty_risk_score.csv",
   col_types = c(concept_set = "c", points = "d", icd10_code = "c", icd_description = "c")
 )
 requiredConcepts$hospital_frailty_risk_score <- hfrsData$concept_set
 formulas$hospital_frailty_risk_score <- paste0(hfrsData$points, " * .data$", hfrsData$concept_set, collapse = " + ")
 
-# Internal concepts ----
-internalConcepts <- list()
-
-## Charlson Index concepts ----
-internalConcepts$charlson <- readr::read_csv(
-  file = here::here("data-raw", "concepts", "charlson.csv"),
-  col_types = c(concept_id = "i", codelist_name = "c", concept_name = "c", vocabulary_id = "c")
-) |>
-  dplyr::select("codelist_name", "concept_id")
-
-## Updated Charlson Index concepts ----
-internalConcepts$updated_charlson <- internalConcepts$charlson |>
-  dplyr::filter(.data$codelist_name %in% .env$requiredConcepts$updated_charlson)
-
-## Hospital Frailty Risk Score ----
-internalConcepts$hospital_frailty_risk_score <- list.files(
-  path = here::here("data-raw", "concepts"),
-  pattern = "^hfrs",
-  full.names = TRUE
-) |>
-  rlang::set_names() |>
-  purrr::map(\(x) readr::read_csv(file = x, col_types = c(concept_id = "i"))) |>
-  dplyr::bind_rows(.id = "icd10_code") |>
-  dplyr::mutate(icd10_code = toupper(substr(basename(.data$icd10_code), 6, 8))) |>
-  dplyr::left_join(
-    hfrsData |>
-      dplyr::select("codelist_name" = "concept_set", "icd10_code"),
-    by = "icd10_code"
-  ) |>
-  dplyr::select("codelist_name", "concept_id")
-
-## Body Mass Index ----
-internalConcepts$body_mass_index <- here::here("data-raw", "concepts", "bmi.csv") |>
-  omopgenerics::importCodelist() |>
-  dplyr::as_tibble()
-
-## Prepare intenal concepts
-internalConcepts <- internalConcepts |>
-  dplyr::bind_rows(.id = "index") |>
-  dplyr::select("index", "codelist_name", "concept_id") |>
-  dplyr::arrange(.data$index, .data$codelist_name, .data$concept_id) |>
-  dplyr::left_join(
-    cdm$concept |>
-      dplyr::select(
-        "concept_id", "concept_name", "domain_id", "vocabulary_id",
-        "concept_code"
-      ),
-    by = "concept_id"
-  )
-
-# Save internal data ----
-usethis::use_data(
-  requiredConcepts,
-  formulas,
-  internalConcepts,
-  internal = TRUE,
-  overwrite = TRUE
-)
-
-efiConcepts <- c(
+## Electronic Frailty Index ----
+requiredConcepts$electronic_frailty_index <- c(
   "activity_limitation", "anemia", "arthritis", "atrial_fibrillation",
   "cerebrovascular_disease", "chronic_kidney_disease",  "diabetes", "dizziness",
   "dyspnea", "falls", "foot_problem", "fragility_fracture",
@@ -161,13 +103,13 @@ efiConcepts <- c(
   "social_vulnerability", "thyroid_disease", "urinary_incontinence",
   "urinary_system_disease", "visual_impairment", "weight_loss_anorexia"
 )
-
-efiFormula <- paste0(
-  paste0("1/36 * .data$", efiConcepts, collapse = " + "),
+formulas$electronic_frailty_index <- paste0(
+  paste0("1/36 * .data$", requiredConcepts$electronic_frailty_index, collapse = " + "),
   " + dplyr::if_else(.data$polypharmacy_count >= 5, 1/36, 0)"
 )
 
-efi2Weights <- c(
+## Electronic Frailty Index 2 ----
+efi2 <- c(
   activity_limitation = "0.15284 / 8.429",
   alcohol_harmful_intake = "0.23107 / 8.429",
   alcohol_missing = "0.13175 / 8.429",
@@ -207,11 +149,9 @@ efi2Weights <- c(
   transient_ischemic_attack = "0.02305 / 8.429",
   weight_loss_anorexia = "0.19256 / 8.429"
 )
-
-efi2Concepts <- names(efi2Weights)
-
-efi2Formula <- paste0(
-  paste0(efi2Weights, " * .data$", names(efi2Weights), collapse = " + "),
+requiredConcepts$electronic_frailty_index_2 <- names(efi2)
+formulas$electronic_frailty_index_2 <- paste0(
+  paste0(uname(efi2), " * .data$", names(efi2), collapse = " + "),
   " + dplyr::case_when(
     .data$polypharmacy_count >= 10 ~ 0.50801 / 8.429,
     .data$polypharmacy_count >= 5 ~ 0.32301 / 8.429,
@@ -219,8 +159,44 @@ efi2Formula <- paste0(
   )"
 )
 
-# Electronic Frailty Index
-efi <- list.files(
+# Internal concepts ----
+internalConcepts <- list()
+
+## Charlson Index concepts ----
+internalConcepts$charlson <- readr::read_csv(
+  file = here::here("data-raw", "concepts", "charlson.csv"),
+  col_types = c(concept_id = "i", codelist_name = "c", concept_name = "c", vocabulary_id = "c")
+) |>
+  dplyr::select("codelist_name", "concept_id")
+
+## Updated Charlson Index concepts ----
+internalConcepts$updated_charlson <- internalConcepts$charlson |>
+  dplyr::filter(.data$codelist_name %in% .env$requiredConcepts$updated_charlson)
+
+## Hospital Frailty Risk Score ----
+internalConcepts$hospital_frailty_risk_score <- list.files(
+  path = here::here("data-raw", "concepts"),
+  pattern = "^hfrs",
+  full.names = TRUE
+) |>
+  rlang::set_names() |>
+  purrr::map(\(x) readr::read_csv(file = x, col_types = c(concept_id = "i"))) |>
+  dplyr::bind_rows(.id = "icd10_code") |>
+  dplyr::mutate(icd10_code = toupper(substr(basename(.data$icd10_code), 6, 8))) |>
+  dplyr::left_join(
+    hfrsData |>
+      dplyr::select("codelist_name" = "concept_set", "icd10_code"),
+    by = "icd10_code"
+  ) |>
+  dplyr::select("codelist_name", "concept_id")
+
+## Body Mass Index ----
+internalConcepts$body_mass_index <- here::here("data-raw", "concepts", "bmi.csv") |>
+  omopgenerics::importCodelist() |>
+  dplyr::as_tibble()
+
+## Electronic Frailty Index ----
+internalConcepts$electronic_frailty_index <- list.files(
   path = here::here("data-raw", "concepts"),
   pattern = "^efi",
   full.names = TRUE
@@ -229,25 +205,37 @@ efi <- list.files(
   # there is a warning because we do not use SNOMED veterinary
   CodelistGenerator::asCodelist(cdm = cdm) |>
   dplyr::as_tibble() |>
-  dplyr::mutate(
-    codelist_name = stringr::str_remove(string = .data$codelist_name, pattern = "^efi_"),
-    index = "electronic_frailty_index"
-  ) |>
+  dplyr::mutate(codelist_name = stringr::str_remove(string = .data$codelist_name, pattern = "^efi_")) |>
   # eliminating the SNOMED veterinary concepts
   dplyr::filter(!.data$concept_id %in% c(42593547, 42598600, 42600089, 42600293, 42600389))
 
-# Electronic Frailty Index 2
-efi2 <- efi |>
-  dplyr::filter(.data$codelist_name %in% .env$efi2Concepts)
+## Electronic Frailty Index 2 ----
 
-
+## Prepare intenal concepts ----
+internalConcepts <- internalConcepts |>
+  dplyr::bind_rows(.id = "index") |>
+  dplyr::select("index", "codelist_name", "concept_id") |>
+  dplyr::arrange(.data$index, .data$codelist_name, .data$concept_id) |>
+  dplyr::left_join(
+    cdm$concept |>
+      dplyr::select(
+        "concept_id", "concept_name", "domain_id", "vocabulary_id",
+        "concept_code"
+      ),
+    by = "concept_id"
+  )
 # check if any name is not present
-x <- concepts |>
+x <- internalConcepts |>
   dplyr::filter(is.na(.data$concept_name))
 if (nrow(x) > 0) {
   cli::cli_abort(c(x = "There are concepts that are not present in cdm."))
 }
 
-# datasets
-
-
+# Save internal data ----
+usethis::use_data(
+  requiredConcepts,
+  formulas,
+  internalConcepts,
+  internal = TRUE,
+  overwrite = TRUE
+)
