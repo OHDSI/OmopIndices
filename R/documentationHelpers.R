@@ -28,8 +28,8 @@ documentationConceptSet <- function(cs) {
   paste0(
     "It can either be a <codelist>, <codelist_with_details> or ",
     "<concept_set_expression> object. It must contain `",
-    paste0(cs, collapse = "`, `"), "` as concepts. If `NULL` internal concepts",
-    "will be used. Internal concepts can be checked with `getIndexCodelist()`."
+    paste0(cs, collapse = "`, `"), "` as concepts. By default internal concepts",
+    "are used."
   )
 }
 

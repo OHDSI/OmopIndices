@@ -72,10 +72,10 @@ that identifies the index date.
 | Socioeconomic status | `addSocioEconomicStatus()`, `addTownsend()`, `addIndexOfMultipleDeprivation()` | Townsend or IMD value |
 
 The index functions use OMOP concepts from the supplied `conceptSet` to find
-records in the requested window. When `conceptSet = NULL`, the package uses
-the internal concept sets, that can be checked using `getIndexCodelist()`. A
-concept set can also be supplied as a `codelist`, `codelist_with_details`, or
-`concept_set_expression` object.
+records in the requested window. By default the package uses internal concept
+sets, that can be checked using `getIndexCodelist()`. A concept set can also be
+supplied as a `codelist`, `codelist_with_details`, or `concept_set_expression`
+object.
 
 ## Examples
 

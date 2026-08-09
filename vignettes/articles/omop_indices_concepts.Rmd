@@ -39,65 +39,7 @@ getIndexCodelist("charlson")
 You can explore the different codelists here:
 
 ```{r, echo=FALSE}
-x <- OmopIndices:::concepts |>
-  dplyr::group_by(.data$index) |>
-  dplyr::group_split() |>
-  as.list()
-names(x) <- purrr::map_chr(x, \(xx) unique(xx$index))
-x <- x |>
-  purrr::map(\(xx) dplyr::select(xx, !"index"))
-
-makeConceptSelector <- function(data, id) {
-  concepts <- sort(unique(data$codelist_name))
-
-  tables <- purrr::map(concepts, \(x) {
-    tableId <- paste0(id, "-", x)
-    display <- if (identical(x, concepts[[1]])) NULL else "none"
-
-    htmltools::tags$div(
-      id = tableId,
-      class = "concept-table",
-      style = if (is.null(display)) NULL else paste0("display:", display, ";"),
-      visOmopResults::formatTable(
-        data |>
-          dplyr::filter(.data$codelist_name == .env$x) |>
-          dplyr::select(!"codelist_name"),
-        type = "gt"
-      )
-    )
-  })
-
-  htmltools::tags$div(
-    id = id,
-    class = "concept-selector",
-    htmltools::tags$label(
-      `for` = paste0(id, "-select"),
-      "Choose a concept:"
-    ),
-    htmltools::tags$select(
-      id = paste0(id, "-select"),
-      class = "form-control",
-      purrr::map(concepts, \(concept) {
-        htmltools::tags$option(
-          concept,
-          value = concept,
-          `data-target` = paste0(id, "-", concept)
-        )
-      })
-    ),
-    tables,
-    htmltools::tags$script(htmltools::HTML(sprintf(
-      "document.getElementById('%s-select').addEventListener('change', function() {
-        document.querySelectorAll('#%s .concept-table').forEach(function(x) {
-          x.style.display = 'none';
-        });
-        var target = this.options[this.selectedIndex].dataset.target;
-        document.getElementById(target).style.display = 'block';
-      });",
-      id, id
-    )))
-  )
-}
+load(file = here::here("vignettes/articles/selectors.RData"))
 ```
 
 ## Overview of codelists {.tabset}
@@ -105,19 +47,31 @@ makeConceptSelector <- function(data, id) {
 ### Charlson Index
 
 ```{r, echo=FALSE}
-makeConceptSelector(x$charlson, "charlson")
+selectorCharlson
 ```
 
 ### Updated Charlson Index
 
 ```{r, echo=FALSE}
-makeConceptSelector(x$updatedCharlson, "updated-charlson")
+selectorUpdatedCharlson
+```
+
+### Electronic Frailty Index
+
+```{r, echo=FALSE}
+selectorEFI
+```
+
+### Electronic Frailty Index 2
+
+```{r, echo=FALSE}
+selectorEFI2
 ```
 
 ### Hospital Frailty Risk Score
 
 ```{r, echo=FALSE}
-makeConceptSelector(x$hfrs, "hfrs")
+selectorHFRS
 ```
 
 ## {-}
