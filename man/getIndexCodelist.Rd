@@ -7,7 +7,7 @@
 getIndexCodelist(index)
 }
 \arguments{
-\item{index}{A choice between the different indexes: \code{"charlson"}, and \code{"updatedCharlson"}.}
+\item{index}{A choice between the different indexes: \code{"body_mass_index"}, \code{"charlson"}, \code{"hfrs"}, and \code{"updatedCharlson"}.}
 }
 \value{
 A codelist used for the index.
@@ -16,7 +16,7 @@ A codelist used for the index.
 Get the codelists used for a certain index calculation
 }
 \examples{
-library(OmopIndexes)
+library(OmopIndices)
 
 getIndexCodelist("charlson")
 

@@ -73,8 +73,8 @@ that identifies the index date.
 
 The index functions use OMOP concepts from the supplied `conceptSet` to find
 records in the requested window. When `conceptSet = NULL`, the package uses
-the corresponding concept sets from `OmopConcepts` where available. A concept
-set can also be supplied as a `codelist`, `codelist_with_details`, or
+the internal concept sets, that can be checked using `getIndexCodelist()`. A
+concept set can also be supplied as a `codelist`, `codelist_with_details`, or
 `concept_set_expression` object.
 
 ## Examples

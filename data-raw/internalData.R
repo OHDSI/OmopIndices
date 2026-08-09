@@ -1,13 +1,13 @@
 
-hfrs <- readr::read_csv(
+hfrsData <- readr::read_csv(
   file = "data-raw/hospital_frailty_risk_score.csv",
   show_col_types = FALSE
 )
 
-hfrsConcepts <- hfrs |>
+hfrsConcepts <- hfrsData |>
   dplyr::pull("concept_set")
 
-hfrsFormula <- paste0(hfrs$points, " * .data$", hfrs$concept_set, collapse = " + ")
+hfrsFormula <- paste0(hfrsData$points, " * .data$", hfrsData$concept_set, collapse = " + ")
 
 efiConcepts <- c(
   "activity_limitation", "anemia", "arthritis", "atrial_fibrillation",

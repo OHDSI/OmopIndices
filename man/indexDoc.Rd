@@ -4,7 +4,7 @@
 \alias{indexDoc}
 \title{Helper for consistent documentation of \code{index} argument}
 \arguments{
-\item{index}{A choice between the different indexes: \code{"charlson"}, and \code{"updatedCharlson"}.}
+\item{index}{A choice between the different indexes: \code{"body_mass_index"}, \code{"charlson"}, \code{"hfrs"}, and \code{"updatedCharlson"}.}
 }
 \description{
 Helper for consistent documentation of \code{index} argument

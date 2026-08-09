@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' library(OmopIndexes)
+#' library(OmopIndices)
 #'
 #' getIndexCodelist("charlson")
 #'

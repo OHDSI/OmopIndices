@@ -15,10 +15,17 @@ hfrs <- list.files(
   dplyr::bind_rows(.id = "icd10_code") |>
   dplyr::mutate(icd10_code = toupper(substr(basename(.data$icd10_code), 6, 8))) |>
   dplyr::left_join(
-    hfrs |>
+    hfrsData |>
       dplyr::select("codelist_name" = "concept_set", "icd10_code"),
     by = "icd10_code"
   )
+
+# bmi
+bmi <- readr::read_csv(
+  file = here::here("data-raw", "concepts", "bmi.csv"),
+  col_types = c(concept_id = "i")
+) |>
+  dplyr::mutate(codelist_name = "bmi", index = "body_mass_index")
 
 # create concept dataset
 concepts <- charlson |>
@@ -35,6 +42,7 @@ concepts <- charlson |>
       dplyr::select("codelist_name", "concept_id") |>
       dplyr::mutate(index = "hfrs")
   ) |>
+  dplyr::union_all(bmi) |>
   dplyr::select("index", "codelist_name", "concept_id") |>
   dplyr::arrange(.data$index, .data$codelist_name, .data$concept_id)
 
