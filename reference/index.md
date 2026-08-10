@@ -6,8 +6,12 @@
   : Add Body Mass Index measurement
 
 - [`addCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addCharlsonIndex.md)
-  : Add Charlson Comorbidity Index (CCI) value based on Charlson et
-  al. (1987) or Charlson et al. (1994) (age-adjusted) version.
+  :
+
+  Add Charlson Comorbidity Index (CCI) value based on [Charlson et al.
+  (1987)](https://doi.org/10.1016/0021-9681(87)90171-8) and [Charlson et
+  al. (1994)](https://doi.org/10.1016/0895-4356(94)90129-5)
+  (age-adjusted) version.
 
 - [`addElectronicFrailtyIndex()`](https://OHDSI.github.io/OmopIndices/reference/addElectronicFrailtyIndex.md)
   : Add Electronic Frailty Index (eFI) value based Clegg et al. (2016)
@@ -50,8 +54,10 @@
   deprivation index](https://athena.ohdsi.org/search-terms/terms/715996)
 
 - [`addUpdatedCharlsonIndex()`](https://OHDSI.github.io/OmopIndices/reference/addUpdatedCharlsonIndex.md)
-  : Add Updated Charlson Comorbidity Index (CCI) value based on Quan et
-  al. (2011)
+  :
 
-- [`hospitalFrailtyRiskScore`](https://OHDSI.github.io/OmopIndices/reference/hospitalFrailtyRiskScore.md)
-  : Hospital Frailty Risk Score data set
+  Add Updated Charlson Comorbidity Index (CCI) value based on [Quan et
+  al. (2011)](https://doi.org/10.1093/aje/kwq433)
+
+- [`getIndexCodelist()`](https://OHDSI.github.io/OmopIndices/reference/getIndexCodelist.md)
+  : Get the codelists used for a certain index calculation

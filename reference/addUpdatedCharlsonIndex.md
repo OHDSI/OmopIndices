@@ -1,7 +1,7 @@
-# Add Updated Charlson Comorbidity Index (CCI) value based on Quan et al. (2011)
+# Add Updated Charlson Comorbidity Index (CCI) value based on [Quan et al. (2011)](https://doi.org/10.1093/aje/kwq433)
 
-Add Updated Charlson Comorbidity Index (CCI) value based on Quan et al.
-(2011)
+Add Updated Charlson Comorbidity Index (CCI) value based on [Quan et al.
+(2011)](https://doi.org/10.1093/aje/kwq433)
 
 ## Usage
 
@@ -11,7 +11,7 @@ addUpdatedCharlsonIndex(
   indexDate = "cohort_start_date",
   ageAdjusted = TRUE,
   window = c(-Inf, 0),
-  conceptSet = NULL,
+  conceptSet = getIndexCodelist("updated_charlson"),
   nameStyle = "charlson_index",
   categories = NULL,
   name = tableName(x)
@@ -48,8 +48,8 @@ addUpdatedCharlsonIndex(
   `connective_tissue_disease`, `mild_liver_disease`, `hemiplegia`,
   `severe_chronic_kidney_disease`, `diabetes_with_complication`,
   `any_malignancy`, `moderate_or_severe_liver_disease`,
-  `metastatic_solid_tumor`, `aids` as concepts. If `NULL` concepts will
-  be retrieved using the OmopConcepts package.
+  `metastatic_solid_tumor`, `aids` as concepts. By default internal
+  concepts are used.
 
 - nameStyle:
 
@@ -77,23 +77,23 @@ index value.
 library(OmopIndices)
 library(omock)
 
-cdm <- mockCdmFromDataset()
-cdm <- cdm |>
- mockCohort()
+cdm <- mockCdmFromDataset() |>
+  mockCohort()
 
 conceptSet <- list(
- "congestive_heart_failure" = 319835L,
- "dementia" = 4182210L,
- "chronic_pulmonary_disease" = 255573L,
- "connective_tissue_disease" = 4134537L,
- "mild_liver_disease" = 194984L,
- "moderate_or_severe_liver_disease" = 4212540L,
- "diabetes_with_complication" = 42538715L,
- "hemiplegia" = 374022L,
- "severe_chronic_kidney_disease" = 46271022L,
- "any_malignancy" = 4180914L,
- "metastatic_solid_tumor" = 432851L,
- "aids" = 4267414L)
+  "congestive_heart_failure" = 319835L,
+  "dementia" = 4182210L,
+  "chronic_pulmonary_disease" = 255573L,
+  "connective_tissue_disease" = 4134537L,
+  "mild_liver_disease" = 194984L,
+  "moderate_or_severe_liver_disease" = 4212540L,
+  "diabetes_with_complication" = 42538715L,
+  "hemiplegia" = 374022L,
+  "severe_chronic_kidney_disease" = 46271022L,
+  "any_malignancy" = 4180914L,
+  "metastatic_solid_tumor" = 432851L,
+  "aids" = 4267414L
+)
 
 cdm$cohort |>
   addUpdatedCharlsonIndex(conceptSet = conceptSet)

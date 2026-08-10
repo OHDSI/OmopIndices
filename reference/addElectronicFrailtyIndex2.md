@@ -13,7 +13,7 @@ addElectronicFrailtyIndex2(
   x,
   indexDate = "cohort_start_date",
   window = c(-365, 0),
-  conceptSet = NULL,
+  conceptSet = getIndexCodelist("electronic_frailty_index_2"),
   categories = list(robust = c(0, 0.0857), mild = c(0.0857, 0.1624), moderate = c(0.1624,
     0.2392), severe = c(0.2392, Inf)),
   nameStyle = "efi2",
@@ -49,13 +49,12 @@ addElectronicFrailtyIndex2(
   `fracture`, `fragility_fracture`, `heart_failure`, `housebound`,
   `hypotension_syncope`, `liver_problems`,
   `medication_management_problems`, `memory_concerns`,
-  `mobility_problems`, `motor_neuron_disease`, `bmi_missing`,
-  `bmi_underweight`, `palliative_care`, `parkinsonism_tremor`,
-  `peptic_ulcer_disease`, `peripheral_vascular_disease`,
-  `requirement_for_care`, `respiratory_disease`, `seizures`,
-  `self_harm`, `skin_ulcer`, `smoker_current`, `social_vulnerability`,
-  `stroke`, `transient_ischemic_attack`, `weight_loss` as concepts. If
-  `NULL` concepts will be retrieved using the OmopConcepts package.
+  `mobility_problems`, `motor_neuron_disease`, `palliative_care`,
+  `parkinsonism_tremor`, `peptic_ulcer`, `peripheral_vascular_disease`,
+  `care_requirement`, `respiratory_disease`, `seizures`, `self_harm`,
+  `skin_ulcer`, `smoker_current`, `social_vulnerability`, `stroke`,
+  `transient_ischemic_attack`, `weight_loss_anorexia`, `bmi` as
+  concepts. By default internal concepts are used.
 
 - categories:
 

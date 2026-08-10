@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>omop_indices_concepts • OmopIndices</title>
+<title>OmopIndices default concepts • OmopIndices</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="omop_indices_concepts">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="OmopIndices default concepts">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -34,7 +34,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/add_indices.html">add_indices</a></li>
-    <li><a class="dropdown-item" href="../articles/omop_indices_concepts.html">omop_indices_concepts</a></li>
+    <li><a class="dropdown-item" href="../articles/omop_indices_concepts.html">OmopIndices default concepts</a></li>
   </ul>
 </li>
       </ul>
@@ -56,18 +56,151 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>omop_indices_concepts</h1>
+      <h1>OmopIndices default concepts</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/OHDSI/OmopIndices/blob/main/vignettes/omop_indices_concepts.Rmd" class="external-link"><code>vignettes/omop_indices_concepts.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/OHDSI/OmopIndices/blob/main/vignettes/articles/omop_indices_concepts.Rmd" class="external-link"><code>vignettes/articles/omop_indices_concepts.Rmd</code></a></small>
       <div class="d-none name"><code>omop_indices_concepts.Rmd</code></div>
     </div>
 
     
     
+<p>The core functions in <strong>OmopIndices</strong> add indexes to a
+table:</p>
+<ul>
+<li><code><a href="../reference/addCharlsonIndex.html">addCharlsonIndex()</a></code></li>
+<li><code><a href="../reference/addUpdatedCharlsonIndex.html">addUpdatedCharlsonIndex()</a></code></li>
+<li><code><a href="../reference/addHospitalFrailtyRiskScore.html">addHospitalFrailtyRiskScore()</a></code></li>
+<li><code><a href="../reference/addElectronicFrailtyIndex.html">addElectronicFrailtyIndex()</a></code></li>
+<li><code><a href="../reference/addElectronicFrailtyIndex2.html">addElectronicFrailtyIndex2()</a></code></li>
+</ul>
+<p>These indices depend on a set of codelists, these codelist can be
+provided by the user using the <code>conceptSet</code> argument. If not
+provided the package contain its own definition for each one of the
+codelist.</p>
+<p>You can get the default codelists of a given index with
+<code><a href="../reference/getIndexCodelist.html">getIndexCodelist()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://OHDSI.github.io/OmopIndices/">OmopIndices</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://OHDSI.github.io/OmopIndices/">OmopIndices</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/getIndexCodelist.html">getIndexCodelist</a></span><span class="op">(</span><span class="st">"charlson"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">17 codelists</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; - aids (11 codes)</span></span>
+<span><span class="co">#&gt; - any_malignancy (716 codes)</span></span>
+<span><span class="co">#&gt; - cerebrovascular_disease (129 codes)</span></span>
+<span><span class="co">#&gt; - chronic_pulmonary_disease (92 codes)</span></span>
+<span><span class="co">#&gt; - congestive_heart_failure (41 codes)</span></span>
+<span><span class="co">#&gt; - connective_tissue_disease (60 codes)</span></span>
+<span><span class="co">#&gt; along with 11 more codelists</span></span></code></pre></div>
+<p>You can explore the different codelists here:</p>
+<div class="section level2 tabset">
+<h2 class="tabset" id="overview-of-codelists">Overview of codelists<a class="anchor" aria-label="anchor" href="#overview-of-codelists"></a>
+</h2>
+
+
+
+
+
+<ul class="nav nav-tabs" id="overview-of-codelists" role="tablist">
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#charlson-index" id="charlson-index-tab" type="button" role="tab" aria-controls="charlson-index" aria-selected="true" class="active nav-link">Charlson Index</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#updated-charlson-index" id="updated-charlson-index-tab" type="button" role="tab" aria-controls="updated-charlson-index" aria-selected="false" class="nav-link">Updated Charlson Index</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#electronic-frailty-index" id="electronic-frailty-index-tab" type="button" role="tab" aria-controls="electronic-frailty-index" aria-selected="false" class="nav-link">Electronic Frailty Index</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#electronic-frailty-index-2" id="electronic-frailty-index-2-tab" type="button" role="tab" aria-controls="electronic-frailty-index-2" aria-selected="false" class="nav-link">Electronic Frailty Index 2</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#hospital-frailty-risk-score" id="hospital-frailty-risk-score-tab" type="button" role="tab" aria-controls="hospital-frailty-risk-score" aria-selected="false" class="nav-link">Hospital Frailty Risk Score</button></li>
+</ul>
+<div class="tab-content">
+<div class="active  tab-pane" id="charlson-index" role="tabpanel" aria-labelledby="charlson-index-tab">
+
+</div>
+<div class="tab-pane" id="updated-charlson-index" role="tabpanel" aria-labelledby="updated-charlson-index-tab">
+
+</div>
+<div class="tab-pane" id="electronic-frailty-index" role="tabpanel" aria-labelledby="electronic-frailty-index-tab">
+
+</div>
+<div class="tab-pane" id="electronic-frailty-index-2" role="tabpanel" aria-labelledby="electronic-frailty-index-2-tab">
+
+</div>
+<div class="tab-pane" id="hospital-frailty-risk-score" role="tabpanel" aria-labelledby="hospital-frailty-risk-score-tab">
+
+</div>
+</div>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="section"></h2>
+</div>
+<div class="section level2 tabset">
+<h2 class="tabset" id="diagnostics-of-codelists">Diagnostics of codelists<a class="anchor" aria-label="anchor" href="#diagnostics-of-codelists"></a>
+</h2>
+<p>You might want to perform diagnostics on the mapping of your source
+data and assess how well the involved codelists are recorded you can
+easily do that using <strong>CodelistGenerator</strong> or
+<strong>PhenotypeR</strong>.</p>
+
+
+<ul class="nav nav-tabs" id="diagnostics-of-codelists" role="tablist">
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#codelistgenerator" id="codelistgenerator-tab" type="button" role="tab" aria-controls="codelistgenerator" aria-selected="true" class="active nav-link">CodelistGenerator</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#phenotyper" id="phenotyper-tab" type="button" role="tab" aria-controls="phenotyper" aria-selected="false" class="nav-link">PhenotypeR</button></li>
+</ul>
+<div class="tab-content">
+<div class="active  tab-pane" id="codelistgenerator" role="tabpanel" aria-labelledby="codelistgenerator-tab">
+
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/CodelistGenerator/" class="external-link">CodelistGenerator</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://OHDSI.github.io/OmopIndices/">OmopIndices</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/omock/" class="external-link">omock</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ohdsi.github.io/omock/reference/mockCdmFromDataset.html" class="external-link">mockCdmFromDataset</a></span><span class="op">(</span>datasetName <span class="op">=</span> <span class="st">"GiBleed"</span>, source <span class="op">=</span> <span class="st">"duckdb"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">codelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getIndexCodelist.html">getIndexCodelist</a></span><span class="op">(</span><span class="st">"charlson"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">codeUse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CodelistGenerator/reference/summariseCodeUse.html" class="external-link">summariseCodeUse</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">codelist</span>, cdm <span class="op">=</span> <span class="va">cdm</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://darwin-eu.github.io/CodelistGenerator/reference/tableCodeUse.html" class="external-link">tableCodeUse</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">codeUse</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="tab-pane" id="phenotyper" role="tabpanel" aria-labelledby="phenotyper-tab">
+
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/PhenotypeR/" class="external-link">PhenotypeR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/CohortConstructor/" class="external-link">CohortConstructor</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://OHDSI.github.io/OmopIndices/">OmopIndices</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/omock/" class="external-link">omock</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ohdsi.github.io/omock/reference/mockCdmFromDataset.html" class="external-link">mockCdmFromDataset</a></span><span class="op">(</span>datasetName <span class="op">=</span> <span class="st">"GiBleed"</span>, source <span class="op">=</span> <span class="st">"duckdb"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">codelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getIndexCodelist.html">getIndexCodelist</a></span><span class="op">(</span><span class="st">"charlson"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cdm</span><span class="op">$</span><span class="va">my_cohort</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ohdsi.github.io/CohortConstructor/reference/conceptCohort.html" class="external-link">conceptCohort</a></span><span class="op">(</span>cdm <span class="op">=</span> <span class="va">cdm</span>, conceptSet <span class="op">=</span> <span class="va">codelist</span>, name <span class="op">=</span> <span class="st">"my_cohort"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">phenotypeDiagnostics</span><span class="op">(</span>cohort <span class="op">=</span> <span class="va">cdm</span><span class="op">$</span><span class="va">my_cohort</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shinyDiagnostics</span><span class="op">(</span>result <span class="op">=</span> <span class="va">results</span>, directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="section-1"></h2>
+</div>
+<div class="section level2">
+<h2 id="codelists-generation">Codelists generation<a class="anchor" aria-label="anchor" href="#codelists-generation"></a>
+</h2>
+<p>As mentioned above the package contains default codelists these were
+obtained from other papers and projects:</p>
+<ul>
+<li><p><strong>Charlson Index</strong> and <strong>Updated Charlson
+Index</strong> codelists were obtained from <a href="https://doi.org/10.1186/s12911-022-02006-1" class="external-link">Fortin et al
+2022</a>.</p></li>
+<li><p><strong>Hospital Frailty Risk Score</strong> /<span class="citation">@martaalcalde</span> to explain</p></li>
+<li><p><strong>Electronic Frailty Index</strong> codelists were obtained
+from …</p></li>
+<li><p><strong>Electronic Frailty Index 2</strong> codelists were
+obtained from …</p></li>
+</ul>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

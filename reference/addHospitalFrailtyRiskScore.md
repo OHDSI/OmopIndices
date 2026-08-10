@@ -10,7 +10,7 @@ addHospitalFrailtyRiskScore(
   x,
   indexDate = "cohort_start_date",
   window = c(-365, 0),
-  conceptSet = NULL,
+  conceptSet = getIndexCodelist("hospital_frailty_risk_score"),
   categories = list(low = c(0, 5), intermediate = c(5, 15), high = c(15, Inf)),
   nameStyle = "hfrs",
   name = tableName(x)
@@ -107,8 +107,7 @@ addHospitalFrailtyRiskScore(
   `unspecified_dementia`, `unspecified_fall`, `unspecified_haematuria`,
   `unspecified_renal_failure`, `unspecified_urinary_incontinence`,
   `vascular_dementia`, `vitamin_d_deficiency`, `volume_depletion` as
-  concepts. If `NULL` concepts will be retrieved using the OmopConcepts
-  package.
+  concepts. By default internal concepts are used.
 
 - categories:
 

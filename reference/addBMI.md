@@ -29,8 +29,7 @@ addBMI(
 
   It can either be a , \<codelist_with_details\> or
   \<concept_set_expression\> object. It must contain `obesity`, `bmi` as
-  concepts. If `NULL` concepts will be retrieved using the OmopConcepts
-  package.
+  concepts. By default internal concepts are used.
 
 - indexDate:
 

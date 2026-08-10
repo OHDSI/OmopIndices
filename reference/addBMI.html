@@ -19,7 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/add_indices.html">add_indices</a></li>
-    <li><a class="dropdown-item" href="../articles/omop_indices_concepts.html">omop_indices_concepts</a></li>
+    <li><a class="dropdown-item" href="../articles/omop_indices_concepts.html">OmopIndices default concepts</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -66,7 +66,7 @@ columns.</p></dd>
 
 
 <dt id="arg-conceptset">conceptSet<a class="anchor" aria-label="anchor" href="#arg-conceptset"></a></dt>
-<dd><p>It can either be a <codelist>, &lt;codelist_with_details&gt; or &lt;concept_set_expression&gt; object. It must contain <code>obesity</code>, <code>bmi</code> as concepts. If <code>NULL</code> concepts will be retrieved using the OmopConcepts package.</codelist></p></dd>
+<dd><p>It can either be a <codelist>, &lt;codelist_with_details&gt; or &lt;concept_set_expression&gt; object. It must contain <code>obesity</code>, <code>bmi</code> as concepts. By default internal concepts are used.</codelist></p></dd>
 
 
 <dt id="arg-indexdate">indexDate<a class="anchor" aria-label="anchor" href="#arg-indexdate"></a></dt>
