@@ -118,3 +118,17 @@ shinyDiagnostics(result = results, directory = getwd())
 ```
 
 ## {-}
+
+## Codelists generation
+
+As mentioned above the package contains default codelists these were obtained
+from other papers and projects:
+
+- **Charlson Index** and **Updated Charlson Index** codelists were obtained from
+[Fortin et al 2022](https://doi.org/10.1186/s12911-022-02006-1).
+
+- **Hospital Frailty Risk Score** /@martaalcalde to explain
+
+- **Electronic Frailty Index** codelists were obtained from ...
+
+- **Electronic Frailty Index 2** codelists were obtained from ...
