@@ -2,7 +2,8 @@
 % Please edit documentation in R/addElectronicFrailtyIndex.R
 \name{addElectronicFrailtyIndex}
 \alias{addElectronicFrailtyIndex}
-\title{Add Electronic Frailty Index (eFI) value based Clegg et al. (2016) definition}
+\title{Add Electronic Frailty Index (eFI) value based on
+\href{https://doi.org/10.1093/ageing/afw039}{Clegg et al. (2016)}}
 \usage{
 addElectronicFrailtyIndex(
   x,
@@ -38,7 +39,8 @@ temporary table will be created.}
 The \code{x} table with a new column added with the eFI of the patient.
 }
 \description{
-Add Electronic Frailty Index (eFI) value based Clegg et al. (2016) definition
+Add Electronic Frailty Index (eFI) value based on
+\href{https://doi.org/10.1093/ageing/afw039}{Clegg et al. (2016)}
 }
 \examples{
 {
