@@ -20,7 +20,7 @@ addBMI(
 \item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
 columns.}
 
-\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{obesity}, \code{bmi} as concepts. If \code{NULL} internal conceptswill be used. Internal concepts can be checked with \code{getIndexCodelist()}.}
+\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{obesity}, \code{bmi} as concepts. By default internal concepts are used.}
 
 \item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
 table.}

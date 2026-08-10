@@ -47,31 +47,31 @@ load(file = here::here("vignettes/articles/selectors.RData"))
 ### Charlson Index
 
 ```{r, echo=FALSE}
-selectorCharlson
+#selectorCharlson
 ```
 
 ### Updated Charlson Index
 
 ```{r, echo=FALSE}
-selectorUpdatedCharlson
+#selectorUpdatedCharlson
 ```
 
 ### Electronic Frailty Index
 
 ```{r, echo=FALSE}
-selectorEFI
+#selectorEFI
 ```
 
 ### Electronic Frailty Index 2
 
 ```{r, echo=FALSE}
-selectorEFI2
+#selectorEFI2
 ```
 
 ### Hospital Frailty Risk Score
 
 ```{r, echo=FALSE}
-selectorHFRS
+#selectorHFRS
 ```
 
 ## {-}

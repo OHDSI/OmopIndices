@@ -14,8 +14,11 @@
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
+#'
 #' @returns The `x` table with a new eFI2 score column.
+#'
 #' @export
+#'
 addElectronicFrailtyIndex2 <- function(x,
                                        indexDate = "cohort_start_date",
                                        window = c(-365, 0),
@@ -30,7 +33,7 @@ addElectronicFrailtyIndex2 <- function(x,
                                        name = tableName(x)) {
   addIndex(
     x = x,
-    type = "efi2",
+    type = "electronic_frailty_index_2",
     indexDate = indexDate,
     window = window,
     conceptSet = conceptSet,

@@ -27,7 +27,7 @@ table.}
 
 \item{window}{Window to asses \verb{Charlson index} in, it must be a vector of two numeric values \code{c(min, max)}. Window times refer to days since \code{indexDate}.}
 
-\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{congestive_heart_failure}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{mild_liver_disease}, \code{hemiplegia}, \code{severe_chronic_kidney_disease}, \code{diabetes_with_complication}, \code{any_malignancy}, \code{moderate_or_severe_liver_disease}, \code{metastatic_solid_tumor}, \code{aids} as concepts. If \code{NULL} internal conceptswill be used. Internal concepts can be checked with \code{getIndexCodelist()}.}
+\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{congestive_heart_failure}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{mild_liver_disease}, \code{hemiplegia}, \code{severe_chronic_kidney_disease}, \code{diabetes_with_complication}, \code{any_malignancy}, \code{moderate_or_severe_liver_disease}, \code{metastatic_solid_tumor}, \code{aids} as concepts. By default internal concepts are used.}
 
 \item{nameStyle}{A character string with the name of the new column.}
 
@@ -50,23 +50,23 @@ Add Updated Charlson Comorbidity Index (CCI) value based on
 library(OmopIndices)
 library(omock)
 
-cdm <- mockCdmFromDataset()
-cdm <- cdm |>
- mockCohort()
+cdm <- mockCdmFromDataset() |>
+  mockCohort()
 
 conceptSet <- list(
- "congestive_heart_failure" = 319835L,
- "dementia" = 4182210L,
- "chronic_pulmonary_disease" = 255573L,
- "connective_tissue_disease" = 4134537L,
- "mild_liver_disease" = 194984L,
- "moderate_or_severe_liver_disease" = 4212540L,
- "diabetes_with_complication" = 42538715L,
- "hemiplegia" = 374022L,
- "severe_chronic_kidney_disease" = 46271022L,
- "any_malignancy" = 4180914L,
- "metastatic_solid_tumor" = 432851L,
- "aids" = 4267414L)
+  "congestive_heart_failure" = 319835L,
+  "dementia" = 4182210L,
+  "chronic_pulmonary_disease" = 255573L,
+  "connective_tissue_disease" = 4134537L,
+  "mild_liver_disease" = 194984L,
+  "moderate_or_severe_liver_disease" = 4212540L,
+  "diabetes_with_complication" = 42538715L,
+  "hemiplegia" = 374022L,
+  "severe_chronic_kidney_disease" = 46271022L,
+  "any_malignancy" = 4180914L,
+  "metastatic_solid_tumor" = 432851L,
+  "aids" = 4267414L
+)
 
 cdm$cohort |>
   addUpdatedCharlsonIndex(conceptSet = conceptSet)

@@ -17,6 +17,7 @@ Suggests:
     DBI,
     duckdb,
     gt,
+    here,
     htmltools,
     knitr,
     odbc,
