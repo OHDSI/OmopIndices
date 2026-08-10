@@ -16,26 +16,28 @@ Suggests:
     CohortConstructor,
     DBI,
     duckdb,
+    gt,
+    here,
+    htmltools,
     knitr,
     odbc,
     omock,
     rmarkdown,
     RPostgres,
-    testthat
+    testthat,
+    visOmopResults
 URL: https://OHDSI.github.io/OmopIndices/
 BugReports: https://github.com/OHDSI/OmopIndices/issues
 Imports: 
     cli,
     clock,
     dplyr,
-    OmopConcepts,
     omopgenerics,
     PatientProfiles,
     purrr,
     rlang
 Depends: 
     R (>= 3.5)
-Remotes:
-    ohdsi/OmopConcepts
 Config/roxygen2/version: 8.0.0
 VignetteBuilder: knitr
+Config/Needs/website: rmarkdown

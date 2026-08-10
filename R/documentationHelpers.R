@@ -28,8 +28,8 @@ documentationConceptSet <- function(cs) {
   paste0(
     "It can either be a <codelist>, <codelist_with_details> or ",
     "<concept_set_expression> object. It must contain `",
-    paste0(cs, collapse = "`, `"), "` as concepts. If `NULL` concepts will be ",
-    "retrieved using the OmopConcepts package."
+    paste0(cs, collapse = "`, `"), "` as concepts. By default internal concepts",
+    " are used."
   )
 }
 
@@ -67,3 +67,18 @@ NULL
 #' @name inObservationDoc
 #' @keywords internal
 NULL
+
+#' Helper for consistent documentation of `index` argument
+#'
+#' @param index A choice between the different indexes: `r indexOptions()`.
+#'
+#' @name indexDoc
+#' @keywords internal
+NULL
+
+indexOptions <- function() {
+  indices <- unique(internalConcepts$index)
+  indices <- paste0("`\"", indices, "\"`")
+  indices[length(indices)] <- paste0("and ", indices[length(indices)])
+  paste0(indices, collapse = ", ")
+}

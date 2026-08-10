@@ -1,0 +1,1574 @@
+codelist_name,concept_id,concept_name,vocabulary_id
+peripheral_vascular_disease,4316222,Venous intermittent claudication,SNOMED CT
+peripheral_vascular_disease,192673,Vascular insufficiency of intestine,SNOMED CT
+peripheral_vascular_disease,4134603,Vascular disorder of intestine,SNOMED CT
+peripheral_vascular_disease,312939,Thromboangiitis obliterans,SNOMED CT
+peripheral_vascular_disease,433222,"Thoracoabdominal aortic aneurysm, ruptured",SNOMED CT
+peripheral_vascular_disease,436996,Thoracoabdominal aortic aneurysm,SNOMED CT
+peripheral_vascular_disease,441051,Thoracic aortic aneurysm without rupture,SNOMED CT
+peripheral_vascular_disease,441875,Thoracic aortic aneurysm which has ruptured,SNOMED CT
+peripheral_vascular_disease,320646,Syphilitic aneurysm of aorta,SNOMED CT
+peripheral_vascular_disease,317305,Stricture of artery,SNOMED CT
+peripheral_vascular_disease,312343,Ruptured aortic aneurysm,SNOMED CT
+peripheral_vascular_disease,195559,Ruptured abdominal aortic aneurysm,SNOMED CT
+peripheral_vascular_disease,44782775,Peripheral vascular disease associated with another disorder,SNOMED CT
+peripheral_vascular_disease,321052,Peripheral vascular disease,SNOMED CT
+peripheral_vascular_disease,317309,Peripheral arterial occlusive disease,SNOMED CT
+peripheral_vascular_disease,36712807,Pain at rest of right lower limb co-occurrent and due to atherosclerosis,SNOMED CT
+peripheral_vascular_disease,36712805,Pain at rest of left lower limb co-occurrent and due to atherosclerosis,SNOMED CT
+peripheral_vascular_disease,4325344,Pain at rest due to peripheral vascular disease,SNOMED CT
+peripheral_vascular_disease,37312520,Ischemic foot ulcer due to atherosclerosis of artery of lower limb,SNOMED CT
+peripheral_vascular_disease,36712806,Intermittent claudication of right lower limb co-occurrent and due to atherosclerosis,SNOMED CT
+peripheral_vascular_disease,36717286,Intermittent claudication of left lower limb co-occurrent and due to atherosclerosis,SNOMED CT
+peripheral_vascular_disease,36717006,Intermittent claudication of bilateral lower limbs co-occurrent and due to atherosclerosis,SNOMED CT
+peripheral_vascular_disease,37312529,Intermittent claudication due to atherosclerosis of artery of limb,SNOMED CT
+peripheral_vascular_disease,442774,Intermittent claudication,SNOMED CT
+peripheral_vascular_disease,321882,Generalized atherosclerosis,SNOMED CT
+peripheral_vascular_disease,36717279,Gangrene of right lower limb due to atherosclerosis,SNOMED CT
+peripheral_vascular_disease,37312531,Gangrene of limb due to atherosclerosis of artery of limb,SNOMED CT
+peripheral_vascular_disease,36712963,Gangrene of left lower limb due to atherosclerosis,SNOMED CT
+peripheral_vascular_disease,134380,Erythromelalgia,SNOMED CT
+peripheral_vascular_disease,432346,Dissection of vertebral artery,SNOMED CT
+peripheral_vascular_disease,37016882,Dissection of thoracoabdominal aorta,SNOMED CT
+peripheral_vascular_disease,436136,Dissection of thoracic aorta,SNOMED CT
+peripheral_vascular_disease,37016889,Dissection of renal artery,SNOMED CT
+peripheral_vascular_disease,201043,Dissection of iliac artery,SNOMED CT
+peripheral_vascular_disease,37109512,Dissection of carotid artery,SNOMED CT
+peripheral_vascular_disease,46272492,Dissection of artery,SNOMED CT
+peripheral_vascular_disease,320739,Dissection of aorta,SNOMED CT
+peripheral_vascular_disease,4256889,Dissection of abdominal aorta,SNOMED CT
+peripheral_vascular_disease,199064,Chronic vascular insufficiency of intestine,SNOMED CT
+peripheral_vascular_disease,44782819,Chronic occlusion of artery of extremity,SNOMED CT
+peripheral_vascular_disease,35611566,Bilateral lower limb atherosclerosis pain at rest co-occurrent and due to atherosclerosis,SNOMED CT
+peripheral_vascular_disease,35615028,Bilateral atherosclerosis of lower limbs with gangrene,SNOMED CT
+peripheral_vascular_disease,195834,Atherosclerosis of renal artery,SNOMED CT
+peripheral_vascular_disease,40484551,Atherosclerosis of nonautologous biological bypass graft of limb,SNOMED CT
+peripheral_vascular_disease,46271459,Atherosclerosis of bypass graft of lower limb,SNOMED CT
+peripheral_vascular_disease,40483538,Atherosclerosis of bypass graft of limb,SNOMED CT
+peripheral_vascular_disease,40484541,Atherosclerosis of autologous vein bypass graft of limb,SNOMED CT
+peripheral_vascular_disease,37110250,Atherosclerosis of artery of lower limb,SNOMED CT
+peripheral_vascular_disease,40479625,Atherosclerosis of artery,SNOMED CT
+peripheral_vascular_disease,315558,Atherosclerosis of arteries of the extremities,SNOMED CT
+peripheral_vascular_disease,312934,Atherosclerosis of aorta,SNOMED CT
+peripheral_vascular_disease,318443,Arteriosclerotic vascular disease,SNOMED CT
+peripheral_vascular_disease,317577,Arteriosclerotic gangrene,SNOMED CT
+peripheral_vascular_disease,317585,Aortic aneurysm,SNOMED CT
+peripheral_vascular_disease,443622,Aneurysm of thoracic aorta,SNOMED CT
+peripheral_vascular_disease,4332246,Aneurysm,SNOMED CT
+peripheral_vascular_disease,321314,Abdominal aortic aneurysm without rupture,SNOMED CT
+peripheral_vascular_disease,198177,Abdominal aortic aneurysm,SNOMED CT
+congestive_heart_failure,443580,Systolic heart failure,SNOMED CT
+congestive_heart_failure,4273632,Right ventricular failure,SNOMED CT
+congestive_heart_failure,4195785,Right heart failure secondary to left heart failure,SNOMED CT
+congestive_heart_failure,4190773,Restrictive cardiomyopathy,SNOMED CT
+congestive_heart_failure,320122,Nutritional and metabolic cardiomyopathies,SNOMED CT
+congestive_heart_failure,4172864,Neonatal cardiac failure,SNOMED CT
+congestive_heart_failure,316994,Malignant hypertensive heart disease with congestive heart failure,SNOMED CT
+congestive_heart_failure,439846,Left heart failure,SNOMED CT
+congestive_heart_failure,444101,Hypertensive heart failure,SNOMED CT
+congestive_heart_failure,314378,Hypertensive heart disease with congestive heart failure,SNOMED CT
+congestive_heart_failure,439694,Hypertensive heart and renal disease with both (congestive) heart failure and renal failure,SNOMED CT
+congestive_heart_failure,439696,Hypertensive heart and renal disease with (congestive) heart failure,SNOMED CT
+congestive_heart_failure,44782728,Hypertensive heart AND chronic kidney disease with congestive heart failure,SNOMED CT
+congestive_heart_failure,4004279,High output heart failure,SNOMED CT
+congestive_heart_failure,316139,Heart failure,SNOMED CT
+congestive_heart_failure,4110961,Generalized ischemic myocardial dysfunction,SNOMED CT
+congestive_heart_failure,318773,Dilated cardiomyopathy secondary to alcohol,SNOMED CT
+congestive_heart_failure,4163710,Dilated cardiomyopathy,SNOMED CT
+congestive_heart_failure,443587,Diastolic heart failure,SNOMED CT
+congestive_heart_failure,315295,Congestive rheumatic heart failure,SNOMED CT
+congestive_heart_failure,319835,Congestive heart failure,SNOMED CT
+congestive_heart_failure,40482727,Combined systolic and diastolic dysfunction,SNOMED CT
+congestive_heart_failure,40479192,Chronic systolic heart failure,SNOMED CT
+congestive_heart_failure,4014159,Chronic right-sided heart failure,SNOMED CT
+congestive_heart_failure,444031,Chronic heart failure,SNOMED CT
+congestive_heart_failure,40479576,Chronic diastolic heart failure,SNOMED CT
+congestive_heart_failure,4229440,Chronic congestive heart failure,SNOMED CT
+congestive_heart_failure,44782719,Chronic combined systolic and diastolic heart failure,SNOMED CT
+congestive_heart_failure,320746,Cardiomyopathy associated with another disorder,SNOMED CT
+congestive_heart_failure,321319,Cardiomyopathy,SNOMED CT
+congestive_heart_failure,4215802,Cardiac asthma,SNOMED CT
+congestive_heart_failure,4242669,Biventricular congestive heart failure,SNOMED CT
+congestive_heart_failure,439698,Benign hypertensive heart disease with congestive cardiac failure,SNOMED CT
+congestive_heart_failure,40480603,Acute systolic heart failure,SNOMED CT
+congestive_heart_failure,4233424,Acute right-sided heart failure,SNOMED CT
+congestive_heart_failure,40480602,Acute on chronic systolic heart failure,SNOMED CT
+congestive_heart_failure,37309625,Acute on chronic right-sided congestive heart failure,SNOMED CT
+congestive_heart_failure,40481043,Acute on chronic diastolic heart failure,SNOMED CT
+congestive_heart_failure,44782733,Acute on chronic combined systolic and diastolic heart failure,SNOMED CT
+congestive_heart_failure,40481042,Acute diastolic heart failure,SNOMED CT
+congestive_heart_failure,44782718,Acute combined systolic and diastolic heart failure,SNOMED CT
+any_malignancy,138708,Acute leukemia,SNOMED CT
+any_malignancy,135496,Acute leukemia in remission,SNOMED CT
+any_malignancy,134305,Acute lymphoid leukemia,SNOMED CT
+any_malignancy,141816,Acute lymphoid leukemia in remission,SNOMED CT
+any_malignancy,36712834,Acute lymphoid leukemia relapse,SNOMED CT
+any_malignancy,4079686,Acute megakaryoblastic leukemia,SNOMED CT
+any_malignancy,135768,Acute monocytic leukemia,SNOMED CT
+any_malignancy,140672,Acute monocytic leukemia in remission,SNOMED CT
+any_malignancy,4189938,Acute monocytic/monoblastic leukemia,SNOMED CT
+any_malignancy,135762,Acute myeloid leukemia in remission,SNOMED CT
+any_malignancy,40483761,Acute myeloid leukemia with myelodysplasia-related changes,SNOMED CT
+any_malignancy,40481524,Acute myeloid leukemia with t(9:11)(p22;q23); MLLT3-MLL,SNOMED CT
+any_malignancy,140352,"Acute myeloid leukemia, disease",SNOMED CT
+any_malignancy,4003184,Acute panmyelosis with myelofibrosis,SNOMED CT
+any_malignancy,4002497,"Acute promyelocytic leukemia, FAB M3",SNOMED CT
+any_malignancy,4137687,"Acute promyelocytic leukemia, FAB M3, in remission",SNOMED CT
+any_malignancy,4003188,Adult T-cell leukemia/lymphoma,SNOMED CT
+any_malignancy,4297355,Aggressive NK-cell leukemia involving skin,SNOMED CT
+any_malignancy,37396742,Aggressive systemic mastocytosis,SNOMED CT
+any_malignancy,4003835,Alpha heavy chain disease (clinical),SNOMED CT
+any_malignancy,40488896,"Anaplastic large cell lymphoma, ALK negative",SNOMED CT
+any_malignancy,4299149,Anaplastic large T-cell systemic malignant lymphoma,SNOMED CT
+any_malignancy,4003021,Angiosarcoma of liver,SNOMED CT
+any_malignancy,4079282,Atypical chronic myeloid leukemia,SNOMED CT
+any_malignancy,4173963,B-cell acute lymphoblastic leukemia,SNOMED CT
+any_malignancy,4082311,B-cell chronic lymphocytic leukemia,SNOMED CT
+any_malignancy,434592,B-cell lymphoma (clinical),SNOMED CT
+any_malignancy,4173974,B-cell prolymphocytic leukemia,SNOMED CT
+any_malignancy,4041800,Burkitt's lymphoma (clinical),SNOMED CT
+any_malignancy,4097560,Burkitt's lymphoma of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,193428,Burkitt's lymphoma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,4091768,Burkitt's lymphoma of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,4097561,Burkitt's lymphoma of lymph nodes of axilla and upper limb,SNOMED CT
+any_malignancy,196055,Burkitt's lymphoma of lymph nodes of inguinal region and lower limb,SNOMED CT
+any_malignancy,315481,Burkitt's lymphoma of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,439293,Burkitt's lymphoma of spleen,SNOMED CT
+any_malignancy,435758,Burkitt's tumor of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,433426,Burkitt's tumor of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,437504,"Burkitt's tumor of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,140057,Chronic leukemia,SNOMED CT
+any_malignancy,134597,Chronic leukemia in remission,SNOMED CT
+any_malignancy,133438,Chronic lymphoid leukemia in remission,SNOMED CT
+any_malignancy,138379,"Chronic lymphoid leukemia, disease",SNOMED CT
+any_malignancy,136056,Chronic monocytic leukemia,SNOMED CT
+any_malignancy,760932,Chronic monocytic leukemia in relapse,SNOMED CT
+any_malignancy,134603,Chronic myeloid leukemia,SNOMED CT
+any_malignancy,132572,Chronic myeloid leukemia in remission,SNOMED CT
+any_malignancy,4133599,Chronic myelomonocytic leukemia,SNOMED CT
+any_malignancy,4082487,Cutaneous/peripheral T-cell lymphoma,SNOMED CT
+any_malignancy,40486171,Diffuse follicle center lymphoma,SNOMED CT
+any_malignancy,44808122,Diffuse large B-cell lymphoma,SNOMED CT
+any_malignancy,4300704,Diffuse large B-cell lymphoma (nodal/systemic with skin involvement),SNOMED CT
+any_malignancy,4003830,Diffuse non-Hodgkin's lymphoma,SNOMED CT
+any_malignancy,4003832,"Diffuse non-Hodgkin's lymphoma, immunoblastic (clinical)",SNOMED CT
+any_malignancy,4001328,"Diffuse non-Hodgkin's lymphoma, lymphoblastic (clinical)",SNOMED CT
+any_malignancy,4002356,"Diffuse non-Hodgkin's lymphoma, small cell (clinical)",SNOMED CT
+any_malignancy,4003831,"Diffuse non-Hodgkin's lymphoma, undifferentiated",SNOMED CT
+any_malignancy,138099,"Erythroleukemia, FAB M6",SNOMED CT
+any_malignancy,4139358,"Erythroleukemia, FAB M6 in remission",SNOMED CT
+any_malignancy,4094548,Extramedullary plasmacytoma,SNOMED CT
+any_malignancy,40482893,Extranodal marginal zone B-cell lymphoma of mucosa-associated lymphoid tissue (MALT-lymphoma),SNOMED CT
+any_malignancy,4212994,"Extranodal NK/T-cell lymphoma, nasal type",SNOMED CT
+any_malignancy,37395837,Familial malignant neoplasm of pancreas,SNOMED CT
+any_malignancy,4147411,Follicular non-Hodgkin's lymphoma,SNOMED CT
+any_malignancy,45765770,Follicular non-Hodgkin's lymphoma diffuse follicle center sub-type grade 1,SNOMED CT
+any_malignancy,4003833,"Follicular non-Hodgkin's lymphoma, large cell (clinical)",SNOMED CT
+any_malignancy,4001329,"Follicular non-Hodgkin's lymphoma, mixed small cleaved cell and large cell (clinical)",SNOMED CT
+any_malignancy,4002357,"Follicular non-Hodgkin's lymphoma, small cleaved cell (clinical)",SNOMED CT
+any_malignancy,4170421,Gastrointestinal stromal tumor,SNOMED CT
+any_malignancy,40486465,Gastrointestinal stromal tumor of esophagus,SNOMED CT
+any_malignancy,40490328,Gastrointestinal stromal tumor of large intestine,SNOMED CT
+any_malignancy,40492267,Gastrointestinal stromal tumor of small intestine,SNOMED CT
+any_malignancy,40492266,Gastrointestinal stromal tumor of stomach,SNOMED CT
+any_malignancy,4038845,Hairy cell leukemia (clinical),SNOMED CT
+any_malignancy,4245460,Hairy cell leukemia of spleen,SNOMED CT
+any_malignancy,4217892,Hand-Schüller-Christian disease,SNOMED CT
+any_malignancy,4288751,Heavy chain disease,SNOMED CT
+any_malignancy,4001172,Hepatoblastoma,SNOMED CT
+any_malignancy,37396884,Hereditary diffuse carcinoma of stomach,SNOMED CT
+any_malignancy,4002494,Histiocytic sarcoma (clinical),SNOMED CT
+any_malignancy,4038839,"Hodgkin lymphoma, nodular lymphocyte predominance (clinical)",SNOMED CT
+any_malignancy,4038835,Hodgkin's disease (clinical),SNOMED CT
+any_malignancy,436651,Hodgkin's disease of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,200355,Hodgkin's disease of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,195761,Hodgkin's disease of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,440965,Hodgkin's disease of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,434877,Hodgkin's disease of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,437818,"Hodgkin's disease of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,436652,Hodgkin's disease of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,316356,Hodgkin's disease of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,198704,Hodgkin's disease of spleen,SNOMED CT
+any_malignancy,4041798,"Hodgkin's disease, lymphocytic depletion (clinical)",SNOMED CT
+any_malignancy,432267,"Hodgkin's disease, lymphocytic depletion of extranodal AND/OR solid organ site",SNOMED CT
+any_malignancy,439285,"Hodgkin's disease, lymphocytic depletion of intra-abdominal lymph nodes",SNOMED CT
+any_malignancy,439282,"Hodgkin's disease, lymphocytic depletion of intrapelvic lymph nodes",SNOMED CT
+any_malignancy,141243,"Hodgkin's disease, lymphocytic depletion of intrathoracic lymph nodes",SNOMED CT
+any_malignancy,442151,"Hodgkin's disease, lymphocytic depletion of lymph nodes of axilla AND/OR upper limb",SNOMED CT
+any_malignancy,433161,"Hodgkin's disease, lymphocytic depletion of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,442150,"Hodgkin's disease, lymphocytic depletion of lymph nodes of inguinal region AND/OR lower limb",SNOMED CT
+any_malignancy,313980,"Hodgkin's disease, lymphocytic depletion of lymph nodes of multiple sites",SNOMED CT
+any_malignancy,439281,"Hodgkin's disease, lymphocytic depletion of spleen",SNOMED CT
+any_malignancy,438373,"Hodgkin's disease, lymphocytic-histiocytic predominance of extranodal AND/OR solid organ site",SNOMED CT
+any_malignancy,201242,"Hodgkin's disease, lymphocytic-histiocytic predominance of intra-abdominal lymph nodes",SNOMED CT
+any_malignancy,194876,"Hodgkin's disease, lymphocytic-histiocytic predominance of intrapelvic lymph nodes",SNOMED CT
+any_malignancy,440351,"Hodgkin's disease, lymphocytic-histiocytic predominance of intrathoracic lymph nodes",SNOMED CT
+any_malignancy,438703,"Hodgkin's disease, lymphocytic-histiocytic predominance of lymph nodes of axilla AND/OR upper limb",SNOMED CT
+any_malignancy,442163,"Hodgkin's disease, lymphocytic-histiocytic predominance of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,442162,"Hodgkin's disease, lymphocytic-histiocytic predominance of lymph nodes of inguinal region AND/OR lower limb",SNOMED CT
+any_malignancy,321522,"Hodgkin's disease, lymphocytic-histiocytic predominance of lymph nodes of multiple sites",SNOMED CT
+any_malignancy,198381,"Hodgkin's disease, lymphocytic-histiocytic predominance of spleen",SNOMED CT
+any_malignancy,4038843,"Hodgkin's disease, mixed cellularity (clinical)",SNOMED CT
+any_malignancy,435203,"Hodgkin's disease, mixed cellularity of extranodal AND/OR solid organ site",SNOMED CT
+any_malignancy,192268,"Hodgkin's disease, mixed cellularity of intra-abdominal lymph nodes",SNOMED CT
+any_malignancy,194594,"Hodgkin's disease, mixed cellularity of intrapelvic lymph nodes",SNOMED CT
+any_malignancy,136655,"Hodgkin's disease, mixed cellularity of intrathoracic lymph nodes",SNOMED CT
+any_malignancy,434299,"Hodgkin's disease, mixed cellularity of lymph nodes of axilla AND/OR upper limb",SNOMED CT
+any_malignancy,442161,"Hodgkin's disease, mixed cellularity of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,442160,"Hodgkin's disease, mixed cellularity of lymph nodes of inguinal region AND/OR lower limb",SNOMED CT
+any_malignancy,315202,"Hodgkin's disease, mixed cellularity of lymph nodes of multiple sites",SNOMED CT
+any_malignancy,442159,"Hodgkin's disease, mixed cellularity of spleen",SNOMED CT
+any_malignancy,4038842,"Hodgkin's disease, nodular sclerosis (clinical)",SNOMED CT
+any_malignancy,434302,"Hodgkin's disease, nodular sclerosis of extranodal AND/OR solid organ site",SNOMED CT
+any_malignancy,193434,"Hodgkin's disease, nodular sclerosis of intra-abdominal lymph nodes",SNOMED CT
+any_malignancy,199760,"Hodgkin's disease, nodular sclerosis of intrapelvic lymph nodes",SNOMED CT
+any_malignancy,136928,"Hodgkin's disease, nodular sclerosis of intrathoracic lymph nodes",SNOMED CT
+any_malignancy,314600,"Hodgkin's disease, nodular sclerosis of lymph nodes of axilla AND/OR upper limb",SNOMED CT
+any_malignancy,442158,"Hodgkin's disease, nodular sclerosis of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,442157,"Hodgkin's disease, nodular sclerosis of lymph nodes of inguinal region AND/OR lower limb",SNOMED CT
+any_malignancy,315763,"Hodgkin's disease, nodular sclerosis of lymph nodes of multiple sites",SNOMED CT
+any_malignancy,193157,"Hodgkin's disease, nodular sclerosis of spleen",SNOMED CT
+any_malignancy,4041797,Hodgkin's granuloma (clinical),SNOMED CT
+any_malignancy,439291,Hodgkin's granuloma of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,442156,Hodgkin's granuloma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,440354,Hodgkin's granuloma of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,442155,Hodgkin's granuloma of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,442154,"Hodgkin's granuloma of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,442153,Hodgkin's granuloma of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,320337,Hodgkin's granuloma of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,196355,Hodgkin's granuloma of spleen,SNOMED CT
+any_malignancy,198986,Hodgkin's paragranuloma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,438709,Hodgkin's paragranuloma of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,442152,Hodgkin's paragranuloma of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,435494,"Hodgkin's paragranuloma of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,442144,Hodgkin's paragranuloma of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,140663,Hodgkin's paragranuloma of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,4038840,Hodgkin's sarcoma (clinical),SNOMED CT
+any_malignancy,198372,Hodgkin's sarcoma of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,195196,Hodgkin's sarcoma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,433156,Hodgkin's sarcoma of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,320049,Hodgkin's sarcoma of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,442146,"Hodgkin's sarcoma of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,442145,Hodgkin's sarcoma of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,316649,Hodgkin's sarcoma of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,198710,Hodgkin's sarcoma of spleen,SNOMED CT
+any_malignancy,441523,Immunoproliferative neoplasm,SNOMED CT
+any_malignancy,4142878,Immunoproliferative neoplasm in remission,SNOMED CT
+any_malignancy,4003836,Immunoproliferative small intestinal disease (clinical),SNOMED CT
+any_malignancy,4001664,Intrahepatic bile duct carcinoma,SNOMED CT
+any_malignancy,40482847,Juvenile myelomonocytic leukemia,SNOMED CT
+any_malignancy,434584,Kaposi's sarcoma (clinical),SNOMED CT
+any_malignancy,198085,Kaposi's sarcoma of gastrointestinal tract,SNOMED CT
+any_malignancy,254583,Kaposi's sarcoma of lung,SNOMED CT
+any_malignancy,312846,Kaposi's sarcoma of lymph nodes,SNOMED CT
+any_malignancy,4033893,Kaposi's sarcoma of multiple organs,SNOMED CT
+any_malignancy,140958,Kaposi's sarcoma of palate,SNOMED CT
+any_malignancy,258981,Kaposi's sarcoma of skin,SNOMED CT
+any_malignancy,375479,Kaposi's sarcoma of soft tissue,SNOMED CT
+any_malignancy,4038846,"Langerhans cell histiocytosis, disseminated (clinical)",SNOMED CT
+any_malignancy,4044708,"Langerhans cell histiocytosis, unifocal (clinical)",SNOMED CT
+any_malignancy,441235,Large cell anaplastic lymphoma,SNOMED CT
+any_malignancy,40481357,Large cell lymphoma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,439761,Letterer-Siwe disease of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,444467,Letterer-Siwe disease of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,196363,Letterer-Siwe disease of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,434595,Letterer-Siwe disease of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,444466,Letterer-Siwe disease of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,436362,"Letterer-Siwe disease of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,444465,Letterer-Siwe disease of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,141814,Letterer-Siwe disease of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,197816,Letterer-Siwe disease of spleen,SNOMED CT
+any_malignancy,317510,Leukemia,SNOMED CT
+any_malignancy,135766,Leukemia in remission,SNOMED CT
+any_malignancy,132852,Leukemic reticuloendotheliosis of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,193429,Leukemic reticuloendotheliosis of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,196650,Leukemic reticuloendotheliosis of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,442095,Leukemic reticuloendotheliosis of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,439269,Leukemic reticuloendotheliosis of lymph nodes of axilla and upper limb,SNOMED CT
+any_malignancy,132570,"Leukemic reticuloendotheliosis of lymph nodes of head, face and neck",SNOMED CT
+any_malignancy,439268,Leukemic reticuloendotheliosis of lymph nodes of inguinal region and lower limb,SNOMED CT
+any_malignancy,318989,Leukemic reticuloendotheliosis of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,4001171,Liver cell carcinoma,SNOMED CT
+any_malignancy,4038841,Lymphocyte-rich classical Hodgkin lymphoma,SNOMED CT
+any_malignancy,4002358,Lymphoepithelioid lymphoma (clinical),SNOMED CT
+any_malignancy,132853,Lymphoid leukemia,SNOMED CT
+any_malignancy,760934,Lymphoid leukemia in relapse,SNOMED CT
+any_malignancy,134596,Lymphoid leukemia in remission,SNOMED CT
+any_malignancy,200662,Lymphosarcoma,SNOMED CT
+any_malignancy,440957,Lymphosarcoma and reticulosarcoma,SNOMED CT
+any_malignancy,197228,Lymphosarcoma of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,201810,Lymphosarcoma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,135194,Lymphosarcoma of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,441803,Lymphosarcoma of lymph nodes of axilla and upper limb,SNOMED CT
+any_malignancy,438380,"Lymphosarcoma of lymph nodes of head, face and neck",SNOMED CT
+any_malignancy,198702,Lymphosarcoma of lymph nodes of inguinal region and lower limb,SNOMED CT
+any_malignancy,318697,Lymphosarcoma of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,195201,Lymphosarcoma of spleen,SNOMED CT
+any_malignancy,4041104,Malignant histiocytosis (clinical),SNOMED CT
+any_malignancy,436929,Malignant histiocytosis of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,198098,Malignant histiocytosis of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,192270,Malignant histiocytosis of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,441812,Malignant histiocytosis of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,435200,Malignant histiocytosis of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,441525,"Malignant histiocytosis of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,197232,Malignant histiocytosis of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,321815,Malignant histiocytosis of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,193721,Malignant histiocytosis of spleen,SNOMED CT
+any_malignancy,4003834,Malignant immunoproliferative disease (clinical),SNOMED CT
+any_malignancy,432571,Malignant lymphoma,SNOMED CT
+any_malignancy,4094544,Malignant lymphoma - mixed small and large cell,SNOMED CT
+any_malignancy,440058,Malignant lymphoma of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,200349,Malignant lymphoma of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,195195,Malignant lymphoma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,435753,Malignant lymphoma of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,441521,Malignant lymphoma of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,438698,"Malignant lymphoma of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,192560,Malignant lymphoma of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,132841,Malignant lymphoma of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,200343,Malignant lymphoma of spleen,SNOMED CT
+any_malignancy,4040379,Malignant mast cell tumor (clinical),SNOMED CT
+any_malignancy,4245916,Malignant mast cell tumor of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,200667,Malignant mast cell tumor of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,434601,Malignant mast cell tumor of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,441245,Malignant mast cell tumor of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,435495,"Malignant mast cell tumor of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,198705,Malignant mast cell tumor of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,4095589,Malignant melanoma of ear and/or external auditory canal,SNOMED CT
+any_malignancy,4089860,Malignant melanoma of lip,SNOMED CT
+any_malignancy,4151263,Malignant melanoma of lower limb,SNOMED CT
+any_malignancy,4095592,Malignant melanoma of scalp and/or neck,SNOMED CT
+any_malignancy,141232,Malignant melanoma of skin,SNOMED CT
+any_malignancy,4244051,Malignant melanoma of skin of breast,SNOMED CT
+any_malignancy,434590,Malignant melanoma of skin of eyelid,SNOMED CT
+any_malignancy,133713,Malignant melanoma of skin of face,SNOMED CT
+any_malignancy,140048,Malignant melanoma of skin of lip,SNOMED CT
+any_malignancy,139757,Malignant melanoma of skin of lower limb,SNOMED CT
+any_malignancy,4244488,Malignant melanoma of skin of nose,SNOMED CT
+any_malignancy,133714,Malignant melanoma of skin of trunk,SNOMED CT
+any_malignancy,438983,Malignant melanoma of skin of upper limb,SNOMED CT
+any_malignancy,4153890,Malignant melanoma of trunk,SNOMED CT
+any_malignancy,4149851,Malignant melanoma of upper limb,SNOMED CT
+any_malignancy,4032870,Malignant mesothelioma of pericardium,SNOMED CT
+any_malignancy,4111917,Malignant mesothelioma of pleura,SNOMED CT
+any_malignancy,197506,Malignant neoplasm of abdomen,SNOMED CT
+any_malignancy,40481902,Malignant neoplasm of anorectum,SNOMED CT
+any_malignancy,77812,Malignant neoplasm of anterior wall of urinary bladder,SNOMED CT
+any_malignancy,377229,"Malignant neoplasm of auditory tube, middle ear and mastoid air cells",SNOMED CT
+any_malignancy,4091467,Malignant neoplasm of axillary tail of female breast,SNOMED CT
+any_malignancy,258084,Malignant neoplasm of bones of skull and face,SNOMED CT
+any_malignancy,4091490,Malignant neoplasm of cerebrum (excluding lobes and ventricles),SNOMED CT
+any_malignancy,4095018,Malignant neoplasm of connective and soft tissue of abdomen,SNOMED CT
+any_malignancy,4089777,Malignant neoplasm of connective and soft tissue of hip and lower limb,SNOMED CT
+any_malignancy,201231,Malignant neoplasm of connective and soft tissue of pelvis,SNOMED CT
+any_malignancy,4092358,Malignant neoplasm of connective and soft tissue of thorax,SNOMED CT
+any_malignancy,4092235,Malignant neoplasm of connective and soft tissue of upper limb and shoulder,SNOMED CT
+any_malignancy,194286,"Malignant neoplasm of corpus uteri, excluding isthmus",SNOMED CT
+any_malignancy,40491001,Malignant neoplasm of digestive system,SNOMED CT
+any_malignancy,374297,"Malignant neoplasm of eyeball excluding conjunctiva, cornea, retina and choroid",SNOMED CT
+any_malignancy,4095748,Malignant neoplasm of fundus of corpus uteri,SNOMED CT
+any_malignancy,73153,Malignant neoplasm of lateral wall of urinary bladder,SNOMED CT
+any_malignancy,436045,"Malignant neoplasm of lip, oral cavity and pharynx",SNOMED CT
+any_malignancy,4246127,Malignant neoplasm of liver,SNOMED CT
+any_malignancy,4095432,Malignant neoplasm of liver and intrahepatic bile ducts,SNOMED CT
+any_malignancy,4334322,Malignant neoplasm of lower respiratory tract,SNOMED CT
+any_malignancy,4095442,"Malignant neoplasm of nasal cavities, middle ear and accessory sinuses",SNOMED CT
+any_malignancy,4091464,Malignant neoplasm of nipple and areola of female breast,SNOMED CT
+any_malignancy,4091469,Malignant neoplasm of nipple and areola of male breast,SNOMED CT
+any_malignancy,4092223,Malignant neoplasm of orbital bone,SNOMED CT
+any_malignancy,4091486,Malignant neoplasm of overlapping lesion of urinary organs,SNOMED CT
+any_malignancy,4089769,"Malignant neoplasm of pelvic bones, sacrum and coccyx",SNOMED CT
+any_malignancy,4091621,Malignant neoplasm of peripheral nerve of abdomen,SNOMED CT
+any_malignancy,4097284,Malignant neoplasm of peripheral nerve of pelvis,SNOMED CT
+any_malignancy,4094262,Malignant neoplasm of peripheral nerve of thorax,SNOMED CT
+any_malignancy,4094260,Malignant neoplasm of peripheral nerves and autonomic nervous system,SNOMED CT
+any_malignancy,4095892,"Malignant neoplasm of peripheral nerves of head, face and neck",SNOMED CT
+any_malignancy,4097283,"Malignant neoplasm of peripheral nerves of lower limb, including hip",SNOMED CT
+any_malignancy,4095304,Malignant neoplasm of pituitary gland and craniopharyngeal duct,SNOMED CT
+any_malignancy,75756,Malignant neoplasm of posterior wall of urinary bladder,SNOMED CT
+any_malignancy,4095430,"Malignant neoplasm of rectum, rectosigmoid junction and anus",SNOMED CT
+any_malignancy,40482784,Malignant neoplasm of skeletal system,SNOMED CT
+any_malignancy,80665,Malignant neoplasm of thorax,SNOMED CT
+any_malignancy,440655,"Malignant neoplasm of tongue, tip and lateral border",SNOMED CT
+any_malignancy,4095168,"Malignant neoplasm, overlapping lesion of bladder",SNOMED CT
+any_malignancy,4092513,"Malignant neoplasm, overlapping lesion of breast",SNOMED CT
+any_malignancy,4092515,"Malignant neoplasm, overlapping lesion of cervix uteri",SNOMED CT
+any_malignancy,4094409,Malignant neoplasms of independent (primary) multiple sites,SNOMED CT
+any_malignancy,4110889,Malignant tumor of acoustic vestibular nerve,SNOMED CT
+any_malignancy,4180790,Malignant tumor of colon,SNOMED CT
+any_malignancy,4116238,Malignant tumor of digestive organ,SNOMED CT
+any_malignancy,4112734,Malignant tumor of endocrine pancreas,SNOMED CT
+any_malignancy,4114222,Malignant tumor of head and neck,SNOMED CT
+any_malignancy,443389,Malignant tumor of ill-defined site,SNOMED CT
+any_malignancy,4089530,Malignant tumor of lateral floor of mouth,SNOMED CT
+any_malignancy,4177242,Malignant tumor of lower limb,SNOMED CT
+any_malignancy,4147164,Malignant tumor of lymphoid hemopoietic and related tissue,SNOMED CT
+any_malignancy,4094863,Malignant tumor of Meckel's diverticulum,SNOMED CT
+any_malignancy,4095312,Malignant tumor of nasopharynx,SNOMED CT
+any_malignancy,4114198,Malignant tumor of olfactory tract,SNOMED CT
+any_malignancy,25189,Malignant tumor of oral cavity,SNOMED CT
+any_malignancy,4180793,Malignant tumor of pancreas,SNOMED CT
+any_malignancy,4177236,Malignant tumor of pelvis,SNOMED CT
+any_malignancy,4089665,Malignant tumor of peritoneum and retroperitoneum,SNOMED CT
+any_malignancy,4116235,Malignant tumor of salivary gland,SNOMED CT
+any_malignancy,443397,Malignant tumor of small intestine,SNOMED CT
+any_malignancy,4118989,"Malignant tumor of soft tissue of head, face and neck",SNOMED CT
+any_malignancy,4177112,Malignant tumor of trachea,SNOMED CT
+any_malignancy,4114221,Malignant tumor of unknown origin,SNOMED CT
+any_malignancy,4181485,Malignant tumor of upper limb,SNOMED CT
+any_malignancy,4177113,Malignant tumor of vertebral column,SNOMED CT
+any_malignancy,40481901,Mantle cell lymphoma,SNOMED CT
+any_malignancy,40479608,Mantle cell lymphoma of spleen,SNOMED CT
+any_malignancy,40490918,Marginal zone lymphoma,SNOMED CT
+any_malignancy,36684461,Marginal zone lymphoma of spleen,SNOMED CT
+any_malignancy,4002496,Mast cell leukemia (clinical),SNOMED CT
+any_malignancy,4264693,Mast cell malignancy,SNOMED CT
+any_malignancy,4096968,Mast cell malignancy of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,4094542,Mast cell malignancy of spleen,SNOMED CT
+any_malignancy,4225982,Mature T-cell AND/OR NK cell neoplasm,SNOMED CT
+any_malignancy,313159,Megakaryocytic leukemia,SNOMED CT
+any_malignancy,136930,Megakaryocytic leukemia in remission,SNOMED CT
+any_malignancy,4033891,"Mesothelioma (malignant, clinical disorder)",SNOMED CT
+any_malignancy,4001666,Mesothelioma of peritoneum,SNOMED CT
+any_malignancy,321526,Monocytic leukemia,SNOMED CT
+any_malignancy,437233,Multiple myeloma,SNOMED CT
+any_malignancy,436059,Multiple myeloma in remission,SNOMED CT
+any_malignancy,4040380,Mycosis fungoides (clinical),SNOMED CT
+any_malignancy,135204,Mycosis fungoides of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,201813,Mycosis fungoides of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,442169,Mycosis fungoides of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,134879,Mycosis fungoides of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,141524,Mycosis fungoides of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,138377,"Mycosis fungoides of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,194593,Mycosis fungoides of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,135764,Mycosis fungoides of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,442168,Mycosis fungoides of spleen,SNOMED CT
+any_malignancy,40492268,Myelodysplastic/myeloproliferative disease,SNOMED CT
+any_malignancy,140666,Myeloid leukemia,SNOMED CT
+any_malignancy,760933,Myeloid leukemia in relapse,SNOMED CT
+any_malignancy,132850,Myeloid leukemia in remission,SNOMED CT
+any_malignancy,140967,Myeloid sarcoma,SNOMED CT
+any_malignancy,132575,Myeloid sarcoma in remission,SNOMED CT
+any_malignancy,4054513,Neoplasm of accessory sinus,SNOMED CT
+any_malignancy,4180312,Neoplasm of extremity,SNOMED CT
+any_malignancy,4160342,Neoplasm of eye region,SNOMED CT
+any_malignancy,4130672,Neoplasm of multiple endocrine glands,SNOMED CT
+any_malignancy,4131761,Neoplasm of placenta,SNOMED CT
+any_malignancy,4308811,Neoplasm of soft tissue,SNOMED CT
+any_malignancy,4133600,Neoplasm of spleen,SNOMED CT
+any_malignancy,4149840,Nodular lymphoma,SNOMED CT
+any_malignancy,194878,Nodular lymphoma of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,200338,Nodular lymphoma of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,198088,Nodular lymphoma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,435492,Nodular lymphoma of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,437505,Nodular lymphoma of lymph nodes of axilla and upper limb,SNOMED CT
+any_malignancy,435207,"Nodular lymphoma of lymph nodes of head, face and neck",SNOMED CT
+any_malignancy,198707,Nodular lymphoma of lymph nodes of inguinal region and lower limb,SNOMED CT
+any_malignancy,320347,Nodular lymphoma of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,198374,Nodular lymphoma of spleen,SNOMED CT
+any_malignancy,4038838,Non-Hodgkin's lymphoma (clinical),SNOMED CT
+any_malignancy,40487528,Non-Hodgkin's lymphoma of extranodal site,SNOMED CT
+any_malignancy,133419,Overlapping malignant melanoma of skin,SNOMED CT
+any_malignancy,198695,Overlapping malignant neoplasm of biliary tract,SNOMED CT
+any_malignancy,198082,Overlapping malignant neoplasm of body of uterus,SNOMED CT
+any_malignancy,4032866,Overlapping malignant neoplasm of bone and articular cartilage,SNOMED CT
+any_malignancy,4033318,Overlapping malignant neoplasm of bone and articular cartilage of limbs,SNOMED CT
+any_malignancy,4003693,Overlapping malignant neoplasm of brain,SNOMED CT
+any_malignancy,372849,Overlapping malignant neoplasm of brain and other parts of the central nervous system,SNOMED CT
+any_malignancy,258375,Overlapping malignant neoplasm of bronchus and lung,SNOMED CT
+any_malignancy,79740,Overlapping malignant neoplasm of colon,SNOMED CT
+any_malignancy,25748,Overlapping malignant neoplasm of esophagus,SNOMED CT
+any_malignancy,438095,Overlapping malignant neoplasm of eye and adnexa (primary),SNOMED CT
+any_malignancy,133711,Overlapping malignant neoplasm of female breast,SNOMED CT
+any_malignancy,196051,Overlapping malignant neoplasm of female genital organs,SNOMED CT
+any_malignancy,140955,Overlapping malignant neoplasm of floor of mouth,SNOMED CT
+any_malignancy,321234,"Overlapping malignant neoplasm of heart, mediastinum and pleura",SNOMED CT
+any_malignancy,440044,Overlapping malignant neoplasm of hypopharynx,SNOMED CT
+any_malignancy,22839,Overlapping malignant neoplasm of larynx,SNOMED CT
+any_malignancy,133710,Overlapping malignant neoplasm of lip,SNOMED CT
+any_malignancy,444224,"Overlapping malignant neoplasm of lip, oral cavity and pharynx",SNOMED CT
+any_malignancy,28356,Overlapping malignant neoplasm of major salivary gland,SNOMED CT
+any_malignancy,4003684,Overlapping malignant neoplasm of male breast,SNOMED CT
+any_malignancy,196645,Overlapping malignant neoplasm of male genital organs,SNOMED CT
+any_malignancy,432558,Overlapping malignant neoplasm of nasopharynx,SNOMED CT
+any_malignancy,438691,Overlapping malignant neoplasm of oropharynx,SNOMED CT
+any_malignancy,4001170,Overlapping malignant neoplasm of palate,SNOMED CT
+any_malignancy,192261,Overlapping malignant neoplasm of pancreas,SNOMED CT
+any_malignancy,4002343,Overlapping malignant neoplasm of peripheral nerves and autonomic nervous system,SNOMED CT
+any_malignancy,438090,"Overlapping malignant neoplasm of rectum, anus and anal canal",SNOMED CT
+any_malignancy,198092,Overlapping malignant neoplasm of retroperitoneum and peritoneum,SNOMED CT
+any_malignancy,199747,Overlapping malignant neoplasm of small intestine,SNOMED CT
+any_malignancy,378081,Overlapping malignant neoplasm of soft tissues,SNOMED CT
+any_malignancy,197803,Overlapping malignant neoplasm of stomach,SNOMED CT
+any_malignancy,436043,Overlapping malignant neoplasm of tongue,SNOMED CT
+any_malignancy,4002498,Overlapping malignant neoplasm of tonsil,SNOMED CT
+any_malignancy,4003029,Overlapping malignant neoplasm of vulva,SNOMED CT
+any_malignancy,434881,Peripheral T-cell lymphoma (clinical),SNOMED CT
+any_malignancy,133154,Plasma cell leukemia,SNOMED CT
+any_malignancy,760936,Plasma cell leukemia in relapse,SNOMED CT
+any_malignancy,133158,Plasma cell leukemia in remission,SNOMED CT
+any_malignancy,443743,Plasma cell neoplasm,SNOMED CT
+any_malignancy,4216139,Plasmacytoma,SNOMED CT
+any_malignancy,135214,Polycythemia vera (clinical),SNOMED CT
+any_malignancy,373152,Primary central nervous system lymphoma,SNOMED CT
+any_malignancy,4301668,Primary cutaneous follicular center B-cell lymphoma,SNOMED CT
+any_malignancy,36716501,Primary malignant epithelial neoplasm of nasopharynx,SNOMED CT
+any_malignancy,439392,Primary malignant neoplasm,SNOMED CT
+any_malignancy,36684472,Primary malignant neoplasm of abdomen,SNOMED CT
+any_malignancy,193971,Primary malignant neoplasm of abdominal esophagus,SNOMED CT
+any_malignancy,259748,Primary malignant neoplasm of accessory sinus,SNOMED CT
+any_malignancy,4162115,Primary malignant neoplasm of adrenal cortex,SNOMED CT
+any_malignancy,198104,Primary malignant neoplasm of adrenal gland,SNOMED CT
+any_malignancy,4162859,Primary malignant neoplasm of adrenal medulla,SNOMED CT
+any_malignancy,441225,Primary malignant neoplasm of ampulla of Vater,SNOMED CT
+any_malignancy,436348,Primary malignant neoplasm of anal canal,SNOMED CT
+any_malignancy,436643,Primary malignant neoplasm of anterior aspect of epiglottis,SNOMED CT
+any_malignancy,432844,Primary malignant neoplasm of anterior mediastinum,SNOMED CT
+any_malignancy,438982,Primary malignant neoplasm of anterior portion of floor of mouth,SNOMED CT
+any_malignancy,436042,Primary malignant neoplasm of anterior two-thirds of tongue,SNOMED CT
+any_malignancy,438080,Primary malignant neoplasm of anterior wall of nasopharynx,SNOMED CT
+any_malignancy,40649300,Primary malignant neoplasm of anterior wall of urinary bladder,SNOMED CT
+any_malignancy,80045,Primary malignant neoplasm of anus,SNOMED CT
+any_malignancy,433143,Primary malignant neoplasm of appendix,SNOMED CT
+any_malignancy,444203,Primary malignant neoplasm of articular cartilage,SNOMED CT
+any_malignancy,4247719,Primary malignant neoplasm of ascending colon,SNOMED CT
+any_malignancy,441513,Primary malignant neoplasm of axillary tail of breast,SNOMED CT
+any_malignancy,36684817,Primary malignant neoplasm of axillary tail of left female breast,SNOMED CT
+any_malignancy,36684820,Primary malignant neoplasm of axillary tail of right female breast,SNOMED CT
+any_malignancy,256633,Primary malignant neoplasm of base of tongue,SNOMED CT
+any_malignancy,194589,Primary malignant neoplasm of biliary tract,SNOMED CT
+any_malignancy,196360,Primary malignant neoplasm of bladder,SNOMED CT
+any_malignancy,434293,Primary malignant neoplasm of body of pancreas,SNOMED CT
+any_malignancy,79749,Primary malignant neoplasm of body of penis,SNOMED CT
+any_malignancy,193422,Primary malignant neoplasm of body of stomach,SNOMED CT
+any_malignancy,4162860,Primary malignant neoplasm of body of uterus,SNOMED CT
+any_malignancy,76914,Primary malignant neoplasm of bone,SNOMED CT
+any_malignancy,4246802,Primary malignant neoplasm of bone of skull,SNOMED CT
+any_malignancy,4156114,Primary malignant neoplasm of border of tongue,SNOMED CT
+any_malignancy,380055,Primary malignant neoplasm of brain,SNOMED CT
+any_malignancy,441806,Primary malignant neoplasm of brain stem,SNOMED CT
+any_malignancy,4003674,Primary malignant neoplasm of branchial cleft,SNOMED CT
+any_malignancy,4162253,Primary malignant neoplasm of breast,SNOMED CT
+any_malignancy,4187851,Primary malignant neoplasm of breast lower inner quadrant,SNOMED CT
+any_malignancy,4188545,Primary malignant neoplasm of breast lower outer quadrant,SNOMED CT
+any_malignancy,4158563,Primary malignant neoplasm of breast upper inner quadrant,SNOMED CT
+any_malignancy,4187850,Primary malignant neoplasm of breast upper outer quadrant,SNOMED CT
+any_malignancy,432264,Primary malignant neoplasm of broad ligament,SNOMED CT
+any_malignancy,134579,Primary malignant neoplasm of buccal mucosa,SNOMED CT
+any_malignancy,432838,Primary malignant neoplasm of cardia of stomach,SNOMED CT
+any_malignancy,27235,Primary malignant neoplasm of carotid body,SNOMED CT
+any_malignancy,4246029,Primary malignant neoplasm of cauda equina,SNOMED CT
+any_malignancy,432837,Primary malignant neoplasm of cecum,SNOMED CT
+any_malignancy,4247822,Primary malignant neoplasm of central nervous system,SNOMED CT
+any_malignancy,432845,Primary malignant neoplasm of central portion of female breast,SNOMED CT
+any_malignancy,433149,Primary malignant neoplasm of cerebellum,SNOMED CT
+any_malignancy,436926,Primary malignant neoplasm of cerebral meninges,SNOMED CT
+any_malignancy,432848,Primary malignant neoplasm of cerebral ventricle,SNOMED CT
+any_malignancy,380661,Primary malignant neoplasm of cerebrum,SNOMED CT
+any_malignancy,441224,Primary malignant neoplasm of cervical esophagus,SNOMED CT
+any_malignancy,378696,Primary malignant neoplasm of choroid,SNOMED CT
+any_malignancy,4246808,Primary malignant neoplasm of ciliary body (primary),SNOMED CT
+any_malignancy,197225,Primary malignant neoplasm of clitoris,SNOMED CT
+any_malignancy,4003675,Primary malignant neoplasm of cloacogenic zone,SNOMED CT
+any_malignancy,197500,Primary malignant neoplasm of colon,SNOMED CT
+any_malignancy,255192,Primary malignant neoplasm of commissure of lip,SNOMED CT
+any_malignancy,373151,Primary malignant neoplasm of conjunctiva (primary),SNOMED CT
+any_malignancy,375490,Primary malignant neoplasm of cornea (primary),SNOMED CT
+any_malignancy,433975,Primary malignant neoplasm of cranial nerve,SNOMED CT
+any_malignancy,442134,Primary malignant neoplasm of craniopharyngeal duct,SNOMED CT
+any_malignancy,4003028,Primary malignant neoplasm of descended testis,SNOMED CT
+any_malignancy,441800,Primary malignant neoplasm of descending colon,SNOMED CT
+any_malignancy,42709931,Primary malignant neoplasm of dome of urinary bladder,SNOMED CT
+any_malignancy,434587,Primary malignant neoplasm of dorsal surface of tongue,SNOMED CT
+any_malignancy,435752,Primary malignant neoplasm of duodenum,SNOMED CT
+any_malignancy,441805,Primary malignant neoplasm of endocervix,SNOMED CT
+any_malignancy,133420,Primary malignant neoplasm of endocrine gland,SNOMED CT
+any_malignancy,4247238,Primary malignant neoplasm of endometrium,SNOMED CT
+any_malignancy,80340,Primary malignant neoplasm of epididymis,SNOMED CT
+any_malignancy,26638,Primary malignant neoplasm of esophagus,SNOMED CT
+any_malignancy,140046,Primary malignant neoplasm of ethmoidal sinus,SNOMED CT
+any_malignancy,436358,Primary malignant neoplasm of exocervix,SNOMED CT
+any_malignancy,40486896,Primary malignant neoplasm of extrahepatic bile duct,SNOMED CT
+any_malignancy,374874,Primary malignant neoplasm of eye,SNOMED CT
+any_malignancy,201801,Primary malignant neoplasm of fallopian tube,SNOMED CT
+any_malignancy,137809,Primary malignant neoplasm of female breast,SNOMED CT
+any_malignancy,201238,Primary malignant neoplasm of female genital organ,SNOMED CT
+any_malignancy,135750,Primary malignant neoplasm of floor of mouth,SNOMED CT
+any_malignancy,441233,Primary malignant neoplasm of frontal lobe,SNOMED CT
+any_malignancy,132258,Primary malignant neoplasm of frontal sinus,SNOMED CT
+any_malignancy,435751,Primary malignant neoplasm of fundus of stomach,SNOMED CT
+any_malignancy,197806,Primary malignant neoplasm of gallbladder,SNOMED CT
+any_malignancy,4179720,Primary malignant neoplasm of gastrointestinal tract,SNOMED CT
+any_malignancy,438370,Primary malignant neoplasm of glans penis,SNOMED CT
+any_malignancy,260336,Primary malignant neoplasm of glottis,SNOMED CT
+any_malignancy,437224,Primary malignant neoplasm of greater curvature of stomach,SNOMED CT
+any_malignancy,140950,Primary malignant neoplasm of gum,SNOMED CT
+any_malignancy,438694,Primary malignant neoplasm of hard palate,SNOMED CT
+any_malignancy,442131,Primary malignant neoplasm of head,SNOMED CT
+any_malignancy,440649,Primary malignant neoplasm of head of pancreas,SNOMED CT
+any_malignancy,316644,Primary malignant neoplasm of heart,SNOMED CT
+any_malignancy,438979,Primary malignant neoplasm of hepatic flexure of colon,SNOMED CT
+any_malignancy,434577,Primary malignant neoplasm of hypopharyngeal aspect of aryepiglottic fold,SNOMED CT
+any_malignancy,439746,Primary malignant neoplasm of hypopharynx,SNOMED CT
+any_malignancy,4311480,Primary malignant neoplasm of ileum,SNOMED CT
+any_malignancy,435485,Primary malignant neoplasm of ill-defined site,SNOMED CT
+any_malignancy,132832,Primary malignant neoplasm of inner aspect of lip,SNOMED CT
+any_malignancy,137219,Primary malignant neoplasm of inner aspect of lower lip,SNOMED CT
+any_malignancy,138351,Primary malignant neoplasm of inner aspect of upper lip,SNOMED CT
+any_malignancy,195482,Primary malignant neoplasm of intestinal tract,SNOMED CT
+any_malignancy,197804,Primary malignant neoplasm of intra-abdominal organs,SNOMED CT
+any_malignancy,40490929,Primary malignant neoplasm of intrahepatic bile duct,SNOMED CT
+any_malignancy,4247331,Primary malignant neoplasm of intrathoracic organs,SNOMED CT
+any_malignancy,25486,Primary malignant neoplasm of islets of Langerhans,SNOMED CT
+any_malignancy,192847,Primary malignant neoplasm of isthmus of uterus,SNOMED CT
+any_malignancy,436913,Primary malignant neoplasm of jejunum,SNOMED CT
+any_malignancy,440036,Primary malignant neoplasm of junctional zone of tongue,SNOMED CT
+any_malignancy,198985,Primary malignant neoplasm of kidney,SNOMED CT
+any_malignancy,437501,Primary malignant neoplasm of labia majora,SNOMED CT
+any_malignancy,441802,Primary malignant neoplasm of labia minora,SNOMED CT
+any_malignancy,4313056,Primary malignant neoplasm of lacrimal drainage system,SNOMED CT
+any_malignancy,372567,Primary malignant neoplasm of lacrimal gland,SNOMED CT
+any_malignancy,4246125,Primary malignant neoplasm of large intestine,SNOMED CT
+any_malignancy,436352,Primary malignant neoplasm of laryngeal cartilage,SNOMED CT
+any_malignancy,26052,Primary malignant neoplasm of larynx,SNOMED CT
+any_malignancy,440344,Primary malignant neoplasm of lateral portion of floor of mouth,SNOMED CT
+any_malignancy,438692,Primary malignant neoplasm of lateral wall of nasopharynx,SNOMED CT
+any_malignancy,440345,Primary malignant neoplasm of lateral wall of oropharynx,SNOMED CT
+any_malignancy,40650072,Primary malignant neoplasm of lateral wall of urinary bladder,SNOMED CT
+any_malignancy,434292,Primary malignant neoplasm of lesser curvature of stomach,SNOMED CT
+any_malignancy,434289,Primary malignant neoplasm of lingual tonsil,SNOMED CT
+any_malignancy,4155171,Primary malignant neoplasm of lip,SNOMED CT
+any_malignancy,201519,Primary malignant neoplasm of liver,SNOMED CT
+any_malignancy,436640,Primary malignant neoplasm of long bone of lower limb,SNOMED CT
+any_malignancy,440335,Primary malignant neoplasm of lower gum,SNOMED CT
+any_malignancy,432263,Primary malignant neoplasm of lower inner quadrant of female breast,SNOMED CT
+any_malignancy,201518,Primary malignant neoplasm of lower limb,SNOMED CT
+any_malignancy,4157454,"Primary malignant neoplasm of lower lobe, bronchus or lung",SNOMED CT
+any_malignancy,441515,Primary malignant neoplasm of lower outer quadrant of female breast,SNOMED CT
+any_malignancy,193138,Primary malignant neoplasm of lower third of esophagus,SNOMED CT
+any_malignancy,257503,Primary malignant neoplasm of main bronchus,SNOMED CT
+any_malignancy,4247836,Primary malignant neoplasm of major salivary gland,SNOMED CT
+any_malignancy,135489,Primary malignant neoplasm of male breast,SNOMED CT
+any_malignancy,197507,Primary malignant neoplasm of male genital organ,SNOMED CT
+any_malignancy,379756,Primary malignant neoplasm of mandible,SNOMED CT
+any_malignancy,137800,Primary malignant neoplasm of maxillary sinus,SNOMED CT
+any_malignancy,432256,Primary malignant neoplasm of Meckel's diverticulum,SNOMED CT
+any_malignancy,438693,Primary malignant neoplasm of mediastinum,SNOMED CT
+any_malignancy,4002340,Primary malignant neoplasm of meninges,SNOMED CT
+any_malignancy,4247336,Primary malignant neoplasm of middle ear,SNOMED CT
+any_malignancy,256646,"Primary malignant neoplasm of middle lobe, bronchus or lung",SNOMED CT
+any_malignancy,437805,Primary malignant neoplasm of middle third of esophagus,SNOMED CT
+any_malignancy,4247842,Primary malignant neoplasm of myometrium,SNOMED CT
+any_malignancy,438367,Primary malignant neoplasm of nasal cavity,SNOMED CT
+any_malignancy,36684473,Primary malignant neoplasm of nasopharynx,SNOMED CT
+any_malignancy,376918,Primary malignant neoplasm of nervous system,SNOMED CT
+any_malignancy,432559,Primary malignant neoplasm of occipital lobe,SNOMED CT
+any_malignancy,4246137,Primary malignant neoplasm of optic nerve,SNOMED CT
+any_malignancy,439404,Primary malignant neoplasm of oral cavity,SNOMED CT
+any_malignancy,441809,Primary malignant neoplasm of orbit,SNOMED CT
+any_malignancy,432833,Primary malignant neoplasm of oropharynx,SNOMED CT
+any_malignancy,200051,Primary malignant neoplasm of ovary,SNOMED CT
+any_malignancy,134290,Primary malignant neoplasm of palate,SNOMED CT
+any_malignancy,199754,Primary malignant neoplasm of pancreas,SNOMED CT
+any_malignancy,433423,Primary malignant neoplasm of pancreatic duct,SNOMED CT
+any_malignancy,442122,Primary malignant neoplasm of paraganglion,SNOMED CT
+any_malignancy,196047,Primary malignant neoplasm of parametrium,SNOMED CT
+any_malignancy,139753,Primary malignant neoplasm of parathyroid gland,SNOMED CT
+any_malignancy,200963,Primary malignant neoplasm of paraurethral glands,SNOMED CT
+any_malignancy,438086,Primary malignant neoplasm of parietal lobe,SNOMED CT
+any_malignancy,441510,Primary malignant neoplasm of parietal pleura,SNOMED CT
+any_malignancy,434588,Primary malignant neoplasm of parotid gland,SNOMED CT
+any_malignancy,4246141,Primary malignant neoplasm of pelvic bone,SNOMED CT
+any_malignancy,72566,"Primary malignant neoplasm of pelvic bones, sacrum and coccyx",SNOMED CT
+any_malignancy,198988,Primary malignant neoplasm of pelvis,SNOMED CT
+any_malignancy,195483,Primary malignant neoplasm of penis,SNOMED CT
+any_malignancy,4307721,Primary malignant neoplasm of peripheral nerve,SNOMED CT
+any_malignancy,4003694,"Primary malignant neoplasm of peripheral nerve of head, face AND/OR neck",SNOMED CT
+any_malignancy,4003179,Primary malignant neoplasm of peripheral nerves of trunk,SNOMED CT
+any_malignancy,4003175,Primary malignant neoplasm of peripheral nerves of upper limb,SNOMED CT
+any_malignancy,28083,Primary malignant neoplasm of pharynx,SNOMED CT
+any_malignancy,26361,Primary malignant neoplasm of pineal gland,SNOMED CT
+any_malignancy,24296,Primary malignant neoplasm of pituitary gland,SNOMED CT
+any_malignancy,36715801,Primary malignant neoplasm of placenta,SNOMED CT
+any_malignancy,78093,Primary malignant neoplasm of pleura,SNOMED CT
+any_malignancy,436922,Primary malignant neoplasm of postcricoid region,SNOMED CT
+any_malignancy,435474,Primary malignant neoplasm of posterior hypopharyngeal wall,SNOMED CT
+any_malignancy,435487,Primary malignant neoplasm of posterior mediastinum,SNOMED CT
+any_malignancy,436344,Primary malignant neoplasm of posterior wall of nasopharynx,SNOMED CT
+any_malignancy,439739,Primary malignant neoplasm of posterior wall of oropharynx,SNOMED CT
+any_malignancy,40650479,Primary malignant neoplasm of posterior wall of urinary bladder,SNOMED CT
+any_malignancy,440339,Primary malignant neoplasm of prepuce,SNOMED CT
+any_malignancy,200962,Primary malignant neoplasm of prostate,SNOMED CT
+any_malignancy,438089,Primary malignant neoplasm of pyloric antrum,SNOMED CT
+any_malignancy,192255,Primary malignant neoplasm of pylorus,SNOMED CT
+any_malignancy,435190,Primary malignant neoplasm of pyriform sinus,SNOMED CT
+any_malignancy,438699,Primary malignant neoplasm of rectosigmoid junction,SNOMED CT
+any_malignancy,74582,Primary malignant neoplasm of rectum,SNOMED CT
+any_malignancy,195480,Primary malignant neoplasm of renal pelvis,SNOMED CT
+any_malignancy,4311499,Primary malignant neoplasm of respiratory tract,SNOMED CT
+any_malignancy,377811,Primary malignant neoplasm of retina (primary),SNOMED CT
+any_malignancy,433704,Primary malignant neoplasm of retromolar area,SNOMED CT
+any_malignancy,198091,Primary malignant neoplasm of retroperitoneum,SNOMED CT
+any_malignancy,438977,Primary malignant neoplasm of ribs and/or sternum and/or clavicle,SNOMED CT
+any_malignancy,441520,Primary malignant neoplasm of round ligament of uterus,SNOMED CT
+any_malignancy,79758,Primary malignant neoplasm of scrotum,SNOMED CT
+any_malignancy,434880,Primary malignant neoplasm of short bone of lower limb,SNOMED CT
+any_malignancy,435493,Primary malignant neoplasm of short bone of upper limb,SNOMED CT
+any_malignancy,436635,Primary malignant neoplasm of sigmoid colon,SNOMED CT
+any_malignancy,192836,Primary malignant neoplasm of small intestine,SNOMED CT
+any_malignancy,254282,Primary malignant neoplasm of soft palate,SNOMED CT
+any_malignancy,376647,Primary malignant neoplasm of soft tissues,SNOMED CT
+any_malignancy,197807,Primary malignant neoplasm of soft tissues of abdomen,SNOMED CT
+any_malignancy,438094,Primary malignant neoplasm of soft tissues of lower limb,SNOMED CT
+any_malignancy,4247358,Primary malignant neoplasm of soft tissues of pelvis,SNOMED CT
+any_malignancy,317801,Primary malignant neoplasm of soft tissues of thorax,SNOMED CT
+any_malignancy,197808,Primary malignant neoplasm of soft tissues of trunk,SNOMED CT
+any_malignancy,436357,Primary malignant neoplasm of soft tissues of upper limb,SNOMED CT
+any_malignancy,193719,Primary malignant neoplasm of spermatic cord,SNOMED CT
+any_malignancy,136639,Primary malignant neoplasm of sphenoidal sinus,SNOMED CT
+any_malignancy,135491,Primary malignant neoplasm of spinal cord,SNOMED CT
+any_malignancy,134295,Primary malignant neoplasm of spinal meninges,SNOMED CT
+any_malignancy,193418,Primary malignant neoplasm of spleen,SNOMED CT
+any_malignancy,437798,Primary malignant neoplasm of splenic flexure of colon,SNOMED CT
+any_malignancy,196044,Primary malignant neoplasm of stomach,SNOMED CT
+any_malignancy,259755,Primary malignant neoplasm of subglottis,SNOMED CT
+any_malignancy,439738,Primary malignant neoplasm of sublingual gland,SNOMED CT
+any_malignancy,4312691,Primary malignant neoplasm of submaxillary gland,SNOMED CT
+any_malignancy,441223,Primary malignant neoplasm of superior wall of nasopharynx,SNOMED CT
+any_malignancy,261514,Primary malignant neoplasm of supraglottis,SNOMED CT
+any_malignancy,432843,Primary malignant neoplasm of tail of pancreas,SNOMED CT
+any_malignancy,433976,Primary malignant neoplasm of temporal lobe,SNOMED CT
+any_malignancy,433716,Primary malignant neoplasm of testis,SNOMED CT
+any_malignancy,197799,Primary malignant neoplasm of the peritoneum,SNOMED CT
+any_malignancy,135476,Primary malignant neoplasm of thoracic esophagus,SNOMED CT
+any_malignancy,438368,Primary malignant neoplasm of thymus,SNOMED CT
+any_malignancy,133424,Primary malignant neoplasm of thyroid gland,SNOMED CT
+any_malignancy,437498,Primary malignant neoplasm of tongue,SNOMED CT
+any_malignancy,31509,Primary malignant neoplasm of tonsil,SNOMED CT
+any_malignancy,433709,Primary malignant neoplasm of tonsillar fossa,SNOMED CT
+any_malignancy,440047,Primary malignant neoplasm of tonsillar pillar,SNOMED CT
+any_malignancy,432262,Primary malignant neoplasm of trachea,SNOMED CT
+any_malignancy,432257,Primary malignant neoplasm of transverse colon,SNOMED CT
+any_malignancy,435484,Primary malignant neoplasm of trigone of urinary bladder,SNOMED CT
+any_malignancy,4312698,Primary malignant neoplasm of trunk,SNOMED CT
+any_malignancy,436054,Primary malignant neoplasm of undescended testis,SNOMED CT
+any_malignancy,435478,Primary malignant neoplasm of upper gum,SNOMED CT
+any_malignancy,440956,Primary malignant neoplasm of upper inner quadrant of female breast,SNOMED CT
+any_malignancy,81239,Primary malignant neoplasm of upper limb,SNOMED CT
+any_malignancy,81237,Primary malignant neoplasm of upper limb bones and scapula,SNOMED CT
+any_malignancy,261236,"Primary malignant neoplasm of upper lobe, bronchus or lung",SNOMED CT
+any_malignancy,436353,Primary malignant neoplasm of upper outer quadrant of female breast,SNOMED CT
+any_malignancy,252840,Primary malignant neoplasm of upper respiratory tract,SNOMED CT
+any_malignancy,432260,Primary malignant neoplasm of upper third of esophagus,SNOMED CT
+any_malignancy,201517,Primary malignant neoplasm of urachus,SNOMED CT
+any_malignancy,200054,Primary malignant neoplasm of ureter,SNOMED CT
+any_malignancy,76924,Primary malignant neoplasm of ureteric orifice of urinary bladder,SNOMED CT
+any_malignancy,196049,Primary malignant neoplasm of urethra,SNOMED CT
+any_malignancy,436923,Primary malignant neoplasm of urinary bladder neck,SNOMED CT
+any_malignancy,76349,Primary malignant neoplasm of urinary system,SNOMED CT
+any_malignancy,200052,Primary malignant neoplasm of uterine adnexa,SNOMED CT
+any_malignancy,196359,Primary malignant neoplasm of uterine cervix,SNOMED CT
+any_malignancy,45770892,Primary malignant neoplasm of uterus,SNOMED CT
+any_malignancy,434285,Primary malignant neoplasm of uvula,SNOMED CT
+any_malignancy,196048,Primary malignant neoplasm of vagina,SNOMED CT
+any_malignancy,438360,Primary malignant neoplasm of vallecula,SNOMED CT
+any_malignancy,437220,Primary malignant neoplasm of ventral surface of tongue,SNOMED CT
+any_malignancy,133969,Primary malignant neoplasm of vermilion border of lip,SNOMED CT
+any_malignancy,132565,Primary malignant neoplasm of vermilion border of lower lip,SNOMED CT
+any_malignancy,138074,Primary malignant neoplasm of vermilion border of upper lip,SNOMED CT
+any_malignancy,75488,Primary malignant neoplasm of vertebral column,SNOMED CT
+any_malignancy,261808,Primary malignant neoplasm of vestibule of mouth,SNOMED CT
+any_malignancy,441230,Primary malignant neoplasm of visceral pleura,SNOMED CT
+any_malignancy,195197,Primary malignant neoplasm of vulva,SNOMED CT
+any_malignancy,432254,Primary malignant neoplasm of Waldeyer's ring,SNOMED CT
+any_malignancy,40481522,Primary mediastinal (thymic) large B-cell lymphoma,SNOMED CT
+any_malignancy,443719,Relapsing chronic myeloid leukemia,SNOMED CT
+any_malignancy,436920,Reticulosarcoma,SNOMED CT
+any_malignancy,200659,Reticulosarcoma of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,192265,Reticulosarcoma of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,435193,Reticulosarcoma of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,441241,Reticulosarcoma of lymph nodes of axilla and upper limb,SNOMED CT
+any_malignancy,438106,"Reticulosarcoma of lymph nodes of head, face and neck",SNOMED CT
+any_malignancy,200660,Reticulosarcoma of lymph nodes of inguinal region and lower limb,SNOMED CT
+any_malignancy,139759,Reticulosarcoma of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,442128,Reticulosarcoma of spleen,SNOMED CT
+any_malignancy,40488812,Sarcoma of dendritic cells (accessory cells),SNOMED CT
+any_malignancy,4115271,Sarcoma of liver,SNOMED CT
+any_malignancy,315497,Subacute leukemia,SNOMED CT
+any_malignancy,4143848,Subacute leukemia in remission,SNOMED CT
+any_malignancy,136656,Subacute lymphoid leukemia,SNOMED CT
+any_malignancy,4139054,Subacute lymphoid leukemia in remission,SNOMED CT
+any_malignancy,313430,Subacute monocytic leukemia,SNOMED CT
+any_malignancy,135499,Subacute myeloid leukemia,SNOMED CT
+any_malignancy,4143382,Subacute myeloid leukemia in remission,SNOMED CT
+any_malignancy,4041799,Sézary's disease (clinical),SNOMED CT
+any_malignancy,135759,Sézary's disease of extranodal AND/OR solid organ site,SNOMED CT
+any_malignancy,439267,Sézary's disease of intra-abdominal lymph nodes,SNOMED CT
+any_malignancy,439270,Sézary's disease of intrapelvic lymph nodes,SNOMED CT
+any_malignancy,439265,Sézary's disease of intrathoracic lymph nodes,SNOMED CT
+any_malignancy,138378,Sézary's disease of lymph nodes of axilla AND/OR upper limb,SNOMED CT
+any_malignancy,135765,"Sézary's disease of lymph nodes of head, face AND/OR neck",SNOMED CT
+any_malignancy,439266,Sézary's disease of lymph nodes of inguinal region and lower limb,SNOMED CT
+any_malignancy,199762,Sézary's disease of lymph nodes of inguinal region AND/OR lower limb,SNOMED CT
+any_malignancy,140664,Sézary's disease of lymph nodes of multiple sites,SNOMED CT
+any_malignancy,195760,Sézary's disease of spleen,SNOMED CT
+any_malignancy,4079683,T-cell prolymphocytic leukemia,SNOMED CT
+any_malignancy,4003182,T-zone lymphoma (clinical),SNOMED CT
+any_malignancy,4098597,Waldenström macroglobulinemia,SNOMED CT
+severe_chronic_kidney_disease,44784439,Benign hypertensive renal disease with renal failure,SNOMED CT
+severe_chronic_kidney_disease,312358,Chronic glomerulonephritis,SNOMED CT
+severe_chronic_kidney_disease,442075,Chronic glomerulonephritis associated with another disorder,SNOMED CT
+severe_chronic_kidney_disease,46271022,Chronic kidney disease,SNOMED CT
+severe_chronic_kidney_disease,443614,Chronic kidney disease stage 1,SNOMED CT
+severe_chronic_kidney_disease,443601,Chronic kidney disease stage 2,SNOMED CT
+severe_chronic_kidney_disease,443597,Chronic kidney disease stage 3,SNOMED CT
+severe_chronic_kidney_disease,45763854,Chronic kidney disease stage 3A,SNOMED CT
+severe_chronic_kidney_disease,45763855,Chronic kidney disease stage 3B,SNOMED CT
+severe_chronic_kidney_disease,443612,Chronic kidney disease stage 4,SNOMED CT
+severe_chronic_kidney_disease,443611,Chronic kidney disease stage 5,SNOMED CT
+severe_chronic_kidney_disease,44782690,Chronic kidney disease stage 5 due to hypertension,SNOMED CT
+severe_chronic_kidney_disease,4056462,Chronic mesangial proliferative glomerulonephritis,SNOMED CT
+severe_chronic_kidney_disease,46270347,Chronic nephritic syndrome with membranous glomerulonephritis,SNOMED CT
+severe_chronic_kidney_disease,4055899,"Chronic nephritic syndrome, dense deposit disease",SNOMED CT
+severe_chronic_kidney_disease,4056480,"Chronic nephritic syndrome, diffuse crescentic glomerulonephritis",SNOMED CT
+severe_chronic_kidney_disease,4059463,"Chronic nephritic syndrome, diffuse endocapillary proliferative glomerulonephritis",SNOMED CT
+severe_chronic_kidney_disease,4059584,"Chronic nephritic syndrome, diffuse mesangiocapillary glomerulonephritis",SNOMED CT
+severe_chronic_kidney_disease,45770906,Chronic proliferative glomerulonephritis,SNOMED CT
+severe_chronic_kidney_disease,198185,Chronic renal failure,SNOMED CT
+severe_chronic_kidney_disease,193782,End-stage renal disease,SNOMED CT
+severe_chronic_kidney_disease,44784621,Hypertensive heart and chronic kidney disease,SNOMED CT
+severe_chronic_kidney_disease,439694,Hypertensive heart and renal disease with both (congestive) heart failure and renal failure,SNOMED CT
+severe_chronic_kidney_disease,439695,Hypertensive heart and renal disease with renal failure,SNOMED CT
+severe_chronic_kidney_disease,443919,Hypertensive renal failure,SNOMED CT
+severe_chronic_kidney_disease,198124,Kidney disease,SNOMED CT
+severe_chronic_kidney_disease,43020455,Malignant hypertensive end stage renal disease,SNOMED CT
+severe_chronic_kidney_disease,252365,Membranous glomerulonephritis,SNOMED CT
+severe_chronic_kidney_disease,4146996,Mesangial proliferative glomerulonephritis,SNOMED CT
+severe_chronic_kidney_disease,433257,Mesangiocapillary glomerulonephritis,SNOMED CT
+severe_chronic_kidney_disease,4298809,Nephritic syndrome,SNOMED CT
+severe_chronic_kidney_disease,192359,Renal failure syndrome,SNOMED CT
+severe_chronic_kidney_disease,197921,Renal osteodystrophy,SNOMED CT
+severe_chronic_kidney_disease,42539502,Transplanted kidney present,SNOMED CT
+diabetes_without_complication,4196141,Arthropathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_without_complication,443735,Coma due to diabetes mellitus,SNOMED CT
+diabetes_without_complication,4221933,Coma due to malnutrition-related diabetes mellitus,SNOMED CT
+diabetes_without_complication,45769832,Dermopathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_without_complication,43531616,Dermopathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_without_complication,201820,Diabetes mellitus,SNOMED CT
+diabetes_without_complication,4008576,Diabetes mellitus without complication,SNOMED CT
+diabetes_without_complication,443727,Diabetic ketoacidosis,SNOMED CT
+diabetes_without_complication,37016348,Hyperglycemia due to type 1 diabetes mellitus,SNOMED CT
+diabetes_without_complication,37016349,Hyperglycemia due to type 2 diabetes mellitus,SNOMED CT
+diabetes_without_complication,443592,Hyperosmolality due to uncontrolled type 1 diabetes mellitus,SNOMED CT
+diabetes_without_complication,4226238,Hyperosmolar coma due to diabetes mellitus,SNOMED CT
+diabetes_without_complication,201531,Hyperosmolar coma due to type 1 diabetes mellitus,SNOMED CT
+diabetes_without_complication,201530,Hyperosmolar coma due to type 2 diabetes mellitus,SNOMED CT
+diabetes_without_complication,4226798,Hypoglycemic coma due to diabetes mellitus,SNOMED CT
+diabetes_without_complication,4228112,Hypoglycemic coma due to type 1 diabetes mellitus,SNOMED CT
+diabetes_without_complication,36714116,Hypoglycemic coma due to type 2 diabetes mellitus,SNOMED CT
+diabetes_without_complication,4095288,Ketoacidotic coma due to diabetes mellitus,SNOMED CT
+diabetes_without_complication,4224254,Ketoacidotic coma due to type 1 diabetes mellitus,SNOMED CT
+diabetes_without_complication,4228443,Ketoacidotic coma due to type 2 diabetes mellitus,SNOMED CT
+diabetes_without_complication,4327944,Malnutrition related diabetes mellitus,SNOMED CT
+diabetes_without_complication,4096041,Malnutrition-related diabetes mellitus with ketoacidosis,SNOMED CT
+diabetes_without_complication,4096042,Malnutrition-related diabetes mellitus without complications,SNOMED CT
+diabetes_without_complication,201254,Type 1 diabetes mellitus,SNOMED CT
+diabetes_without_complication,4152858,Type 1 diabetes mellitus with arthropathy,SNOMED CT
+diabetes_without_complication,4099214,Type 1 diabetes mellitus with ulcer,SNOMED CT
+diabetes_without_complication,443412,Type 1 diabetes mellitus without complication,SNOMED CT
+diabetes_without_complication,201826,Type 2 diabetes mellitus,SNOMED CT
+diabetes_without_complication,4099651,Type 2 diabetes mellitus with ulcer,SNOMED CT
+diabetes_without_complication,4193704,Type 2 diabetes mellitus without complication,SNOMED CT
+diabetes_without_complication,40482801,Type II diabetes mellitus uncontrolled,SNOMED CT
+diabetes_with_complication,4175440,Autonomic neuropathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,37016767,Autonomic neuropathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,37016768,Autonomic neuropathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,376979,Cataract due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4225656,Cataract due to diabetes mellitus type 1,SNOMED CT
+diabetes_with_complication,4221495,Cataract due to diabetes mellitus type 2,SNOMED CT
+diabetes_with_complication,43531578,Chronic kidney disease due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,442793,Complication due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4048028,Diabetic mononeuropathy,SNOMED CT
+diabetes_with_complication,435216,Disorder due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,443732,Disorder due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,443767,Disorder of eye due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4224419,Disorder of eye due to malnutrition related diabetes mellitus,SNOMED CT
+diabetes_with_complication,42538169,Disorder of eye due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,443733,Disorder of eye due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,192279,Disorder of kidney due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,443730,Disorder of nervous system due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4224879,Disorder of nervous system due to malnutrition related diabetes mellitus,SNOMED CT
+diabetes_with_complication,377821,Disorder of nervous system due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,376065,Disorder of nervous system due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,4226354,Gangrene due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4223303,Gangrene due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,4222876,Gangrene due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,4191611,Lumbosacral radiculoplexus neuropathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4143857,Lumbosacral radiculoplexus neuropathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,4140466,Lumbosacral radiculoplexus neuropathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,45770830,Macular edema and retinopathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,380097,Macular edema due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4096671,Malnutrition-related diabetes mellitus with peripheral circulatory complications,SNOMED CT
+diabetes_with_complication,4096670,Malnutrition-related diabetes mellitus with renal complications,SNOMED CT
+diabetes_with_complication,378743,Mild nonproliferative retinopathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,37016179,Mild nonproliferative retinopathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,45757435,Mild nonproliferative retinopathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,377552,Moderate nonproliferative retinopathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,37016180,Moderate nonproliferative retinopathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,45770881,Moderate nonproliferative retinopathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,4225055,Mononeuropathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,4222415,Mononeuropathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,40480000,Multiple complications due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4099652,Multiple complications due to malnutrition related diabetes,SNOMED CT
+diabetes_with_complication,4044391,Neuropathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,45763583,Nonproliferative diabetic retinopathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,43530656,Nonproliferative retinopathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,4131908,Peripheral angiopathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,318712,Peripheral circulatory disorder due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,443729,Peripheral circulatory disorder due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,321822,Peripheral vascular disorder due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,376112,Polyneuropathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,37017431,Polyneuropathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,37017432,Polyneuropathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,380096,Proliferative retinopathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,45763584,Proliferative retinopathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,43530685,Proliferative retinopathy due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,200687,Renal disorder due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,443731,Renal disorder due to type 2 diabetes mellitus,SNOMED CT
+diabetes_with_complication,4174977,Retinopathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4227210,Retinopathy due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,376114,Severe nonproliferative retinopathy due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4290822,Severe nonproliferative retinopathy with clinically significant macular edema due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4266637,Severe nonproliferative retinopathy without macular edema due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,4338901,Traction detachment of retina due to diabetes mellitus,SNOMED CT
+diabetes_with_complication,45769873,Traction detachment of retina due to type 1 diabetes mellitus,SNOMED CT
+diabetes_with_complication,45773064,Traction detachment of retina due to type 2 diabetes mellitus,SNOMED CT
+cerebrovascular_disease,4164092,Acute cerebrovascular insufficiency,SNOMED CT
+cerebrovascular_disease,374060,Acute ill-defined cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,42535426,Acute nontraumatic subdural hemorrhage,SNOMED CT
+cerebrovascular_disease,4338523,Amaurosis fugax,SNOMED CT
+cerebrovascular_disease,4108360,Anterior cerebral artery syndrome,SNOMED CT
+cerebrovascular_disease,40480002,Aphasia as late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,43530679,Apraxia as late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,443551,Apraxia due to cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,43531622,Ataxia as sequela of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,4006294,Basilar artery embolism,SNOMED CT
+cerebrovascular_disease,374055,Basilar artery syndrome,SNOMED CT
+cerebrovascular_disease,4338227,Basilar artery thrombosis,SNOMED CT
+cerebrovascular_disease,759831,Bilateral paralytic syndrome as late effect of stroke,SNOMED CT
+cerebrovascular_disease,4319328,Brain stem hemorrhage,SNOMED CT
+cerebrovascular_disease,4111710,Brainstem stroke syndrome,SNOMED CT
+cerebrovascular_disease,4213731,Carotid artery embolism,SNOMED CT
+cerebrovascular_disease,4288310,Carotid artery obstruction,SNOMED CT
+cerebrovascular_disease,313226,Carotid artery occlusion,SNOMED CT
+cerebrovascular_disease,4112020,Carotid artery syndrome hemispheric,SNOMED CT
+cerebrovascular_disease,4311124,Carotid artery thrombosis,SNOMED CT
+cerebrovascular_disease,4111711,Cerebellar stroke syndrome,SNOMED CT
+cerebrovascular_disease,4045749,Cerebral amyloid angiopathy,SNOMED CT
+cerebrovascular_disease,380747,Cerebral arteritis,SNOMED CT
+cerebrovascular_disease,45766199,Cerebral arteritis due to infectious disease,SNOMED CT
+cerebrovascular_disease,372924,Cerebral artery occlusion,SNOMED CT
+cerebrovascular_disease,316437,Cerebral atherosclerosis,SNOMED CT
+cerebrovascular_disease,4190891,Cerebral autosomal dominant arteriopathy with subcortical infarcts and leukoencephalopathy,SNOMED CT
+cerebrovascular_disease,375557,Cerebral embolism,SNOMED CT
+cerebrovascular_disease,376713,Cerebral hemorrhage,SNOMED CT
+cerebrovascular_disease,4110189,Cerebral infarct due to thrombosis of precerebral arteries,SNOMED CT
+cerebrovascular_disease,443454,Cerebral infarction,SNOMED CT
+cerebrovascular_disease,4111714,"Cerebral infarction due to cerebral venous thrombosis, non-pyogenic",SNOMED CT
+cerebrovascular_disease,4108356,Cerebral infarction due to embolism of cerebral arteries,SNOMED CT
+cerebrovascular_disease,45772786,Cerebral infarction due to embolism of middle cerebral artery,SNOMED CT
+cerebrovascular_disease,4110190,Cerebral infarction due to embolism of precerebral arteries,SNOMED CT
+cerebrovascular_disease,46273649,Cerebral infarction due to occlusion of basilar artery,SNOMED CT
+cerebrovascular_disease,46270031,Cerebral infarction due to occlusion of precerebral artery,SNOMED CT
+cerebrovascular_disease,4110192,Cerebral infarction due to thrombosis of cerebral arteries,SNOMED CT
+cerebrovascular_disease,45767658,Cerebral infarction due to thrombosis of middle cerebral artery,SNOMED CT
+cerebrovascular_disease,374384,Cerebral ischemia,SNOMED CT
+cerebrovascular_disease,441874,Cerebral thrombosis,SNOMED CT
+cerebrovascular_disease,45766121,Cerebral vasoconstriction syndrome,SNOMED CT
+cerebrovascular_disease,381316,Cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,381591,Cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,43530851,Chronic non-traumatic intracranial subdural hemorrhage,SNOMED CT
+cerebrovascular_disease,4176892,Cortical hemorrhage,SNOMED CT
+cerebrovascular_disease,4121341,Diffuse cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,43022059,Disease of non-coronary systemic artery,SNOMED CT
+cerebrovascular_disease,4159164,Disorder of basilar artery,SNOMED CT
+cerebrovascular_disease,4153380,Disorder of carotid artery,SNOMED CT
+cerebrovascular_disease,37016924,Dissection of cerebral artery,SNOMED CT
+cerebrovascular_disease,43530687,Dysarthria as late effects of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,443465,Dysphagia as a late effect of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,40479575,Dysphasia as late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,43530688,Fluency disorder as sequela of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,44782781,Hemiplegia and/or hemiparesis following stroke,SNOMED CT
+cerebrovascular_disease,40481762,Hemiplegia as late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,40484522,Hemiplegia of dominant side as late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,40484513,Hemiplegia of nondominant side as late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,443916,Hereditary disease,SNOMED CT
+cerebrovascular_disease,4180158,Hereditary disorder by system,SNOMED CT
+cerebrovascular_disease,312938,Hypertensive encephalopathy,SNOMED CT
+cerebrovascular_disease,4043731,Infarction - precerebral,SNOMED CT
+cerebrovascular_disease,4110185,"Intracerebral hemorrhage, intraventricular",SNOMED CT
+cerebrovascular_disease,4110186,"Intracerebral hemorrhage, multiple localized",SNOMED CT
+cerebrovascular_disease,4353709,Intracerebral vascular finding,SNOMED CT
+cerebrovascular_disease,439847,Intracranial hemorrhage,SNOMED CT
+cerebrovascular_disease,4179912,Intracranial venous thrombosis,SNOMED CT
+cerebrovascular_disease,4046360,Lacunar infarction,SNOMED CT
+cerebrovascular_disease,434056,Late effects of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,4027461,Leukoencephalopathy,SNOMED CT
+cerebrovascular_disease,4110194,Middle cerebral artery syndrome,SNOMED CT
+cerebrovascular_disease,197303,Monoplegia of dominant lower limb as a late effect of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,443525,Monoplegia of dominant upper limb as a late effect of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,40480938,Monoplegia of lower limb as late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,40480946,Monoplegia of nondominant lower limb as a late effect of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,40482266,Monoplegia of nondominant upper limb as a late effect of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,40481842,Monoplegia of upper limb as late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,378774,Moyamoya disease,SNOMED CT
+cerebrovascular_disease,381036,Multiple AND bilateral precerebral artery stenosis,SNOMED CT
+cerebrovascular_disease,4144154,Non-traumatic intracerebral ventricular hemorrhage,SNOMED CT
+cerebrovascular_disease,4111709,Non-traumatic subdural hemorrhage,SNOMED CT
+cerebrovascular_disease,314667,Nonpyogenic thrombosis of intracranial venous sinus,SNOMED CT
+cerebrovascular_disease,436430,Nontraumatic extradural hemorrhage,SNOMED CT
+cerebrovascular_disease,4111716,Occlusion and stenosis of anterior cerebral artery,SNOMED CT
+cerebrovascular_disease,4112024,Occlusion and stenosis of cerebellar arteries,SNOMED CT
+cerebrovascular_disease,4112023,Occlusion and stenosis of middle cerebral artery,SNOMED CT
+cerebrovascular_disease,4111717,Occlusion and stenosis of posterior cerebral artery,SNOMED CT
+cerebrovascular_disease,372654,Paralytic syndrome as late effect of stroke,SNOMED CT
+cerebrovascular_disease,443609,Paralytic syndrome of dominant side as late effect of stroke,SNOMED CT
+cerebrovascular_disease,443599,Paralytic syndrome of nondominant side as late effect of stroke,SNOMED CT
+cerebrovascular_disease,43530742,Paralytic syndrome on one side of the body as late effect of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,4110195,Posterior cerebral artery syndrome,SNOMED CT
+cerebrovascular_disease,42872891,Posterior reversible encephalopathy syndrome,SNOMED CT
+cerebrovascular_disease,443239,Precerebral arterial occlusion,SNOMED CT
+cerebrovascular_disease,4045737,Pure motor lacunar infarction,SNOMED CT
+cerebrovascular_disease,4045738,Pure sensory lacunar infarction,SNOMED CT
+cerebrovascular_disease,40482301,Residual cognitive deficit as late effect of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,45773220,Reversible cerebral vasoconstriction syndrome,SNOMED CT
+cerebrovascular_disease,40480449,Sensory disorder as a late effect of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,43530623,Sequela of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,4112026,Sequelae of cerebral infarction,SNOMED CT
+cerebrovascular_disease,4111721,Sequelae of intracerebral hemorrhage,SNOMED CT
+cerebrovascular_disease,4111720,Sequelae of subarachnoid hemorrhage,SNOMED CT
+cerebrovascular_disease,40481354,Speech and language deficit as late effect of cerebrovascular accident,SNOMED CT
+cerebrovascular_disease,43530674,Spontaneous cerebellar hemorrhage,SNOMED CT
+cerebrovascular_disease,43530727,Spontaneous cerebral hemorrhage,SNOMED CT
+cerebrovascular_disease,42539269,Spontaneous hemorrhage of brain stem,SNOMED CT
+cerebrovascular_disease,42535425,Spontaneous hemorrhage of cerebral hemisphere,SNOMED CT
+cerebrovascular_disease,42535424,Spontaneous hemorrhage of cortical intracerebral hemisphere,SNOMED CT
+cerebrovascular_disease,42538062,Spontaneous intracranial hemorrhage,SNOMED CT
+cerebrovascular_disease,4148906,Spontaneous subarachnoid hemorrhage,SNOMED CT
+cerebrovascular_disease,432923,Subarachnoid hemorrhage,SNOMED CT
+cerebrovascular_disease,4108952,Subarachnoid hemorrhage from carotid siphon and bifurcation,SNOMED CT
+cerebrovascular_disease,4111708,Subarachnoid hemorrhage from vertebral artery,SNOMED CT
+cerebrovascular_disease,433505,Subclavian steal syndrome,SNOMED CT
+cerebrovascular_disease,4049659,Subcortical hemorrhage,SNOMED CT
+cerebrovascular_disease,439040,Subdural hemorrhage,SNOMED CT
+cerebrovascular_disease,433195,Transient arterial retinal occlusion,SNOMED CT
+cerebrovascular_disease,373503,Transient cerebral ischemia,SNOMED CT
+cerebrovascular_disease,437306,Transient global amnesia,SNOMED CT
+cerebrovascular_disease,4274969,Vertebral artery embolism,SNOMED CT
+cerebrovascular_disease,434656,Vertebral artery syndrome,SNOMED CT
+cerebrovascular_disease,4273526,Vertebral artery thrombosis,SNOMED CT
+cerebrovascular_disease,376714,Vertebrobasilar artery syndrome,SNOMED CT
+cerebrovascular_disease,43531621,Vertigo as sequela of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,43531583,Visual disturbance as sequela of cerebrovascular disease,SNOMED CT
+cerebrovascular_disease,44782753,Weakness as a late effect of stroke,SNOMED CT
+cerebrovascular_disease,43530744,Weakness of face muscles as sequela of stroke,SNOMED CT
+aids,37017595,Burkitt lymphoma co-occurrent with human immunodeficiency virus infection,SNOMED CT
+aids,37017319,Disorder of central nervous system co-occurrent with human immunodeficiency virus infection,SNOMED CT
+aids,37017244,Disorder of respiratory system co-occurrent with human immunodeficiency virus infection,SNOMED CT
+aids,4262297,Human immunodeficiency virus encephalopathy,SNOMED CT
+aids,439727,Human immunodeficiency virus infection,SNOMED CT
+aids,4092686,Human immunodeficiency virus infection with secondary clinical infectious disease,SNOMED CT
+aids,37017446,Infection caused by Cytomegalovirus co-occurrent with human immunodeficiency virus infection,SNOMED CT
+aids,37017248,Infection caused by Pneumocystis co-occurrent with human immunodeficiency virus infection,SNOMED CT
+aids,37017320,Malignant neoplastic disease co-occurrent with human immunodeficiency virus infection,SNOMED CT
+aids,40484012,Non-Hodgkin lymphoma associated with Human immunodeficiency virus infection,SNOMED CT
+aids,37017579,Opportunistic mycosis co-occurrent with human immunodeficiency virus infection,SNOMED CT
+chronic_pulmonary_disease,45771045,Acute exacerbation of asthma,SNOMED CT
+chronic_pulmonary_disease,40483342,Acute exacerbation of bronchiectasis,SNOMED CT
+chronic_pulmonary_disease,257004,Acute exacerbation of chronic obstructive airways disease,SNOMED CT
+chronic_pulmonary_disease,43530693,Acute exacerbation of chronic obstructive airways disease with asthma,SNOMED CT
+chronic_pulmonary_disease,46270376,Acute exacerbation of chronic obstructive bronchitis,SNOMED CT
+chronic_pulmonary_disease,45773005,Acute exacerbation of intrinsic asthma,SNOMED CT
+chronic_pulmonary_disease,46270082,Acute exacerbation of mild persistent asthma,SNOMED CT
+chronic_pulmonary_disease,46273487,Acute exacerbation of moderate persistent asthma,SNOMED CT
+chronic_pulmonary_disease,45769438,Acute severe exacerbation of asthma,SNOMED CT
+chronic_pulmonary_disease,45769442,Acute severe exacerbation of immunoglobin E-mediated allergic asthma,SNOMED CT
+chronic_pulmonary_disease,45769443,Acute severe exacerbation of intrinsic asthma,SNOMED CT
+chronic_pulmonary_disease,45769352,Acute severe exacerbation of mild persistent asthma,SNOMED CT
+chronic_pulmonary_disease,45769351,Acute severe exacerbation of moderate persistent asthma,SNOMED CT
+chronic_pulmonary_disease,45769350,Acute severe exacerbation of severe persistent asthma,SNOMED CT
+chronic_pulmonary_disease,37116845,Acute severe refractory exacerbation of asthma,SNOMED CT
+chronic_pulmonary_disease,4191479,Allergic asthma,SNOMED CT
+chronic_pulmonary_disease,4236624,Aluminosis of lung,SNOMED CT
+chronic_pulmonary_disease,256450,Asbestosis,SNOMED CT
+chronic_pulmonary_disease,46269801,Aspirin exacerbated respiratory disease,SNOMED CT
+chronic_pulmonary_disease,4250128,Aspirin-induced asthma,SNOMED CT
+chronic_pulmonary_disease,317009,Asthma,SNOMED CT
+chronic_pulmonary_disease,4148124,Atrophic (senile) emphysema,SNOMED CT
+chronic_pulmonary_disease,437588,Bagassosis,SNOMED CT
+chronic_pulmonary_disease,4032314,Bauxite fibrosis of lung,SNOMED CT
+chronic_pulmonary_disease,4221139,Berylliosis,SNOMED CT
+chronic_pulmonary_disease,439853,Bird-fanciers' lung,SNOMED CT
+chronic_pulmonary_disease,256449,Bronchiectasis,SNOMED CT
+chronic_pulmonary_disease,256451,Bronchitis,SNOMED CT
+chronic_pulmonary_disease,4133623,Bulla of lung,SNOMED CT
+chronic_pulmonary_disease,4311814,Byssinosis,SNOMED CT
+chronic_pulmonary_disease,4302900,Cannabinosis,SNOMED CT
+chronic_pulmonary_disease,4286497,Centriacinar emphysema,SNOMED CT
+chronic_pulmonary_disease,4051466,Childhood asthma,SNOMED CT
+chronic_pulmonary_disease,256448,Chronic asthmatic bronchitis,SNOMED CT
+chronic_pulmonary_disease,42539089,Chronic bronchiolitis,SNOMED CT
+chronic_pulmonary_disease,255841,Chronic bronchitis,SNOMED CT
+chronic_pulmonary_disease,4110048,Chronic bullous emphysema,SNOMED CT
+chronic_pulmonary_disease,4195892,Chronic cor pulmonale,SNOMED CT
+chronic_pulmonary_disease,4112814,Chronic drug-induced interstitial lung disorders,SNOMED CT
+chronic_pulmonary_disease,255573,Chronic obstructive lung disease,SNOMED CT
+chronic_pulmonary_disease,4110056,Chronic obstructive pulmonary disease with acute lower respiratory infection,SNOMED CT
+chronic_pulmonary_disease,44782732,Chronic pulmonary embolism,SNOMED CT
+chronic_pulmonary_disease,315831,Chronic pulmonary heart disease,SNOMED CT
+chronic_pulmonary_disease,252348,Chronic pulmonary radiation disease,SNOMED CT
+chronic_pulmonary_disease,3655113,Chronic respiratory condition caused by vapors,SNOMED CT
+chronic_pulmonary_disease,252946,Coal workers' pneumoconiosis,SNOMED CT
+chronic_pulmonary_disease,313236,Cough variant asthma,SNOMED CT
+chronic_pulmonary_disease,4328679,Diffuse panbronchiolitis,SNOMED CT
+chronic_pulmonary_disease,40493243,Eisenmenger's syndrome,SNOMED CT
+chronic_pulmonary_disease,259043,Emphysematous bleb of lung,SNOMED CT
+chronic_pulmonary_disease,258780,Emphysematous bronchitis,SNOMED CT
+chronic_pulmonary_disease,4138760,Exacerbation of intermittent asthma,SNOMED CT
+chronic_pulmonary_disease,45768908,Exercise induced bronchospasm,SNOMED CT
+chronic_pulmonary_disease,444084,Extrinsic allergic alveolitis,SNOMED CT
+chronic_pulmonary_disease,435298,Farmers' lung,SNOMED CT
+chronic_pulmonary_disease,4322799,Fibrosis of lung caused by radiation,SNOMED CT
+chronic_pulmonary_disease,4027669,Flax-dressers' disease,SNOMED CT
+chronic_pulmonary_disease,4066407,Graphite fibrosis of lung,SNOMED CT
+chronic_pulmonary_disease,434670,Humidifier lung,SNOMED CT
+chronic_pulmonary_disease,312950,IgE-mediated allergic asthma,SNOMED CT
+chronic_pulmonary_disease,4145497,Intrinsic asthma,SNOMED CT
+chronic_pulmonary_disease,4119298,Late onset asthma,SNOMED CT
+chronic_pulmonary_disease,434975,Malt-workers' lung,SNOMED CT
+chronic_pulmonary_disease,438175,Maple-bark strippers' lung,SNOMED CT
+chronic_pulmonary_disease,4146581,Mild intermittent asthma,SNOMED CT
+chronic_pulmonary_disease,4143828,Mild persistent asthma,SNOMED CT
+chronic_pulmonary_disease,4110051,Mixed asthma,SNOMED CT
+chronic_pulmonary_disease,4112826,Mixed simple and mucopurulent chronic bronchitis,SNOMED CT
+chronic_pulmonary_disease,4142738,Moderate persistent asthma,SNOMED CT
+chronic_pulmonary_disease,257905,Mucopurulent chronic bronchitis,SNOMED CT
+chronic_pulmonary_disease,433233,Mushroom workers' lung,SNOMED CT
+chronic_pulmonary_disease,4177944,Panacinar emphysema,SNOMED CT
+chronic_pulmonary_disease,259044,Pneumoconiosis,SNOMED CT
+chronic_pulmonary_disease,4112676,Pneumoconiosis associated with tuberculosis,SNOMED CT
+chronic_pulmonary_disease,254389,Pneumoconiosis due to inorganic dust,SNOMED CT
+chronic_pulmonary_disease,442125,Pneumoconiosis due to silica,SNOMED CT
+chronic_pulmonary_disease,256146,Pneumoconiosis due to silicate,SNOMED CT
+chronic_pulmonary_disease,4249010,Pneumoconiosis due to talc,SNOMED CT
+chronic_pulmonary_disease,258781,Pneumonopathy due to inhalation of dust,SNOMED CT
+chronic_pulmonary_disease,261325,Pulmonary emphysema,SNOMED CT
+chronic_pulmonary_disease,4167085,Pulmonary heart disease,SNOMED CT
+chronic_pulmonary_disease,4167085,Pulmonary heart disease,SNOMED CT
+chronic_pulmonary_disease,4266525,Pulmonary siderosis,SNOMED CT
+chronic_pulmonary_disease,4117865,Radiation respiratory disease,SNOMED CT
+chronic_pulmonary_disease,4152913,Severe asthma,SNOMED CT
+chronic_pulmonary_disease,4145356,Severe persistent asthma,SNOMED CT
+chronic_pulmonary_disease,261889,Simple chronic bronchitis,SNOMED CT
+chronic_pulmonary_disease,4196950,Stannosis,SNOMED CT
+chronic_pulmonary_disease,443890,Suberosis,SNOMED CT
+chronic_pulmonary_disease,45768910,Uncomplicated asthma,SNOMED CT
+chronic_pulmonary_disease,45768963,Uncomplicated mild persistent asthma,SNOMED CT
+chronic_pulmonary_disease,45768964,Uncomplicated moderate persistent asthma,SNOMED CT
+chronic_pulmonary_disease,45768965,Uncomplicated severe persistent asthma,SNOMED CT
+metastatic_solid_tumor,4160276,Malignant neoplasm of genital structure,SNOMED CT
+metastatic_solid_tumor,443392,Malignant neoplastic disease,SNOMED CT
+metastatic_solid_tumor,4131422,Neoplasm of intra-abdominal lymph nodes,SNOMED CT
+metastatic_solid_tumor,4131428,Neoplasm of intrapelvic lymph node,SNOMED CT
+metastatic_solid_tumor,4131304,Neoplasm of intrathoracic lymph nodes,SNOMED CT
+metastatic_solid_tumor,4130839,Neoplasm of lymph node,SNOMED CT
+metastatic_solid_tumor,4131938,Neoplasm of lymph node of lower limb,SNOMED CT
+metastatic_solid_tumor,4133007,Neoplasm of lymph nodes of multiple sites,SNOMED CT
+metastatic_solid_tumor,4130842,Neoplasm of lymph nodes of upper limb,SNOMED CT
+metastatic_solid_tumor,443252,Post-transplant neoplasia,SNOMED CT
+metastatic_solid_tumor,439392,Primary malignant neoplasm,SNOMED CT
+metastatic_solid_tumor,193144,Secondary malignant neoplasm of adrenal gland,SNOMED CT
+metastatic_solid_tumor,4312802,Secondary malignant neoplasm of bladder,SNOMED CT
+metastatic_solid_tumor,78097,Secondary malignant neoplasm of bone,SNOMED CT
+metastatic_solid_tumor,4246450,Secondary malignant neoplasm of bone marrow,SNOMED CT
+metastatic_solid_tumor,4246451,Secondary malignant neoplasm of brain,SNOMED CT
+metastatic_solid_tumor,378087,Secondary malignant neoplasm of brain and spinal cord,SNOMED CT
+metastatic_solid_tumor,4312290,Secondary malignant neoplasm of cerebral meninges,SNOMED CT
+metastatic_solid_tumor,140960,Secondary malignant neoplasm of female breast,SNOMED CT
+metastatic_solid_tumor,4247962,Secondary malignant neoplasm of gastrointestinal tract,SNOMED CT
+metastatic_solid_tumor,192568,Secondary malignant neoplasm of intra-abdominal lymph nodes,SNOMED CT
+metastatic_solid_tumor,4312023,Secondary malignant neoplasm of intra-abdominal organs,SNOMED CT
+metastatic_solid_tumor,200959,Secondary malignant neoplasm of intrapelvic lymph nodes,SNOMED CT
+metastatic_solid_tumor,439751,Secondary malignant neoplasm of intrathoracic lymph nodes,SNOMED CT
+metastatic_solid_tumor,196053,Secondary malignant neoplasm of kidney,SNOMED CT
+metastatic_solid_tumor,200348,Secondary malignant neoplasm of large intestine,SNOMED CT
+metastatic_solid_tumor,46273652,Secondary malignant neoplasm of left lung,SNOMED CT
+metastatic_solid_tumor,4281027,Secondary malignant neoplasm of left ovary,SNOMED CT
+metastatic_solid_tumor,198700,Secondary malignant neoplasm of liver,SNOMED CT
+metastatic_solid_tumor,44806773,Secondary malignant neoplasm of liver and intrahepatic bile duct,SNOMED CT
+metastatic_solid_tumor,254591,Secondary malignant neoplasm of lung,SNOMED CT
+metastatic_solid_tumor,318096,Secondary malignant neoplasm of lymph node,SNOMED CT
+metastatic_solid_tumor,442182,Secondary malignant neoplasm of lymph nodes of lower limb,SNOMED CT
+metastatic_solid_tumor,320342,Secondary malignant neoplasm of lymph nodes of multiple sites,SNOMED CT
+metastatic_solid_tumor,434298,Secondary malignant neoplasm of lymph nodes of upper limb,SNOMED CT
+metastatic_solid_tumor,434875,Secondary malignant neoplasm of mediastinum,SNOMED CT
+metastatic_solid_tumor,373425,Secondary malignant neoplasm of nervous system,SNOMED CT
+metastatic_solid_tumor,199752,Secondary malignant neoplasm of ovary,SNOMED CT
+metastatic_solid_tumor,72266,Secondary malignant neoplasm of pleura,SNOMED CT
+metastatic_solid_tumor,4147162,Secondary malignant neoplasm of respiratory and digestive systems,SNOMED CT
+metastatic_solid_tumor,253717,Secondary malignant neoplasm of respiratory tract,SNOMED CT
+metastatic_solid_tumor,4315806,Secondary malignant neoplasm of retroperitoneum,SNOMED CT
+metastatic_solid_tumor,196925,Secondary malignant neoplasm of retroperitoneum and peritoneum,SNOMED CT
+metastatic_solid_tumor,46270513,Secondary malignant neoplasm of right lung,SNOMED CT
+metastatic_solid_tumor,4281030,Secondary malignant neoplasm of right ovary,SNOMED CT
+metastatic_solid_tumor,136354,Secondary malignant neoplasm of skin,SNOMED CT
+metastatic_solid_tumor,198371,Secondary malignant neoplasm of small intestine,SNOMED CT
+metastatic_solid_tumor,4314071,Secondary malignant neoplasm of trunk,SNOMED CT
+metastatic_solid_tumor,4158910,Secondary malignant neoplasm of unknown site,SNOMED CT
+metastatic_solid_tumor,78987,Secondary malignant neoplasm of urinary system,SNOMED CT
+metastatic_solid_tumor,432851,Secondary malignant neoplastic disease,SNOMED CT
+moderate_or_severe_liver_disease,4340386,Alcoholic hepatic failure,SNOMED CT
+moderate_or_severe_liver_disease,28779,Bleeding esophageal varices,SNOMED CT
+moderate_or_severe_liver_disease,4340390,Chronic hepatic failure,SNOMED CT
+moderate_or_severe_liver_disease,24966,Esophageal varices,SNOMED CT
+moderate_or_severe_liver_disease,4111998,Esophageal varices associated with another disorder,SNOMED CT
+moderate_or_severe_liver_disease,4112183,"Esophageal varices with bleeding, associated with another disorder",SNOMED CT
+moderate_or_severe_liver_disease,22340,Esophageal varices without bleeding,SNOMED CT
+moderate_or_severe_liver_disease,4237824,Gastric varices,SNOMED CT
+moderate_or_severe_liver_disease,46269818,Hepatic coma due to alcoholic liver failure,SNOMED CT
+moderate_or_severe_liver_disease,46269836,Hepatic coma due to chronic hepatic failure,SNOMED CT
+moderate_or_severe_liver_disease,4029488,Hepatic encephalopathy,SNOMED CT
+moderate_or_severe_liver_disease,4245975,Hepatic failure,SNOMED CT
+moderate_or_severe_liver_disease,196455,Hepatorenal syndrome,SNOMED CT
+moderate_or_severe_liver_disease,192680,Portal hypertension,SNOMED CT
+moderate_or_severe_liver_disease,40481531,Sequela of chronic liver disease,SNOMED CT
+moderate_or_severe_liver_disease,4026136,Toxic liver disease with hepatic necrosis,SNOMED CT
+moderate_or_severe_liver_disease,4277276,Veno-occlusive disease of the liver,SNOMED CT
+hemiplegia,4102342,Cauda equina syndrome,SNOMED CT
+hemiplegia,193186,Cauda equina syndrome with neurogenic bladder,SNOMED CT
+hemiplegia,134331,Cauda equina syndrome without neurogenic bladder,SNOMED CT
+hemiplegia,4134120,Cerebral palsy,SNOMED CT
+hemiplegia,4104204,Complete bilateral paralysis,SNOMED CT
+hemiplegia,43530718,Complete paraplegia,SNOMED CT
+hemiplegia,40480416,Complete tetraplegia due to lesion at C1-C4 level,SNOMED CT
+hemiplegia,40481376,Complete tetraplegia due to lesion at C5-C7 level,SNOMED CT
+hemiplegia,4173811,Congenital quadriplegia,SNOMED CT
+hemiplegia,372880,Diplegia of upper limbs,SNOMED CT
+hemiplegia,132617,Diplegic cerebral palsy,SNOMED CT
+hemiplegia,372613,Flaccid hemiplegia,SNOMED CT
+hemiplegia,40481757,Flaccid hemiplegia of dominant side,SNOMED CT
+hemiplegia,40481820,Flaccid hemiplegia of nondominant side,SNOMED CT
+hemiplegia,4101738,Flaccid paraplegia,SNOMED CT
+hemiplegia,4104848,Flaccid tetraplegia,SNOMED CT
+hemiplegia,374022,Hemiplegia,SNOMED CT
+hemiplegia,40482237,Hemiplegia of dominant side,SNOMED CT
+hemiplegia,40480429,Hemiplegia of nondominant side,SNOMED CT
+hemiplegia,134031,Hemiplegic cerebral palsy,SNOMED CT
+hemiplegia,192901,Hereditary spastic paraplegia,SNOMED CT
+hemiplegia,37019108,Human T-cell lymphotropic virus 1-associated myelopathy,SNOMED CT
+hemiplegia,43530719,Incomplete paraplegia,SNOMED CT
+hemiplegia,40480514,Incomplete tetraplegia due to lesion at C5-C7 level,SNOMED CT
+hemiplegia,40480066,Incomplete tetraplegia due to spinal cord lesion at C1-C4 level,SNOMED CT
+hemiplegia,374336,Infantile hemiplegia,SNOMED CT
+hemiplegia,381548,Monoplegia,SNOMED CT
+hemiplegia,195240,Monoplegia of lower limb,SNOMED CT
+hemiplegia,4144328,Monoplegia of lower limb affecting dominant side,SNOMED CT
+hemiplegia,4141654,Monoplegia of lower limb affecting non-dominant side,SNOMED CT
+hemiplegia,379012,Monoplegia of upper limb,SNOMED CT
+hemiplegia,380393,Monoplegia of upper limb affecting non-dominant side,SNOMED CT
+hemiplegia,380393,Monoplegia of upper limb affecting non-dominant side,SNOMED CT
+hemiplegia,40481345,Monoplegia of upper limb of dominant side,SNOMED CT
+hemiplegia,442543,Monoplegic cerebral palsy,SNOMED CT
+hemiplegia,440377,Paralysis,SNOMED CT
+hemiplegia,374377,Paralytic syndrome,SNOMED CT
+hemiplegia,43531639,Paralytic syndrome on one side of the body,SNOMED CT
+hemiplegia,192606,Paraplegia,SNOMED CT
+hemiplegia,44782711,Quadriplegia with quadriparesis,SNOMED CT
+hemiplegia,375528,Spastic hemiplegia,SNOMED CT
+hemiplegia,40480944,Spastic hemiplegia of dominant side,SNOMED CT
+hemiplegia,40480435,Spastic hemiplegia of nondominant side,SNOMED CT
+hemiplegia,44806793,Spastic hemiplegic cerebral palsy,SNOMED CT
+hemiplegia,4101739,Spastic paraplegia,SNOMED CT
+hemiplegia,4102341,Spastic tetraplegia,SNOMED CT
+hemiplegia,374914,Tetraplegia,SNOMED CT
+mild_liver_disease,201343,Acute alcoholic liver disease,SNOMED CT
+mild_liver_disease,196463,Alcoholic cirrhosis,SNOMED CT
+mild_liver_disease,193256,Alcoholic fatty liver,SNOMED CT
+mild_liver_disease,4340385,Alcoholic fibrosis and sclerosis of liver,SNOMED CT
+mild_liver_disease,4340383,Alcoholic hepatitis,SNOMED CT
+mild_liver_disease,201612,Alcoholic liver damage,SNOMED CT
+mild_liver_disease,46269816,Ascites due to alcoholic cirrhosis,SNOMED CT
+mild_liver_disease,200762,Autoimmune hepatitis,SNOMED CT
+mild_liver_disease,192675,Biliary cirrhosis,SNOMED CT
+mild_liver_disease,4058696,Central hemorrhagic necrosis of liver,SNOMED CT
+mild_liver_disease,4026125,Chronic active hepatitis,SNOMED CT
+mild_liver_disease,200763,Chronic hepatitis,SNOMED CT
+mild_liver_disease,198964,Chronic hepatitis C,SNOMED CT
+mild_liver_disease,4238978,Chronic lobular hepatitis,SNOMED CT
+mild_liver_disease,201613,Chronic nonalcoholic liver disease,SNOMED CT
+mild_liver_disease,199867,Chronic persistent hepatitis,SNOMED CT
+mild_liver_disease,4012113,Chronic viral hepatitis,SNOMED CT
+mild_liver_disease,192240,Chronic viral hepatitis B with hepatitis D,SNOMED CT
+mild_liver_disease,439674,Chronic viral hepatitis B without delta-agent,SNOMED CT
+mild_liver_disease,763021,Chronic viral hepatitis C with hepatic coma,SNOMED CT
+mild_liver_disease,194692,Cirrhosis - non-alcoholic,SNOMED CT
+mild_liver_disease,4059284,Cirrhosis and chronic liver disease,SNOMED CT
+mild_liver_disease,4064161,Cirrhosis of liver,SNOMED CT
+mild_liver_disease,194984,Disease of liver,SNOMED CT
+mild_liver_disease,46273476,Hepatic ascites co-occurrent with chronic active hepatitis due to toxic liver disease,SNOMED CT
+mild_liver_disease,46269835,Hepatic ascites due to chronic alcoholic hepatitis,SNOMED CT
+mild_liver_disease,439675,Hepatic coma due to acute hepatitis B with delta agent,SNOMED CT
+mild_liver_disease,4308946,Hepatic coma due to chronic hepatitis B,SNOMED CT
+mild_liver_disease,196029,Hepatic coma due to viral hepatitis,SNOMED CT
+mild_liver_disease,4267417,Hepatic fibrosis,SNOMED CT
+mild_liver_disease,4340948,Hepatic fibrosis with hepatic sclerosis,SNOMED CT
+mild_liver_disease,194417,Hepatic infarction,SNOMED CT
+mild_liver_disease,4337543,Hepatic necrosis,SNOMED CT
+mild_liver_disease,4340394,Hepatic sclerosis,SNOMED CT
+mild_liver_disease,4159144,Hepatopulmonary syndrome,SNOMED CT
+mild_liver_disease,194990,Inflammatory disease of liver,SNOMED CT
+mild_liver_disease,4240725,Peliosis hepatis,SNOMED CT
+mild_liver_disease,4135822,Primary biliary cholangitis,SNOMED CT
+mild_liver_disease,4046123,Secondary biliary cirrhosis,SNOMED CT
+mild_liver_disease,4059290,Steatosis of liver,SNOMED CT
+mild_liver_disease,4059299,Toxic liver disease with chronic active hepatitis,SNOMED CT
+mild_liver_disease,4059298,Toxic liver disease with chronic persistent hepatitis,SNOMED CT
+mild_liver_disease,4058695,Toxic liver disease with fibrosis and cirrhosis of liver,SNOMED CT
+mild_liver_disease,42537742,Transplanted liver present,SNOMED CT
+mild_liver_disease,198683,Viral hepatitis B without hepatic coma,SNOMED CT
+mild_liver_disease,193693,Viral hepatitis without hepatic coma,SNOMED CT
+peptic_ulcer_disease,4027729,Acute duodenal ulcer with hemorrhage,SNOMED CT
+peptic_ulcer_disease,441062,Acute duodenal ulcer with hemorrhage AND obstruction,SNOMED CT
+peptic_ulcer_disease,4336230,Acute duodenal ulcer with hemorrhage AND perforation,SNOMED CT
+peptic_ulcer_disease,435855,Acute duodenal ulcer with hemorrhage AND with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,434402,Acute duodenal ulcer with hemorrhage but without obstruction,SNOMED CT
+peptic_ulcer_disease,437021,"Acute duodenal ulcer with hemorrhage, with perforation AND with obstruction",SNOMED CT
+peptic_ulcer_disease,4265479,Acute duodenal ulcer with perforation,SNOMED CT
+peptic_ulcer_disease,434070,Acute duodenal ulcer with perforation AND obstruction,SNOMED CT
+peptic_ulcer_disease,435578,Acute duodenal ulcer with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,4138962,Acute duodenal ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,435859,Acute duodenal ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,440755,"Acute duodenal ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4231580,Acute gastric ulcer with hemorrhage,SNOMED CT
+peptic_ulcer_disease,198467,Acute gastric ulcer with hemorrhage and obstruction,SNOMED CT
+peptic_ulcer_disease,4169592,Acute gastric ulcer with hemorrhage and perforation,SNOMED CT
+peptic_ulcer_disease,199855,Acute gastric ulcer with hemorrhage AND with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,193795,Acute gastric ulcer with hemorrhage but without obstruction,SNOMED CT
+peptic_ulcer_disease,195845,"Acute gastric ulcer with hemorrhage, with perforation and with obstruction",SNOMED CT
+peptic_ulcer_disease,4057953,Acute gastric ulcer with perforation,SNOMED CT
+peptic_ulcer_disease,200137,Acute gastric ulcer with perforation AND obstruction,SNOMED CT
+peptic_ulcer_disease,194680,Acute gastric ulcer with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,4195231,Acute gastric ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,192954,Acute gastric ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,199062,"Acute gastric ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4274491,Acute gastrojejunal ulcer with hemorrhage,SNOMED CT
+peptic_ulcer_disease,441063,Acute gastrojejunal ulcer with hemorrhage and obstruction,SNOMED CT
+peptic_ulcer_disease,4217947,Acute gastrojejunal ulcer with hemorrhage and perforation,SNOMED CT
+peptic_ulcer_disease,441328,Acute gastrojejunal ulcer with hemorrhage and with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,438468,Acute gastrojejunal ulcer with hemorrhage but without obstruction,SNOMED CT
+peptic_ulcer_disease,442314,"Acute gastrojejunal ulcer with hemorrhage, with perforation and with obstruction",SNOMED CT
+peptic_ulcer_disease,4280942,Acute gastrojejunal ulcer with perforation,SNOMED CT
+peptic_ulcer_disease,435846,Acute gastrojejunal ulcer with perforation AND obstruction,SNOMED CT
+peptic_ulcer_disease,437598,Acute gastrojejunal ulcer with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,4147683,Acute gastrojejunal ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,432951,Acute gastrojejunal ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,436460,"Acute gastrojejunal ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4046500,Acute peptic ulcer with hemorrhage,SNOMED CT
+peptic_ulcer_disease,23237,Acute peptic ulcer with hemorrhage AND obstruction,SNOMED CT
+peptic_ulcer_disease,4006994,Acute peptic ulcer with hemorrhage and perforation,SNOMED CT
+peptic_ulcer_disease,27026,Acute peptic ulcer with hemorrhage AND with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,31335,Acute peptic ulcer with hemorrhage but without obstruction,SNOMED CT
+peptic_ulcer_disease,194986,"Acute peptic ulcer with hemorrhage, with perforation AND with obstruction",SNOMED CT
+peptic_ulcer_disease,4194543,Acute peptic ulcer with perforation,SNOMED CT
+peptic_ulcer_disease,26718,Acute peptic ulcer with perforation AND obstruction,SNOMED CT
+peptic_ulcer_disease,30439,Acute peptic ulcer with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,4163865,Acute peptic ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,195584,Acute peptic ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,198187,"Acute peptic ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4232181,Chronic duodenal ulcer with hemorrhage,SNOMED CT
+peptic_ulcer_disease,437323,Chronic duodenal ulcer with hemorrhage AND obstruction,SNOMED CT
+peptic_ulcer_disease,4289830,Chronic duodenal ulcer with hemorrhage AND perforation,SNOMED CT
+peptic_ulcer_disease,438796,Chronic duodenal ulcer with hemorrhage AND with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,436148,Chronic duodenal ulcer with hemorrhage but without obstruction,SNOMED CT
+peptic_ulcer_disease,440756,"Chronic duodenal ulcer with hemorrhage, with perforation AND with obstruction",SNOMED CT
+peptic_ulcer_disease,4173408,Chronic duodenal ulcer with perforation,SNOMED CT
+peptic_ulcer_disease,439058,Chronic duodenal ulcer with perforation AND obstruction,SNOMED CT
+peptic_ulcer_disease,432354,Chronic duodenal ulcer with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,4222896,Chronic duodenal ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,443770,Chronic duodenal ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,433246,"Chronic duodenal ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4211001,Chronic gastric ulcer with hemorrhage,SNOMED CT
+peptic_ulcer_disease,201885,Chronic gastric ulcer with hemorrhage and with obstruction,SNOMED CT
+peptic_ulcer_disease,4294973,Chronic gastric ulcer with hemorrhage and with perforation,SNOMED CT
+peptic_ulcer_disease,196442,Chronic gastric ulcer with hemorrhage AND with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,197018,Chronic gastric ulcer with hemorrhage but without obstruction,SNOMED CT
+peptic_ulcer_disease,198801,"Chronic gastric ulcer with hemorrhage, with perforation and with obstruction",SNOMED CT
+peptic_ulcer_disease,4150681,Chronic gastric ulcer with perforation,SNOMED CT
+peptic_ulcer_disease,4206315,Chronic gastric ulcer with perforation AND with obstruction,SNOMED CT
+peptic_ulcer_disease,197914,Chronic gastric ulcer with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,4296611,Chronic gastric ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,195583,Chronic gastric ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,200769,"Chronic gastric ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,433515,Chronic gastrojejunal ulcer with hemorrhage,SNOMED CT
+peptic_ulcer_disease,436729,Chronic gastrojejunal ulcer with hemorrhage and obstruction,SNOMED CT
+peptic_ulcer_disease,4164920,Chronic gastrojejunal ulcer with hemorrhage and perforation,SNOMED CT
+peptic_ulcer_disease,437326,Chronic gastrojejunal ulcer with hemorrhage and with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,443779,"Chronic gastrojejunal ulcer with hemorrhage, with perforation and with obstruction",SNOMED CT
+peptic_ulcer_disease,4101870,Chronic gastrojejunal ulcer with perforation,SNOMED CT
+peptic_ulcer_disease,444102,Chronic gastrojejunal ulcer with perforation AND with obstruction,SNOMED CT
+peptic_ulcer_disease,435579,Chronic gastrojejunal ulcer with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,4177387,Chronic gastrojejunal ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,434400,Chronic gastrojejunal ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,438795,"Chronic gastrojejunal ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4174044,Chronic peptic ulcer with hemorrhage,SNOMED CT
+peptic_ulcer_disease,24076,Chronic peptic ulcer with hemorrhage AND obstruction,SNOMED CT
+peptic_ulcer_disease,4247008,Chronic peptic ulcer with hemorrhage AND perforation,SNOMED CT
+peptic_ulcer_disease,22665,Chronic peptic ulcer with hemorrhage AND with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,30770,Chronic peptic ulcer with hemorrhage but without obstruction,SNOMED CT
+peptic_ulcer_disease,24397,"Chronic peptic ulcer with hemorrhage, with perforation AND with obstruction",SNOMED CT
+peptic_ulcer_disease,4146517,Chronic peptic ulcer with perforation,SNOMED CT
+peptic_ulcer_disease,30442,Chronic peptic ulcer with perforation AND obstruction,SNOMED CT
+peptic_ulcer_disease,23247,Chronic peptic ulcer with perforation but without obstruction,SNOMED CT
+peptic_ulcer_disease,4204555,Chronic peptic ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,24973,Chronic peptic ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,23808,"Chronic peptic ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4031954,Duodenal ulcer with hemorrhage AND perforation,SNOMED CT
+peptic_ulcer_disease,4209746,Duodenal ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,435305,Duodenal ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,438469,"Duodenal ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4265600,Gastric ulcer,SNOMED CT
+peptic_ulcer_disease,4248429,Gastric ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,196443,Gastric ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,195851,"Gastric ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4059178,Gastrojejunal ulcer,SNOMED CT
+peptic_ulcer_disease,4101104,Gastrojejunal ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,438188,Gastrojejunal ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,439858,"Gastrojejunal ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4027663,Peptic ulcer,SNOMED CT
+peptic_ulcer_disease,4291028,Peptic ulcer without hemorrhage AND without perforation,SNOMED CT
+peptic_ulcer_disease,200771,Peptic ulcer without hemorrhage AND without perforation but with obstruction,SNOMED CT
+peptic_ulcer_disease,201069,"Peptic ulcer without hemorrhage, without perforation AND without obstruction",SNOMED CT
+peptic_ulcer_disease,4198381,Ulcer of duodenum,SNOMED CT
+connective_tissue_disease,4344166,Adult onset Still's disease,SNOMED CT
+connective_tissue_disease,4005037,Childhood type dermatomyositis,SNOMED CT
+connective_tissue_disease,4135937,CREST syndrome,SNOMED CT
+connective_tissue_disease,80182,Dermatomyositis,SNOMED CT
+connective_tissue_disease,4081250,Dermatomyositis sine myositis,SNOMED CT
+connective_tissue_disease,4344161,Dermatomyositis with malignant disease,SNOMED CT
+connective_tissue_disease,4063581,Drug-induced systemic lupus erythematosus,SNOMED CT
+connective_tissue_disease,46273369,Endocarditis due to systemic lupus erythematosus,SNOMED CT
+connective_tissue_disease,81097,Felty's syndrome,SNOMED CT
+connective_tissue_disease,4343935,Giant cell arteritis with polymyalgia rheumatica,SNOMED CT
+connective_tissue_disease,74125,Inflammatory polyarthropathy,SNOMED CT
+connective_tissue_disease,37395588,Juvenile dermatomyositis co-occurrent with respiratory involvement,SNOMED CT
+connective_tissue_disease,4055369,Lung disease with polymyositis,SNOMED CT
+connective_tissue_disease,4055640,Lung disease with systemic lupus erythematosus,SNOMED CT
+connective_tissue_disease,255304,Lung disease with systemic sclerosis,SNOMED CT
+connective_tissue_disease,4107913,Myopathy due to rheumatoid arthritis,SNOMED CT
+connective_tissue_disease,4105026,Myopathy due to systemic sclerosis,SNOMED CT
+connective_tissue_disease,4079978,Overlap syndrome,SNOMED CT
+connective_tissue_disease,255348,Polymyalgia rheumatica,SNOMED CT
+connective_tissue_disease,80800,Polymyositis,SNOMED CT
+connective_tissue_disease,46270482,Polyneuropathy due to systemic sclerosis,SNOMED CT
+connective_tissue_disease,4102493,Polyneuropathy in rheumatoid arthritis,SNOMED CT
+connective_tissue_disease,40485046,Progressive systemic sclerosis,SNOMED CT
+connective_tissue_disease,4145240,Renal tubulo-interstitial disorder in systemic lupus erythematosus,SNOMED CT
+connective_tissue_disease,80809,Rheumatoid arthritis,SNOMED CT
+connective_tissue_disease,4117687,Rheumatoid arthritis - ankle and/or foot,SNOMED CT
+connective_tissue_disease,4115161,Rheumatoid arthritis - hand joint,SNOMED CT
+connective_tissue_disease,4116440,Rheumatoid arthritis of elbow,SNOMED CT
+connective_tissue_disease,4116150,Rheumatoid arthritis of hip,SNOMED CT
+connective_tissue_disease,4116151,Rheumatoid arthritis of knee,SNOMED CT
+connective_tissue_disease,42534834,Rheumatoid arthritis of left hand,SNOMED CT
+connective_tissue_disease,42534835,Rheumatoid arthritis of left hip,SNOMED CT
+connective_tissue_disease,37108590,Rheumatoid arthritis of left knee,SNOMED CT
+connective_tissue_disease,35609009,Rheumatoid arthritis of left shoulder,SNOMED CT
+connective_tissue_disease,36685020,Rheumatoid arthritis of left wrist,SNOMED CT
+connective_tissue_disease,4117686,Rheumatoid arthritis of multiple joints,SNOMED CT
+connective_tissue_disease,36685022,Rheumatoid arthritis of right elbow,SNOMED CT
+connective_tissue_disease,42534836,Rheumatoid arthritis of right hand,SNOMED CT
+connective_tissue_disease,42534837,Rheumatoid arthritis of right hip,SNOMED CT
+connective_tissue_disease,37108591,Rheumatoid arthritis of right knee,SNOMED CT
+connective_tissue_disease,35609010,Rheumatoid arthritis of right shoulder,SNOMED CT
+connective_tissue_disease,36685024,Rheumatoid arthritis of right wrist,SNOMED CT
+connective_tissue_disease,4114439,Rheumatoid arthritis of shoulder,SNOMED CT
+connective_tissue_disease,4116441,Rheumatoid arthritis of wrist,SNOMED CT
+connective_tissue_disease,36684997,Rheumatoid factor positive rheumatoid arthritis,SNOMED CT
+connective_tissue_disease,256197,Rheumatoid lung disease,SNOMED CT
+connective_tissue_disease,37395590,Rheumatoid lung disease with rheumatoid arthritis,SNOMED CT
+connective_tissue_disease,4162539,Rheumatoid pneumoconiosis,SNOMED CT
+connective_tissue_disease,4271003,Rheumatoid vasculitis,SNOMED CT
+connective_tissue_disease,4083556,Seronegative rheumatoid arthritis,SNOMED CT
+connective_tissue_disease,4035611,Seropositive rheumatoid arthritis,SNOMED CT
+connective_tissue_disease,254443,Sjögren's syndrome,SNOMED CT
+connective_tissue_disease,4285717,SLE glomerulonephritis syndrome,SNOMED CT
+connective_tissue_disease,4142899,Subcutaneous rheumatoid nodule,SNOMED CT
+connective_tissue_disease,257628,Systemic lupus erythematosus,SNOMED CT
+connective_tissue_disease,4344158,Systemic lupus erythematosus with organ/system involvement,SNOMED CT
+connective_tissue_disease,4149913,Systemic lupus erythematosus with pericarditis,SNOMED CT
+connective_tissue_disease,134442,Systemic sclerosis,SNOMED CT
+connective_tissue_disease,4063582,Systemic sclerosis induced by drugs and chemicals,SNOMED CT
+connective_tissue_disease,4290976,Temporal arteritis,SNOMED CT
+myocardial_infarction,45766075,Acute anterior ST segment elevation myocardial infarction,SNOMED CT
+myocardial_infarction,312327,Acute myocardial infarction,SNOMED CT
+myocardial_infarction,434376,Acute myocardial infarction of anterior wall,SNOMED CT
+myocardial_infarction,438438,Acute myocardial infarction of anterolateral wall,SNOMED CT
+myocardial_infarction,438170,Acute myocardial infarction of inferior wall,SNOMED CT
+myocardial_infarction,438447,Acute myocardial infarction of inferolateral wall,SNOMED CT
+myocardial_infarction,441579,Acute myocardial infarction of inferoposterior wall,SNOMED CT
+myocardial_infarction,436706,Acute myocardial infarction of lateral wall,SNOMED CT
+myocardial_infarction,4270024,Acute non-ST segment elevation myocardial infarction,SNOMED CT
+myocardial_infarction,4296653,Acute ST segment elevation myocardial infarction,SNOMED CT
+myocardial_infarction,46270162,Acute ST segment elevation myocardial infarction due to left coronary artery occlusion,SNOMED CT
+myocardial_infarction,46270163,Acute ST segment elevation myocardial infarction due to right coronary artery occlusion,SNOMED CT
+myocardial_infarction,43020460,Acute ST segment elevation myocardial infarction involving left anterior descending coronary artery,SNOMED CT
+myocardial_infarction,45766116,Acute ST segment elevation myocardial infarction of inferior wall,SNOMED CT
+myocardial_infarction,444406,Acute subendocardial infarction,SNOMED CT
+myocardial_infarction,4329847,Myocardial infarction,SNOMED CT
+myocardial_infarction,37309626,Myocardial infarction due to demand ischemia,SNOMED CT
+myocardial_infarction,314666,Old myocardial infarction,SNOMED CT
+myocardial_infarction,4108217,Subsequent myocardial infarction,SNOMED CT
+myocardial_infarction,4108677,Subsequent myocardial infarction of anterior wall,SNOMED CT
+myocardial_infarction,4108218,Subsequent myocardial infarction of inferior wall,SNOMED CT
+myocardial_infarction,45766241,Subsequent non-ST segment elevation myocardial infarction,SNOMED CT
+myocardial_infarction,45766114,Subsequent ST segment elevation myocardial infarction,SNOMED CT
+myocardial_infarction,439693,True posterior myocardial infarction,SNOMED CT
+dementia,378419,Alzheimer's disease,SNOMED CT
+dementia,37111242,Delirium co-occurrent with dementia,SNOMED CT
+dementia,44782726,Delusions in Alzheimer's disease,SNOMED CT
+dementia,4182210,Dementia,SNOMED CT
+dementia,4228133,Dementia associated with AIDS,SNOMED CT
+dementia,374888,Dementia associated with another disease,SNOMED CT
+dementia,4314734,Dementia associated with Parkinson's Disease,SNOMED CT
+dementia,4180284,Dementia due to Creutzfeldt Jakob disease,SNOMED CT
+dementia,40483103,Dementia due to Huntington chorea,SNOMED CT
+dementia,44782422,Dementia due to Parkinson's disease,SNOMED CT
+dementia,44782710,Dementia due to Pick's disease,SNOMED CT
+dementia,43530666,Dementia with behavioral disturbance,SNOMED CT
+dementia,44782727,Depressed mood in Alzheimer's disease,SNOMED CT
+dementia,37017319,Disorder of central nervous system co-occurrent with human immunodeficiency virus infection,SNOMED CT
+dementia,36687122,Human immunodeficiency virus infection with cognitive impairment,SNOMED CT
+dementia,4046090,Mixed cortical and subcortical vascular dementia,SNOMED CT
+dementia,379778,Multi-infarct dementia,SNOMED CT
+dementia,444091,Multi-infarct dementia with delirium,SNOMED CT
+dementia,443790,Multi-infarct dementia with delusions,SNOMED CT
+dementia,443864,Multi-infarct dementia with depression,SNOMED CT
+dementia,377254,"Multi-infarct dementia, uncomplicated",SNOMED CT
+dementia,378125,Presenile dementia,SNOMED CT
+dementia,381832,Presenile dementia with delirium,SNOMED CT
+dementia,44782771,Presenile dementia with delusions,SNOMED CT
+dementia,377527,Presenile dementia with depression,SNOMED CT
+dementia,4218017,"Primary degenerative dementia of the Alzheimer type, presenile onset",SNOMED CT
+dementia,4220313,"Primary degenerative dementia of the Alzheimer type, senile onset",SNOMED CT
+dementia,4152048,Senile and presenile organic psychotic conditions,SNOMED CT
+dementia,373179,Senile degeneration of brain,SNOMED CT
+dementia,4048875,Senile dementia,SNOMED CT
+dementia,376946,Senile dementia with delirium,SNOMED CT
+dementia,380986,Senile dementia with delusion,SNOMED CT
+dementia,379784,Senile dementia with depression,SNOMED CT
+dementia,4047747,Subcortical vascular dementia,SNOMED CT
+dementia,376085,Uncomplicated presenile dementia,SNOMED CT
+dementia,375791,Uncomplicated senile dementia,SNOMED CT
+dementia,443605,Vascular dementia,SNOMED CT
+dementia,4046089,Vascular dementia of acute onset,SNOMED CT
+dementia,37018688,Vascular dementia with behavioral disturbance,SNOMED CT
+dementia,37109056,Vascular dementia without behavioral disturbance,SNOMED CT

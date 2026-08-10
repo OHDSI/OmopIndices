@@ -8,7 +8,7 @@ addElectronicFrailtyIndex(
   x,
   indexDate = "cohort_start_date",
   window = c(-365, 0),
-  conceptSet = NULL,
+  conceptSet = getIndexCodelist("electronic_frailty_index"),
   categories = list(fit = c(0, 0.12), mild = c(0.12, 0.24), moderate = c(0.24, 0.36),
     severe = c(0.36, 1)),
   nameStyle = "efi",
@@ -24,7 +24,7 @@ table.}
 
 \item{window}{Window to asses \verb{electronic frailty index} in, it must be a vector of two numeric values \code{c(min, max)}. Window times refer to days since \code{indexDate}.}
 
-\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{activity_limitation}, \code{anemia}, \code{arthritis}, \code{atrial_fibrillation}, \code{cerebrovascular_disease}, \code{chronic_kidney_disease}, \code{diabetes}, \code{dizziness}, \code{dyspnea}, \code{falls}, \code{foot_problems}, \code{fragility_fracture}, \code{hearing_impairment}, \code{heart_failure}, \code{heart_valve_disorder}, \code{housebound}, \code{hypertension}, \code{hypotension}, \code{ischemic_heart_disease}, \code{memory_cognitive_disorder}, \code{mobility_transfer}, \code{osteoporosis}, \code{parkinsonism_tremor}, \code{peptic_ulcer}, \code{peripheral_vascular_disease}, \code{care_requirement}, \code{respiratory_disease}, \code{skin_ulcer}, \code{sleep_disturbance}, \code{social_vulnerability}, \code{thyroid_disease}, \code{urinary_incontinence}, \code{urinary_system_disease}, \code{visual_impairment}, \code{weight_loss_anorexia} as concepts. If \code{NULL} concepts will be retrieved using the OmopConcepts package.}
+\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{activity_limitation}, \code{anemia}, \code{arthritis}, \code{atrial_fibrillation}, \code{cerebrovascular_disease}, \code{chronic_kidney_disease}, \code{diabetes}, \code{dizziness}, \code{dyspnea}, \code{falls}, \code{foot_problem}, \code{fragility_fracture}, \code{hearing_impairment}, \code{heart_failure}, \code{heart_valve_disorder}, \code{housebound}, \code{hypertension}, \code{hypotension_syncope}, \code{ischemic_heart_disease}, \code{memory_cognitive_disorder}, \code{mobility_problems}, \code{osteoporosis}, \code{parkinsonism_tremor}, \code{peptic_ulcer}, \code{peripheral_vascular_disease}, \code{care_requirement}, \code{respiratory_disease}, \code{skin_ulcer}, \code{sleep_disturbance}, \code{social_vulnerability}, \code{thyroid_disease}, \code{urinary_incontinence}, \code{urinary_system_disease}, \code{visual_impairment}, \code{weight_loss_anorexia} as concepts. By default internal concepts are used.}
 
 \item{categories}{Named list of categories to group the values. If NULL the
 risk score is returned as numeric.}
@@ -45,51 +45,53 @@ Add Electronic Frailty Index (eFI) value based Clegg et al. (2016) definition
 library(OmopIndices)
 library(omock)
 
-cdm <- mockCdmFromDataset()
-cdm <- cdm |>
- mockCohort()
+cdm <- mockCdmFromDataset() |>
+  mockCohort()
 
 conceptSet <- list(
-   "activity_limitation" = 763723L,
-   "anemia" = 439777L,
-   "arthritis" = 4291025L,
-   "atrial_fibrillation" = 313217L,
-   "chronic_kidney_disease" = 46271022L,
-   "cerebrovascular_disease" = 381591L,
-   "dizziness" = 4223938L,
-   "dyspnea" = 312437L,
-   "falls" = 4059015L,
-   "foot_problems" = 4101512L,
-   "fragility_fracture" = 3170964L,
-   "hearing_impairment" = 4234647L,
-   "heart_failure" = 316139L,
-   "heart_valve_disorder"  = 4281749L,
-   "housebound" = 4052962L,
-   "hypertension" = 319826L,
-   "hypotension" = 316447L,
-   "ischemic_heart_disease"  = 4185932L,
-   "memory_cognitive_disorder" = 4304008L,
-   "mobility_transfer" =  4053076L,
-   "osteoporosis" = 80502L,
-   "parkinsonism_tremor" = 4140090L,
-   "peptic_ulcer" = 4027663L,
-   "peripheral_vascular_disease" = 321052L,
-   "care_requirement" = 3661927L,
-   "respiratory_disease" = 317009L,
-   "skin_ulcer" = 4262920L,
-   "sleep_disturbance" = 435524L,
-   "social_vulnerability" = 4026161L,
-   "diabetes" = 201820L,
-   "thyroid_disease" = 4017052L,
-   "urinary_incontinence" = 197672L,
-   "urinary_system_disease" = 75865L,
-   "visual_impairment" = 4265433L,
-   "weight_loss_anorexia" = 436675L)
+  "activity_limitation" = 763723L,
+  "anemia" = 439777L,
+  "arthritis" = 4291025L,
+  "atrial_fibrillation" = 313217L,
+  "chronic_kidney_disease" = 46271022L,
+  "cerebrovascular_disease" = 381591L,
+  "dizziness" = 4223938L,
+  "dyspnea" = 312437L,
+  "falls" = 4059015L,
+  "foot_problem" = 4101512L,
+  "fragility_fracture" = 3170964L,
+  "hearing_impairment" = 4234647L,
+  "heart_failure" = 316139L,
+  "heart_valve_disorder" = 4281749L,
+  "housebound" = 4052962L,
+  "hypertension" = 319826L,
+  "hypotension_syncope" = 316447L,
+  "ischemic_heart_disease" = 4185932L,
+  "memory_cognitive_disorder" = 4304008L,
+  "mobility_problems" =  4053076L,
+  "osteoporosis" = 80502L,
+  "parkinsonism_tremor" = 4140090L,
+  "peptic_ulcer" = 4027663L,
+  "peripheral_vascular_disease" = 321052L,
+  "care_requirement" = 3661927L,
+  "respiratory_disease" = 317009L,
+  "skin_ulcer" = 4262920L,
+  "sleep_disturbance" = 435524L,
+  "social_vulnerability" = 4026161L,
+  "diabetes" = 201820L,
+  "thyroid_disease" = 4017052L,
+  "urinary_incontinence" = 197672L,
+  "urinary_system_disease" = 75865L,
+  "visual_impairment" = 4265433L,
+  "weight_loss_anorexia" = 436675L
+)
 
-# Polypharmacy is calculated internally using the function `addPolypharmacyCount()`,
-# and is defined as individuals taking 5 or more medicines
+# Polypharmacy is calculated internally using the function
+# `addPolypharmacyCount()`, and is defined as individuals taking 5 or more
+# medicines
 
 cdm$cohort |>
   addElectronicFrailtyIndex(conceptSet = conceptSet)
-   }
+}
+
 }

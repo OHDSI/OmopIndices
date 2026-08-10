@@ -13,24 +13,10 @@ addIndex <- function(x,
   cdm <- omopgenerics::cdmReference(x)
   indexDate <- omopgenerics::validateColumn(indexDate, x, "date", call = call)
   window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE, call = call)[[1]]
-  if (type == "efi") {
-    reqConcepts <- efiConcepts
-    formula <- efiFormula
-  } else if (type == "efi2") {
-    reqConcepts <- efi2Concepts
-    formula <- efi2Formula
-  } else if (type == "hfrs") {
-    reqConcepts <- hfrsConcepts
-    formula <- hfrsFormula
-  } else if (type == "charlson") {
-    reqConcepts <- charlsonConcepts
-    formula <- if(isTRUE(ageAdjusted)) charlsonFormulaAgeAdjusted else charlsonFormula
-  } else if (type == "updatedCharlson") {
-    reqConcepts <- updatedCharlsonConcepts
-    formula <- if(isTRUE(ageAdjusted)) updatedCharlsonFormulaAgeAdjusted else updatedCharlsonFormula
-  }
+  formulaKey <- paste0(type, ifelse(ageAdjusted, "_age_adjusted", ""))
+  formula <- formulas[[formulaKey]]
 
-  conceptSet <- validateConceptSet(conceptSet, reqConcepts, cdm, call = call)
+  conceptSet <- validateConceptSet(conceptSet, type, cdm, call = call)
   nameStyle <- validateNameStyle(nameStyle, x, call = call)
   x <- omopgenerics::validateNewColumn(x, nameStyle, call = call)
   name <- validateName(name, call = call)
@@ -55,37 +41,47 @@ addIndex <- function(x,
       nameStyle = "{concept_name}"
     )
 
-  if (type %in% c("updatedCharlson", "charlson") & isTRUE(ageAdjusted)) {
+  if (type %in% c("updated_charlson", "charlson") & isTRUE(ageAdjusted)) {
     index <- index |>
       PatientProfiles::addAge(
         indexDate = indexDate,
         ageGroup = list("g1"= c(0, 49), "g2" = c(50, 59), "g3" = c(60, 69), "g4" = c(70, 79), "g5" = c(80, Inf)),
         name = nm
       )
-  } else if (type %in% c("efi", "efi2")) {
+  } else if (type %in% c("electronic_frailty_index", "electronic_frailty_index_2")) {
     # TODO use internal functions to skip validation
     index <- index |>
       addPolypharmacyCount(
         indexDate = indexDate,
         window = window,
-        nameStyle = "polypharmacy_count"
+        nameStyle = "polypharmacy_count",
+        name = nm
+      )
+  }
+  if (type == "electronic_frailty_index_2") {
+    index <- index |>
+      addBMI(
+        indexDate = indexDate,
+        conceptSet = conceptSet,
+        window = window,
+        nameStyle = "bmi",
+        name = nm
       )
   }
 
   index <- index |>
-    dplyr::mutate(!!!q)
+    dplyr::mutate(!!!q) |>
+    dplyr::select(dplyr::all_of(c(id, indexDate, nameStyle))) |>
+    dplyr::compute(name = nm)
 
   if (!is.null(categories)) {
     qc <- qCategories(categories) |>
       rlang::set_names(nameStyle) |>
       rlang::parse_exprs()
     index <- index |>
-      dplyr::mutate(!!!qc)
+      dplyr::mutate(!!!qc) |>
+      dplyr::compute(name = nm)
   }
-
-  index <- index |>
-    dplyr::select(dplyr::all_of(c(id, indexDate, nameStyle))) |>
-    dplyr::compute(name = nm)
 
   # add index to x
   x <- x |>
@@ -99,11 +95,16 @@ addIndex <- function(x,
 }
 qCategories <- function(categories) {
   q <- categories |>
-    purrr::imap(\(win, nm) {
+    purrr::imap_chr(\(win, nm) {
       paste0(windowCondition(win), " ~ '", nm, "'")
     }) |>
-    paste0(", ")
-  paste0("dplyr::case_when(", q, ")")
+    paste0(collapse = ", ")
+  paste0(
+    "dplyr::case_when(",
+    "is.na(.data[[nameStyle]]) ~ 'missing',",
+    q,
+    ")"
+  )
 }
 windowCondition <- function(window) {
   if (is.infinite(window[2])) {

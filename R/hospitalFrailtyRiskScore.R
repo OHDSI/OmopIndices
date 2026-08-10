@@ -5,7 +5,8 @@
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("hospital frailty risk score")`
-#' @param conceptSet `r documentationConceptSet(hfrsConcepts)`
+#' @param conceptSet
+#' `r documentationConceptSet(requiredConcepts$hospital_frailty_risk_score)`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -18,7 +19,7 @@
 addHospitalFrailtyRiskScore <- function(x,
                                         indexDate = "cohort_start_date",
                                         window = c(-365, 0),
-                                        conceptSet = NULL,
+                                        conceptSet = getIndexCodelist("hospital_frailty_risk_score"),
                                         categories = list(
                                           "low" = c(0, 5),
                                           "intermediate" = c(5, 15),
@@ -38,16 +39,3 @@ addHospitalFrailtyRiskScore <- function(x,
     name = name
   )
 }
-
-#' Hospital Frailty Risk Score data set
-#'
-#' @format ## `hospitalFrailtyRiskScore`
-#' A data frame with 109 rows and 4 columns:
-#' \describe{
-#'   \item{concept_set}{The name of the concept set to be provided}
-#'   \item{points}{Number of points associated with the codelist}
-#'   \item{icd10_code}{ICD-10 code used}
-#'   \item{icd_description}{Name of the ICD-10 code}
-#' }
-#' @source <https://doi.org/10.1016/S0140-6736(18)30668-8>
-"hospitalFrailtyRiskScore"

@@ -1,0 +1,134 @@
+---
+title: "OmopIndices default concepts"
+output:
+  rmarkdown::html_vignette:
+    tabset: true
+vignette: >
+  %\VignetteIndexEntry{omop_indices_concepts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The core functions in **OmopIndices** add indexes to a table:
+
+- `addCharlsonIndex()`
+- `addUpdatedCharlsonIndex()`
+- `addHospitalFrailtyRiskScore()`
+- `addElectronicFrailtyIndex()`
+- `addElectronicFrailtyIndex2()`
+
+These indices depend on a set of codelists, these codelist can be provided by
+the user using the `conceptSet` argument. If not provided the package contain
+its own definition for each one of the codelist.
+
+You can get the default codelists of a given index with `getIndexCodelist()`:
+
+```{r}
+library(OmopIndices)
+
+getIndexCodelist("charlson")
+```
+
+You can explore the different codelists here:
+
+```{r, echo=FALSE}
+load(file = here::here("vignettes/articles/selectors.RData"))
+```
+
+## Overview of codelists {.tabset}
+
+### Charlson Index
+
+```{r, echo=FALSE}
+#selectorCharlson
+```
+
+### Updated Charlson Index
+
+```{r, echo=FALSE}
+#selectorUpdatedCharlson
+```
+
+### Electronic Frailty Index
+
+```{r, echo=FALSE}
+#selectorEFI
+```
+
+### Electronic Frailty Index 2
+
+```{r, echo=FALSE}
+#selectorEFI2
+```
+
+### Hospital Frailty Risk Score
+
+```{r, echo=FALSE}
+#selectorHFRS
+```
+
+## {-}
+
+## Diagnostics of codelists {.tabset}
+
+You might want to perform diagnostics on the mapping of your source data and
+assess how well the involved codelists are recorded you can easily do that using
+**CodelistGenerator** or **PhenotypeR**.
+
+### CodelistGenerator
+
+```{r, eval=FALSE}
+library(CodelistGenerator)
+library(OmopIndices)
+library(omock)
+
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+
+codelist <- getIndexCodelist("charlson")
+
+codeUse <- summariseCodeUse(x = codelist, cdm = cdm)
+
+tableCodeUse(result = codeUse)
+```
+
+### PhenotypeR
+
+```{r, eval=FALSE}
+library(PhenotypeR)
+library(CohortConstructor)
+library(OmopIndices)
+library(omock)
+
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+
+codelist <- getIndexCodelist("charlson")
+
+cdm$my_cohort <- conceptCohort(cdm = cdm, conceptSet = codelist, name = "my_cohort")
+
+results <- phenotypeDiagnostics(cohort = cdm$my_cohort)
+
+shinyDiagnostics(result = results, directory = getwd())
+```
+
+## {-}
+
+## Codelists generation
+
+As mentioned above the package contains default codelists these were obtained
+from other papers and projects:
+
+- **Charlson Index** and **Updated Charlson Index** codelists were obtained from
+[Fortin et al 2022](https://doi.org/10.1186/s12911-022-02006-1).
+
+- **Hospital Frailty Risk Score** /@martaalcalde to explain
+
+- **Electronic Frailty Index** codelists were obtained from ...
+
+- **Electronic Frailty Index 2** codelists were obtained from ...
