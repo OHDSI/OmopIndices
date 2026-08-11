@@ -1,5 +1,6 @@
 
-#' Add Electronic Frailty Index (eFI) value based Clegg et al. (2016) definition
+#' Add Electronic Frailty Index (eFI) value based on
+#' [Clegg et al. (2016)](https://doi.org/10.1093/ageing/afw039)
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
@@ -69,7 +70,7 @@
 #'
 addElectronicFrailtyIndex <- function(x,
                                       indexDate = "cohort_start_date",
-                                      window = c(-365, 0),
+                                      window = c(-Inf, 0),
                                       conceptSet = getIndexCodelist("electronic_frailty_index"),
                                       categories = list(
                                         "fit" = c(0, 0.12),

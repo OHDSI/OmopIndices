@@ -1,6 +1,6 @@
 
-#' Add the hospital frailty risk score as defined in Gilbert et al:
-#' <https://doi.org/10.1016/S0140-6736(18)30668-8>
+#' Add the hospital frailty risk score as defined in
+#' [Gilbert et al. (2018)](https://doi.org/10.1016/S0140-6736(18)30668-8)
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
@@ -18,7 +18,7 @@
 #'
 addHospitalFrailtyRiskScore <- function(x,
                                         indexDate = "cohort_start_date",
-                                        window = c(-365, 0),
+                                        window = c(-730, 0),
                                         conceptSet = getIndexCodelist("hospital_frailty_risk_score"),
                                         categories = list(
                                           "low" = c(0, 5),

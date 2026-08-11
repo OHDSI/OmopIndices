@@ -3,7 +3,7 @@
 \name{addPolypharmacyCount}
 \alias{addPolypharmacyCount}
 \title{Add the maximum number of ingredients an individual is exposed simultaneously
-in a certain window.}
+in a certain window}
 \usage{
 addPolypharmacyCount(
   x,
@@ -30,7 +30,7 @@ ingredients used in the window of interest.
 }
 \description{
 Add the maximum number of ingredients an individual is exposed simultaneously
-in a certain window.
+in a certain window
 }
 \examples{
 \donttest{
