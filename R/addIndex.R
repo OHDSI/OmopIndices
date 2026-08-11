@@ -96,7 +96,7 @@ addIndex <- function(x,
 qCategories <- function(categories) {
   q <- categories |>
     purrr::imap_chr(\(win, nm) {
-      paste0(windowCondition(win), " ~ '", nm, "'")
+      paste0(categoriesCondition(win), " ~ '", nm, "'")
     }) |>
     paste0(collapse = ", ")
   paste0(
@@ -106,10 +106,10 @@ qCategories <- function(categories) {
     ")"
   )
 }
-windowCondition <- function(window) {
+categoriesCondition <- function(window) {
   if (is.infinite(window[2])) {
     paste0(window[1], " <= .data[[nameStyle]]")
   } else {
-    paste0(window[1], " <= .data[[nameStyle]] & .data[[nameStyle]] <= ", window[2])
+    paste0(window[1], " <= .data[[nameStyle]] & .data[[nameStyle]] < ", window[2])
   }
 }
