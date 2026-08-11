@@ -3,7 +3,7 @@
 \name{addTownsend}
 \alias{addTownsend}
 \title{Add Socio-economic status as a column to a table using the
-\href{https://athena.ohdsi.org/search-terms/terms/715996}{Townsend deprivation index}}
+\href{https://athena.ohdsi.org/search-terms/terms/715996}{Townsend Deprivation Index}}
 \usage{
 addTownsend(
   x,
@@ -40,5 +40,5 @@ The \code{x} table with a new column added with the socio-economic status
 }
 \description{
 Add Socio-economic status as a column to a table using the
-\href{https://athena.ohdsi.org/search-terms/terms/715996}{Townsend deprivation index}
+\href{https://athena.ohdsi.org/search-terms/terms/715996}{Townsend Deprivation Index}
 }

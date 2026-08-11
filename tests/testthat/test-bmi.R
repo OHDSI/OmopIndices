@@ -53,8 +53,61 @@ test_that("test BMI index", {
 
   expect_no_error(
     cdm$cohort1 |>
-      addBMI(conceptSet = bmi)
+      addBMI(conceptSet = bmi, name = "bmi_initial")
   )
 
+  # Exercise category creation, all ordering choices, and each finite/infinite
+  # window shape.  These assertions also verify that one result is returned
+  # per cohort row and that the category is derived from the selected BMI.
+  for (ord in c("first", "last", "min", "max")) {
+    result <- cdm$cohort1 |>
+      addBMI(conceptSet = bmi, order = ord, inObservation = FALSE,
+             categories = list(normal = c(0, 24.9), high = c(25, Inf)),
+             nameStyle = paste0("bmi_", ord)) |>
+      dplyr::collect()
+    expect_equal(nrow(result), 3)
+    expect_true(paste0("bmi_", ord) %in% names(result))
+  }
+  windows <- list(c(-Inf, 0), c(0, Inf), c(-1, 1), c(-Inf, Inf))
+  for (i in seq_along(windows)) {
+    win <- windows[[i]]
+    result <- cdm$cohort1 |>
+      addBMI(conceptSet = bmi, window = win, inObservation = FALSE,
+             nameStyle = paste0("bmi_window_", i))
+    expect_equal(nrow(result |> dplyr::collect()), 3)
+  }
+
+  # No concept in an eligible domain returns the typed empty result.
+  empty <- OmopIndices:::getRecords(
+    tables = character(), cdm = cdm, conceptSet = list(bmi = 999L),
+    records = cdm$cohort1 |> dplyr::transmute(person_id = .data$subject_id,
+                                               index_date = .data$cohort_start_date),
+    window = c(-Inf, 0), nm = "empty_bmi_records"
+  ) |> dplyr::collect()
+  expect_equal(nrow(empty), 0)
+
+  records <- cdm$cohort1 |>
+    dplyr::transmute(person_id = .data$subject_id,
+                     index_date = .data$cohort_start_date)
+  direct <- OmopIndices:::getRecords(
+    tables = "measurement", cdm = cdm, conceptSet = bmi,
+    records = records, window = c(-Inf, 1000), nm = "direct_bmi_records"
+  )
+  expect_true(dplyr::collect(direct) |> nrow() > 0)
+  for (i in seq_along(list(c(0, Inf), c(-1, 1)))) {
+    ranged <- OmopIndices:::getRecords(
+      tables = "measurement", cdm = cdm, conceptSet = bmi,
+      records = records, window = list(c(0, Inf), c(-1, 1))[[i]],
+      nm = paste0("ranged_bmi_records_", i)
+    )
+    expect_true(is.data.frame(dplyr::collect(ranged)))
+  }
+  tied <- direct |>
+    dplyr::mutate(bmi_date = as.Date("2020-01-01"), bmi = 99) |>
+    dplyr::compute(name = "tied_bmi_records")
+  selected <- OmopIndices:::subsetRecords(tied, character(), "tied_bmi_records") |>
+    dplyr::collect()
+  expect_true(nrow(selected) > 0)
+  expect_true(all(selected$bmi == 99))
   dropCreatedTables(cdm = cdm)
 })

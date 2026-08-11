@@ -130,10 +130,12 @@ getRecords <- function(tables, cdm, conceptSet, records, window, nm) {
             rec <- rec |>
               dplyr::filter(!!window[1] <= .data$date_diff)
           } else {
+            lower <- window[1]
+            upper <- window[2]
             rec <- rec |>
               dplyr::filter(
-                !!.env$window[1] <= .data$date_diff &
-                  .data$date_diff <= !!window[2]
+                !!lower <= .data$date_diff &
+                  .data$date_diff <= !!upper
               )
           }
         }

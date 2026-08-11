@@ -39,7 +39,7 @@ addSocioEconomicStatus <- function(x,
 }
 
 #' Add Socio-economic status as a column to a table using the
-#' [Townsend deprivation index](https://athena.ohdsi.org/search-terms/terms/715996)
+#' [Townsend Deprivation Index](https://athena.ohdsi.org/search-terms/terms/715996)
 #'
 #' @inheritParams addSocioEconomicStatus
 #'
@@ -232,8 +232,8 @@ filterOrder <- function(x, diff, order, indexDate) {
     if (nrow(x) == 0) return(x)
   }
   q <- switch(order,
-              "first" = ".data[[diff]] == min(.data[[diff]], na.rm = TRUE)",
-              "last" = ".data[[diff]] == max(.data[[diff]], na.rm = TRUE)") |>
+              "first" = paste0(".data[['", diff, "']] == min(.data[['", diff, "']], na.rm = TRUE)"),
+              "last" = paste0(".data[['", diff, "']] == max(.data[['", diff, "']], na.rm = TRUE)")) |>
     rlang::parse_exprs()
   x |>
     dplyr::group_by(.data$person_id, .data[[indexDate]]) |>
