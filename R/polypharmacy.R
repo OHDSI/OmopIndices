@@ -1,6 +1,6 @@
 
 #' Add the maximum number of ingredients an individual is exposed simultaneously
-#' in a certain window.
+#' in a certain window
 #'
 #' @param x A `cdm_table` object.
 #' @param indexDate Name of a 'date' column that indicates the index date.

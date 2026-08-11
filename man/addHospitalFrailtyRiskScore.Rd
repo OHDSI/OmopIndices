@@ -2,8 +2,8 @@
 % Please edit documentation in R/hospitalFrailtyRiskScore.R
 \name{addHospitalFrailtyRiskScore}
 \alias{addHospitalFrailtyRiskScore}
-\title{Add the hospital frailty risk score as defined in Gilbert et al:
-\url{https://doi.org/10.1016/S0140-6736(18)30668-8}}
+\title{Add the hospital frailty risk score as defined in
+\href{https://doi.org/10.1016/S0140-6736(18)30668-8}{Gilbert et al. (2018)}}
 \usage{
 addHospitalFrailtyRiskScore(
   x,
@@ -39,6 +39,6 @@ The \code{x} table with a new column added with the hospital
 frailty risk score of the patient.
 }
 \description{
-Add the hospital frailty risk score as defined in Gilbert et al:
-\url{https://doi.org/10.1016/S0140-6736(18)30668-8}
+Add the hospital frailty risk score as defined in
+\href{https://doi.org/10.1016/S0140-6736(18)30668-8}{Gilbert et al. (2018)}
 }

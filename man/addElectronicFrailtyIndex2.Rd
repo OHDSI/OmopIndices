@@ -2,7 +2,8 @@
 % Please edit documentation in R/addElectronicFrailtyIndex2.R
 \name{addElectronicFrailtyIndex2}
 \alias{addElectronicFrailtyIndex2}
-\title{Add Electronic Frailty Index 2 (eFI2) value based on Best et al. (2025)}
+\title{Add Electronic Frailty Index 2 (eFI2) value based on
+\href{https://doi.org/10.1093/ageing/afaf077}{Best et al. (2025)}}
 \usage{
 addElectronicFrailtyIndex2(
   x,
