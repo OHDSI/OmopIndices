@@ -18,7 +18,7 @@
 #'
 addHospitalFrailtyRiskScore <- function(x,
                                         indexDate = "cohort_start_date",
-                                        window = c(-365, 0),
+                                        window = c(-730, 0),
                                         conceptSet = getIndexCodelist("hospital_frailty_risk_score"),
                                         categories = list(
                                           "low" = c(0, 5),

@@ -21,7 +21,7 @@
 #'
 addElectronicFrailtyIndex2 <- function(x,
                                        indexDate = "cohort_start_date",
-                                       window = c(-365, 0),
+                                       window = c(-Inf, 0),
                                        conceptSet = getIndexCodelist("electronic_frailty_index_2"),
                                        categories = list(
                                          "robust" = c(0, 0.0857),

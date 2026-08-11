@@ -7,7 +7,7 @@
 addElectronicFrailtyIndex(
   x,
   indexDate = "cohort_start_date",
-  window = c(-365, 0),
+  window = c(-Inf, 0),
   conceptSet = getIndexCodelist("electronic_frailty_index"),
   categories = list(fit = c(0, 0.12), mild = c(0.12, 0.24), moderate = c(0.24, 0.36),
     severe = c(0.36, 1)),
