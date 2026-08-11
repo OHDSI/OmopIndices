@@ -74,7 +74,7 @@ addIndex <- function(x,
     dplyr::select(dplyr::all_of(c(id, indexDate, nameStyle))) |>
     dplyr::compute(name = nm)
 
-  if (!is.null(categories)) {
+  if (length(categories) > 0) {
     qc <- qCategories(categories) |>
       rlang::set_names(nameStyle) |>
       rlang::parse_exprs()
