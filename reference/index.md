@@ -14,12 +14,16 @@
   (age-adjusted) version.
 
 - [`addElectronicFrailtyIndex()`](https://OHDSI.github.io/OmopIndices/reference/addElectronicFrailtyIndex.md)
-  : Add Electronic Frailty Index (eFI) value based Clegg et al. (2016)
-  definition
+  :
+
+  Add Electronic Frailty Index (eFI) value based on [Clegg et al.
+  (2016)](https://doi.org/10.1093/ageing/afw039)
 
 - [`addElectronicFrailtyIndex2()`](https://OHDSI.github.io/OmopIndices/reference/addElectronicFrailtyIndex2.md)
-  : Add Electronic Frailty Index 2 (eFI2) value based on Best et al.
-  (2025)
+  :
+
+  Add Electronic Frailty Index 2 (eFI2) value based on [Best et al.
+  (2025)](https://doi.org/10.1093/ageing/afaf077)
 
 - [`addEthnicity()`](https://OHDSI.github.io/OmopIndices/reference/addEthnicity.md)
   : Add the ethnicity of a person to a table
@@ -27,8 +31,8 @@
 - [`addHospitalFrailtyRiskScore()`](https://OHDSI.github.io/OmopIndices/reference/addHospitalFrailtyRiskScore.md)
   :
 
-  Add the hospital frailty risk score as defined in Gilbert et al:
-  <https://doi.org/10.1016/S0140-6736(18)30668-8>
+  Add the hospital frailty risk score as defined in [Gilbert et al.
+  (2018)](https://doi.org/10.1016/S0140-6736(18)30668-8)
 
 - [`addIndexOfMultipleDeprivation()`](https://OHDSI.github.io/OmopIndices/reference/addIndexOfMultipleDeprivation.md)
   :
@@ -42,7 +46,7 @@
 
 - [`addPolypharmacyCount()`](https://OHDSI.github.io/OmopIndices/reference/addPolypharmacyCount.md)
   : Add the maximum number of ingredients an individual is exposed
-  simultaneously in a certain window.
+  simultaneously in a certain window
 
 - [`addSocioEconomicStatus()`](https://OHDSI.github.io/OmopIndices/reference/addSocioEconomicStatus.md)
   : Add Socio-economic status as a column to a table

@@ -1,4 +1,4 @@
-# Add Electronic Frailty Index 2 (eFI2) value based on Best et al. (2025)
+# Add Electronic Frailty Index 2 (eFI2) value based on [Best et al. (2025)](https://doi.org/10.1093/ageing/afaf077)
 
 The eFI2 is a weighted score for one-year frailty-related outcomes. The
 supplied concept set must contain the named eFI2 predictors. For BMI,

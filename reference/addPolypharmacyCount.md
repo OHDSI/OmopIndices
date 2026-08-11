@@ -1,7 +1,7 @@
-# Add the maximum number of ingredients an individual is exposed simultaneously in a certain window.
+# Add the maximum number of ingredients an individual is exposed simultaneously in a certain window
 
 Add the maximum number of ingredients an individual is exposed
-simultaneously in a certain window.
+simultaneously in a certain window
 
 ## Usage
 
@@ -56,7 +56,7 @@ cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 #> ℹ Creating local <cdm_reference> object.
 #> ℹ Inserting <cdm_reference> into duckdb.
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/Rtmp4HPgoz/duckdb
+#> ℹ /tmp/Rtmp23nELi/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -69,18 +69,18 @@ cdm$condition_occurrence |>
   select("person_id", "condition_start_date") |>
   addPolypharmacyCount(indexDate = "condition_start_date")
 #> # A query:  ?? x 3
-#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1//tmp/Rtmp4HPgoz/file1b7a58aead01.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1//tmp/Rtmp23nELi/file1ad11db662a.duckdb]
 #>    person_id condition_start_date polypharmacy_count
 #>        <int> <date>                            <int>
-#>  1      4208 1962-04-03                            0
-#>  2      1478 1994-01-08                            0
-#>  3      1520 1984-09-21                            0
-#>  4      4388 1974-01-29                            0
-#>  5      2863 1966-09-20                            0
-#>  6      4405 1975-12-26                            0
-#>  7      1867 1978-05-06                            0
-#>  8      1770 2017-03-21                            0
-#>  9      2909 1986-09-03                            0
-#> 10      2204 1986-09-18                            0
+#>  1      3536 1969-02-15                            0
+#>  2      4690 1997-10-03                            0
+#>  3       962 2005-01-06                            0
+#>  4      2222 1992-08-19                            0
+#>  5      4411 1980-09-22                            0
+#>  6      2657 2018-07-13                            0
+#>  7      1397 2006-03-26                            0
+#>  8       606 2004-02-20                            0
+#>  9      1155 2010-10-29                            0
+#> 10      2776 2014-10-22                            0
 # }
 ```

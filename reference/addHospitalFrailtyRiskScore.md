@@ -1,7 +1,7 @@
-# Add the hospital frailty risk score as defined in Gilbert et al: <https://doi.org/10.1016/S0140-6736(18)30668-8>
+# Add the hospital frailty risk score as defined in [Gilbert et al. (2018)](https://doi.org/10.1016/S0140-6736(18)30668-8)
 
-Add the hospital frailty risk score as defined in Gilbert et al:
-<https://doi.org/10.1016/S0140-6736(18)30668-8>
+Add the hospital frailty risk score as defined in [Gilbert et al.
+(2018)](https://doi.org/10.1016/S0140-6736(18)30668-8)
 
 ## Usage
 
