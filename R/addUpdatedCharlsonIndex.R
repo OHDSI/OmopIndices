@@ -46,7 +46,7 @@ addUpdatedCharlsonIndex <- function(x,
                              ageAdjusted = TRUE,
                              window = c(-Inf, 0),
                              conceptSet = getIndexCodelist("updated_charlson"),
-                             nameStyle = "charlson_index",
+                             nameStyle = "updated_charlson_index",
                              categories = NULL,
                              name = tableName(x)) {
   addIndex(
