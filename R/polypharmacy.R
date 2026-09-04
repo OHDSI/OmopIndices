@@ -5,6 +5,8 @@
 #' @param x A `cdm_table` object.
 #' @param indexDate Name of a 'date' column that indicates the index date.
 #' @param window Window of interest.
+#' @param overlap Whether exposures must overlap in time or merely occur within
+#' the window of interest.
 #' @param nameStyle Name of the new column.
 #' @param name Name of the new table.
 #'
@@ -29,6 +31,7 @@
 addPolypharmacyCount <- function(x,
                                  indexDate = "cohort_start_date",
                                  window = c(0, 0),
+                                 overlap = TRUE,
                                  nameStyle = "polypharmacy_count",
                                  name = tableName(x)) {
   # input check
@@ -36,6 +39,7 @@ addPolypharmacyCount <- function(x,
   personId <- omopgenerics::getPersonIdentifier(x = x)
   indexDate <- omopgenerics::validateColumn(column = indexDate, x = x, type = "date")
   window <- omopgenerics::validateWindowArgument(window = window)
+  omopgenerics::assertLogical(overlap, length = 1)
   if (length(window) > 1) {
     cli::cli_abort(c(x = "Only one window is allowed."))
   }
@@ -68,8 +72,8 @@ addPolypharmacyCount <- function(x,
   pref <- omopgenerics::tmpPrefix()
 
   # intersect with drug_era
-  ids <- omopgenerics::uniqueId(n = 2, exclude = colnames(x))
-  sel <- c("person_id", "drug_era_start_date", "drug_era_end_date") |>
+  ids <- omopgenerics::uniqueId(n = 3, exclude = colnames(x))
+  sel <- c("person_id", "drug_era_start_date", "drug_era_end_date", "drug_concept_id") |>
     rlang::set_names(nm = c(personId, ids))
   nm1 <- omopgenerics::uniqueTableName(prefix = pref)
   nm2 <- omopgenerics::uniqueTableName(prefix = pref)
@@ -90,23 +94,34 @@ addPolypharmacyCount <- function(x,
     ) |>
     dplyr::compute(name = nm1)
 
-  # calculate number ingredients
-  q <- "-min(.data$flag, na.rm = TRUE)" |>
-    rlang::set_names(nm = nameStyle) |>
-    rlang::parse_exprs()
-  x_counts <- x_counts |>
-    dplyr::select(dplyr::all_of(c(personId, indexDate, "date" = ids[1]))) |>
-    dplyr::mutate(flag = -1L) |>
-    dplyr::union_all(
-      x_counts |>
-        dplyr::select(dplyr::all_of(c(personId, indexDate, "date" = ids[2]))) |>
-        dplyr::mutate(flag = 1L)
-    ) |>
-    dplyr::group_by(.data[[personId]], .data[[indexDate]]) |>
-    dplyr::arrange(.data$date, .data$flag) |>
-    dplyr::mutate(flag = cumsum(.data$flag)) |>
-    dplyr::summarise(!!!q) |>
-    dplyr::compute(name = nm2)
+  # calculate number exposures
+  if (overlap) {
+    q <- "-min(.data$flag, na.rm = TRUE)" |>
+      rlang::set_names(nm = nameStyle) |>
+      rlang::parse_exprs()
+    x_counts <- x_counts |>
+      dplyr::select(dplyr::all_of(c(personId, indexDate, "date" = ids[1]))) |>
+      dplyr::mutate(flag = -1L) |>
+      dplyr::union_all(
+        x_counts |>
+          dplyr::select(dplyr::all_of(c(personId, indexDate, "date" = ids[2]))) |>
+          dplyr::mutate(flag = 1L)
+      ) |>
+      dplyr::group_by(.data[[personId]], .data[[indexDate]]) |>
+      dplyr::arrange(.data$date, .data$flag) |>
+      dplyr::mutate(flag = cumsum(.data$flag)) |>
+      dplyr::summarise(!!!q) |>
+      dplyr::compute(name = nm2)
+  } else {
+    q <- "dplyr::n_distinct(.data$drug, na.rm = TRUE)" |>
+      rlang::set_names(nm = nameStyle) |>
+      rlang::parse_exprs()
+    x_counts <- x_counts |>
+      dplyr::select(dplyr::all_of(c(personId, indexDate, "drug" = ids[3]))) |>
+      dplyr::group_by(.data[[personId]], .data[[indexDate]]) |>
+      dplyr::summarise(!!!q) |>
+      dplyr::compute(name = nm2)
+  }
 
   # add new column
   x <- x |>
