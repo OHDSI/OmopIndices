@@ -89,6 +89,23 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
     c(2L, 3L)
   )
 
+  expect_no_error(
+    cdm$toy_table <- cdm$toy_table |>
+      addPolypharmacyCount(
+        indexDate = "my_date",
+        window = c(60, 130),
+        overlap = FALSE,
+        nameStyle = "count_no_overlap"
+      )
+  )
+  expect_identical(
+    cdm$toy_table |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$person_id) |>
+      dplyr::pull("count_no_overlap"),
+    c(3L, 3L)
+  )
+
   expect_error(
     addPolypharmacyCount(cdm$my_cohort, window = list(c(0, 0), c(0, 90))),
     "Only one window is allowed"
