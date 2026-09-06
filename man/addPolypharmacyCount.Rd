@@ -9,6 +9,7 @@ addPolypharmacyCount(
   x,
   indexDate = "cohort_start_date",
   window = c(0, 0),
+  overlap = TRUE,
   nameStyle = "polypharmacy_count",
   name = tableName(x)
 )
@@ -19,6 +20,9 @@ addPolypharmacyCount(
 \item{indexDate}{Name of a 'date' column that indicates the index date.}
 
 \item{window}{Window of interest.}
+
+\item{overlap}{Whether exposures must overlap in time or merely occur within
+the window of interest.}
 
 \item{nameStyle}{Name of the new column.}
 
