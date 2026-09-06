@@ -10,6 +10,7 @@ addPolypharmacyCount(
   x,
   indexDate = "cohort_start_date",
   window = c(0, 0),
+  overlap = TRUE,
   nameStyle = "polypharmacy_count",
   name = tableName(x)
 )
@@ -28,6 +29,11 @@ addPolypharmacyCount(
 - window:
 
   Window of interest.
+
+- overlap:
+
+  Whether exposures must overlap in time or merely occur within the
+  window of interest.
 
 - nameStyle:
 
@@ -56,7 +62,7 @@ cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 #> ℹ Creating local <cdm_reference> object.
 #> ℹ Inserting <cdm_reference> into duckdb.
 #> duckdb keeps downloaded extensions and secrets in a temporary directory:
-#> ℹ /tmp/RtmpaXjJVC/duckdb
+#> ℹ /tmp/RtmpR0GZ8k/duckdb
 #> This is removed when the R session ends.
 #> • Extensions are re-downloaded each session.
 #> • Secrets are lost.
@@ -69,18 +75,18 @@ cdm$condition_occurrence |>
   select("person_id", "condition_start_date") |>
   addPolypharmacyCount(indexDate = "condition_start_date")
 #> # A query:  ?? x 3
-#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1020-azure:R 4.6.1//tmp/RtmpaXjJVC/file1a7568b0929.duckdb]
+#> # Database: DuckDB 1.5.5 [unknown@Linux 6.17.0-1022-azure:R 4.6.1//tmp/RtmpR0GZ8k/file1b087cbc6e.duckdb]
 #>    person_id condition_start_date polypharmacy_count
 #>        <int> <date>                            <int>
-#>  1      2204 1989-01-22                            0
-#>  2      1804 1950-05-12                            0
-#>  3      4562 2016-04-28                            0
-#>  4      4105 2000-11-14                            0
-#>  5       211 2000-10-03                            0
-#>  6      4988 1996-07-25                            0
-#>  7      4675 1930-05-20                            0
-#>  8      3060 2012-03-29                            0
-#>  9      4121 1928-06-23                            0
-#> 10      4107 1996-09-22                            0
+#>  1      3822 1974-11-22                            0
+#>  2      5193 1971-06-05                            0
+#>  3      2988 1972-09-15                            0
+#>  4      4279 1954-01-20                            0
+#>  5      3615 1993-07-16                            0
+#>  6      3864 2010-01-31                            0
+#>  7       165 2006-10-21                            0
+#>  8         1 2017-05-12                            0
+#>  9      2902 1954-01-25                            0
+#> 10      1679 1985-10-17                            0
 # }
 ```

@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   add_indices: add_indices.html
   articles/omop_indices_concepts: omop_indices_concepts.html
-last_built: 2026-08-11T20:01Z
+last_built: 2026-09-06T19:02Z
 urls:
   reference: https://OHDSI.github.io/OmopIndices/reference
   article: https://OHDSI.github.io/OmopIndices/articles
