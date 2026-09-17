@@ -11,3 +11,5 @@
 ^data-raw$
 ^vignettes/articles$
 ^hexsticker$
+^CRAN-SUBMISSION$
+^cran-comments\.md$
