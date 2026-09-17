@@ -6,7 +6,7 @@
 \usage{
 addBMI(
   x,
-  conceptSet = NULL,
+  conceptSet = getIndexCodelist("body_mass_index"),
   indexDate = "cohort_start_date",
   window = c(-Inf, 0),
   order = "last",
@@ -20,7 +20,7 @@ addBMI(
 \item{x}{A \code{cdm_table} containing a person identifier column named
 \code{person_id} or \code{subject_id}.}
 
-\item{conceptSet}{A named concept set supplied as a \code{codelist}, \code{codelist_with_details}, \code{concept_set_expression}, or named list of concept IDs. It must contain \code{obesity}, \code{bmi} as concepts. By default, internal codelists are used.}
+\item{conceptSet}{A named concept set supplied as a \code{codelist}, \code{codelist_with_details}, \code{concept_set_expression}, or named list of concept IDs. It must contain \code{bmi} as concepts. By default, internal codelists are used.}
 
 \item{indexDate}{A character string naming the \code{Date} column in \code{x} that
 defines the index date.}
@@ -34,8 +34,9 @@ measurements within the window: \code{last} (latest), \code{first} (earliest), \
 \item{nameStyle}{A character string specifying the name of the new column.}
 
 \item{categories}{A named list of numeric vectors, each containing the lower
-and upper bounds of a BMI interval. An additional categorical column is
-added, and missing BMI values are labelled \code{missing}.}
+and upper bounds of a BMI interval. An additional column named by appending
+\verb{_categories} to \code{nameStyle} is added, and missing BMI values are labelled
+\code{missing}.}
 
 \item{inObservation}{Logical; whether to restrict records to the person's
 observation period.}

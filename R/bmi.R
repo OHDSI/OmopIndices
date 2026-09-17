@@ -4,13 +4,14 @@
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("BMI")`
-#' @param conceptSet `r documentationConceptSet(c("obesity", "bmi"))`
+#' @param conceptSet `r documentationConceptSet("bmi")`
 #' @param order A character string specifying how to select among multiple BMI
 #' measurements within the window: `last` (latest), `first` (earliest), `max`
 #' (highest), or `min` (lowest).
 #' @param categories A named list of numeric vectors, each containing the lower
-#' and upper bounds of a BMI interval. An additional categorical column is
-#' added, and missing BMI values are labelled `missing`.
+#' and upper bounds of a BMI interval. An additional column named by appending
+#' `_categories` to `nameStyle` is added, and missing BMI values are labelled
+#' `missing`.
 #' @inheritParams nameStyleDoc
 #' @inheritParams inObservationDoc
 #' @inheritParams nameDoc
@@ -40,7 +41,7 @@
 #' }
 #'
 addBMI <- function(x,
-                   conceptSet = NULL,
+                   conceptSet = getIndexCodelist("body_mass_index"),
                    indexDate = "cohort_start_date",
                    window = c(-Inf, 0),
                    order = "last",
@@ -54,7 +55,7 @@ addBMI <- function(x,
   indexDate <- validateIndexDate(indexDate, x)
   window <- validateWindow(window)
   window <- unlist(window)
-  conceptSet <- validateConceptSet(conceptSet, "bmi", cdm)
+  conceptSet <- validateConceptSet(conceptSet, "body_mass_index", cdm)
   nameStyle <- validateNameStyle(nameStyle, x)
   x <- omopgenerics::validateNewColumn(x, nameStyle)
   name <- validateName(name)
@@ -92,7 +93,7 @@ addBMI <- function(x,
   # add categories
   if (!is.null(categories)) {
     qc <- qCategories(categories) |>
-      rlang::set_names(nameStyle) |>
+      rlang::set_names(paste0(nameStyle, "_categories")) |>
       rlang::parse_exprs()
     x <- x |>
       dplyr::mutate(!!!qc) |>

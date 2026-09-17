@@ -1,5 +1,5 @@
 
-test_that("polypharmacy count returns zeros for empty drug eras and rejects multiple windows", {
+test_that("polypharmacy returns zeros for empty drug eras and rejects multiple windows", {
   cdm <- omock::mockCdmReference(vocabularySet = "GiBleed") |>
     omock::mockCdmFromTables(tables = list(
       drug_era = dplyr::tibble(
@@ -39,7 +39,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
 
   expect_no_error(
     cdm$my_cohort2 <- cdm$my_cohort |>
-      addPolypharmacyCount(
+      addPolypharmacy(
         indexDate = "cohort_start_date",
         window = c(0, 0),
         nameStyle = "count",
@@ -56,9 +56,32 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
     c(1L, 1L)
   )
 
+  cdm$my_cohort_categories <- cdm$my_cohort |>
+    addPolypharmacy(
+      categories = list(
+        low = c(0, 1),
+        high = c(2, Inf)
+      ),
+      name = "my_cohort_categories"
+    )
+  expect_identical(
+    cdm$my_cohort_categories |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id) |>
+      dplyr::pull("polypharmacy"),
+    c(1L, 1L)
+  )
+  expect_identical(
+    cdm$my_cohort_categories |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id) |>
+      dplyr::pull("polypharmacy_categories"),
+    c("low", "low")
+  )
+
   expect_warning(
     cdm$my_cohort2 <- cdm$my_cohort2 |>
-      addPolypharmacyCount(
+      addPolypharmacy(
         indexDate = "cohort_start_date",
         window = c(0, 79),
         nameStyle = "count",
@@ -75,7 +98,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
 
   expect_no_error(
     cdm$toy_table <- cdm$toy_table |>
-      addPolypharmacyCount(
+      addPolypharmacy(
         indexDate = "my_date",
         window = c(0, 80),
         nameStyle = "count"
@@ -91,7 +114,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
 
   expect_no_error(
     cdm$toy_table <- cdm$toy_table |>
-      addPolypharmacyCount(
+      addPolypharmacy(
         indexDate = "my_date",
         window = c(60, 130),
         overlap = FALSE,
@@ -108,7 +131,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
 
   expect_no_error(
     cdm$toy_table <- cdm$toy_table |>
-      addPolypharmacyCount(
+      addPolypharmacy(
         indexDate = "my_date",
         window = c(-Inf, 0),
         overlap = FALSE,
@@ -125,7 +148,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
 
   expect_no_error(
     cdm$toy_table <- cdm$toy_table |>
-      addPolypharmacyCount(
+      addPolypharmacy(
         indexDate = "my_date",
         window = c(0, Inf),
         nameStyle = "count_right_open"
@@ -141,7 +164,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
 
   expect_no_error(
     cdm$toy_table <- cdm$toy_table |>
-      addPolypharmacyCount(
+      addPolypharmacy(
         indexDate = "my_date",
         window = c(-Inf, Inf),
         nameStyle = "count_unbounded"
@@ -156,7 +179,7 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
   )
 
   expect_error(
-    addPolypharmacyCount(cdm$my_cohort, window = list(c(0, 0), c(0, 90))),
+    addPolypharmacy(cdm$my_cohort, window = list(c(0, 0), c(0, 90))),
     "Only one window is allowed"
   )
 
@@ -165,14 +188,14 @@ test_that("polypharmacy count returns zeros for empty drug eras and rejects mult
     dplyr::filter(.data$person_id == 0)
   expect_warning(
     result <- cdm$my_cohort |>
-      addPolypharmacyCount(),
+      addPolypharmacy(),
     "table is empty"
   )
   expect_true("my_cohort" %in% tableName(result))
   expect_warning(
     result <- result |>
       dplyr::compute() |>
-      addPolypharmacyCount()
+      addPolypharmacy()
   )
   expect_true(is.na(tableName(result)))
 

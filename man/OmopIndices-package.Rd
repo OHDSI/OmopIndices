@@ -24,7 +24,7 @@ Useful links:
 Authors:
 \itemize{
   \item Martí Català \email{marti.catalasabate@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-3308-9905}{ORCID})
-  \item Marta Alcalde \email{marta.alcaldeherraiz@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0002-4405-1814}{ORCID})
+  \item Marta Alcalde-Herraiz \email{marta.alcaldeherraiz@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0002-4405-1814}{ORCID})
   \item Maria T Sanchez-Santos \email{maria.sanchez@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-1908-8623}{ORCID})
 }
 

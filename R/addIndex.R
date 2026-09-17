@@ -51,10 +51,10 @@ addIndex <- function(x,
   } else if (type %in% c("electronic_frailty_index", "electronic_frailty_index_2")) {
     # TODO use internal functions to skip validation
     index <- index |>
-      addPolypharmacyCount(
+      addPolypharmacy(
         indexDate = indexDate,
         window = c(-365, 0),
-        nameStyle = "polypharmacy_count",
+        nameStyle = "polypharmacy",
         name = nm
       )
   }

@@ -105,7 +105,7 @@ requiredConcepts$electronic_frailty_index <- c(
 )
 formulas$electronic_frailty_index <- paste0(
   paste0("1/36 * .data$", requiredConcepts$electronic_frailty_index, collapse = " + "),
-  " + dplyr::if_else(.data$polypharmacy_count >= 5, 1/36, 0)"
+  " + dplyr::if_else(.data$polypharmacy >= 5, 1/36, 0)"
 )
 
 ## Electronic Frailty Index 2 ----
@@ -155,8 +155,8 @@ formulas$electronic_frailty_index_2 <- paste0(
     .data$bmi < 18.5  ~ 0.4417 / 8.429,
     .default = 0
   ) + dplyr::case_when(
-    .data$polypharmacy_count >= 10 ~ 0.50801 / 8.429,
-    .data$polypharmacy_count >= 5 ~ 0.32301 / 8.429,
+    .data$polypharmacy >= 10 ~ 0.50801 / 8.429,
+    .data$polypharmacy >= 5 ~ 0.32301 / 8.429,
     .default = 0
   )"
 )
@@ -249,6 +249,8 @@ if (nrow(x) > 0) {
 }
 # check missing definitions
 # check extra definitions
+
+requiredConcepts$body_mass_index <- "bmi"
 
 # Save internal data ----
 usethis::use_data(

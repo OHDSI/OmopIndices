@@ -59,7 +59,7 @@ contain `person_id` or `subject_id` and, for index-based measures, a
 | Group | Functions | Output |
 |----|----|----|
 | Comorbidity and frailty | `addCharlsonIndex()`, `addUpdatedCharlsonIndex()`, `addElectronicFrailtyIndex()`, `addHospitalFrailtyRiskScore()` | Numeric score, optionally with a categorical column |
-| Clinical covariates | `addBMI()`, `addPolypharmacyCount()` | BMI and maximum simultaneous ingredient count |
+| Clinical covariates | `addBMI()`, `addPolypharmacy()` | BMI and maximum simultaneous ingredient count |
 | Demographics | `addEthnicity()`, `addLocation()` | Person-level ethnicity and location fields |
 | Socioeconomic status | `addSocioEconomicStatus()`, `addTownsend()`, `addIndexOfMultipleDeprivation()` | Townsend or IMD value |
 
@@ -155,18 +155,17 @@ getIndexCodelist("charlson")
 ### Clinical covariates
 
 `addBMI()` selects a BMI measurement from a time window, while
-`addPolypharmacyCount()` calculates the maximum number of simultaneous
-drug ingredients in its window. Here BMI is taken from the last
-measurement in the preceding year and polypharmacy is assessed over the
-preceding 30 days.
+`addPolypharmacy()` calculates the maximum number of simultaneous drug
+ingredients in its window. Here BMI is taken from the last measurement in the
+preceding year and polypharmacy is assessed over the preceding 30 days.
 
 ``` r
 clinical <- cdm$cohort |>
   addBMI(window = c(-365, 0), order = "last") |>
-  addPolypharmacyCount(window = c(-30, 0))
+  addPolypharmacy(window = c(-30, 0))
 
 clinical |>
-  select(subject_id, cohort_start_date, bmi, polypharmacy_count) |>
+  select(subject_id, cohort_start_date, bmi, polypharmacy) |>
   glimpse()
 #> Rows: ??
 #> Columns: 4
@@ -174,7 +173,7 @@ clinical |>
 #> $ subject_id         <int> 2859, 5165, 3241, 1381, 4403, 1242, 3083, 410, 5276…
 #> $ cohort_start_date  <date> 1982-07-04, 2010-11-09, 2002-08-02, 2010-08-08, 19…
 #> $ bmi                <int> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
-#> $ polypharmacy_count <int> 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 3, 2, 1, 2, 2, …
+#> $ polypharmacy       <int> 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
 ```
 
 ### Demographics
