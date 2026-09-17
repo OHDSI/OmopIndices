@@ -189,3 +189,44 @@ addPolypharmacy <- function(x,
 
   return(x)
 }
+
+#' Add the maximum number of ingredients to which an individual is simultaneously
+#' exposed within a specified window
+#'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' The function was renamed to `addPolypharmacy()`
+#'
+#' @inheritParams xDoc
+#' @inheritParams indexDateDoc
+#' @param window `r documentationWindow("polypharmacy")`
+#' @param overlap Logical; if `TRUE`, count drug eras that overlap in time. If
+#' `FALSE`, count drug eras that occur within the window without requiring them
+#' to overlap one another.
+#' @inheritParams categoriesDoc
+#' @inheritParams nameStyleDoc
+#' @inheritParams nameDoc
+#'
+#' @export
+#'
+#' @returns The table `x` with a new column containing the maximum number of
+#' simultaneous ingredients in the window of interest.
+#'
+addPolypharmacyCount <- function(x,
+                                 indexDate = "cohort_start_date",
+                                 window = c(0, 0),
+                                 overlap = TRUE,
+                                 categories = NULL,
+                                 nameStyle = "polypharmacy",
+                                 name = tableName(x)) {
+  lifecycle::deprecate_soft(when = "0.1.0", "addPolypharmacyCount()", "addPolypharmacy()")
+  addPolypharmacy(
+    x = x,
+    indexDate = indexDate,
+    window = window,
+    overlap = overlap,
+    categories = categories,
+    nameStyle = nameStyle,
+    name = name
+  )
+}

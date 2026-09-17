@@ -43,6 +43,7 @@ Imports:
     cli,
     clock,
     dplyr,
+    lifecycle,
     omopgenerics (>= 1.4.0),
     PatientProfiles,
     purrr,
@@ -51,3 +52,4 @@ Depends:
     R (>= 4.1.0)
 Config/roxygen2/version: 8.0.0
 Config/Needs/website: rmarkdown
+RoxygenNote: 8.0.0
