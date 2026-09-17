@@ -9,7 +9,7 @@ Index of Multiple Deprivation"><meta property="og:image" content="https://OHDSI.
 
     <a class="navbar-brand me-2" href="../index.html">OmopIndices</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.900</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@ Index of Multiple Deprivation"><meta property="og:image" content="https://OHDSI.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Add socioeconomic status as a column to a table using the <a href="https://athena.ohdsi.org/search-terms/terms/35812882" class="external-link">Index of Multiple Deprivation</a></h1>
-      <small class="dont-index">Source: <a href="https://github.com/OHDSI/OmopIndices/blob/v0.1.0/R/socioEconomicStatus.R" class="external-link"><code>R/socioEconomicStatus.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/OHDSI/OmopIndices/blob/main/R/socioEconomicStatus.R" class="external-link"><code>R/socioEconomicStatus.R</code></a></small>
       <div class="d-none name"><code>addIndexOfMultipleDeprivation.Rd</code></div>
     </div>
 
@@ -113,7 +113,7 @@ Deprivation value.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating local <span style="color: #0000BB;">&lt;cdm_reference&gt;</span> object.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Inserting <span style="color: #0000BB;">&lt;cdm_reference&gt;</span> into <span style="color: #0000BB;">duckdb</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> duckdb keeps downloaded extensions and secrets in a temporary directory:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/RtmptLmxJe/duckdb</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/RtmpNEUAUi/duckdb</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> This is removed when the R session ends.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Secrets are lost.</span>
@@ -141,8 +141,8 @@ Deprivation value.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Socio-economic status could not be added from <span style="color: #0000BB;">imd</span>.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rows: ??</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ subject_id            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 84<span style="color: #949494;">, </span>86<span style="color: #949494;">, </span>187<span style="color: #949494;">, </span>187<span style="color: #949494;">, </span>297<span style="color: #949494;">, </span>297<span style="color: #949494;">, </span>363<span style="color: #949494;">, </span>380<span style="color: #949494;">, </span>406<span style="color: #949494;">, </span>502<span style="color: #949494;">, </span>…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ cohort_start_date     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2007-02-05<span style="color: #949494;">, </span>2013-12-18<span style="color: #949494;">, </span>1985-11-24<span style="color: #949494;">, </span>2013-10-17<span style="color: #949494;">,</span>…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ subject_id            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 4224<span style="color: #949494;">, </span>4224<span style="color: #949494;">, </span>4488<span style="color: #949494;">, </span>4527<span style="color: #949494;">, </span>4527<span style="color: #949494;">, </span>4569<span style="color: #949494;">, </span>4847<span style="color: #949494;">, </span>5000<span style="color: #949494;">, </span>…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cohort_start_date     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1965-01-06<span style="color: #949494;">, </span>1968-12-13<span style="color: #949494;">, </span>2001-10-03<span style="color: #949494;">, </span>1980-06-10<span style="color: #949494;">,</span>…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ socio_economic_status <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Missing"<span style="color: #949494;">, </span>"Missing"<span style="color: #949494;">, </span>"Missing"<span style="color: #949494;">, </span>"Missing"<span style="color: #949494;">, </span>"Mis…</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>

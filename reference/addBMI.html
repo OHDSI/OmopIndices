@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">OmopIndices</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.900</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Add Body Mass Index measurement</h1>
-      <small class="dont-index">Source: <a href="https://github.com/OHDSI/OmopIndices/blob/v0.1.0/R/bmi.R" class="external-link"><code>R/bmi.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/OHDSI/OmopIndices/blob/main/R/bmi.R" class="external-link"><code>R/bmi.R</code></a></small>
       <div class="d-none name"><code>addBMI.Rd</code></div>
     </div>
 
@@ -43,7 +43,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addBMI</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  conceptSet <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  conceptSet <span class="op">=</span> <span class="fu"><a href="getIndexCodelist.html">getIndexCodelist</a></span><span class="op">(</span><span class="st">"body_mass_index"</span><span class="op">)</span>,</span>
 <span>  indexDate <span class="op">=</span> <span class="st">"cohort_start_date"</span>,</span>
 <span>  window <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  order <span class="op">=</span> <span class="st">"last"</span>,</span>
@@ -64,7 +64,7 @@
 
 
 <dt id="arg-conceptset">conceptSet<a class="anchor" aria-label="anchor" href="#arg-conceptset"></a></dt>
-<dd><p>A named concept set supplied as a <code>codelist</code>, <code>codelist_with_details</code>, <code>concept_set_expression</code>, or named list of concept IDs. It must contain <code>obesity</code>, <code>bmi</code> as concepts. By default, internal codelists are used.</p></dd>
+<dd><p>A named concept set supplied as a <code>codelist</code>, <code>codelist_with_details</code>, <code>concept_set_expression</code>, or named list of concept IDs. It must contain <code>bmi</code> as concepts. By default, internal codelists are used.</p></dd>
 
 
 <dt id="arg-indexdate">indexDate<a class="anchor" aria-label="anchor" href="#arg-indexdate"></a></dt>
@@ -88,8 +88,9 @@ measurements within the window: <code>last</code> (latest), <code>first</code> (
 
 <dt id="arg-categories">categories<a class="anchor" aria-label="anchor" href="#arg-categories"></a></dt>
 <dd><p>A named list of numeric vectors, each containing the lower
-and upper bounds of a BMI interval. An additional categorical column is
-added, and missing BMI values are labelled <code>missing</code>.</p></dd>
+and upper bounds of a BMI interval. An additional column named by appending
+<code>_categories</code> to <code>nameStyle</code> is added, and missing BMI values are labelled
+<code>missing</code>.</p></dd>
 
 
 <dt id="arg-inobservation">inObservation<a class="anchor" aria-label="anchor" href="#arg-inobservation"></a></dt>
@@ -131,7 +132,7 @@ observation period.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating local <span style="color: #0000BB;">&lt;cdm_reference&gt;</span> object.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Inserting <span style="color: #0000BB;">&lt;cdm_reference&gt;</span> into <span style="color: #0000BB;">duckdb</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> duckdb keeps downloaded extensions and secrets in a temporary directory:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/RtmptLmxJe/duckdb</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/RtmpNEUAUi/duckdb</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> This is removed when the R session ends.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Secrets are lost.</span>
@@ -158,10 +159,11 @@ observation period.</p></dd>
 <span class="r-in"><span>  <span class="fu">addBMI</span><span class="op">(</span>window <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">365</span>, <span class="fl">0</span><span class="op">)</span>, order <span class="op">=</span> <span class="st">"last"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">subject_id</span>, <span class="va">cohort_start_date</span>, <span class="va">bmi</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>9 unique codelist concept IDs are not present in `cdm$concept`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rows: ??</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ subject_id        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 4439<span style="color: #949494;">, </span>4470<span style="color: #949494;">, </span>4662<span style="color: #949494;">, </span>4662<span style="color: #949494;">, </span>4678<span style="color: #949494;">, </span>4713<span style="color: #949494;">, </span>4792<span style="color: #949494;">, </span>4792<span style="color: #949494;">, </span>4883…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $ cohort_start_date <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1992-02-07<span style="color: #949494;">, </span>1990-04-15<span style="color: #949494;">, </span>1977-03-06<span style="color: #949494;">, </span>2006-06-06<span style="color: #949494;">, </span>197…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ subject_id        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 57<span style="color: #949494;">, </span>57<span style="color: #949494;">, </span>80<span style="color: #949494;">, </span>187<span style="color: #949494;">, </span>248<span style="color: #949494;">, </span>297<span style="color: #949494;">, </span>297<span style="color: #949494;">, </span>380<span style="color: #949494;">, </span>394<span style="color: #949494;">, </span>578<span style="color: #949494;">, </span>686<span style="color: #949494;">, </span>…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ cohort_start_date <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 1970-12-07<span style="color: #949494;">, </span>1992-02-27<span style="color: #949494;">, </span>1949-11-11<span style="color: #949494;">, </span>1987-09-06<span style="color: #949494;">, </span>201…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ bmi               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>…</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
