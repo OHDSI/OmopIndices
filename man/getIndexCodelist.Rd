@@ -2,18 +2,19 @@
 % Please edit documentation in R/indexConcepts.R
 \name{getIndexCodelist}
 \alias{getIndexCodelist}
-\title{Get the codelists used for a certain index calculation}
+\title{Get the codelists used for a specified index calculation}
 \usage{
 getIndexCodelist(index)
 }
 \arguments{
-\item{index}{A choice between the different indexes: \code{"body_mass_index"}, \code{"charlson"}, \code{"electronic_frailty_index"}, \code{"electronic_frailty_index_2"}, \code{"hospital_frailty_risk_score"}, and \code{"updated_charlson"}.}
+\item{index}{A character string identifying the index for which to retrieve
+internal codelists. Supported values are \code{"body_mass_index"}, \code{"charlson"}, \code{"electronic_frailty_index"}, \code{"hospital_frailty_risk_score"}, and \code{"updated_charlson"}.}
 }
 \value{
-A codelist used for the index.
+A codelist containing the concepts used for the selected index.
 }
 \description{
-Get the codelists used for a certain index calculation
+Get the codelists used for a specified index calculation
 }
 \examples{
 library(OmopIndices)

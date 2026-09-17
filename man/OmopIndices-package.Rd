@@ -4,15 +4,28 @@
 \name{OmopIndices-package}
 \alias{OmopIndices}
 \alias{OmopIndices-package}
-\title{OmopIndices: What the Package Does (Title Case)}
+\title{OmopIndices: Patient-Level Indices from the OMOP Common Data Model}
 \description{
-More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+Provides tools to derive standardised, reproducible patient-level indices and covariates from Observational Medical Outcomes Partnership (OMOP) Common Data Model (CDM) databases. Functions calculate comorbidity and frailty scores, including the Charlson Comorbidity Index, Electronic Frailty Index, and Hospital Frailty Risk Score, as well as body mass index, polypharmacy, ethnicity, location, and socioeconomic status measures.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://OHDSI.github.io/OmopIndices/}
   \item Report bugs at \url{https://github.com/OHDSI/OmopIndices/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Martí Català \email{marti.catalasabate@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-3308-9905}{ORCID})
+
+Authors:
+\itemize{
+  \item Martí Català \email{marti.catalasabate@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-3308-9905}{ORCID})
+  \item Marta Alcalde-Herraiz \email{marta.alcaldeherraiz@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0002-4405-1814}{ORCID})
+  \item Maria T Sanchez-Santos \email{maria.sanchez@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-1908-8623}{ORCID})
 }
 
 }

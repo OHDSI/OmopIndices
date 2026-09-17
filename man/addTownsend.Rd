@@ -2,7 +2,7 @@
 % Please edit documentation in R/socioEconomicStatus.R
 \name{addTownsend}
 \alias{addTownsend}
-\title{Add Socio-economic status as a column to a table using the
+\title{Add socioeconomic status as a column to a table using the
 \href{https://athena.ohdsi.org/search-terms/terms/715996}{Townsend deprivation index}}
 \usage{
 addTownsend(
@@ -16,29 +16,52 @@ addTownsend(
 )
 }
 \arguments{
-\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
-columns.}
+\item{x}{A \code{cdm_table} containing a person identifier column named
+\code{person_id} or \code{subject_id}.}
 
-\item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
-table.}
+\item{indexDate}{A character string naming the \code{Date} column in \code{x} that
+defines the index date.}
 
-\item{window}{Window to asses \code{socio_economic_status} in, it must be a vector of two numeric values \code{c(min, max)}. Window times refer to days since \code{indexDate}.}
+\item{window}{A numeric vector of length two, \code{c(min, max)}, defining the window for \code{socio_economic_status} in days relative to \code{indexDate}. Use \code{-Inf} or \code{Inf} for an unbounded lower or upper limit.}
 
-\item{order}{Character to indicate which of the records to select if multiple
-records are found.}
+\item{order}{A character string specifying which record to select when
+multiple records are found: \code{first} or \code{last}.}
 
-\item{nameStyle}{A character string with the name of the new column.}
+\item{nameStyle}{A character string specifying the name of the new column.}
 
-\item{name}{A character string with the name of the new table. If \code{NULL} a
-temporary table will be created.}
+\item{name}{A character string specifying the name of the output table. If
+\code{NULL}, a temporary table is created.}
 
-\item{missingSocioEconomicStatusValue}{Character to assign missing values.}
+\item{missingSocioEconomicStatusValue}{A character string used to replace
+missing socioeconomic status values.}
 }
 \value{
-The \code{x} table with a new column added with the socio-economic status
-(townsend index) of the patient.
+The table \code{x} with a new column containing the Townsend deprivation
+index.
 }
 \description{
-Add Socio-economic status as a column to a table using the
+Add socioeconomic status as a column to a table using the
 \href{https://athena.ohdsi.org/search-terms/terms/715996}{Townsend deprivation index}
+}
+\examples{
+\donttest{
+library(omock)
+library(duckdb)
+library(OmopIndices)
+library(dplyr)
+library(CohortConstructor)
+
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+cdm$cohort <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+  name = "cohort"
+)
+
+cdm$cohort |>
+  addTownsend() |>
+  select(subject_id, cohort_start_date, socio_economic_status) |>
+  glimpse()
+}
+
 }

@@ -8,27 +8,29 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  message = FALSE,
+  warning = FALSE,
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
 ```
 
-# OmopIndices
+# OmopIndices <a href="https://OHDSI.github.io/OmopIndices/"><img src="man/figures/logo.png" align="right" height="138" alt="OmopIndices website" /></a>
 
 <!-- badges: start -->
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![CRAN status](https://www.r-pkg.org/badges/version/OmopIndices)](https://CRAN.R-project.org/package=OmopIndices)
+<!-- [![CRAN status](https://www.r-pkg.org/badges/version/OmopIndices)](https://CRAN.R-project.org/package=OmopIndices) -->
 [![R-CMD-check](https://github.com/OHDSI/OmopIndices/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/OmopIndices/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/OHDSI/OmopIndices/graph/badge.svg)](https://app.codecov.io/gh/OHDSI/OmopIndices)
 <!-- badges: end -->
 
-The goal of **OmopIndices** is to enable standardised and reproducible 
-derivation of clinically and epidemiologically relevant patient-level indexes 
-and covariates directly from OMOP CDM databases instances.
+The goal of **OmopIndices** is to enable standardised and reproducible
+derivation of clinically and epidemiologically relevant patient-level indices
+and covariates directly from OMOP CDM database instances.
 
 ## Ecosystem
 
-*OmopIndices* is part of the ecosystem of packages defined by 
+*OmopIndices* is part of the ecosystem of packages defined by
 [omopgenerics](https://darwin-eu.github.io/omopgenerics/). For more details on
 the ecosystem you can read the [Tidy R programming with the OMOP Common Data Model](https://ohdsi.github.io/Tidy-R-programming-with-OMOP/)
 book.
@@ -37,8 +39,8 @@ book.
 
 | Source | Driver | CDM reference | Status |
 |------------------|------------------|------------------|------------------|
-| Local R dataframe | N/A | `omopgenerics::cdmFromTables()` | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=local-omopgenerics) |
-| In-memory duckdb datatabase | duckdb | `CDMConnector::cdmFromCon()` | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=duckdb-CDMConnector) |
+| Local R data frame | N/A | `omopgenerics::cdmFromTables()` | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=local-omopgenerics) |
+| In-memory DuckDB database | duckdb | `CDMConnector::cdmFromCon()` | ![](https://img.shields.io/github/actions/workflow/status/OHDSI/OmopIndices/test-weekly.yaml?branch=main&job=duckdb-CDMConnector) |
 
 ## Installation
 
@@ -61,92 +63,154 @@ pak::pkg_install("OHDSI/OmopIndices")
 OmopIndices adds patient-level measures to an existing `cdm_table`. Each
 function returns the input table with one or more columns added, so functions
 can be composed with the pipe operator. The input table must contain
-`person_id` (or `subject_id`) and, for index-based measures, a `Date` column
+`person_id` or `subject_id` and, for index-based measures, a `Date` column
 that identifies the index date.
 
 | Group | Functions | Output |
 |---|---|---|
 | Comorbidity and frailty | `addCharlsonIndex()`, `addUpdatedCharlsonIndex()`, `addElectronicFrailtyIndex()`, `addHospitalFrailtyRiskScore()` | Numeric score, optionally with a categorical column |
-| Clinical covariates | `addBMI()`, `addPolypharmacyCount()` | BMI and maximum simultaneous ingredient count |
+| Clinical covariates | `addBMI()`, `addPolypharmacy()` | BMI and maximum simultaneous ingredient count |
 | Demographics | `addEthnicity()`, `addLocation()` | Person-level ethnicity and location fields |
 | Socioeconomic status | `addSocioEconomicStatus()`, `addTownsend()`, `addIndexOfMultipleDeprivation()` | Townsend or IMD value |
 
 The index functions use OMOP concepts from the supplied `conceptSet` to find
-records in the requested window. By default the package uses internal concept
-sets, that can be checked using `getIndexCodelist()`. A concept set can also be
+records in the requested window. By default, the package uses internal concept
+sets that can be inspected using `getIndexCodelist()`. A concept set can also be
 supplied as a `codelist`, `codelist_with_details`, or `concept_set_expression`
 object.
 
 ## Examples
 
-### Mock data
-
-For the purpose to illustrate the functionality of OmopIndices we will use the
-*GiBleed* database contained by the [omock](https://ohdsi.github.io/omock/)
-package.
+The examples below use the *GiBleed* database bundled with the
+[omock](https://ohdsi.github.io/omock/) package. Each group starts from the
+same mock cohort, and the examples can be adapted to any compatible OMOP CDM
+table. For index-based measures, the default index date is
+`cohort_start_date`; use `indexDate` to select another `Date` column. Windows
+are expressed in days relative to the index date, so `c(-365, 0)` means the
+year before and including the index date.
 
 ```{r}
 library(omock)
 library(duckdb)
 library(OmopIndices)
+library(dplyr)
+library(CohortConstructor)
 
 cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+
+# Let's create a simple sinusitis cohort for the examples
+cdm$cohort <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+  name = "cohort"
+)
 ```
 
-### `addLocation()`
+### Comorbidity and frailty
 
-## A complete example
+The comorbidity and frailty functions add a numeric score. The Charlson and
+updated Charlson functions can optionally include age adjustment, and the
+frailty scores can also add a categorical classification of the score. The
+package provides default categories for the Electronic Frailty Index and
+Hospital Frailty Risk Score; these can be overridden with `categories`.
 
-The following example derives several measures for a cohort. The default
-index date is `cohort_start_date`; use `indexDate` to point to another date
-column. Windows are expressed in days relative to the index date, so
-`c(-365, 0)` means the year before and including the index date.
-
-```{r, eval = FALSE}
-library(dplyr)
-
-cohort <- cdm$cohort |>
+```{r}
+comorbidity <- cdm$cohort |>
   addCharlsonIndex(ageAdjusted = TRUE) |>
+  addUpdatedCharlsonIndex(ageAdjusted = TRUE) |>
   addElectronicFrailtyIndex() |>
-  addHospitalFrailtyRiskScore() |>
-  addBMI(window = c(-365, 0), order = "last") |>
-  addPolypharmacyCount(window = c(-30, 0)) |>
-  addEthnicity() |>
-  addLocation()
-
-cohort |>
-  select(person_id, cohort_start_date, charlson_index, efi, hfrs, bmi,
-         polypharmacy_count, ethnicity, location) |>
-  glimpse()
-```
-
-## Choosing options
-
-For reproducible analyses, specify the concept set and output names explicitly
-when defaults do not match the study protocol. Index functions accept a named
-`categories` list to add labelled categories alongside the score, for example:
-
-```{r, eval = FALSE}
-cohort <- cdm$cohort |>
   addHospitalFrailtyRiskScore(
-    window = c(-365, 0),
     categories = list(
       low = c(0, 5),
       intermediate = c(5, 15),
       high = c(15, Inf)
-    ),
-    nameStyle = "hospital_frailty_risk"
+    )
   )
+
+comorbidity |>
+  select(subject_id, cohort_start_date, charlson, updated_charlson, efi,
+         efi_categories, hfrs, hfrs_categories) |>
+  glimpse()
 ```
 
-`addBMI()` can select the first, last, minimum, or maximum measurement in a
-window. `addEthnicity()` and `addLocation()` try the values in `from`
-sequentially, which makes it possible to provide fallbacks. Missing values
-are filled with the corresponding `missing*Value` argument.
+Each index uses an internal concept set by default. To apply a study-specific
+definition, supply a named `conceptSet` containing the required codelists. The
+available internal codelists can be inspected with `getIndexCodelist()`.
+
+```{r}
+getIndexCodelist("charlson")
+```
+
+### Clinical covariates
+
+`addBMI()` selects a BMI measurement from a time window, while
+`addPolypharmacy()` calculates the maximum number of simultaneous drug
+ingredients in its window. Here BMI is taken from the last measurement in the
+preceding year and polypharmacy is assessed over the preceding 30 days.
+
+```{r}
+clinical <- cdm$cohort |>
+  addBMI(window = c(-365, 0), order = "last") |>
+  addPolypharmacy(window = c(-30, 0))
+
+clinical |>
+  select(subject_id, cohort_start_date, bmi, polypharmacy) |>
+  glimpse()
+```
+
+### Demographics
+
+`addEthnicity()` uses available ethnicity and race fields from the OMOP
+`person` table in sequence. `addLocation()` first uses `location_id` and then
+falls back to the location associated with `care_site_id`. Missing values can
+be replaced with study-specific labels.
+
+```{r}
+demographics <- cdm$cohort |>
+  addEthnicity(missingEthnicityValue = "Unknown") |>
+  addLocation(
+    from = c("location_id", "care_site_id"),
+    locationSource = "location_source_value",
+    missingLocationValue = "Unknown"
+  )
+
+demographics |>
+  select(subject_id, cohort_start_date, ethnicity, location) |>
+  glimpse()
+```
+
+### Socioeconomic status
+
+Socioeconomic status can be derived from Townsend deprivation scores, the
+Index of Multiple Deprivation (IMD), or a prioritised combination of both. The
+following example retains the two source-specific outputs and also creates a
+combined value that prefers IMD and falls back to Townsend.
+
+```{r}
+socioeconomic <- cdm$cohort |>
+  addTownsend(nameStyle = "townsend") |>
+  addIndexOfMultipleDeprivation(nameStyle = "imd") |>
+  addSocioEconomicStatus(
+    from = c("imd", "townsend"),
+    nameStyle = "socio_economic_status"
+  )
+
+socioeconomic |>
+  select(subject_id, cohort_start_date, townsend, imd,
+         socio_economic_status) |>
+  glimpse()
+```
+
+The default codelists and output names are suitable for exploratory use, but
+for a reproducible analysis you should specify the concept set, date window,
+selection order, and output name required by the study protocol.
 
 ## Function reference
 
 See the [reference site](https://ohdsi.github.io/OmopIndices/reference/) for
 complete argument descriptions, accepted input types, and examples for every
-exported function. The package is designed to work with local data frames and
-database-backed OMOP CDM sources supported by `omopgenerics`.
+exported function. The package is tested with local data frames and DuckDB in
+continuous integration. It is designed to work with database-backed OMOP CDM
+sources supported by [omopgenerics](https://darwin-eu.github.io/omopgenerics/)
+and [CDMConnector](https://darwin-eu.github.io/CDMConnector/); verify any
+additional backend in the target deployment environment.

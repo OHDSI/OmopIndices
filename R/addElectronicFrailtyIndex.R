@@ -1,6 +1,6 @@
 
 #' Add Electronic Frailty Index (eFI) value based on
-#' [Clegg et al. (2016)](https://doi.org/10.1093/ageing/afw039)
+#' Clegg et al. (2016) (\doi{10.1093/ageing/afw039})
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
@@ -10,61 +10,78 @@
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
 #'
-#' @returns The `x` table with a new column added with the eFI of the patient.
+#' @returns The table `x` with a new column containing the Electronic Frailty
+#' Index value.
 #'
 #' @export
 #'
-#' @examples{
-#' library(OmopIndices)
+#' @examples
+#' \donttest{
 #' library(omock)
+#' library(duckdb)
+#' library(OmopIndices)
+#' library(dplyr)
+#' library(CohortConstructor)
 #'
-#' cdm <- mockCdmFromDataset() |>
-#'   mockCohort()
-#'
-#' conceptSet <- list(
-#'   "activity_limitation" = 763723L,
-#'   "anemia" = 439777L,
-#'   "arthritis" = 4291025L,
-#'   "atrial_fibrillation" = 313217L,
-#'   "chronic_kidney_disease" = 46271022L,
-#'   "cerebrovascular_disease" = 381591L,
-#'   "dizziness" = 4223938L,
-#'   "dyspnea" = 312437L,
-#'   "falls" = 4059015L,
-#'   "foot_problem" = 4101512L,
-#'   "fragility_fracture" = 3170964L,
-#'   "hearing_impairment" = 4234647L,
-#'   "heart_failure" = 316139L,
-#'   "heart_valve_disorder" = 4281749L,
-#'   "housebound" = 4052962L,
-#'   "hypertension" = 319826L,
-#'   "hypotension_syncope" = 316447L,
-#'   "ischemic_heart_disease" = 4185932L,
-#'   "memory_cognitive_disorder" = 4304008L,
-#'   "mobility_problems" =  4053076L,
-#'   "osteoporosis" = 80502L,
-#'   "parkinsonism_tremor" = 4140090L,
-#'   "peptic_ulcer" = 4027663L,
-#'   "peripheral_vascular_disease" = 321052L,
-#'   "care_requirement" = 3661927L,
-#'   "respiratory_disease" = 317009L,
-#'   "skin_ulcer" = 4262920L,
-#'   "sleep_disturbance" = 435524L,
-#'   "social_vulnerability" = 4026161L,
-#'   "diabetes" = 201820L,
-#'   "thyroid_disease" = 4017052L,
-#'   "urinary_incontinence" = 197672L,
-#'   "urinary_system_disease" = 75865L,
-#'   "visual_impairment" = 4265433L,
-#'   "weight_loss_anorexia" = 436675L
+#' cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+#' cdm$cohort <- conceptCohort(
+#'   cdm = cdm,
+#'   conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+#'   name = "cohort"
 #' )
 #'
-#' # Polypharmacy is calculated internally using the function
-#' # `addPolypharmacyCount()`, and is defined as individuals taking 5 or more
-#' # medicines
+#' # Using the internal concept sets:
+#' cdm$cohort |>
+#'   addElectronicFrailtyIndex() |>
+#'   select(subject_id, cohort_start_date, efi, efi_categories) |>
+#'   glimpse()
+#'
+#' # This example uses custom concept sets.
+#' customConceptSet <- list(
+#'   activity_limitation = 763723L,
+#'   anemia = 439777L,
+#'   arthritis = 4291025L,
+#'   atrial_fibrillation = 313217L,
+#'   chronic_kidney_disease = 46271022L,
+#'   cerebrovascular_disease = 381591L,
+#'   dizziness = 4223938L,
+#'   dyspnea = 312437L,
+#'   falls = 4059015L,
+#'   foot_problem = 4101512L,
+#'   fragility_fracture = 3170964L,
+#'   hearing_impairment = 4234647L,
+#'   heart_failure = 316139L,
+#'   heart_valve_disorder = 4281749L,
+#'   housebound = 4052962L,
+#'   hypertension = 319826L,
+#'   hypotension_syncope = 316447L,
+#'   ischemic_heart_disease = 4185932L,
+#'   memory_cognitive_disorder = 4304008L,
+#'   mobility_problems = 4053076L,
+#'   osteoporosis = 80502L,
+#'   parkinsonism_tremor = 4140090L,
+#'   peptic_ulcer = 4027663L,
+#'   peripheral_vascular_disease = 321052L,
+#'   care_requirement = 3661927L,
+#'   respiratory_disease = 317009L,
+#'   skin_ulcer = 4262920L,
+#'   sleep_disturbance = 435524L,
+#'   social_vulnerability = 4026161L,
+#'   diabetes = 201820L,
+#'   thyroid_disease = 4017052L,
+#'   urinary_incontinence = 197672L,
+#'   urinary_system_disease = 75865L,
+#'   visual_impairment = 4265433L,
+#'   weight_loss_anorexia = 436675L
+#' )
 #'
 #' cdm$cohort |>
-#'   addElectronicFrailtyIndex(conceptSet = conceptSet)
+#'   addElectronicFrailtyIndex(
+#'     conceptSet = customConceptSet,
+#'     nameStyle = "efi_custom"
+#'   ) |>
+#'   select(subject_id, cohort_start_date, efi_custom, efi_custom_categories) |>
+#'   glimpse()
 #' }
 #'
 addElectronicFrailtyIndex <- function(x,

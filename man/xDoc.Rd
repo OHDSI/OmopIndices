@@ -4,8 +4,8 @@
 \alias{xDoc}
 \title{Helper for consistent documentation of \code{x} argument}
 \arguments{
-\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
-columns.}
+\item{x}{A \code{cdm_table} containing a person identifier column named
+\code{person_id} or \code{subject_id}.}
 }
 \description{
 Helper for consistent documentation of \code{x} argument

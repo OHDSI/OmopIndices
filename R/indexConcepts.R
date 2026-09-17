@@ -1,9 +1,9 @@
 
-#' Get the codelists used for a certain index calculation
+#' Get the codelists used for a specified index calculation
 #'
 #' @inheritParams indexDoc
 #'
-#' @returns A codelist used for the index.
+#' @returns A codelist containing the concepts used for the selected index.
 #'
 #' @export
 #'

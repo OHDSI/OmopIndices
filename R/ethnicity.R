@@ -2,45 +2,55 @@
 #' Add the ethnicity of a person to a table
 #'
 #' @inheritParams xDoc
-#' @param from Character to indicate how to retrieve ethnicity, if multiple
-#' values are provided different sources will be tried sequentially. Available
+#' @param from A character vector specifying the ethnicity sources to try, in
+#' priority order. The first source that provides a value is used. Available
 #' options are:
 #' - **ethnicity_concept_id** to assign ethnicity using the `concept_name`
-#' associated with the `ethnicity_concept_id` column of person table.
+#' associated with the `ethnicity_concept_id` column of the `person` table.
 #' - **ethnicity_source_concept_id** to assign ethnicity using the
 #' `concept_name` associated with the `ethnicity_source_concept_id` column of
-#' person table.
+#' the `person` table.
 #' - **race_concept_id** to assign ethnicity using the `concept_name` associated
-#' with the `race_concept_id` column of person table.
+#' with the `race_concept_id` column of the `person` table.
 #' - **race_source_concept_id** to assign ethnicity using the `concept_name`
-#' associated with the `race_source_concept_id` column of person table.
+#' associated with the `race_source_concept_id` column of the `person` table.
 #' - **ethnicity_source_value** to assign ethnicity using the value of the
-#' column `ethnicity_source_value` in the person table.
+#' column `ethnicity_source_value` in the `person` table.
 #' - **race_source_value** to assign ethnicity using the value of the
-#' column `race_source_value` in the person table.
+#' column `race_source_value` in the `person` table.
 #' - **nhs-categories** to assign ethnicity using
 #' [NHS Ethnic Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category).
 #' - **nhs-groups** to assign ethnicity using broad groups of
 #' [NHS Ethnic Category](https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category)
-#' as described in <https://doi.org/10.1038/s41597-024-02958-1>.
+#' as described in \doi{10.1038/s41597-024-02958-1}.
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
-#' @param missingEthnicityValue Character to coaslesce missing values.
+#' @param missingEthnicityValue A character string used to replace missing
+#' ethnicity values.
 #'
-#' @returns The `x` table with a new column added with the ethnicity of the
-#' patient.
+#' @returns The table `x` with a new column containing the patient's ethnicity.
 #' @export
 #'
 #' @examples
-#' library(OmopIndices)
+#' \donttest{
 #' library(omock)
+#' library(duckdb)
+#' library(OmopIndices)
 #' library(dplyr)
+#' library(CohortConstructor)
 #'
-#' cdm <- mockCdmFromDataset(source = "duckdb")
+#' cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+#' cdm$cohort <- conceptCohort(
+#'   cdm = cdm,
+#'   conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+#'   name = "cohort"
+#' )
 #'
-#' cdm$condition_occurrence |>
+#' cdm$cohort |>
 #'   addEthnicity() |>
+#'   select(subject_id, cohort_start_date, ethnicity) |>
 #'   glimpse()
+#' }
 #'
 addEthnicity <- function(x,
                          from = c(

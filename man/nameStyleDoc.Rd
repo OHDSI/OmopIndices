@@ -4,7 +4,7 @@
 \alias{nameStyleDoc}
 \title{Helper for consistent documentation of \code{nameStyle} argument}
 \arguments{
-\item{nameStyle}{A character string with the name of the new column.}
+\item{nameStyle}{A character string specifying the name of the new column.}
 }
 \description{
 Helper for consistent documentation of \code{nameStyle} argument

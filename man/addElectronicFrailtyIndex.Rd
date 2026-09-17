@@ -3,7 +3,7 @@
 \name{addElectronicFrailtyIndex}
 \alias{addElectronicFrailtyIndex}
 \title{Add Electronic Frailty Index (eFI) value based on
-\href{https://doi.org/10.1093/ageing/afw039}{Clegg et al. (2016)}}
+Clegg et al. (2016) (\doi{10.1093/ageing/afw039})}
 \usage{
 addElectronicFrailtyIndex(
   x,
@@ -16,81 +16,99 @@ addElectronicFrailtyIndex(
 )
 }
 \arguments{
-\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
-columns.}
+\item{x}{A \code{cdm_table} containing a person identifier column named
+\code{person_id} or \code{subject_id}.}
 
-\item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
-table.}
+\item{indexDate}{A character string naming the \code{Date} column in \code{x} that
+defines the index date.}
 
-\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{activity_limitation}, \code{anemia}, \code{arthritis}, \code{atrial_fibrillation}, \code{cerebrovascular_disease}, \code{chronic_kidney_disease}, \code{diabetes}, \code{dizziness}, \code{dyspnea}, \code{falls}, \code{foot_problem}, \code{fragility_fracture}, \code{hearing_impairment}, \code{heart_failure}, \code{heart_valve_disorder}, \code{housebound}, \code{hypertension}, \code{hypotension_syncope}, \code{ischemic_heart_disease}, \code{memory_cognitive_disorder}, \code{mobility_problems}, \code{osteoporosis}, \code{parkinsonism_tremor}, \code{peptic_ulcer}, \code{peripheral_vascular_disease}, \code{care_requirement}, \code{respiratory_disease}, \code{skin_ulcer}, \code{sleep_disturbance}, \code{social_vulnerability}, \code{thyroid_disease}, \code{urinary_incontinence}, \code{urinary_system_disease}, \code{visual_impairment}, \code{weight_loss_anorexia} as concepts. By default internal concepts are used.}
+\item{conceptSet}{A named concept set supplied as a \code{codelist}, \code{codelist_with_details}, \code{concept_set_expression}, or named list of concept IDs. It must contain \code{activity_limitation}, \code{anemia}, \code{arthritis}, \code{atrial_fibrillation}, \code{cerebrovascular_disease}, \code{chronic_kidney_disease}, \code{diabetes}, \code{dizziness}, \code{dyspnea}, \code{falls}, \code{foot_problem}, \code{fragility_fracture}, \code{hearing_impairment}, \code{heart_failure}, \code{heart_valve_disorder}, \code{housebound}, \code{hypertension}, \code{hypotension_syncope}, \code{ischemic_heart_disease}, \code{memory_cognitive_disorder}, \code{mobility_problems}, \code{osteoporosis}, \code{parkinsonism_tremor}, \code{peptic_ulcer}, \code{peripheral_vascular_disease}, \code{care_requirement}, \code{respiratory_disease}, \code{skin_ulcer}, \code{sleep_disturbance}, \code{social_vulnerability}, \code{thyroid_disease}, \code{urinary_incontinence}, \code{urinary_system_disease}, \code{visual_impairment}, \code{weight_loss_anorexia} as concepts. By default, internal codelists are used.}
 
-\item{categories}{Named list of categories to group the values. A new column named
-'\{nameStyle\}_categories' will be added with the different groups.}
+\item{categories}{A named list of numeric vectors, each containing the lower
+and upper bounds of a score interval. An additional column with the suffix
+\verb{_categories} is added. Intervals are
+evaluated in the order supplied, and missing scores are labelled \code{missing}.}
 
-\item{nameStyle}{A character string with the name of the new column.}
+\item{nameStyle}{A character string specifying the name of the new column.}
 
-\item{name}{A character string with the name of the new table. If \code{NULL} a
-temporary table will be created.}
+\item{name}{A character string specifying the name of the output table. If
+\code{NULL}, a temporary table is created.}
 }
 \value{
-The \code{x} table with a new column added with the eFI of the patient.
+The table \code{x} with a new column containing the Electronic Frailty
+Index value.
 }
 \description{
 Add Electronic Frailty Index (eFI) value based on
-\href{https://doi.org/10.1093/ageing/afw039}{Clegg et al. (2016)}
+Clegg et al. (2016) (\doi{10.1093/ageing/afw039})
 }
 \examples{
-{
-library(OmopIndices)
+\donttest{
 library(omock)
+library(duckdb)
+library(OmopIndices)
+library(dplyr)
+library(CohortConstructor)
 
-cdm <- mockCdmFromDataset() |>
-  mockCohort()
-
-conceptSet <- list(
-  "activity_limitation" = 763723L,
-  "anemia" = 439777L,
-  "arthritis" = 4291025L,
-  "atrial_fibrillation" = 313217L,
-  "chronic_kidney_disease" = 46271022L,
-  "cerebrovascular_disease" = 381591L,
-  "dizziness" = 4223938L,
-  "dyspnea" = 312437L,
-  "falls" = 4059015L,
-  "foot_problem" = 4101512L,
-  "fragility_fracture" = 3170964L,
-  "hearing_impairment" = 4234647L,
-  "heart_failure" = 316139L,
-  "heart_valve_disorder" = 4281749L,
-  "housebound" = 4052962L,
-  "hypertension" = 319826L,
-  "hypotension_syncope" = 316447L,
-  "ischemic_heart_disease" = 4185932L,
-  "memory_cognitive_disorder" = 4304008L,
-  "mobility_problems" =  4053076L,
-  "osteoporosis" = 80502L,
-  "parkinsonism_tremor" = 4140090L,
-  "peptic_ulcer" = 4027663L,
-  "peripheral_vascular_disease" = 321052L,
-  "care_requirement" = 3661927L,
-  "respiratory_disease" = 317009L,
-  "skin_ulcer" = 4262920L,
-  "sleep_disturbance" = 435524L,
-  "social_vulnerability" = 4026161L,
-  "diabetes" = 201820L,
-  "thyroid_disease" = 4017052L,
-  "urinary_incontinence" = 197672L,
-  "urinary_system_disease" = 75865L,
-  "visual_impairment" = 4265433L,
-  "weight_loss_anorexia" = 436675L
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+cdm$cohort <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+  name = "cohort"
 )
 
-# Polypharmacy is calculated internally using the function
-# `addPolypharmacyCount()`, and is defined as individuals taking 5 or more
-# medicines
+# Using the internal concept sets:
+cdm$cohort |>
+  addElectronicFrailtyIndex() |>
+  select(subject_id, cohort_start_date, efi, efi_categories) |>
+  glimpse()
+
+# This example uses custom concept sets.
+customConceptSet <- list(
+  activity_limitation = 763723L,
+  anemia = 439777L,
+  arthritis = 4291025L,
+  atrial_fibrillation = 313217L,
+  chronic_kidney_disease = 46271022L,
+  cerebrovascular_disease = 381591L,
+  dizziness = 4223938L,
+  dyspnea = 312437L,
+  falls = 4059015L,
+  foot_problem = 4101512L,
+  fragility_fracture = 3170964L,
+  hearing_impairment = 4234647L,
+  heart_failure = 316139L,
+  heart_valve_disorder = 4281749L,
+  housebound = 4052962L,
+  hypertension = 319826L,
+  hypotension_syncope = 316447L,
+  ischemic_heart_disease = 4185932L,
+  memory_cognitive_disorder = 4304008L,
+  mobility_problems = 4053076L,
+  osteoporosis = 80502L,
+  parkinsonism_tremor = 4140090L,
+  peptic_ulcer = 4027663L,
+  peripheral_vascular_disease = 321052L,
+  care_requirement = 3661927L,
+  respiratory_disease = 317009L,
+  skin_ulcer = 4262920L,
+  sleep_disturbance = 435524L,
+  social_vulnerability = 4026161L,
+  diabetes = 201820L,
+  thyroid_disease = 4017052L,
+  urinary_incontinence = 197672L,
+  urinary_system_disease = 75865L,
+  visual_impairment = 4265433L,
+  weight_loss_anorexia = 436675L
+)
 
 cdm$cohort |>
-  addElectronicFrailtyIndex(conceptSet = conceptSet)
+  addElectronicFrailtyIndex(
+    conceptSet = customConceptSet,
+    nameStyle = "efi_custom"
+  ) |>
+  select(subject_id, cohort_start_date, efi_custom, efi_custom_categories) |>
+  glimpse()
 }
 
 }

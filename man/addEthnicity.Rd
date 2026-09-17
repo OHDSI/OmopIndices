@@ -14,56 +14,66 @@ addEthnicity(
 )
 }
 \arguments{
-\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
-columns.}
+\item{x}{A \code{cdm_table} containing a person identifier column named
+\code{person_id} or \code{subject_id}.}
 
-\item{from}{Character to indicate how to retrieve ethnicity, if multiple
-values are provided different sources will be tried sequentially. Available
+\item{from}{A character vector specifying the ethnicity sources to try, in
+priority order. The first source that provides a value is used. Available
 options are:
 \itemize{
 \item \strong{ethnicity_concept_id} to assign ethnicity using the \code{concept_name}
-associated with the \code{ethnicity_concept_id} column of person table.
+associated with the \code{ethnicity_concept_id} column of the \code{person} table.
 \item \strong{ethnicity_source_concept_id} to assign ethnicity using the
 \code{concept_name} associated with the \code{ethnicity_source_concept_id} column of
-person table.
+the \code{person} table.
 \item \strong{race_concept_id} to assign ethnicity using the \code{concept_name} associated
-with the \code{race_concept_id} column of person table.
+with the \code{race_concept_id} column of the \code{person} table.
 \item \strong{race_source_concept_id} to assign ethnicity using the \code{concept_name}
-associated with the \code{race_source_concept_id} column of person table.
+associated with the \code{race_source_concept_id} column of the \code{person} table.
 \item \strong{ethnicity_source_value} to assign ethnicity using the value of the
-column \code{ethnicity_source_value} in the person table.
+column \code{ethnicity_source_value} in the \code{person} table.
 \item \strong{race_source_value} to assign ethnicity using the value of the
-column \code{race_source_value} in the person table.
+column \code{race_source_value} in the \code{person} table.
 \item \strong{nhs-categories} to assign ethnicity using
 \href{https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category}{NHS Ethnic Category}.
 \item \strong{nhs-groups} to assign ethnicity using broad groups of
 \href{https://athena.ohdsi.org/search-terms/terms?vocabulary=NHS+Ethnic+Category}{NHS Ethnic Category}
-as described in \url{https://doi.org/10.1038/s41597-024-02958-1}.
+as described in \doi{10.1038/s41597-024-02958-1}.
 }}
 
-\item{nameStyle}{A character string with the name of the new column.}
+\item{nameStyle}{A character string specifying the name of the new column.}
 
-\item{name}{A character string with the name of the new table. If \code{NULL} a
-temporary table will be created.}
+\item{name}{A character string specifying the name of the output table. If
+\code{NULL}, a temporary table is created.}
 
-\item{missingEthnicityValue}{Character to coaslesce missing values.}
+\item{missingEthnicityValue}{A character string used to replace missing
+ethnicity values.}
 }
 \value{
-The \code{x} table with a new column added with the ethnicity of the
-patient.
+The table \code{x} with a new column containing the patient's ethnicity.
 }
 \description{
 Add the ethnicity of a person to a table
 }
 \examples{
-library(OmopIndices)
+\donttest{
 library(omock)
+library(duckdb)
+library(OmopIndices)
 library(dplyr)
+library(CohortConstructor)
 
-cdm <- mockCdmFromDataset(source = "duckdb")
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+cdm$cohort <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+  name = "cohort"
+)
 
-cdm$condition_occurrence |>
+cdm$cohort |>
   addEthnicity() |>
+  select(subject_id, cohort_start_date, ethnicity) |>
   glimpse()
+}
 
 }

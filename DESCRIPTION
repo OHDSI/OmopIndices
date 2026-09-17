@@ -1,11 +1,22 @@
 Package: OmopIndices
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: Patient-Level Indices from the OMOP Common Data Model
+Version: 0.1.0.900
+Authors@R: c(
+    person("Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3308-9905")),
+    person("Marta", "Alcalde-Herraiz", , "marta.alcaldeherraiz@ndorms.ox.ac.uk", 
+    role = c("aut"), comment = c(ORCID = "0009-0002-4405-1814")),
+    person("Maria T", "Sanchez-Santos", , "maria.sanchez@ndorms.ox.ac.uk",
+    role = c("aut"), comment = c(ORCID = "0000-0003-1908-8623"))
+    )
+Maintainer: Martí Català <marti.catalasabate@ndorms.ox.ac.uk>
+Description: Provides tools to derive standardised, reproducible patient-level
+    indices and covariates from Observational Medical Outcomes Partnership
+    (OMOP) Common Data Model (CDM) databases. Functions calculate comorbidity
+    and frailty scores, including the Charlson Comorbidity Index, Electronic
+    Frailty Index, and Hospital Frailty Risk Score, as well as body mass index,
+    polypharmacy, ethnicity, location, and socioeconomic status measures.
 License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -21,6 +32,7 @@ Suggests:
     knitr,
     odbc,
     omock,
+    PhenotypeR,
     rmarkdown,
     RPostgres,
     testthat,
@@ -31,12 +43,13 @@ Imports:
     cli,
     clock,
     dplyr,
-    omopgenerics,
+    lifecycle,
+    omopgenerics (>= 1.4.0),
     PatientProfiles,
     purrr,
     rlang
 Depends: 
     R (>= 4.1.0)
 Config/roxygen2/version: 8.0.0
-VignetteBuilder: knitr
 Config/Needs/website: rmarkdown
+RoxygenNote: 8.0.0

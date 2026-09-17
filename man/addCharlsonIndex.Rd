@@ -3,8 +3,8 @@
 \name{addCharlsonIndex}
 \alias{addCharlsonIndex}
 \title{Add Charlson Comorbidity Index (CCI) value based on
-\href{https://doi.org/10.1016/0021-9681(87)90171-8}{Charlson et al. (1987)} and
-\href{https://doi.org/10.1016/0895-4356(94)90129-5}{Charlson et al. (1994)}
+Charlson et al. (1987) (\doi{10.1016/0021-9681(87)90171-8}) and
+Charlson et al. (1994) (\doi{10.1016/0895-4356(94)90129-5})
 (age-adjusted) version.}
 \usage{
 addCharlsonIndex(
@@ -18,63 +18,85 @@ addCharlsonIndex(
 )
 }
 \arguments{
-\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
-columns.}
+\item{x}{A \code{cdm_table} containing a person identifier column named
+\code{person_id} or \code{subject_id}.}
 
-\item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
-table.}
+\item{indexDate}{A character string naming the \code{Date} column in \code{x} that
+defines the index date.}
 
-\item{ageAdjusted}{Whether to calculate the Age-Adjusted Comorbidity Index (TRUE) or not (FALSE)}
+\item{ageAdjusted}{Logical; whether to include age adjustment in the
+Charlson Comorbidity Index.}
 
-\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{myocardial_infarction}, \code{congestive_heart_failure}, \code{peripheral_vascular_disease}, \code{cerebrovascular_disease}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{peptic_ulcer_disease}, \code{mild_liver_disease}, \code{diabetes_without_complication}, \code{hemiplegia}, \code{severe_chronic_kidney_disease}, \code{diabetes_with_complication}, \code{any_malignancy}, \code{moderate_or_severe_liver_disease}, \code{metastatic_solid_tumor}, \code{aids} as concepts. By default internal concepts are used.}
+\item{conceptSet}{A named concept set supplied as a \code{codelist}, \code{codelist_with_details}, \code{concept_set_expression}, or named list of concept IDs. It must contain \code{myocardial_infarction}, \code{congestive_heart_failure}, \code{peripheral_vascular_disease}, \code{cerebrovascular_disease}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{peptic_ulcer_disease}, \code{mild_liver_disease}, \code{diabetes_without_complication}, \code{hemiplegia}, \code{severe_chronic_kidney_disease}, \code{diabetes_with_complication}, \code{any_malignancy}, \code{moderate_or_severe_liver_disease}, \code{metastatic_solid_tumor}, \code{aids} as concepts. By default, internal codelists are used.}
 
-\item{nameStyle}{A character string with the name of the new column.}
+\item{nameStyle}{A character string specifying the name of the new column.}
 
-\item{categories}{Named list of categories to group the values. A new column named
-'\{nameStyle\}_categories' will be added with the different groups.}
+\item{categories}{A named list of numeric vectors, each containing the lower
+and upper bounds of a score interval. An additional column with the suffix
+\verb{_categories} is added. Intervals are
+evaluated in the order supplied, and missing scores are labelled \code{missing}.}
 
-\item{name}{A character string with the name of the new table. If \code{NULL} a
-temporary table will be created.}
+\item{name}{A character string specifying the name of the output table. If
+\code{NULL}, a temporary table is created.}
 }
 \value{
-The table \code{x} with a new column column with the corresponding
-Charlson index value.
+The table \code{x} with a new column containing the Charlson Comorbidity
+Index value.
 }
 \description{
 Add Charlson Comorbidity Index (CCI) value based on
-\href{https://doi.org/10.1016/0021-9681(87)90171-8}{Charlson et al. (1987)} and
-\href{https://doi.org/10.1016/0895-4356(94)90129-5}{Charlson et al. (1994)}
+Charlson et al. (1987) (\doi{10.1016/0021-9681(87)90171-8}) and
+Charlson et al. (1994) (\doi{10.1016/0895-4356(94)90129-5})
 (age-adjusted) version.
 }
 \examples{
-{
-library(OmopIndices)
+\donttest{
 library(omock)
+library(duckdb)
+library(OmopIndices)
+library(dplyr)
+library(CohortConstructor)
 
-cdm <- mockCdmFromDataset()
-cdm <- cdm |>
- mockCohort()
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+cdm$cohort <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+  name = "cohort"
+)
 
-conceptSet <- list(
- "myocardial_infarction" = 329847L,
- "congestive_heart_failure" = 319835L,
- "peripheral_vascular_disease" = 321052L,
- "cerebrovascular_disease" = 381591L,
- "dementia" = 4182210L,
- "chronic_pulmonary_disease" = 255573L,
- "connective_tissue_disease" = 4134537L,
- "peptic_ulcer_disease" = 4027663L,
- "mild_liver_disease" = 194984L,
- "moderate_or_severe_liver_disease" = 4212540L,
- "diabetes_without_complication" = 201820L,
- "diabetes_with_complication" = 42538715L,
- "hemiplegia" = 374022L,
- "severe_chronic_kidney_disease" = 46271022L,
- "any_malignancy" = 4180914L,
- "metastatic_solid_tumor" = 432851L,
- "aids" = 4267414L)
+# Using the internal concept sets:
+cdm$cohort |>
+  addCharlsonIndex(ageAdjusted = TRUE) |>
+  select(subject_id, cohort_start_date, charlson) |>
+  glimpse()
+
+# This example uses custom concept sets.
+customConceptSet <- list(
+  myocardial_infarction = 329847L,
+  congestive_heart_failure = 319835L,
+  peripheral_vascular_disease = 321052L,
+  cerebrovascular_disease = 381591L,
+  dementia = 4182210L,
+  chronic_pulmonary_disease = 255573L,
+  connective_tissue_disease = 4134537L,
+  peptic_ulcer_disease = 4027663L,
+  mild_liver_disease = 194984L,
+  moderate_or_severe_liver_disease = 4212540L,
+  diabetes_without_complication = 201820L,
+  diabetes_with_complication = 42538715L,
+  hemiplegia = 374022L,
+  severe_chronic_kidney_disease = 46271022L,
+  any_malignancy = 4180914L,
+  metastatic_solid_tumor = 432851L,
+  aids = 4267414L
+)
 
 cdm$cohort |>
-  addCharlsonIndex(conceptSet = conceptSet)
+  addCharlsonIndex(
+    conceptSet = customConceptSet,
+    nameStyle = "charlson_custom"
+  ) |>
+  select(subject_id, cohort_start_date, charlson_custom) |>
+  glimpse()
 }
 }

@@ -3,7 +3,7 @@
 \name{addHospitalFrailtyRiskScore}
 \alias{addHospitalFrailtyRiskScore}
 \title{Add the hospital frailty risk score as defined in
-\href{https://doi.org/10.1016/S0140-6736(18)30668-8}{Gilbert et al. (2018)}}
+Gilbert et al. (2018) (\doi{10.1016/S0140-6736(18)30668-8})}
 \usage{
 addHospitalFrailtyRiskScore(
   x,
@@ -15,27 +15,51 @@ addHospitalFrailtyRiskScore(
 )
 }
 \arguments{
-\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
-columns.}
+\item{x}{A \code{cdm_table} containing a person identifier column named
+\code{person_id} or \code{subject_id}.}
 
-\item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
-table.}
+\item{indexDate}{A character string naming the \code{Date} column in \code{x} that
+defines the index date.}
 
-\item{conceptSet}{It can either be a \if{html}{\out{<codelist>}}, <codelist_with_details> or <concept_set_expression> object. It must contain \code{abnormal_results_of_function_studies}, \code{abnormalities_of_gait_and_mobility}, \code{abnormalities_of_heart_beat}, \code{acute_renal_failure}, \code{agent_resistant_to_penicillin_and_related_antibiotics}, \code{alzheimers_disease}, \code{artificial_opening_status}, \code{blindness_and_low_vision}, \code{calculus_of_kidney_and_ureter}, \code{care_involving_use_of_rehabilitation_procedures}, \code{carrier_of_infectious_disease}, \code{cellulitis}, \code{cerebral_infarction}, \code{cerebral_ischaemic_attacks}, \code{chronic_renal_failure}, \code{cognitive_functions_and_awareness}, \code{convulsions_not_elsewhere_classified}, \code{decubitus_ulcer}, \code{deficiency_of_other_b_group_vitamins}, \code{degenerative_diseases_of_nervous_system}, \code{delirium}, \code{dementia_in_alzheimers_disease}, \code{dependence_on_enabling_machines_and_devices}, \code{depressive_episode}, \code{diarrhoea_and_gastroenteritis}, \code{disorders_of_kidney_and_ureter}, \code{disorders_of_mineral_metabolism}, \code{duodenal_ulcer}, \code{dysphagia}, \code{epilepsy}, \code{exposure_to_unspecified_factor}, \code{fall}, \code{fall_involving_bed}, \code{fall_on_and_from_stairs_and_steps}, \code{fever_of_unknown_origin}, \code{fluid_electrolyte_and_acid_base_balance}, \code{fracture_of_femur}, \code{fracture_of_lumbar_spine_and_pelvis}, \code{fracture_of_ribs_sternum_and_thoracic_spine}, \code{fracture_of_shoulder_and_upper_arm}, \code{gangrene_not_elsewhere_classified}, \code{general_sensations_and_perceptions}, \code{hemiplegia}, \code{hypotension}, \code{infections_of_skin}, \code{intracranial_injury}, \code{mental_and_behavioural_disorders_due_to_use_of_alcohol}, \code{nausea_and_vomiting}, \code{nervous_and_musculoskeletal_systems_r_29_6_tendency_to_fall}, \code{nosocomial_condition}, \code{open_wound_of_forearm}, \code{open_wound_of_head}, \code{osteoporosis_with_pathological_fracture}, \code{osteoporosis_without_pathological_fracture}, \code{other_abnormal_findings_of_blood_chemistry}, \code{other_anaemias}, \code{other_and_unspecified_injuries_of_head}, \code{other_arthrosis}, \code{other_bacterial_agents}, \code{other_bacterial_intestinal_infections}, \code{other_cerebrovascular_diseases}, \code{other_diseases_of_digestive_system}, \code{other_disorders_of_pancreatic_internal_secretion}, \code{other_disorders_of_urinary_system}, \code{other_fall_on_same_level}, \code{other_functional_intestinal_disorders}, \code{other_hearing_loss}, \code{other_joint_disorders_not_elsewhere_classified}, \code{other_medical_procedures}, \code{other_noninfective_gastroenteritis_and_colitis}, \code{other_septicaemia}, \code{other_soft_tissue_disorders_not_elsewhere_classified}, \code{parkinsons_disease}, \code{personal_history_of_other_diseases_and_conditions}, \code{personal_history_of_risk_factors}, \code{pneumonia_organism_unspecified}, \code{pneumonitis_due_to_solids_and_liquids}, \code{polyarthrosis}, \code{problems_related_to_care_provider_dependency}, \code{problems_related_to_life_management_difficulty}, \code{problems_related_to_medical_facilities_and_other_health_care}, \code{problems_related_to_social_environment}, \code{prosthetic_devices_implants}, \code{respiratory_failure_not_elsewhere_classified}, \code{retention_of_urine}, \code{scoliosis}, \code{senility}, \code{sequelae_of_cerebrovascular_disease}, \code{somnolence_stupor_and_coma}, \code{speech_disturbances_not_elsewhere_classified}, \code{spinal_stenosis_secondary_code_only}, \code{streptococcus_and_staphylococcus}, \code{superficial_injury_of_head}, \code{superficial_injury_of_lower_leg}, \code{symptoms_and_signs_concerning_food_and_fluid_intake}, \code{symptoms_and_signs_involving_emotional_state}, \code{syncope_and_collapse}, \code{thyrotoxicosis_hyperthyroidism}, \code{ulcer_of_lower_limb_not_elsewhere_classified}, \code{unknown_and_unspecified_causes_of_morbidity}, \code{unspecified_acute_lower_respiratory_infection}, \code{unspecified_dementia}, \code{unspecified_fall}, \code{unspecified_haematuria}, \code{unspecified_renal_failure}, \code{unspecified_urinary_incontinence}, \code{vascular_dementia}, \code{vitamin_d_deficiency}, \code{volume_depletion} as concepts. By default internal concepts are used.}
+\item{conceptSet}{A named concept set supplied as a \code{codelist}, \code{codelist_with_details}, \code{concept_set_expression}, or named list of concept IDs. It must contain \code{abnormal_results_of_function_studies}, \code{abnormalities_of_gait_and_mobility}, \code{abnormalities_of_heart_beat}, \code{acute_renal_failure}, \code{agent_resistant_to_penicillin_and_related_antibiotics}, \code{alzheimers_disease}, \code{artificial_opening_status}, \code{blindness_and_low_vision}, \code{calculus_of_kidney_and_ureter}, \code{care_involving_use_of_rehabilitation_procedures}, \code{carrier_of_infectious_disease}, \code{cellulitis}, \code{cerebral_infarction}, \code{cerebral_ischaemic_attacks}, \code{chronic_renal_failure}, \code{cognitive_functions_and_awareness}, \code{convulsions_not_elsewhere_classified}, \code{decubitus_ulcer}, \code{deficiency_of_other_b_group_vitamins}, \code{degenerative_diseases_of_nervous_system}, \code{delirium}, \code{dementia_in_alzheimers_disease}, \code{dependence_on_enabling_machines_and_devices}, \code{depressive_episode}, \code{diarrhoea_and_gastroenteritis}, \code{disorders_of_kidney_and_ureter}, \code{disorders_of_mineral_metabolism}, \code{duodenal_ulcer}, \code{dysphagia}, \code{epilepsy}, \code{exposure_to_unspecified_factor}, \code{fall}, \code{fall_involving_bed}, \code{fall_on_and_from_stairs_and_steps}, \code{fever_of_unknown_origin}, \code{fluid_electrolyte_and_acid_base_balance}, \code{fracture_of_femur}, \code{fracture_of_lumbar_spine_and_pelvis}, \code{fracture_of_ribs_sternum_and_thoracic_spine}, \code{fracture_of_shoulder_and_upper_arm}, \code{gangrene_not_elsewhere_classified}, \code{general_sensations_and_perceptions}, \code{hemiplegia}, \code{hypotension}, \code{infections_of_skin}, \code{intracranial_injury}, \code{mental_and_behavioural_disorders_due_to_use_of_alcohol}, \code{nausea_and_vomiting}, \code{nervous_and_musculoskeletal_systems_r_29_6_tendency_to_fall}, \code{nosocomial_condition}, \code{open_wound_of_forearm}, \code{open_wound_of_head}, \code{osteoporosis_with_pathological_fracture}, \code{osteoporosis_without_pathological_fracture}, \code{other_abnormal_findings_of_blood_chemistry}, \code{other_anaemias}, \code{other_and_unspecified_injuries_of_head}, \code{other_arthrosis}, \code{other_bacterial_agents}, \code{other_bacterial_intestinal_infections}, \code{other_cerebrovascular_diseases}, \code{other_diseases_of_digestive_system}, \code{other_disorders_of_pancreatic_internal_secretion}, \code{other_disorders_of_urinary_system}, \code{other_fall_on_same_level}, \code{other_functional_intestinal_disorders}, \code{other_hearing_loss}, \code{other_joint_disorders_not_elsewhere_classified}, \code{other_medical_procedures}, \code{other_noninfective_gastroenteritis_and_colitis}, \code{other_septicaemia}, \code{other_soft_tissue_disorders_not_elsewhere_classified}, \code{parkinsons_disease}, \code{personal_history_of_other_diseases_and_conditions}, \code{personal_history_of_risk_factors}, \code{pneumonia_organism_unspecified}, \code{pneumonitis_due_to_solids_and_liquids}, \code{polyarthrosis}, \code{problems_related_to_care_provider_dependency}, \code{problems_related_to_life_management_difficulty}, \code{problems_related_to_medical_facilities_and_other_health_care}, \code{problems_related_to_social_environment}, \code{prosthetic_devices_implants}, \code{respiratory_failure_not_elsewhere_classified}, \code{retention_of_urine}, \code{scoliosis}, \code{senility}, \code{sequelae_of_cerebrovascular_disease}, \code{somnolence_stupor_and_coma}, \code{speech_disturbances_not_elsewhere_classified}, \code{spinal_stenosis_secondary_code_only}, \code{streptococcus_and_staphylococcus}, \code{superficial_injury_of_head}, \code{superficial_injury_of_lower_leg}, \code{symptoms_and_signs_concerning_food_and_fluid_intake}, \code{symptoms_and_signs_involving_emotional_state}, \code{syncope_and_collapse}, \code{thyrotoxicosis_hyperthyroidism}, \code{ulcer_of_lower_limb_not_elsewhere_classified}, \code{unknown_and_unspecified_causes_of_morbidity}, \code{unspecified_acute_lower_respiratory_infection}, \code{unspecified_dementia}, \code{unspecified_fall}, \code{unspecified_haematuria}, \code{unspecified_renal_failure}, \code{unspecified_urinary_incontinence}, \code{vascular_dementia}, \code{vitamin_d_deficiency}, \code{volume_depletion} as concepts. By default, internal codelists are used.}
 
-\item{categories}{Named list of categories to group the values. A new column named
-'\{nameStyle\}_categories' will be added with the different groups.}
+\item{categories}{A named list of numeric vectors, each containing the lower
+and upper bounds of a score interval. An additional column with the suffix
+\verb{_categories} is added. Intervals are
+evaluated in the order supplied, and missing scores are labelled \code{missing}.}
 
-\item{nameStyle}{A character string with the name of the new column.}
+\item{nameStyle}{A character string specifying the name of the new column.}
 
-\item{name}{A character string with the name of the new table. If \code{NULL} a
-temporary table will be created.}
+\item{name}{A character string specifying the name of the output table. If
+\code{NULL}, a temporary table is created.}
 }
 \value{
-The \code{x} table with a new column added with the hospital
-frailty risk score of the patient.
+The table \code{x} with a new column containing the Hospital Frailty Risk
+Score value.
 }
 \description{
 Add the hospital frailty risk score as defined in
-\href{https://doi.org/10.1016/S0140-6736(18)30668-8}{Gilbert et al. (2018)}
+Gilbert et al. (2018) (\doi{10.1016/S0140-6736(18)30668-8})
+}
+\examples{
+\donttest{
+library(omock)
+library(duckdb)
+library(OmopIndices)
+library(dplyr)
+library(CohortConstructor)
+
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+cdm$cohort <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+  name = "cohort"
+)
+
+cdm$cohort |>
+  addHospitalFrailtyRiskScore() |>
+  select(subject_id, cohort_start_date, hfrs, hfrs_categories) |>
+  glimpse()
+}
+
 }

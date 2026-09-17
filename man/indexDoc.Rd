@@ -4,7 +4,8 @@
 \alias{indexDoc}
 \title{Helper for consistent documentation of \code{index} argument}
 \arguments{
-\item{index}{A choice between the different indexes: \code{"body_mass_index"}, \code{"charlson"}, \code{"electronic_frailty_index"}, \code{"electronic_frailty_index_2"}, \code{"hospital_frailty_risk_score"}, and \code{"updated_charlson"}.}
+\item{index}{A character string identifying the index for which to retrieve
+internal codelists. Supported values are \code{"body_mass_index"}, \code{"charlson"}, \code{"electronic_frailty_index"}, \code{"hospital_frailty_risk_score"}, and \code{"updated_charlson"}.}
 }
 \description{
 Helper for consistent documentation of \code{index} argument

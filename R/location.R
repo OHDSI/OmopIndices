@@ -2,29 +2,42 @@
 #' Add the location to a table
 #'
 #' @inheritParams xDoc
-#' @param from Character to indicate how to retrieve location, if multiple
-#' values are provided different sources will be tried sequentially.
+#' @param from A character vector specifying the location sources to try, in
+#' priority order. The first source that provides a location is used. Supported
+#' values are `location_id` and `care_site_id`.
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
-#' @param locationSource Character with the column in `location` table that we
-#' want to retrive.
-#' @param missingLocationValue Character to coalesce missing values.
+#' @param locationSource A character string specifying the column to retrieve
+#' from the `location` table. Supported values include `location_source_value`,
+#' `city`, `state`, `zip`, `county`, `country_concept_id`, and
+#' `country_source_value`.
+#' @param missingLocationValue A character string used to replace missing
+#' location values.
 #'
-#' @returns The `x` table with a new column added with the location of the
-#' patient.
+#' @returns The table `x` with a new column containing the patient's location.
 #'
 #' @export
 #'
 #' @examples
-#' library(OmopIndices)
+#' \donttest{
 #' library(omock)
+#' library(duckdb)
+#' library(OmopIndices)
 #' library(dplyr)
+#' library(CohortConstructor)
 #'
-#' cdm <- mockCdmFromDataset(source = "duckdb")
+#' cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+#' cdm$cohort <- conceptCohort(
+#'   cdm = cdm,
+#'   conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+#'   name = "cohort"
+#' )
 #'
-#' cdm$condition_occurrence |>
+#' cdm$cohort |>
 #'   addLocation() |>
+#'   select(subject_id, cohort_start_date, location) |>
 #'   glimpse()
+#' }
 #'
 addLocation <- function(x,
                         from = c("location_id", "care_site_id"),

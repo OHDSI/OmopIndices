@@ -4,8 +4,8 @@
 \alias{indexDateDoc}
 \title{Helper for consistent documentation of \code{indexDate} argument}
 \arguments{
-\item{indexDate}{A character string that points to a \code{Date} column in the \code{x}
-table.}
+\item{indexDate}{A character string naming the \code{Date} column in \code{x} that
+defines the index date.}
 }
 \description{
 Helper for consistent documentation of \code{indexDate} argument

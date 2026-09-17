@@ -14,38 +14,51 @@ addLocation(
 )
 }
 \arguments{
-\item{x}{A \code{cdm_table} object, it mus contain \code{person_id} or \code{subject_id} as
-columns.}
+\item{x}{A \code{cdm_table} containing a person identifier column named
+\code{person_id} or \code{subject_id}.}
 
-\item{from}{Character to indicate how to retrieve location, if multiple
-values are provided different sources will be tried sequentially.}
+\item{from}{A character vector specifying the location sources to try, in
+priority order. The first source that provides a location is used. Supported
+values are \code{location_id} and \code{care_site_id}.}
 
-\item{nameStyle}{A character string with the name of the new column.}
+\item{nameStyle}{A character string specifying the name of the new column.}
 
-\item{name}{A character string with the name of the new table. If \code{NULL} a
-temporary table will be created.}
+\item{name}{A character string specifying the name of the output table. If
+\code{NULL}, a temporary table is created.}
 
-\item{locationSource}{Character with the column in \code{location} table that we
-want to retrive.}
+\item{locationSource}{A character string specifying the column to retrieve
+from the \code{location} table. Supported values include \code{location_source_value},
+\code{city}, \code{state}, \code{zip}, \code{county}, \code{country_concept_id}, and
+\code{country_source_value}.}
 
-\item{missingLocationValue}{Character to coalesce missing values.}
+\item{missingLocationValue}{A character string used to replace missing
+location values.}
 }
 \value{
-The \code{x} table with a new column added with the location of the
-patient.
+The table \code{x} with a new column containing the patient's location.
 }
 \description{
 Add the location to a table
 }
 \examples{
-library(OmopIndices)
+\donttest{
 library(omock)
+library(duckdb)
+library(OmopIndices)
 library(dplyr)
+library(CohortConstructor)
 
-cdm <- mockCdmFromDataset(source = "duckdb")
+cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+cdm$cohort <- conceptCohort(
+  cdm = cdm,
+  conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+  name = "cohort"
+)
 
-cdm$condition_occurrence |>
+cdm$cohort |>
   addLocation() |>
+  select(subject_id, cohort_start_date, location) |>
   glimpse()
+}
 
 }

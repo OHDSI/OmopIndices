@@ -4,8 +4,8 @@
 \alias{inObservationDoc}
 \title{Helper for consistent documentation of \code{inObservation} argument}
 \arguments{
-\item{inObservation}{Whether to restrict to records within the observation
-period.}
+\item{inObservation}{Logical; whether to restrict records to the person's
+observation period.}
 }
 \description{
 Helper for consistent documentation of \code{inObservation} argument

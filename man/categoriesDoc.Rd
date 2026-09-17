@@ -4,8 +4,10 @@
 \alias{categoriesDoc}
 \title{Helper for consistent documentation of \code{categories} argument}
 \arguments{
-\item{categories}{Named list of categories to group the values. A new column named
-'\{nameStyle\}_categories' will be added with the different groups.}
+\item{categories}{A named list of numeric vectors, each containing the lower
+and upper bounds of a score interval. An additional column with the suffix
+\verb{_categories} is added. Intervals are
+evaluated in the order supplied, and missing scores are labelled \code{missing}.}
 }
 \description{
 Helper for consistent documentation of \code{categories} argument

@@ -1,6 +1,6 @@
 
 #' Add the hospital frailty risk score as defined in
-#' [Gilbert et al. (2018)](https://doi.org/10.1016/S0140-6736(18)30668-8)
+#' Gilbert et al. (2018) (\doi{10.1016/S0140-6736(18)30668-8})
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
@@ -10,10 +10,31 @@
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
 #'
-#' @returns The `x` table with a new column added with the hospital
-#' frailty risk score of the patient.
+#' @returns The table `x` with a new column containing the Hospital Frailty Risk
+#' Score value.
 #'
 #' @export
+#'
+#' @examples
+#' \donttest{
+#' library(omock)
+#' library(duckdb)
+#' library(OmopIndices)
+#' library(dplyr)
+#' library(CohortConstructor)
+#'
+#' cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+#' cdm$cohort <- conceptCohort(
+#'   cdm = cdm,
+#'   conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+#'   name = "cohort"
+#' )
+#'
+#' cdm$cohort |>
+#'   addHospitalFrailtyRiskScore() |>
+#'   select(subject_id, cohort_start_date, hfrs, hfrs_categories) |>
+#'   glimpse()
+#' }
 #'
 addHospitalFrailtyRiskScore <- function(x,
                                         indexDate = "cohort_start_date",

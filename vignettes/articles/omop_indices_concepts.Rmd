@@ -22,11 +22,10 @@ The core functions in **OmopIndices** add indexes to a table:
 - `addUpdatedCharlsonIndex()`
 - `addHospitalFrailtyRiskScore()`
 - `addElectronicFrailtyIndex()`
-- `addElectronicFrailtyIndex2()`
 
-These indices depend on a set of codelists, these codelist can be provided by
-the user using the `conceptSet` argument. If not provided the package contain
-its own definition for each one of the codelist.
+These indices depend on a set of codelists. These codelists can be provided by
+the user using the `conceptSet` argument. If not provided, the package contains
+its own definition for each codelist.
 
 You can get the default codelists of a given index with `getIndexCodelist()`:
 
@@ -39,39 +38,34 @@ getIndexCodelist("charlson")
 You can explore the different codelists here:
 
 ```{r, echo=FALSE}
-load(file = here::here("vignettes/articles/selectors.RData"))
+library(htmltools)
+load(file = here::here("vignettes", "articles", "selectors.RData"))
 ```
 
 ## Overview of codelists {.tabset}
 
 ### Charlson Index
 
-```{r, echo=FALSE}
-#selectorCharlson
+```{r, echo=FALSE, results="asis"}
+selectorCharlson
 ```
 
 ### Updated Charlson Index
 
-```{r, echo=FALSE}
-#selectorUpdatedCharlson
+```{r, echo=FALSE, results="asis"}
+selectorUpdatedCharlson
 ```
 
 ### Electronic Frailty Index
 
-```{r, echo=FALSE}
-#selectorEFI
-```
-
-### Electronic Frailty Index 2
-
-```{r, echo=FALSE}
-#selectorEFI2
+```{r, echo=FALSE, results="asis"}
+selectorEFI
 ```
 
 ### Hospital Frailty Risk Score
 
-```{r, echo=FALSE}
-#selectorHFRS
+```{r, echo=FALSE, results="asis"}
+selectorHFRS
 ```
 
 ## {-}
@@ -79,15 +73,16 @@ load(file = here::here("vignettes/articles/selectors.RData"))
 ## Diagnostics of codelists {.tabset}
 
 You might want to perform diagnostics on the mapping of your source data and
-assess how well the involved codelists are recorded you can easily do that using
+assess how well the involved codelists are recorded. You can do this using
 **CodelistGenerator** or **PhenotypeR**.
 
 ### CodelistGenerator
 
 ```{r, eval=FALSE}
-library(CodelistGenerator)
-library(OmopIndices)
 library(omock)
+library(duckdb)
+library(OmopIndices)
+library(CodelistGenerator)
 
 cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 
@@ -101,10 +96,11 @@ tableCodeUse(result = codeUse)
 ### PhenotypeR
 
 ```{r, eval=FALSE}
-library(PhenotypeR)
-library(CohortConstructor)
-library(OmopIndices)
 library(omock)
+library(duckdb)
+library(OmopIndices)
+library(CohortConstructor)
+library(PhenotypeR)
 
 cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
 
@@ -119,16 +115,18 @@ shinyDiagnostics(result = results, directory = getwd())
 
 ## {-}
 
-## Codelists generation
+## Codelist provenance
 
-As mentioned above the package contains default codelists these were obtained
-from other papers and projects:
+The package contains default codelists derived from the following sources:
 
-- **Charlson Index** and **Updated Charlson Index** codelists were obtained from
-[Fortin et al 2022](https://doi.org/10.1186/s12911-022-02006-1).
+- **Charlson Index** and **Updated Charlson Index** codelists are based on
+[Fortin et al. (2022)](https://doi.org/10.1186/s12911-022-02006-1).
 
-- **Hospital Frailty Risk Score** /@martaalcalde to explain
+- **Hospital Frailty Risk Score** weights and ICD-10 definitions are based on
+[Gilbert et al. (2018)](https://doi.org/10.1016/S0140-6736(18)30668-8). The
+corresponding definitions are mapped to SNOMED CT concepts for use with the
+OMOP CDM.
 
-- **Electronic Frailty Index** codelists were obtained from ...
-
-- **Electronic Frailty Index 2** codelists were obtained from ...
+- **Electronic Frailty Index** codelists follow the clinical deficit definitions
+in [Clegg et al. (2016)](https://doi.org/10.1093/ageing/afw039) and are
+represented using OMOP concepts.

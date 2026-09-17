@@ -1,39 +1,49 @@
 
-#' Add the maximum number of ingredients an individual is exposed simultaneously
-#' in a certain window
+#' Add the maximum number of ingredients to which an individual is simultaneously
+#' exposed within a specified window
 #'
-#' @param x A `cdm_table` object.
-#' @param indexDate Name of a 'date' column that indicates the index date.
-#' @param window Window of interest.
-#' @param overlap Whether exposures must overlap in time or merely occur within
-#' the window of interest.
-#' @param nameStyle Name of the new column.
-#' @param name Name of the new table.
+#' @inheritParams xDoc
+#' @inheritParams indexDateDoc
+#' @param window `r documentationWindow("polypharmacy")`
+#' @param overlap Logical; if `TRUE`, count drug eras that overlap in time. If
+#' `FALSE`, count drug eras that occur within the window without requiring them
+#' to overlap one another.
+#' @inheritParams categoriesDoc
+#' @inheritParams nameStyleDoc
+#' @inheritParams nameDoc
 #'
-#' @returns The table `x` with a new column column with the number of
-#' ingredients used in the window of interest.
+#' @returns The table `x` with a new column containing the maximum number of
+#' simultaneous ingredients in the window of interest.
 #' @export
 #'
 #' @examples
 #' \donttest{
-#' library(OmopIndices)
 #' library(omock)
+#' library(duckdb)
+#' library(OmopIndices)
 #' library(dplyr)
+#' library(CohortConstructor)
 #'
 #' cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+#' cdm$cohort <- conceptCohort(
+#'   cdm = cdm,
+#'   conceptSet = list(sinusitis = c(257012L, 4283893L, 4294548L, 40481087L)),
+#'   name = "cohort"
+#' )
 #'
-#' cdm$condition_occurrence |>
-#'   slice_sample(n = 10) |>
-#'   select("person_id", "condition_start_date") |>
-#'   addPolypharmacyCount(indexDate = "condition_start_date")
+#' cdm$cohort |>
+#'   addPolypharmacy(window = c(-30, 0)) |>
+#'   select(subject_id, cohort_start_date, polypharmacy) |>
+#'   glimpse()
 #' }
 #'
-addPolypharmacyCount <- function(x,
-                                 indexDate = "cohort_start_date",
-                                 window = c(0, 0),
-                                 overlap = TRUE,
-                                 nameStyle = "polypharmacy_count",
-                                 name = tableName(x)) {
+addPolypharmacy <- function(x,
+                            indexDate = "cohort_start_date",
+                            window = c(0, 0),
+                            overlap = TRUE,
+                            categories = NULL,
+                            nameStyle = "polypharmacy",
+                            name = tableName(x)) {
   # input check
   x <- omopgenerics::validateCdmTable(table = x)
   personId <- omopgenerics::getPersonIdentifier(x = x)
@@ -48,6 +58,12 @@ addPolypharmacyCount <- function(x,
   if (is.na(name)) {
     name <- NULL
   }
+  omopgenerics::assertList(
+    categories,
+    named = TRUE,
+    class = "numeric",
+    null = TRUE
+  )
 
   if (nameStyle %in% colnames(x)) {
     cli::cli_warn(c("!" = "column {.var {nameStyle}} will be overwritten."))
@@ -66,6 +82,14 @@ addPolypharmacyCount <- function(x,
     x <- x |>
       dplyr::mutate(!!!q) |>
       dplyr::compute(name = name)
+    if (!is.null(categories)) {
+      qc <- qCategories(categories) |>
+        rlang::set_names(paste0(nameStyle, "_categories")) |>
+        rlang::parse_exprs()
+      x <- x |>
+        dplyr::mutate(!!!qc) |>
+        dplyr::compute(name = name)
+    }
     return(x)
   }
 
@@ -133,7 +157,7 @@ addPolypharmacyCount <- function(x,
       dplyr::summarise(!!!q) |>
       dplyr::compute(name = nm2)
   } else {
-    q <- "dplyr::n_distinct(.data$drug, na.rm = TRUE)" |>
+    q <- "dplyr::n_distinct(.data$drug)" |>
       rlang::set_names(nm = nameStyle) |>
       rlang::parse_exprs()
     x_counts <- x_counts |>
@@ -152,7 +176,57 @@ addPolypharmacyCount <- function(x,
     )) |>
     dplyr::compute(name = name)
 
+  if (!is.null(categories)) {
+    qc <- qCategories(categories) |>
+      rlang::set_names(paste0(nameStyle, "_categories")) |>
+      rlang::parse_exprs()
+    x <- x |>
+      dplyr::mutate(!!!qc) |>
+      dplyr::compute(name = name)
+  }
+
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
   return(x)
+}
+
+#' Add the maximum number of ingredients to which an individual is simultaneously
+#' exposed within a specified window
+#'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' The function was renamed to `addPolypharmacy()`
+#'
+#' @inheritParams xDoc
+#' @inheritParams indexDateDoc
+#' @param window `r documentationWindow("polypharmacy")`
+#' @param overlap Logical; if `TRUE`, count drug eras that overlap in time. If
+#' `FALSE`, count drug eras that occur within the window without requiring them
+#' to overlap one another.
+#' @inheritParams categoriesDoc
+#' @inheritParams nameStyleDoc
+#' @inheritParams nameDoc
+#'
+#' @export
+#'
+#' @returns The table `x` with a new column containing the maximum number of
+#' simultaneous ingredients in the window of interest.
+#'
+addPolypharmacyCount <- function(x,
+                                 indexDate = "cohort_start_date",
+                                 window = c(0, 0),
+                                 overlap = TRUE,
+                                 categories = NULL,
+                                 nameStyle = "polypharmacy",
+                                 name = tableName(x)) {
+  lifecycle::deprecate_soft(when = "0.1.0", "addPolypharmacyCount()", "addPolypharmacy()")
+  addPolypharmacy(
+    x = x,
+    indexDate = indexDate,
+    window = window,
+    overlap = overlap,
+    categories = categories,
+    nameStyle = nameStyle,
+    name = name
+  )
 }

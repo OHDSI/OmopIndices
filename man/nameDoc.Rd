@@ -4,8 +4,8 @@
 \alias{nameDoc}
 \title{Helper for consistent documentation of \code{name} argument}
 \arguments{
-\item{name}{A character string with the name of the new table. If \code{NULL} a
-temporary table will be created.}
+\item{name}{A character string specifying the name of the output table. If
+\code{NULL}, a temporary table is created.}
 }
 \description{
 Helper for consistent documentation of \code{name} argument
