@@ -16,6 +16,8 @@ export(getIndexCodelist)
 export(tableName)
 importFrom(lifecycle,deprecated)
 importFrom(omopgenerics,tableName)
-importFrom(rlang,":=")
-importFrom(rlang,.data)
-importFrom(rlang,.env)
+importFrom(rlang,
+  ":=",
+  .data,
+  .env
+)

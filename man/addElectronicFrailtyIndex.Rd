@@ -11,6 +11,7 @@ addElectronicFrailtyIndex(
   conceptSet = getIndexCodelist("electronic_frailty_index"),
   categories = list(fit = c(0, 0.12), mild = c(0.12, 0.24), moderate = c(0.24, 0.36),
     severe = c(0.36, 1)),
+  window = NULL,
   nameStyle = "efi",
   name = tableName(x)
 )
@@ -28,6 +29,11 @@ defines the index date.}
 and upper bounds of a score interval. An additional column with the suffix
 \verb{_categories} is added. Intervals are
 evaluated in the order supplied, and missing scores are labelled \code{missing}.}
+
+\item{window}{\code{NULL} to use the windows defined by the index components, or
+a numeric vector of length two, \code{c(min, max)}, to override the component
+windows in days relative to \code{indexDate}. Use \code{-Inf} or \code{Inf} for an
+unbounded lower or upper limit.}
 
 \item{nameStyle}{A character string specifying the name of the new column.}
 

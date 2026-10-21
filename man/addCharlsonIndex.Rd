@@ -12,6 +12,7 @@ addCharlsonIndex(
   indexDate = "cohort_start_date",
   ageAdjusted = TRUE,
   conceptSet = getIndexCodelist("charlson"),
+  window = NULL,
   nameStyle = "charlson",
   categories = NULL,
   name = tableName(x)
@@ -28,6 +29,11 @@ defines the index date.}
 Charlson Comorbidity Index.}
 
 \item{conceptSet}{A named concept set supplied as a \code{codelist}, \code{codelist_with_details}, \code{concept_set_expression}, or named list of concept IDs. It must contain \code{myocardial_infarction}, \code{congestive_heart_failure}, \code{peripheral_vascular_disease}, \code{cerebrovascular_disease}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{peptic_ulcer_disease}, \code{mild_liver_disease}, \code{diabetes_without_complication}, \code{hemiplegia}, \code{severe_chronic_kidney_disease}, \code{diabetes_with_complication}, \code{any_malignancy}, \code{moderate_or_severe_liver_disease}, \code{metastatic_solid_tumor}, \code{aids} as concepts. By default, internal codelists are used.}
+
+\item{window}{\code{NULL} to use the windows defined by the index components, or
+a numeric vector of length two, \code{c(min, max)}, to override the component
+windows in days relative to \code{indexDate}. Use \code{-Inf} or \code{Inf} for an
+unbounded lower or upper limit.}
 
 \item{nameStyle}{A character string specifying the name of the new column.}
 

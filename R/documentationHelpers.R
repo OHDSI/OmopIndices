@@ -17,6 +17,17 @@ NULL
 #' @keywords internal
 NULL
 
+#' Helper for consistent documentation of `window` argument
+#'
+#' @param window `NULL` to use the windows defined by the index components, or
+#' a numeric vector of length two, `c(min, max)`, to override the component
+#' windows in days relative to `indexDate`. Use `-Inf` or `Inf` for an
+#' unbounded lower or upper limit.
+#'
+#' @name windowDoc
+#' @keywords internal
+NULL
+
 documentationWindow <- function(fun) {
   paste0(
     "A numeric vector of length two, `c(min, max)`, defining the window for `",

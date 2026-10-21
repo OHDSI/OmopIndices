@@ -5,6 +5,7 @@
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
+#' @inheritParams windowDoc
 #' @param ageAdjusted Logical; whether to include age adjustment in the
 #' Charlson Comorbidity Index.
 #' @param conceptSet `r documentationConceptSet(requiredConcepts$charlson)`
@@ -71,19 +72,20 @@ addCharlsonIndex <- function(x,
                              indexDate = "cohort_start_date",
                              ageAdjusted = TRUE,
                              conceptSet = getIndexCodelist("charlson"),
+                             window = NULL,
                              nameStyle = "charlson",
                              categories = NULL,
                              name = tableName(x)) {
-  addIndex(
+  omopgenerics::assertLogical(ageAdjusted, length = 1)
+  addIndexFromKey(
     x = x,
-    type = "charlson",
+    key = ifelse(ageAdjusted, "charlson_age_adjusted", "charlson"),
     indexDate = indexDate,
-    window = c(-Inf, 0),
+    window = window,
     conceptSet = conceptSet,
     categories = categories,
     nameStyle = nameStyle,
-    ageAdjusted = ageAdjusted,
-    name = name,
+    name = name
   )
 
 }

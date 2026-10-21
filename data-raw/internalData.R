@@ -2,9 +2,10 @@
 # Create cdm for descendants and concept names ----
 cdm <- omock::mockCdmFromDataset(datasetName = "delphi-100k")
 
-# Indices data ----
+# Indices definitions ----
 ## Empty objects to save  -----
 formulas <- list()
+components <- list()
 requiredConcepts <- list()
 
 ## Charlson Index ----
@@ -40,13 +41,26 @@ dplyr::case_when(
 2 * .data$hemiplegia + 2 * .data$severe_chronic_kidney_disease + 6 * .data$aids"
 formulas$charlson_age_adjusted <- paste0(
   "dplyr::case_when(
-    .data$age_group == 'g1' ~ 0L,
-    .data$age_group == 'g2' ~ 1L,
-    .data$age_group == 'g3' ~ 2L,
-    .data$age_group == 'g4' ~ 3L,
-    .data$age_group == 'g5' ~ 4L
+    .data$age_group == '0 to 49' ~ 0L,
+    .data$age_group == '50 to 59' ~ 1L,
+    .data$age_group == '60 to 69' ~ 2L,
+    .data$age_group == '70 to 79' ~ 3L,
+    .data$age_group == '80 or over' ~ 4L
   ) + ",
   formulas$charlson
+)
+components$charlson <- requiredConcepts$charlson |>
+  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0)))
+components$charlson_age_adjusted <- c(
+  components$charlson,
+  list(list(
+    type = "age_group",
+    ageGroup = list(
+      "0 to 49" = c(0, 49), "50 to 59" = c(50, 59),
+      "60 to 69" = c(60, 69), "70 to 79" = c(70, 79),
+      "80 or over" = c(80, Inf)
+    )
+  ))
 )
 
 ## Updated Charlson Index ----
@@ -73,13 +87,19 @@ dplyr::case_when(
 .data$severe_chronic_kidney_disease + 4 * .data$aids"
 formulas$updated_charlson_age_adjusted <- paste0(
   "dplyr::case_when(
-    .data$age_group == 'g1' ~ 0L,
-    .data$age_group == 'g2' ~ 1L,
-    .data$age_group == 'g3' ~ 2L,
-    .data$age_group == 'g4' ~ 3L,
-    .data$age_group == 'g5' ~ 4L
+    .data$age_group == '0 to 49' ~ 0L,
+    .data$age_group == '50 to 59' ~ 1L,
+    .data$age_group == '60 to 69' ~ 2L,
+    .data$age_group == '70 to 79' ~ 3L,
+    .data$age_group == '80 or over' ~ 4L
   ) +",
   formulas$updated_charlson
+)
+components$updated_charlson <- requiredConcepts$updated_charlson |>
+  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0)))
+components$updated_charlson_age_adjusted <- c(
+  components$updated_charlson,
+  components$charlson_age_adjusted[length(components$charlson_age_adjusted)]
 )
 
 ## Hospital Frailty Risk Score ----
@@ -89,6 +109,8 @@ hfrsData <- readr::read_csv(
 )
 requiredConcepts$hospital_frailty_risk_score <- hfrsData$concept_set
 formulas$hospital_frailty_risk_score <- paste0(hfrsData$points, " * .data$", hfrsData$concept_set, collapse = " + ")
+components$hospital_frailty_risk_score <- requiredConcepts$hospital_frailty_risk_score |>
+  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-730, 0)))
 
 ## Electronic Frailty Index ----
 requiredConcepts$electronic_frailty_index <- c(
@@ -106,6 +128,11 @@ requiredConcepts$electronic_frailty_index <- c(
 formulas$electronic_frailty_index <- paste0(
   paste0("1/36 * .data$", requiredConcepts$electronic_frailty_index, collapse = " + "),
   " + dplyr::if_else(.data$polypharmacy >= 5, 1/36, 0)"
+)
+components$electronic_frailty_index <- c(
+  requiredConcepts$electronic_frailty_index |>
+    purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0))),
+  list(list(type = "polypharmacy", window = c(-365, 0), overlap = TRUE))
 )
 
 ## Electronic Frailty Index 2 ----
@@ -160,6 +187,25 @@ formulas$electronic_frailty_index_2 <- paste0(
     .default = 0
   )"
 )
+components$electronic_frailty_index_2 <- c(
+  names(efi2) |>
+    purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0))),
+  list(
+    list(type = "bmi", conceptSet = "bmi", window = c(-Inf, 0), order = "last"),
+    list(type = "polypharmacy", window = c(-365, 0), overlap = TRUE)
+  )
+)
+
+## Body Mass Index ----
+requiredConcepts$body_mass_index <- "bmi"
+formulas$body_mass_index <- ".data$bmi"
+components$body_mass_index <- list(list(
+  type = "bmi",
+  conceptSet = "bmi",
+  window = c(-Inf, 0),
+  order = "last",
+  inObservation = TRUE
+))
 
 # Internal concepts ----
 internalConcepts <- list()
@@ -250,12 +296,11 @@ if (nrow(x) > 0) {
 # check missing definitions
 # check extra definitions
 
-requiredConcepts$body_mass_index <- "bmi"
-
 # Save internal data ----
 usethis::use_data(
   requiredConcepts,
   formulas,
+  components,
   internalConcepts,
   internal = TRUE,
   overwrite = TRUE
