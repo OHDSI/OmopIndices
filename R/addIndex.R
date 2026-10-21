@@ -63,7 +63,9 @@ addIndexInternal <- function(x,
   if (any(c("cohort_flag", "measurement_flag") %in% types)) {
     indexCohort <- omopgenerics::uniqueTableName()
     cdm[[indexCohort]] <- index |>
-      dplyr::rename(all_of(c("subject_id" = id, "cohort_start_date" = indexDate))) |>
+      dplyr::rename(dplyr::all_of(
+        c("subject_id" = id, "cohort_start_date" = indexDate)
+      )) |>
       dplyr::mutate(
         cohort_definition_id = 1L,
         cohort_end_date = .data$cohort_start_date
