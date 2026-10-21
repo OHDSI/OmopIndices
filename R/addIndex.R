@@ -118,6 +118,7 @@ addIndexInternal <- function(x,
           indexDate = indexDate,
           conceptSet = conceptSet[comp$conceptSet],
           window = comp$window,
+          nameStyle = "{concept_name}",
           name = nm
         )
     } else if (comp$type %in% c("measurement_flag", "cohort_flag")) {
@@ -155,6 +156,7 @@ addIndexInternal <- function(x,
           indexDate = indexDate,
           targetCohortTable = tmpCohort,
           window = comp$window,
+          nameStyle = "{cohort_name}",
           name = nm
         )
 

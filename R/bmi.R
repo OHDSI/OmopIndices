@@ -55,7 +55,7 @@ addBMI <- function(x,
   indexDate <- validateIndexDate(indexDate, x)
   window <- validateWindow(window)
   window <- unlist(window)
-  conceptSet <- validateConceptSet(conceptSet, "body_mass_index", cdm)
+  conceptSet <- validateConceptSet(conceptSet, "bmi", cdm)
   nameStyle <- validateNameStyle(nameStyle, x)
   x <- omopgenerics::validateNewColumn(x, nameStyle)
   name <- validateName(name)
