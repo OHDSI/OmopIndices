@@ -13,8 +13,7 @@ validateWindow <- function(window, call = parent.frame()) {
   }
   return(window[[1]])
 }
-validateConceptSet <- function(conceptSet, type, cdm, call = parent.frame()) {
-  nms <- requiredConcepts[[type]]
+validateConceptSet <- function(conceptSet, nms, cdm, call = parent.frame()) {
   conceptSet <- omopgenerics::validateConceptSetArgument(conceptSet, cdm, call = call)
   notPresent <- nms[!nms %in% names(conceptSet)]
   if (length(notPresent) > 0) {
