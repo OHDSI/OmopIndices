@@ -21,6 +21,14 @@ test_that("check addLocation", {
   )
   cdm <- omopgenerics::insertTable(cdm = cdm, name = "location", table = location)
 
+  countryConcept <- cdm$concept |>
+    dplyr::filter(.data$concept_id != 0L) |>
+    dplyr::select("concept_id", "concept_name") |>
+    dplyr::collect() |>
+    dplyr::slice(1)
+  cdm$location <- cdm$location |>
+    dplyr::mutate(country_concept_id = countryConcept$concept_id[[1]])
+
   # care site
   careSite <- dplyr::tibble(
     care_site_id = 1:5L,
@@ -65,6 +73,23 @@ test_that("check addLocation", {
       dplyr::pull("location") |>
       unique(),
     c("zone", "location1", "Missing", "UK")
+  )
+
+  # A country concept id is resolved to its concept name.
+  expect_no_error(
+    cdm$cohort <- cdm$cohort |>
+      addLocation(locationSource = "country_concept_id", nameStyle = "country")
+  )
+  expect_identical(
+    cdm$cohort |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id) |>
+      dplyr::pull("country"),
+    c(
+      rep(countryConcept$concept_name[[1]], 6),
+      "Missing",
+      countryConcept$concept_name[[1]]
+    )
   )
 
   # add care_site results should not change

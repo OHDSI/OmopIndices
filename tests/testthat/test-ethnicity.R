@@ -54,6 +54,59 @@ test_that("ethnicity works", {
     c("Asian", "Other Race", "White", "Native Hawaiian or Other Pacific Islander")
   )
 
+  # NHS ethnicity categories and broad groups use race_source_concept_id.
+  cdm$person <- cdm$person |>
+    dplyr::mutate(race_source_concept_id = dplyr::case_when(
+      .data$person_id == 1L ~ 700362L,
+      .data$person_id == 2L ~ 700363L,
+      .data$person_id == 3L ~ 700364L,
+      .data$person_id == 4L ~ 700366L,
+      .data$person_id == 5L ~ 700367L,
+      .data$person_id == 6L ~ 700369L,
+      .data$person_id == 7L ~ 700385L,
+      .data$person_id == 8L ~ 700388L
+    ))
+  cdm$cohort <- cdm$cohort |>
+    addEthnicity(from = "nhs-categories", nameStyle = "nhs_categories")
+  expect_identical(
+    cdm$cohort |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id) |>
+      dplyr::pull("nhs_categories"),
+    c(
+      "Asian or Asian British - Any other Asian background",
+      "Asian or Asian British - Pakistani",
+      "Asian or Asian British - Bangladeshi",
+      "Black or Black British - Caribbean",
+      "Black or Black British - African",
+      "Other Ethnic Groups - Chinese",
+      "White - British",
+      "Mixed - White and Black Caribbean"
+    )
+  )
+  cdm$cohort <- cdm$cohort |>
+    addEthnicity(from = "nhs-groups", nameStyle = "nhs_groups")
+  expect_identical(
+    cdm$cohort |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id) |>
+      dplyr::pull("nhs_groups"),
+    c("Asian", "Asian", "Asian", "Black", "Black", "Other", "White", "Mix")
+  )
+
+  # Free-text race values are accepted as an ethnicity source.
+  cdm$person <- cdm$person |>
+    dplyr::mutate(race_source_value = paste("race", person_id))
+  cdm$cohort <- cdm$cohort |>
+    addEthnicity(from = "race_source_value", nameStyle = "race_value")
+  expect_identical(
+    cdm$cohort |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id) |>
+      dplyr::pull("race_value"),
+    paste("race", 1:8)
+  )
+
   # expect all missing if no from is supplied
   expect_warning(
     cdm$cohort <- cdm$cohort |>

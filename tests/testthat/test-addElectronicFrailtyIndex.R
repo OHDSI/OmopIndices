@@ -110,11 +110,13 @@ test_that("efi works", {
                                      cdmName = "mock")
 
 
-  expect_no_error(cdm[["cohort"]] <- cdm[["cohort"]] |>
-                    addElectronicFrailtyIndex(indexDate = "cohort_start_date",
-                                              conceptSet = conceptSet,
-                                              nameStyle = "efi",
-                                              categories = NULL))
+  expect_no_error(expect_warning(
+    cdm[["cohort"]] <- cdm[["cohort"]] |>
+      addElectronicFrailtyIndex(indexDate = "cohort_start_date",
+                                conceptSet = conceptSet,
+                                nameStyle = "efi",
+                                categories = NULL)
+  ))
 
   expect_equal(cdm[["cohort"]] |>
                  dplyr::pull("efi"),
