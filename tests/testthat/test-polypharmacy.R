@@ -80,6 +80,24 @@ test_that("polypharmacy returns zeros for empty drug eras and rejects multiple w
   )
 
   expect_warning(
+    cdm$my_cohort_deprecated <- cdm$my_cohort |>
+      addPolypharmacyCount(
+        indexDate = "cohort_start_date",
+        window = c(0, 79),
+        nameStyle = "deprecated_count",
+        name = "my_cohort_deprecated"
+      ),
+    "addPolypharmacyCount\\(\\).*was deprecated"
+  )
+  expect_identical(
+    cdm$my_cohort_deprecated |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id) |>
+      dplyr::pull("deprecated_count"),
+    c(2L, 2L)
+  )
+
+  expect_warning(
     cdm$my_cohort2 <- cdm$my_cohort2 |>
       addPolypharmacy(
         indexDate = "cohort_start_date",
@@ -110,6 +128,25 @@ test_that("polypharmacy returns zeros for empty drug eras and rejects multiple w
       dplyr::arrange(.data$person_id) |>
       dplyr::pull("count"),
     c(2L, 3L)
+  )
+
+  cdm$toy_table_categories <- cdm$toy_table |>
+    addPolypharmacy(
+      indexDate = "my_date",
+      window = c(0, 80),
+      categories = list(
+        none = c(0, 0),
+        multiple = c(2, Inf)
+      ),
+      nameStyle = "drug_count",
+      name = "toy_table_categories"
+    )
+  expect_identical(
+    cdm$toy_table_categories |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$person_id) |>
+      dplyr::pull("drug_count_categories"),
+    c("multiple", "multiple")
   )
 
   expect_no_error(

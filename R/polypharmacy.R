@@ -219,7 +219,7 @@ addPolypharmacyCount <- function(x,
                                  categories = NULL,
                                  nameStyle = "polypharmacy",
                                  name = tableName(x)) {
-  lifecycle::deprecate_soft(when = "0.1.0", "addPolypharmacyCount()", "addPolypharmacy()")
+  lifecycle::deprecate_warn(when = "0.1.0", "addPolypharmacyCount()", "addPolypharmacy()")
   addPolypharmacy(
     x = x,
     indexDate = indexDate,

@@ -153,4 +153,34 @@ test_that("addBMI selects and categorises BMI measurements", {
     collect_bmi(cdm$cohort_bmi_categories, "bmi_categories"),
     c("overweight", "missing", "missing")
   )
+
+  # If multiple records fall on the selected day, addBMI warns and keeps the
+  # maximum value so the result remains one row per person and index date.
+  cdm$measurement <- cdm$measurement |>
+    dplyr::mutate(
+      measurement_date = dplyr::if_else(
+        .data$measurement_id == 2L,
+        as.Date("2000-01-21"),
+        .data$measurement_date
+      ),
+      value_as_number = dplyr::if_else(
+        .data$measurement_id == 2L,
+        26,
+        .data$value_as_number
+      )
+    )
+  expect_warning(
+    cdm$cohort_bmi_same_day <- cdm$cohort1 |>
+      addBMI(
+        conceptSet = bmi,
+        order = "last",
+        nameStyle = "bmi_same_day",
+        name = "cohort_bmi_same_day"
+      ),
+    "Multiple records observed despite the `order` argument"
+  )
+  expect_equal(
+    collect_bmi(cdm$cohort_bmi_same_day, "bmi_same_day"),
+    c(26, NA_real_, NA_real_)
+  )
 })
