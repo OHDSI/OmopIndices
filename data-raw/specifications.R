@@ -93,7 +93,7 @@ components$updated_charlson <- c(
 
 # Updated Charlson Index Age Adjusted ----
 formulas$updated_charlson_age_adjusted <- paste0(
-  formulas$charlson,
+  formulas$updated_charlson,
   "+ dplyr::case_when(
     .data$age_group == '0 to 49' ~ 0L,
     .data$age_group == '50 to 59' ~ 1L,
