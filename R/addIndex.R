@@ -104,11 +104,12 @@ addIndexInternal <- function(x,
         )
     } else if (comp$type == "bmi") {
       index <- index |>
-        addBMI(
+        addBMIInternal(
           indexDate = indexDate,
           conceptSet = conceptSet["bmi"],
-          window = comp$window,
+          window = unlist(comp$window),
           order = comp$order,
+          inObservation = if (is.null(comp$inObservation)) TRUE else comp$inObservation,
           nameStyle = "bmi",
           name = nm
         )

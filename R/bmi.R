@@ -49,58 +49,59 @@ addBMI <- function(x,
                    categories = NULL,
                    inObservation = TRUE,
                    name = tableName(x)) {
-  # initial checks
-  x <- validateX(x)
-  cdm <- omopgenerics::cdmReference(x)
-  indexDate <- validateIndexDate(indexDate, x)
   window <- validateWindow(window)
-  window <- unlist(window)
-  conceptSet <- validateConceptSet(conceptSet, "bmi", cdm)
-  nameStyle <- validateNameStyle(nameStyle, x)
-  x <- omopgenerics::validateNewColumn(x, nameStyle)
-  name <- validateName(name)
-  categories <- validateCategories(categories)
+  addIndexInternal(
+    x = x,
+    indexDate = indexDate,
+    window = NULL,
+    conceptSet = conceptSet,
+    categories = categories,
+    nameStyle = nameStyle,
+    name = name,
+    formula = ".data$bmi",
+    component = list(list(
+      type = "bmi",
+      conceptSet = "bmi",
+      window = window,
+      order = order,
+      inObservation = inObservation,
+      nameStyle = "bmi"
+    )),
+    call = parent.frame()
+  )
+}
+
+addBMIInternal <- function(x,
+                           indexDate,
+                           conceptSet,
+                           window,
+                           order,
+                           inObservation,
+                           nameStyle,
+                           name) {
   omopgenerics::assertChoice(order, c("first", "last", "min", "max"))
-
-  # person id
   id <- omopgenerics::getPersonIdentifier(x)
-
-  # get records
+  cdm <- omopgenerics::cdmReference(x)
   records <- x |>
     dplyr::select(dplyr::all_of(c(person_id = id, index_date = indexDate))) |>
     dplyr::distinct()
 
-  # get bmi
-  nm <- omopgenerics::uniqueTableName()
+  bmiTable <- omopgenerics::uniqueTableName()
+  on.exit(omopgenerics::dropSourceTable(cdm = cdm, name = bmiTable))
   bmiRecords <- tablesToSubset(conceptSet, cdm) |>
-    getRecords(cdm, conceptSet, records, window, nm) |>
-    subsetInObservation(inObservation, nm) |>
-    subsetRecords(order, nm)
+    getRecords(cdm, conceptSet, records, window, bmiTable) |>
+    subsetInObservation(inObservation, bmiTable) |>
+    subsetRecords(order, bmiTable)
 
-  # add bmi
   sel <- c("person_id", "index_date", "bmi") |>
     rlang::set_names(c(id, indexDate, nameStyle))
-  x <- x |>
+  x |>
     dplyr::left_join(
       bmiRecords |>
         dplyr::select(dplyr::all_of(sel)),
       by = c(id, indexDate)
     ) |>
     dplyr::compute(name = name)
-
-  omopgenerics::dropSourceTable(cdm = cdm, name = nm)
-
-  # add categories
-  if (!is.null(categories)) {
-    qc <- qCategories(categories) |>
-      rlang::set_names(paste0(nameStyle, "_categories")) |>
-      rlang::parse_exprs()
-    x <- x |>
-      dplyr::mutate(!!!qc) |>
-      dplyr::compute(name = name)
-  }
-
-  return(x)
 }
 tablesToSubset <- function(conceptSet, cdm) {
   cdm$concept |>
