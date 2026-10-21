@@ -50,6 +50,13 @@ addBMI <- function(x,
                    inObservation = TRUE,
                    name = tableName(x)) {
   window <- validateWindow(window)
+  key <- "body_mass_index"
+
+  component <- components[[key]]
+  component[[1]]$window <- window
+  component[[1]]$order <- order
+  component[[1]]$inObservation <- inObservation
+
   addIndexInternal(
     x = x,
     indexDate = indexDate,
@@ -58,15 +65,8 @@ addBMI <- function(x,
     categories = categories,
     nameStyle = nameStyle,
     name = name,
-    formula = ".data$bmi",
-    component = list(list(
-      type = "bmi",
-      conceptSet = "bmi",
-      window = window,
-      order = order,
-      inObservation = inObservation,
-      nameStyle = "bmi"
-    )),
+    component = component,
+    formula = formulas[[key]],
     call = parent.frame()
   )
 }
@@ -79,7 +79,9 @@ addBMIInternal <- function(x,
                            inObservation,
                            nameStyle,
                            name) {
-  omopgenerics::assertChoice(order, c("first", "last", "min", "max"))
+  omopgenerics::assertChoice(order, c("first", "last", "min", "max"), length = 1)
+  omopgenerics::assertLogical(inObservation, length = 1)
+
   id <- omopgenerics::getPersonIdentifier(x)
   cdm <- omopgenerics::cdmReference(x)
   records <- x |>
