@@ -10,6 +10,7 @@ addPolypharmacy(
   indexDate = "cohort_start_date",
   window = c(0, 0),
   overlap = TRUE,
+  group = "ingredient drug_era",
   categories = NULL,
   nameStyle = "polypharmacy",
   name = tableName(x)
@@ -24,9 +25,24 @@ defines the index date.}
 
 \item{window}{A numeric vector of length two, \code{c(min, max)}, defining the window for \code{polypharmacy} in days relative to \code{indexDate}. Use \code{-Inf} or \code{Inf} for an unbounded lower or upper limit.}
 
-\item{overlap}{Logical; if \code{TRUE}, count drug eras that overlap in time. If
-\code{FALSE}, count drug eras that occur within the window without requiring them
-to overlap one another.}
+\item{overlap}{Logical; if \code{TRUE}, count drug records that overlap in time.
+If \code{FALSE}, count drug records that occur within the window without
+requiring them to overlap one another.}
+
+\item{group}{Group at which drug records will be considered, it must be a
+choice between:
+\itemize{
+\item "concept_id" Records are not grouped, each drug_concept_id counts as 1.
+\item "ingredient drug_era" Records are grouped using the drug_era table.
+\item "ingredient drug_exposure" Records are grouped at ingredient level using
+the drug_exposure table.
+\item "ATC 1st", "ATC 2nd", "ATC 3rd", "ATC 4th", "ATC 5th" Records are grouped
+using different ATC groups levels. ATC codelists are retrieved using
+\code{CodelistGenerator::getATCCodes()}.
+\item Custom \code{conceptSet} a custom \code{codelist}, \code{codelist_with_details} or
+\code{concept_set_expression} concept set definition, \code{drug_concept_ids} not
+included in the conceptSet will be omitted.
+}}
 
 \item{categories}{A named list of numeric vectors, each containing the lower
 and upper bounds of a score interval. An additional column with the suffix

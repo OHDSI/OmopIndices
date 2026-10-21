@@ -5,9 +5,21 @@
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
 #' @param window `r documentationWindow("polypharmacy")`
-#' @param overlap Logical; if `TRUE`, count drug eras that overlap in time. If
-#' `FALSE`, count drug eras that occur within the window without requiring them
-#' to overlap one another.
+#' @param overlap Logical; if `TRUE`, count drug records that overlap in time.
+#' If `FALSE`, count drug records that occur within the window without
+#' requiring them to overlap one another.
+#' @param group Group at which drug records will be considered, it must be a
+#' choice between:
+#'   - "concept_id" Records are not grouped, each drug_concept_id counts as 1.
+#'   - "ingredient drug_era" Records are grouped using the drug_era table.
+#'   - "ingredient drug_exposure" Records are grouped at ingredient level using
+#'   the drug_exposure table.
+#'   - "ATC 1st", "ATC 2nd", "ATC 3rd", "ATC 4th", "ATC 5th" Records are grouped
+#'   using different ATC groups levels. ATC codelists are retrieved using
+#'   `CodelistGenerator::getATCCodes()`.
+#'   - Custom `conceptSet` a custom `codelist`, `codelist_with_details` or
+#'   `concept_set_expression` concept set definition, `drug_concept_ids` not
+#'   included in the conceptSet will be omitted.
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -41,6 +53,7 @@ addPolypharmacy <- function(x,
                             indexDate = "cohort_start_date",
                             window = c(0, 0),
                             overlap = TRUE,
+                            group = "ingredient drug_era",
                             categories = NULL,
                             nameStyle = "polypharmacy",
                             name = tableName(x)) {
@@ -58,12 +71,7 @@ addPolypharmacy <- function(x,
   if (is.na(name)) {
     name <- NULL
   }
-  omopgenerics::assertList(
-    categories,
-    named = TRUE,
-    class = "numeric",
-    null = TRUE
-  )
+  omopgenerics::assertList(categories, named = TRUE, class = "numeric", null = TRUE)
 
   if (nameStyle %in% colnames(x)) {
     cli::cli_warn(c("!" = "column {.var {nameStyle}} will be overwritten."))
@@ -72,6 +80,10 @@ addPolypharmacy <- function(x,
   }
 
   cdm <- omopgenerics::cdmReference(table = x)
+
+  table <- ifelse(group == "ingredient drug_era", "drug_era", "drug_exposure")
+  nm <- omopgenerics::uniqueTableName()
+  join <- validateGroup(group, cdm, nm)
 
   # check drug_era is empty
   if (omopgenerics::isTableEmpty(cdm$drug_era)) {

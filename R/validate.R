@@ -33,3 +33,8 @@ validateName <- function(name, call = parent.frame()) {
 validateCategories <- function(categories, call = parent.frame()) {
   omopgenerics::assertList(categories, null = TRUE, named = TRUE, call = call)
 }
+validateGroup <- function(group, cdm, nm, call = parent.frame()) {
+  groups <- c("concept_id", "ingredient drug_era", "ingredient drug_exposure",
+              "ATC 1st", "ATC 2nd", "ATC 3rd", "ATC 4th", "ATC 5th")
+  omopgenerics::assertChoice(group, groups, length = 1)
+}
