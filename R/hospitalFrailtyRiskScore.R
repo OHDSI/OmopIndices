@@ -46,11 +46,10 @@ addHospitalFrailtyRiskScore <- function(x,
                                         ),
                                         nameStyle = "hfrs",
                                         name = tableName(x)) {
-  addIndex(
+  addIndexFromKey(
     x = x,
-    type = "hospital_frailty_risk_score",
+    key = "hospital_frailty_risk_score",
     indexDate = indexDate,
-    window = c(-730, 0),
     conceptSet = conceptSet,
     categories = categories,
     nameStyle = nameStyle,

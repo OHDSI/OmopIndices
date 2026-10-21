@@ -74,16 +74,16 @@ addCharlsonIndex <- function(x,
                              nameStyle = "charlson",
                              categories = NULL,
                              name = tableName(x)) {
-  addIndex(
+  omopgenerics::assertLogical(ageAdjusted, length = 1)
+  addIndexFromKey(
     x = x,
-    type = "charlson",
+    key = ifelse(ageAdjusted, "charlson_age_adjusted", "charlson"),
     indexDate = indexDate,
-    window = c(-Inf, 0),
     conceptSet = conceptSet,
     categories = categories,
     nameStyle = nameStyle,
     ageAdjusted = ageAdjusted,
-    name = name,
+    name = name
   )
 
 }

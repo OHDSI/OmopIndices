@@ -95,11 +95,10 @@ addElectronicFrailtyIndex <- function(x,
                                       ),
                                       nameStyle = "efi",
                                       name = tableName(x)) {
-  addIndex(
+  addIndexFromKey(
     x = x,
-    type = "electronic_frailty_index",
+    key = "electronic_frailty_index",
     indexDate = indexDate,
-    window = c(-Inf, 0),
     conceptSet = conceptSet,
     categories = categories,
     nameStyle = nameStyle,

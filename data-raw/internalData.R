@@ -5,6 +5,7 @@ cdm <- omock::mockCdmFromDataset(datasetName = "delphi-100k")
 # Indices data ----
 ## Empty objects to save  -----
 formulas <- list()
+components <- list()
 requiredConcepts <- list()
 
 ## Charlson Index ----
@@ -40,11 +41,11 @@ dplyr::case_when(
 2 * .data$hemiplegia + 2 * .data$severe_chronic_kidney_disease + 6 * .data$aids"
 formulas$charlson_age_adjusted <- paste0(
   "dplyr::case_when(
-    .data$age_group == 'g1' ~ 0L,
-    .data$age_group == 'g2' ~ 1L,
-    .data$age_group == 'g3' ~ 2L,
-    .data$age_group == 'g4' ~ 3L,
-    .data$age_group == 'g5' ~ 4L
+    .data$age_group == '0 to 49' ~ 0L,
+    .data$age_group == '50 to 59' ~ 1L,
+    .data$age_group == '60 to 69' ~ 2L,
+    .data$age_group == '70 to 79' ~ 3L,
+    .data$age_group == '80 or over' ~ 4L
   ) + ",
   formulas$charlson
 )
@@ -73,11 +74,11 @@ dplyr::case_when(
 .data$severe_chronic_kidney_disease + 4 * .data$aids"
 formulas$updated_charlson_age_adjusted <- paste0(
   "dplyr::case_when(
-    .data$age_group == 'g1' ~ 0L,
-    .data$age_group == 'g2' ~ 1L,
-    .data$age_group == 'g3' ~ 2L,
-    .data$age_group == 'g4' ~ 3L,
-    .data$age_group == 'g5' ~ 4L
+    .data$age_group == '0 to 49' ~ 0L,
+    .data$age_group == '50 to 59' ~ 1L,
+    .data$age_group == '60 to 69' ~ 2L,
+    .data$age_group == '70 to 79' ~ 3L,
+    .data$age_group == '80 or over' ~ 4L
   ) +",
   formulas$updated_charlson
 )
@@ -159,6 +160,41 @@ formulas$electronic_frailty_index_2 <- paste0(
     .data$polypharmacy >= 5 ~ 0.32301 / 8.429,
     .default = 0
   )"
+)
+
+components$charlson <- requiredConcepts$charlson |>
+  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0)))
+components$charlson_age_adjusted <- c(
+  components$charlson,
+  list(list(
+    type = "age_group",
+    ageGroup = list(
+      "0 to 49" = c(0, 49), "50 to 59" = c(50, 59),
+      "60 to 69" = c(60, 69), "70 to 79" = c(70, 79),
+      "80 or over" = c(80, Inf)
+    )
+  ))
+)
+components$updated_charlson <- requiredConcepts$updated_charlson |>
+  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0)))
+components$updated_charlson_age_adjusted <- c(
+  components$updated_charlson,
+  components$charlson_age_adjusted[length(components$charlson_age_adjusted)]
+)
+components$hospital_frailty_risk_score <- requiredConcepts$hospital_frailty_risk_score |>
+  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-730, 0)))
+components$electronic_frailty_index <- c(
+  requiredConcepts$electronic_frailty_index |>
+    purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0))),
+  list(list(type = "polypharmacy", window = c(-365, 0), overlap = TRUE))
+)
+components$electronic_frailty_index_2 <- c(
+  names(efi2) |>
+    purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0))),
+  list(
+    list(type = "bmi", conceptSet = "bmi", window = c(-Inf, 0), order = "last"),
+    list(type = "polypharmacy", window = c(-365, 0), overlap = TRUE)
+  )
 )
 
 # Internal concepts ----
@@ -256,6 +292,7 @@ requiredConcepts$body_mass_index <- "bmi"
 usethis::use_data(
   requiredConcepts,
   formulas,
+  components,
   internalConcepts,
   internal = TRUE,
   overwrite = TRUE
