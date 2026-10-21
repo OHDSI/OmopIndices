@@ -3,6 +3,7 @@
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
+#' @inheritParams windowDoc
 #' @param ageAdjusted Logical; whether to include age adjustment in the updated
 #' Charlson Comorbidity Index.
 #' @param conceptSet
@@ -65,6 +66,7 @@ addUpdatedCharlsonIndex <- function(x,
                              indexDate = "cohort_start_date",
                              ageAdjusted = TRUE,
                              conceptSet = getIndexCodelist("updated_charlson"),
+                             window = NULL,
                              nameStyle = "updated_charlson",
                              categories = NULL,
                              name = tableName(x)) {
@@ -73,10 +75,10 @@ addUpdatedCharlsonIndex <- function(x,
     x = x,
     key = ifelse(ageAdjusted, "updated_charlson_age_adjusted", "updated_charlson"),
     indexDate = indexDate,
+    window = window,
     conceptSet = conceptSet,
     categories = categories,
     nameStyle = nameStyle,
-    ageAdjusted = ageAdjusted,
     name = name
   )
 

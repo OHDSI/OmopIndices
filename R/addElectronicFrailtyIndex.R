@@ -4,6 +4,7 @@
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
+#' @inheritParams windowDoc
 #' @param conceptSet
 #' `r documentationConceptSet(requiredConcepts$electronic_frailty_index)`
 #' @inheritParams categoriesDoc
@@ -93,16 +94,17 @@ addElectronicFrailtyIndex <- function(x,
                                         "moderate" = c(0.24, 0.36),
                                         "severe" = c(0.36, 1)
                                       ),
+                                      window = NULL,
                                       nameStyle = "efi",
                                       name = tableName(x)) {
   addIndexFromKey(
     x = x,
     key = "electronic_frailty_index",
     indexDate = indexDate,
+    window = window,
     conceptSet = conceptSet,
     categories = categories,
     nameStyle = nameStyle,
-    ageAdjusted = FALSE,
     name = name
   )
 }

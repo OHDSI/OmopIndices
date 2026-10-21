@@ -2,7 +2,7 @@
 addIndexFromKey <- function(x,
                             key,
                             indexDate,
-                            window = NULL,
+                            window,
                             conceptSet,
                             categories,
                             nameStyle,

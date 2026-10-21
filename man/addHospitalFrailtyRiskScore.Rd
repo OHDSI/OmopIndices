@@ -10,6 +10,7 @@ addHospitalFrailtyRiskScore(
   indexDate = "cohort_start_date",
   conceptSet = getIndexCodelist("hospital_frailty_risk_score"),
   categories = list(low = c(0, 5), intermediate = c(5, 15), high = c(15, Inf)),
+  window = NULL,
   nameStyle = "hfrs",
   name = tableName(x)
 )
@@ -27,6 +28,11 @@ defines the index date.}
 and upper bounds of a score interval. An additional column with the suffix
 \verb{_categories} is added. Intervals are
 evaluated in the order supplied, and missing scores are labelled \code{missing}.}
+
+\item{window}{\code{NULL} to use the windows defined by the index components, or
+a numeric vector of length two, \code{c(min, max)}, to override the component
+windows in days relative to \code{indexDate}. Use \code{-Inf} or \code{Inf} for an
+unbounded lower or upper limit.}
 
 \item{nameStyle}{A character string specifying the name of the new column.}
 
