@@ -82,12 +82,11 @@ addPolypharmacy <- function(x,
   cdm <- omopgenerics::cdmReference(table = x)
 
   table <- ifelse(group == "ingredient drug_era", "drug_era", "drug_exposure")
-  nm <- omopgenerics::uniqueTableName()
-  join <- validateGroup(group, cdm, nm)
+  join <- validateGroup(group, cdm)
 
-  # check drug_era is empty
-  if (omopgenerics::isTableEmpty(cdm$drug_era)) {
-    cli::cli_warn(c("!" = "{.pkg drug_era} table is empty."))
+  # check table is empty
+  if (omopgenerics::isTableEmpty(cdm[[table]])) {
+    cli::cli_warn(c("!" = "{.pkg {table}} table is empty."))
     q <- "0L" |>
       rlang::set_names(nm = nameStyle) |>
       rlang::parse_exprs()
@@ -107,20 +106,32 @@ addPolypharmacy <- function(x,
 
   pref <- omopgenerics::tmpPrefix()
 
-  # intersect with drug_era
+  # intersect with table
   ids <- omopgenerics::uniqueId(n = 3, exclude = colnames(x))
-  sel <- c("person_id", "drug_era_start_date", "drug_era_end_date", "drug_concept_id") |>
+  sel <- c(
+    "person_id",
+    omopgenerics::omopColumns(table = table, field = "start_date"),
+    omopgenerics::omopColumns(table = table, field = "end_date"),
+    ifelse(is.character(join), "drug_concept_id", "group")
+  ) |>
     rlang::set_names(nm = c(personId, ids))
   nm1 <- omopgenerics::uniqueTableName(prefix = pref)
   nm2 <- omopgenerics::uniqueTableName(prefix = pref)
   win1 <- window[[1]][1]
   win2 <- window[[1]][2]
 
+  # join by groups
+  records <- cdm[[table]]
+  if (!is.character(join)) {
+    records <- records |>
+      dplyr::inner_join(join, by = "drug_concept_id")
+  }
+
   # useful records
   x_counts <- x |>
     dplyr::distinct(.data[[personId]], .data[[indexDate]]) |>
     dplyr::inner_join(
-      cdm$drug_era |>
+      records |>
         dplyr::select(dplyr::all_of(sel)),
       by = personId
     )
