@@ -33,8 +33,48 @@ validateName <- function(name, call = parent.frame()) {
 validateCategories <- function(categories, call = parent.frame()) {
   omopgenerics::assertList(categories, null = TRUE, named = TRUE, call = call)
 }
-validateGroup <- function(group, cdm, nm, call = parent.frame()) {
-  groups <- c("concept_id", "ingredient drug_era", "ingredient drug_exposure",
-              "ATC 1st", "ATC 2nd", "ATC 3rd", "ATC 4th", "ATC 5th")
-  omopgenerics::assertChoice(group, groups, length = 1)
+validateGroup <- function(group, cdm, call = parent.frame()) {
+  groups <- c(
+    "concept_id", "ingredient drug_era", "ingredient drug_exposure",
+    "ATC 1st", "ATC 2nd", "ATC 3rd", "ATC 4th", "ATC 5th"
+  )
+  omopgenerics::assertChoice(group, groups, length = 1, call = call)
+
+  if (group %in% c("concept_id", "ingredient drug_era")) {
+    return(group)
+  }
+
+  if (group == "ingredient drug_exposure") {
+    join <- cdm$concept_ancestor |>
+      dplyr::inner_join(
+        cdm$concept |>
+          dplyr::filter(
+            .data$concept_class_id == "Ingredient" &
+              .data$standard_concept == "S"
+          ) |>
+          dplyr::select("ancestor_concept_id" = "concept_id"),
+        by = "ancestor_concept_id"
+      ) |>
+      dplyr::select(
+        "group" = "ancestor_concept_id",
+        "drug_concept_id" = "descendant_concept_id"
+      )
+  } else {
+    join <- cdm$concept_ancestor |>
+      dplyr::inner_join(
+        cdm$concept |>
+          dplyr::filter(
+            .data$vocabulary_id == "ATC" &
+              .data$concept_class_id == .env$group
+          ) |>
+          dplyr::select("ancestor_concept_id" = "concept_id"),
+        by = "ancestor_concept_id"
+      ) |>
+      dplyr::select(
+        "group" = "ancestor_concept_id",
+        "drug_concept_id" = "descendant_concept_id"
+      )
+  }
+
+  return(join)
 }
