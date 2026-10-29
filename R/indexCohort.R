@@ -24,9 +24,36 @@ indexCohort <- function(cdm,
   }
 
   # get the record per component
+  pref <- omopgenerics::tmpPrefix()
+  records  <- list()
+  for (comp in component) {
+    if (comp$type == "age_group") {
+
+    } else if (comp$type == "polypharmacy") {
+
+    } else if (comp$type == "bmi") {
+
+    } else if (comp$type == "concept_flag") {
+
+    } else if (comp$type %in% c("measurement_flag", "cohort_flag")) {
+      if (comp$type == "measurement_flag") {
+
+      } else {
+
+      }
+    }
+  }
+
+  # join all records
+  nm <- omopgenerics::uniqueTableName()
+  records <- records |>
+    purrr::reduce(dplyr::union_all) |>
+    dplyr::compute(name = nm)
+  omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
   # apply formula and categories
 
   # erafy
 
+  return(cdm[[name]])
 }
