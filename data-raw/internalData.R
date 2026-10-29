@@ -49,8 +49,13 @@ formulas$charlson_age_adjusted <- paste0(
   ) + ",
   formulas$charlson
 )
-components$charlson <- requiredConcepts$charlson |>
-  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0)))
+components$charlson <- list(
+  list(
+    type = "concept_flag",
+    conceptSet = requiredConcepts$charlson,
+    window = c(-Inf, 0)
+  )
+)
 components$charlson_age_adjusted <- c(
   components$charlson,
   list(list(
@@ -95,8 +100,13 @@ formulas$updated_charlson_age_adjusted <- paste0(
   ) +",
   formulas$updated_charlson
 )
-components$updated_charlson <- requiredConcepts$updated_charlson |>
-  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0)))
+components$updated_charlson <- list(
+  list(
+    type = "concept_flag",
+    conceptSet = requiredConcepts$updated_charlson,
+    window = c(-Inf, 0)
+  )
+)
 components$updated_charlson_age_adjusted <- c(
   components$updated_charlson,
   components$charlson_age_adjusted[length(components$charlson_age_adjusted)]
@@ -109,8 +119,13 @@ hfrsData <- readr::read_csv(
 )
 requiredConcepts$hospital_frailty_risk_score <- hfrsData$concept_set
 formulas$hospital_frailty_risk_score <- paste0(hfrsData$points, " * .data$", hfrsData$concept_set, collapse = " + ")
-components$hospital_frailty_risk_score <- requiredConcepts$hospital_frailty_risk_score |>
-  purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-730, 0)))
+components$hospital_frailty_risk_score <- list(
+  list(
+    type = "concept_flag",
+    conceptSet = requiredConcepts$hospital_frailty_risk_score,
+    window = c(-730, 0)
+  )
+)
 
 ## Electronic Frailty Index ----
 requiredConcepts$electronic_frailty_index <- c(
@@ -129,10 +144,17 @@ formulas$electronic_frailty_index <- paste0(
   paste0("1/36 * .data$", requiredConcepts$electronic_frailty_index, collapse = " + "),
   " + dplyr::if_else(.data$polypharmacy >= 5, 1/36, 0)"
 )
-components$electronic_frailty_index <- c(
-  requiredConcepts$electronic_frailty_index |>
-    purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0))),
-  list(list(type = "polypharmacy", window = c(-365, 0), overlap = TRUE))
+components$electronic_frailty_index <- list(
+  list(
+    type = "concept_flag",
+    conceptSet = requiredConcepts$electronic_frailty_index,
+    window = c(-Inf, 0)
+  ),
+  list(
+    type = "polypharmacy",
+    window = c(-365, 0),
+    overlap = TRUE
+  )
 )
 
 ## Electronic Frailty Index 2 ----
@@ -187,25 +209,37 @@ formulas$electronic_frailty_index_2 <- paste0(
     .default = 0
   )"
 )
-components$electronic_frailty_index_2 <- c(
-  names(efi2) |>
-    purrr::map(\(x) list(type = "concept_flag", conceptSet = x, window = c(-Inf, 0))),
+components$electronic_frailty_index_2 <- list(
   list(
-    list(type = "bmi", conceptSet = "bmi", window = c(-Inf, 0), order = "last"),
-    list(type = "polypharmacy", window = c(-365, 0), overlap = TRUE)
+    type = "concept_flag",
+    conceptSet = names(efi2),
+    window = c(-Inf, 0)
+  ),
+  list(
+    type = "bmi",
+    conceptSet = "bmi",
+    window = c(-Inf, 0),
+    order = "last"
+  ),
+  list(
+    type = "polypharmacy",
+    window = c(-365, 0),
+    overlap = TRUE
   )
 )
 
 ## Body Mass Index ----
 requiredConcepts$body_mass_index <- "bmi"
 formulas$body_mass_index <- ".data$bmi"
-components$body_mass_index <- list(list(
-  type = "bmi",
-  conceptSet = "bmi",
-  window = c(-Inf, 0),
-  order = "last",
-  inObservation = TRUE
-))
+components$body_mass_index <- list(
+  list(
+    type = "bmi",
+    conceptSet = "bmi",
+    window = c(-Inf, 0),
+    order = "last",
+    inObservation = TRUE
+  )
+)
 
 # Internal concepts ----
 internalConcepts <- list()
