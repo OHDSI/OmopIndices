@@ -28,16 +28,16 @@ indexCohort <- function(cdm,
       dplyr::select("person_id")
   }
 
-  # get the record per component
-  records  <- list()
+  # get the episodes per component
+  episodes  <- list()
   for (i in seq_along(component)) {
     comp <- component[[i]]
     if (comp$type == "age_group") {
-      record[[i]] <- ageGroupRecords(cdm, ageGroup, pref, subset)
+      episodes[[i]] <- ageGroupEpisodes(cdm, comp$ageGroup, pref, subset)
     } else if (comp$type == "polypharmacy") {
 
     } else if (comp$type == "bmi") {
-
+      episodes[[i]] <- bmiEpisodes(cdm, comp$bmiGroup, pref, subset, conceptSet)
     } else if (comp$type == "concept_flag") {
 
     } else if (comp$type %in% c("measurement_flag", "cohort_flag")) {
@@ -49,9 +49,9 @@ indexCohort <- function(cdm,
     }
   }
 
-  # join all records
+  # join all episodes
   nm <- omopgenerics::uniqueTableName()
-  records <- records |>
+  episodes <- episodes |>
     purrr::reduce(dplyr::union_all) |>
     dplyr::compute(name = nm)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
@@ -94,7 +94,7 @@ indexCohort <- function(cdm,
   return(cdm[[name]])
 }
 
-ageGroupRecords <- function(cdm, ageGroup, pref, subset) {
+ageGroupEpisodes <- function(cdm, ageGroup, pref, subset) {
   # internal prefix
   ip <- omopgenerics::tmpPrefix()
 
@@ -170,4 +170,87 @@ ageGroupRecords <- function(cdm, ageGroup, pref, subset) {
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(ip))
 
   return(ageGroupRecords)
+}
+bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
+  # internal prefix
+  ip <- omopgenerics::tmpPrefix()
+
+  # get bmi records
+  bmiTable <- omopgenerics::uniqueTableName(prefix = ip)
+  bmiRecords <- tablesToSubset(conceptSet, cdm) |>
+    getRecords(cdm, conceptSet, subset, c(-Inf, Inf), bmiTable) |>
+    subsetInObservation(TRUE, bmiTable)
+
+  # add observation periods
+  subset <- subset |>
+    dplyr::inner_join(
+      cdm$observation_period |>
+        dplyr::select(
+          "person_id",
+          "observation_period_start_date",
+          "observation_period_end_date"
+        ),
+      by = "person_id"
+    ) |>
+    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
+
+  # construct bmi episodes
+  nameStyle <- "bmi"
+  q <- qCategories(bmiGroup) |>
+    rlang::set_names("cohort_name") |>
+    rlang::parse_exprs()
+  bmiRecords <- subset |>
+    dplyr::select("person_id", "bmi_date" = "observation_period_start_date") |>
+    dplyr::mutate(bmi = NA_real_) |>
+    dplyr::union_all(bmiRecords) |>
+    dplyr::group_by(.data$person_id, .data$bmi_date) |>
+    dplyr::summarise(bmi = mean(.data$bmi, na.rm = TRUE), .groups = "drop") |>
+    dplyr::mutate(!!!q) |>
+    dplyr::select(
+      "person_id",
+      "cohort_start_date" = "bmi_date",
+      "cohort_name"
+    ) |>
+    dplyr::compute(name = bmiTable) |>
+    # add id group
+    dplyr::group_by(.data$person_id) |>
+    dplyr::arrange(.data$cohort_start_date) |>
+    dplyr::mutate(id = as.integer(dplyr::row_number())) |>
+    dplyr::ungroup() |>
+    dplyr::compute(name = bmiTable)
+
+  bmiRecords <- bmiRecords |>
+    # add end of observation
+    dplyr::inner_join(
+      subset |>
+        dplyr::select("person_id", "observation_period_end_date"),
+      by = "person_id"
+    ) |>
+    # add start of next episode
+    dplyr::left_join(
+      bmiRecords |>
+        dplyr::select("person_id", "cohort_end_date" = "cohort_start_date", "id") |>
+        dplyr::mutate(
+          cohort_end_date = as.Date(clock::add_days(.data$cohort_end_date, -1L)),
+          id = .data$id - 1L
+        ),
+      by = c("person_id", "id")
+    ) |>
+    dplyr::mutate(cohort_end_date = dplyr::coalesce(
+      .data$cohort_end_date, .data$observation_period_end_date
+    )) |>
+    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip)) |>
+    # erafy
+    OmopConstructor::collapseRecords(
+      startDate = "cohort_start_date",
+      endDate = "cohort_end_date",
+      by = c("person_id", "cohort_name"),
+      gep = 1L,
+      name = omopgenerics::uniqueTableName(prefix = pref)
+    )
+
+  # drop tables
+  omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(ip))
+
+  return(bmiRecords)
 }
