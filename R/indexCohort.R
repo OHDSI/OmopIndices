@@ -179,12 +179,12 @@ ageGroupEpisodes <- function(cdm, ageGroup, pref, subset) {
       }
       q <- c(q, paste0('"', nm, '"')) |>
         rlang::parse_exprs() |>
-        rlang::set_names(c("cohort_start_date", "cohort_end_date", "cohort_name"))
+        rlang::set_names(c("start", "end", "cohort_name"))
 
       subset |>
         dplyr::mutate(!!!q) |>
-        dplyr::filter(.data$cohort_start_date <= .data$cohort_end_date) |>
-        dplyr::select("person_id", "cohort_start_date", "cohort_end_date", "cohort_name") |>
+        dplyr::filter(.data$start <= .data$end) |>
+        dplyr::select("person_id", "start", "end", "cohort_name") |>
         dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
     }) |>
     purrr::reduce(dplyr::union_all) |>
