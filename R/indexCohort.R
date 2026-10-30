@@ -322,7 +322,21 @@ splitEpisodes <- function(episodes, nm) {
 
   return(episodes)
 }
+domainsData <- dplyr::tribble(
+  ~"domain_id",    ~"table",               ~"concept",                ~"source",                         ~"start",                     ~"end",
+  "drug",          "drug_exposure",        "drug_concept_id",         "drug_source_concept_id",         "drug_exposure_start_date",   "drug_exposure_end_date",
+  "condition",     "condition_occurrence", "condition_concept_id",    "condition_source_concept_id",    "condition_start_date",       "condition_end_date",
+  "procedure",     "procedure_occurrence", "procedure_concept_id",    "procedure_source_concept_id",    "procedure_date",             "procedure_date",
+  "observation",   "observation",          "observation_concept_id",  "observation_source_concept_id",  "observation_date",           "observation_date",
+  "measurement",   "measurement",          "measurement_concept_id",  "measurement_source_concept_id",  "measurement_date",           "measurement_date",
+  "visit",         "visit_occurrence",     "visit_concept_id",        "visit_source_concept_id",        "visit_start_date",           "visit_end_date",
+  "device",        "device_exposure",      "device_concept_id",       "device_source_concept_id",       "device_exposure_start_date", "device_exposure_end_date",
+  "visit_detail",  "visit_detail",         "visit_detail_concept_id", "visit_detail_source_concept_id", "visit_detail_start_date",    "visit_detail_end_date",
+  "drug_era",      "drug_era",             "drug_concept_id",         NA,                               "drug_era_start_date",        "drug_era_end_date",
+  "condition_era", "condition_era",        "condition_concept_id",    NA,                               "condition_era_start_date",   "condition_era_end_date"
+)
 conceptEpisodes <- function(cdm, conceptSet, window, subset, pref) {
+
   # internal prefix
   ip <- omopgenerics::tmpPrefix()
 
@@ -339,23 +353,45 @@ conceptEpisodes <- function(cdm, conceptSet, window, subset, pref) {
     dplyr::pull() |>
     tolower()
 
-  # records
-  records <- domains |>
-    purrr::map(\(x) {
+  # not supported domains
+  notSupported <- domains |>
+    purrr::keep(\(x) !x %in% domainsData$domain_id)
+  if (length(notSupported)) {
+    cli::cli_warn(c("!" = "Some of the provided concept domains are not supported: {notSupported}."))
+  }
 
+  # records
+  nm <- omopgenerics::uniqueTableName()
+  records <- domains |>
+    purrr::keep(\(x) x %in% domainsData$domain_id) |>
+    purrr::map(\(domain) {
+      table <- domainsData$table[domainsData$domain_id == domain]
+      start <- domainsData$start[domainsData$domain_id == domain]
+      concept <- domainsData$concept[domainsData$domain_id == domain]
+      cdm[[table]] |>
+        dplyr::inner_join(subset, by = "person_id") |>
+        dplyr::inner_join(
+          cdm[[con]] |>
+            dplyr::select(!!concept := "concept_id", "cohort_name"),
+          by = concept
+        ) |>
+        dplyr::select("person_id", "start" = dplyr::all_of(start), "cohort_name") |>
+        dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
     }) |>
     purrr::compact() |>
     purrr::reduce(dplyr::union_all) |>
     PatientProfiles::filterInObservation("start") |>
-    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
+    dplyr::compute(name = nm)
+  omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(ip))
 
   # use window
+  nm1 <- omopgenerics::uniqueTableName()
   if (is.infinite(window[1])) {
     records <- records |>
       dplyr::group_by(.data$person_id, .data$cohort_name) |>
-      dplyr::summarise(start = min(.data$start, .na.rm = TRUE), .groups = "drop") |>
+      dplyr::summarise(start = min(.data$start, na.rm = TRUE), .groups = "drop") |>
       dplyr::mutate(end = as.Date(NA)) |>
-      dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
+      dplyr::compute(name = nm1)
   } else {
     records <- records |>
       dplyr::mutate(end = as.Date(clock::add_days(.data$start, !!-window[1]))) |>
@@ -364,9 +400,10 @@ conceptEpisodes <- function(cdm, conceptSet, window, subset, pref) {
         endDate = "end",
         by = c("person_id", "cohort_name"),
         gap = 1L,
-        name = omopgenerics::uniqueTableName(prefix = ip)
+        name = nm1
       )
   }
+  omopgenerics::dropSourceTable(cdm = cdm, name = nm)
 
   # correct by observation_period_end_date
   records <- records |>
@@ -384,9 +421,7 @@ conceptEpisodes <- function(cdm, conceptSet, window, subset, pref) {
     dplyr::compute(name = omopgenerics::uniqueTableName(prefix = pref))
 
   # drop tables
-  records |>
-    omopgenerics::cdmReference() |>
-    omopgenerics::dropSourceTable(name = dplyr::starts_with(ip))
+  omopgenerics::dropSourceTable(cdm = cdm, name = nm1)
 
   return(records)
 }
