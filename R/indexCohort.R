@@ -39,7 +39,7 @@ indexCohort <- function(cdm,
     } else if (comp$type == "bmi") {
       episodes[[i]] <- bmiEpisodes(cdm, comp$bmiGroup, pref, subset, conceptSet)
     } else if (comp$type == "concept_flag") {
-
+      episodes[[i]] <- conceptEpisodes(cdm, conceptSet[comp$conceptSet], comp$window, subset, pref)
     } else if (comp$type %in% c("measurement_flag", "cohort_flag")) {
       if (comp$type == "measurement_flag") {
 
@@ -56,10 +56,32 @@ indexCohort <- function(cdm,
     dplyr::compute(name = nm)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
-  # apply formula and categories
+  # apply points and categories
+  nm <- omopgenerics::uniqueTableName()
+  cdm <- omopgenerics::insertTable(cdm = cdm, name = nm, table = points)
+  episodes <- episodes |>
+    dplyr::inner_join(cdm[[nm]], by = "cohort_name") |>
+    dplyr::select(!"cohort_name") |>
+    dplyr::compute(name = nm)
 
-  # erafy
-  cdm[[name]] <- records |>
+  # calculate points and categories
+  nameStyle <- "points"
+  q <- qCategories(categories) |>
+    rlang::set_names("cohort_name") |>
+    rlang::parse_exprs()
+  cdm[[name]] <- splitEpisodes(episodes, nm) |> # split in small episodes
+    dplyr::inner_join(
+      episodes |>
+        dplyr::select("person_id", "start", "end", "points"),
+      by = dplyr::join_by("person_id", cohort_start_date <= end, start <= cohort_end_date)
+    ) |>
+    # calculate points per path
+    dplyr::group_by(.data$person_id, .data$cohort_start_date, .data$cohort_end_date) |>
+    dplyr::summarise(points = sum(.data$points, na.rm = TRUE), .groups = "drop") |>
+    # add categories
+    dplyr::mutate(!!!q) |>
+    dplyr::compute(name = nm) |>
+    # erafy
     OmopConstructor::collapseRecords(
       startDate = "cohort_start_date",
       endDate = "cohort_end_date",
@@ -90,6 +112,8 @@ indexCohort <- function(cdm,
       cohortAttritionRef = NULL,
       cohortCodelistRef = NULL # TODO add codelists??
     )
+
+  # drop tables
 
   return(cdm[[name]])
 }
@@ -253,4 +277,116 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(ip))
 
   return(bmiRecords)
+}
+splitEpisodes <- function(episodes, nm) {
+  ip <- omopgenerics::tmpPrefix()
+
+  # start dates
+  startDates <- episodes |>
+    dplyr::select("person_id", "cohort_start_date") |>
+    dplyr::union_all(
+      episodes |>
+        dplyr::select("person_id", "cohort_start_date" = "cohort_end_date") |>
+        dplyr::mutate(cohort_start_date = as.Date(clock::add_days(.data$cohort_start_date, 1L)))
+    ) |>
+    dplyr::distinct() |>
+    dplyr::group_by(.data$person_id) |>
+    dplyr::arrange(.data$cohort_start_date) |>
+    dplyr::mutate(id = as.integer(dplyr::row_number())) |>
+    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
+
+  # end dates
+  endDates <- episodes |>
+    dplyr::select("person_id", "cohort_end_date") |>
+    dplyr::union_all(
+      episodes |>
+        dplyr::select("person_id", "cohort_end_date" = "cohort_start_date") |>
+        dplyr::mutate(cohort_end_date = as.Date(clock::add_days(.data$cohort_end_date, -1L)))
+    ) |>
+    dplyr::distinct() |>
+    dplyr::group_by(.data$person_id) |>
+    dplyr::arrange(.data$cohort_end_date) |>
+    dplyr::mutate(id = as.integer(dplyr::row_number())) |>
+    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
+
+  # splitted episodes
+  episodes <- startDates |>
+    dplyr::inner_join(endDates, by = c("person_id", "id")) |>
+    dplyr::select(!"id") |>
+    dplyr::compute(name = nm)
+
+  # drop tables
+  episodes |>
+    omopgenerics::cdmReference() |>
+    omopgenerics::dropSourceTable(name = dplyr::starts_with(ip))
+
+  return(episodes)
+}
+conceptEpisodes <- function(cdm, conceptSet, window, subset, pref) {
+  # internal prefix
+  ip <- omopgenerics::tmpPrefix()
+
+  # insert concept table
+  con <- omopgenerics::uniqueTableName(prefix = ip)
+  x <- dplyr::as_tibble(conceptSet) |>
+    dplyr::rename("cohort_name" = "codelist_name")
+  cdm <- omopgenerics::insertTable(cdm = cdm, name = con, table = x)
+
+  # tables
+  domains <- cdm$concept |>
+    dplyr::inner_join(cdm[[con]], by = "concept_id") |>
+    dplyr::distinct(.data$domain_id) |>
+    dplyr::pull() |>
+    tolower()
+
+  # records
+  records <- domains |>
+    purrr::map(\(x) {
+
+    }) |>
+    purrr::compact() |>
+    purrr::reduce(dplyr::union_all) |>
+    PatientProfiles::filterInObservation("start") |>
+    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
+
+  # use window
+  if (is.infinite(window[1])) {
+    records <- records |>
+      dplyr::group_by(.data$person_id, .data$cohort_name) |>
+      dplyr::summarise(start = min(.data$start, .na.rm = TRUE), .groups = "drop") |>
+      dplyr::mutate(end = as.Date(NA)) |>
+      dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
+  } else {
+    records <- records |>
+      dplyr::mutate(end = as.Date(clock::add_days(.data$start, !!-window[1]))) |>
+      OmopConstructor::collapseRecords(
+        startDate = "start",
+        endDate = "end",
+        by = c("person_id", "cohort_name"),
+        gap = 1L,
+        name = omopgenerics::uniqueTableName(prefix = ip)
+      )
+  }
+
+  # correct by observation_period_end_date
+  records <- records |>
+    dplyr::inner_join(
+      cdm$observation_period |>
+        dplyr::select("person_id", "observation_period_end_date"),
+      by = "person_id"
+    ) |>
+    dplyr::mutate(end = dplyr::case_when(
+      is.na(.data$end) ~ .data$observation_period_end_date,
+      .data$observation_period_end_date < .data$end ~ .data$observation_period_end_date,
+      .default = .data$end
+    )) |>
+    dplyr::select("cohort_name", "person_id", "start", "end") |>
+    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = pref))
+
+  # drop tables
+  records |>
+    omopgenerics::cdmReference() |>
+    omopgenerics::dropSourceTable(name = dplyr::starts_with(ip))
+
+  return(records)
 }
