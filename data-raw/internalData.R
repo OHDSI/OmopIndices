@@ -96,19 +96,19 @@ cohortComponents$charlson <- list(
     type = "concept",
     conceptSet = "diabetes_without_complication",
     followUp = Inf,
-    censorEvent = "diabetes_with_complication"
+    censor = "diabetes_with_complication"
   ),
   list(
     type = "concept",
     conceptSet = "any_malignancy",
     followUp = Inf,
-    censorEvent = "metastatic_solid_tumor"
+    censor = "metastatic_solid_tumor"
   ),
   list(
     type = "concept",
     conceptSet = "mild_liver_disease",
     followUp = Inf,
-    censorEvent = "moderate_or_severe_liver_disease"
+    censor = "moderate_or_severe_liver_disease"
   )
 )
 cohortComponents$charlson_age_adjusted <- c(
@@ -384,8 +384,7 @@ internalConcepts$electronic_frailty_index_2 <- list.files(
 
 ## Prepare points dataframe ----
 points <- points |>
-  purrr::map(\(x) dplyr::tibble(cohort_name = names(x), points = unlist(x))) |>
-  dplyr::bind_rows(.id = "index")
+  purrr::map(\(x) dplyr::tibble(cohort_name = names(x), points = unlist(x)))
 
 ## Prepare internal concepts ----
 internalConcepts <- internalConcepts |>

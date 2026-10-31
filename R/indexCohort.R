@@ -33,7 +33,7 @@ indexCohort <- function(cdm,
   cdm <- omopgenerics::validateCdmArgument(cdm = cdm, call = call)
   omopgenerics::assertList(categories, named = TRUE, class = "numeric", call = call)
   name <- omopgenerics::validateNameArgument(name = name, cdm = cdm, call = call)
-  neededConcepts <- neededConceptSet(component)
+  neededConcepts <- neededConceptSet(cohortComponents)
   conceptSet <- validateConceptSet(conceptSet, neededConcepts, cdm, call = call)
   omopgenerics::assertCharacter(subsetCohort, null = TRUE, call = call)
 
@@ -49,9 +49,11 @@ indexCohort <- function(cdm,
       dplyr::select("person_id")
   }
 
+  # identify all events of interest
+
   # get the episodes per component
   episodes  <- list()
-  for (i in seq_along(component)) {
+  for (i in seq_along(cohortComponents)) {
     comp <- component[[i]]
     if (comp$type == "age_group") {
       episodes[[i]] <- ageGroupEpisodes(cdm, comp$ageGroup, pref, subset)

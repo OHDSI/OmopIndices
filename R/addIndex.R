@@ -209,13 +209,13 @@ overwriteWindow <- function(component, window, call) {
 neededConceptSet <- function(component) {
   component |>
     purrr::map(\(x) {
-      if ("conceptSet" %in% names(x)) {
-        x$conceptSet
-      } else {
-        NULL
-      }
+      nms <- c("conceptSet", "censor") |>
+        purrr::keep(\(col) col %in% names(x))
+      unlist(x[nms], use.names = FALSE)
     }) |>
-    purrr::flatten_chr()
+    purrr::flatten_chr() |>
+    unique() |>
+    sort()
 }
 
 qCategories <- function(categories) {
