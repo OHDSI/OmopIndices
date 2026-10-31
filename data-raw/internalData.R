@@ -7,6 +7,8 @@ cdm <- omock::mockCdmFromDataset(datasetName = "delphi-100k")
 formulas <- list()
 components <- list()
 requiredConcepts <- list()
+points <- list()
+cohortComponents <- list()
 
 ## Charlson Index ----
 requiredConcepts$charlson <- c(
@@ -48,6 +50,78 @@ formulas$charlson_age_adjusted <- paste0(
     .data$age_group == '80 or over' ~ 4L
   ) + ",
   formulas$charlson
+)
+points$charlson <- list(
+  diabetes_with_complication = 2L,
+  diabetes_without_complication = 1L,
+  metastatic_solid_tumor = 6L,
+  any_malignancy = 2L,
+  moderate_or_severe_liver_disease = 3L,
+  mild_liver_disease = 1L,
+  myocardial_infarction = 1L,
+  congestive_heart_failure = 1L,
+  peripheral_vascular_disease = 1L,
+  cerebrovascular_disease = 1L,
+  dementia = 1L,
+  chronic_pulmonary_disease = 1L,
+  connective_tissue_disease = 1L,
+  peptic_ulcer_disease = 1L,
+  hemiplegia = 2L,
+  severe_chronic_kidney_disease = 2L,
+  aids = 6L
+)
+points$charlson_age_adjusted <- c(
+  points$charlson,
+  list(
+    '50 to 59' = 1L,
+    '60 to 69' = 2L,
+    '70 to 79' = 3L,
+    '80 or over' = 4L
+  )
+)
+cohortComponents$charlson <- list(
+  list(
+    type = "concept",
+    conceptSet = c(
+      "diabetes_with_complication", "metastatic_solid_tumor",
+      "moderate_or_severe_liver_disease", "myocardial_infarction",
+      "congestive_heart_failure", "peripheral_vascular_disease",
+      "cerebrovascular_disease", "dementia", "chronic_pulmonary_disease",
+      "connective_tissue_disease", "peptic_ulcer_disease", "hemiplegia",
+      "severe_chronic_kidney_disease", "aids"
+    ),
+    followUp = Inf
+  ),
+  list(
+    type = "concept",
+    conceptSet = "diabetes_without_complication",
+    followUp = Inf,
+    censorEvent = "diabetes_with_complication"
+  ),
+  list(
+    type = "concept",
+    conceptSet = "any_malignancy",
+    followUp = Inf,
+    censorEvent = "metastatic_solid_tumor"
+  ),
+  list(
+    type = "concept",
+    conceptSet = "mild_liver_disease",
+    followUp = Inf,
+    censorEvent = "moderate_or_severe_liver_disease"
+  )
+)
+cohortComponents$charlson_age_adjusted <- c(
+  cohortComponents$charlson,
+  list(list(
+    type = "age_group",
+    ageGroup = list(
+     "50 to 59" = c(50, 59),
+     "60 to 69" = c(60, 69),
+     "70 to 79" = c(70, 79),
+     "80 or over" = c(80, Inf)
+    )
+  ))
 )
 components$charlson <- list(
   list(
@@ -308,6 +382,11 @@ internalConcepts$electronic_frailty_index_2 <- list.files(
   ) |>
   dplyr::union_all(internalConcepts$body_mass_index)
 
+## Prepare points dataframe ----
+points <- points |>
+  purrr::map(\(x) dplyr::tibble(cohort_name = names(x), points = unlist(x))) |>
+  dplyr::bind_rows(.id = "index")
+
 ## Prepare internal concepts ----
 internalConcepts <- internalConcepts |>
   dplyr::bind_rows(.id = "index") |>
@@ -335,6 +414,8 @@ usethis::use_data(
   requiredConcepts,
   formulas,
   components,
+  points,
+  cohortComponents,
   internalConcepts,
   internal = TRUE,
   overwrite = TRUE

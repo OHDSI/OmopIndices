@@ -99,3 +99,22 @@ indexOptions <- function() {
   indices[length(indices)] <- paste0("and ", indices[length(indices)])
   paste0(indices, collapse = ", ")
 }
+
+#' Helper for consistent documentation for cohort functions
+#'
+#' @param cdm A `cdm_reference` object.
+#' @param categories A named list of numeric vectors, each containing the lower
+#' and upper bounds of a score interval. Upper and lower bounds are both
+#' included. The name will be used to name the resultant cohort.
+#' @param name Name of the new cohort table created in the cdm object.
+#' @param subsetCohort A character refering to a cohort table containing
+#' individuals for whom cohorts will be generated. Only individuals in this
+#' table will appear in the generated cohort. If `NULL` no subsetting will be
+#' performed.
+#' @param subsetCohortId Specifies cohort IDs from the `subsetCohort` table to
+#' include. If none are provided, all cohorts from the subsetCohort are
+#' included.
+#'
+#' @name cohortDoc
+#' @keywords internal
+NULL

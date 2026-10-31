@@ -1,7 +1,28 @@
 
+indexCohortFromKey <- function(cdm,
+                               key,
+                               categories,
+                               name,
+                               conceptSet,
+                               subsetCohort,
+                               subsetCohortId,
+                               call = parent.frame()) {
+  indexCohort(
+    cdm = cdm,
+    points = points[[key]],
+    cohortComponents = cohortComponents[[key]],
+    categories = categories,
+    name = name,
+    conceptSet = conceptSet,
+    subsetCohort = subsetCohort,
+    subsetCohortId = {{subsetCohortId}},
+    call = call
+  )
+}
+
 indexCohort <- function(cdm,
-                        formula,
-                        component,
+                        points,
+                        cohortComponents,
                         categories,
                         name,
                         conceptSet,
