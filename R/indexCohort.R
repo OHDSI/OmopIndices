@@ -52,11 +52,11 @@ indexCohort <- function(cdm,
   # get the episodes per component
   episodes  <- list()
   for (i in seq_along(cohortComponents)) {
-    comp <- component[[i]]
+    comp <- cohortComponents[[i]]
     if (comp$type == "age_group") {
       episodes[[i]] <- ageGroupEpisodes(cdm, comp$ageGroup, pref, subset)
     } else if (comp$type == "polypharmacy") {
-
+      # TODO
     } else if (comp$type == "bmi") {
       episodes[[i]] <- bmiEpisodes(cdm, comp$bmiGroup, pref, subset, conceptSet)
     } else if (comp$type == "concept") {
@@ -72,10 +72,10 @@ indexCohort <- function(cdm,
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
   # apply points and categories
-  nm <- omopgenerics::uniqueTableName()
-  cdm <- omopgenerics::insertTable(cdm = cdm, name = nm, table = points)
+  pointsTable <- omopgenerics::uniqueTableName()
+  cdm <- omopgenerics::insertTable(cdm = cdm, name = pointsTable, table = points)
   episodes <- episodes |>
-    dplyr::inner_join(cdm[[nm]], by = "cohort_name") |>
+    dplyr::inner_join(cdm[[pointsTable]], by = "cohort_name") |>
     dplyr::select(!"cohort_name") |>
     dplyr::compute(name = nm)
 
@@ -129,6 +129,7 @@ indexCohort <- function(cdm,
     )
 
   # drop tables
+  omopgenerics::dropSourceTable(cdm = cdm, name = c(nm, pointsTable))
 
   return(cdm[[name]])
 }
@@ -282,7 +283,7 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
       startDate = "start",
       endDate = "end",
       by = c("person_id", "cohort_name"),
-      gep = 1L,
+      gap = 1L,
       name = omopgenerics::uniqueTableName(prefix = pref)
     )
 
@@ -389,7 +390,21 @@ getEvents <- function(cdm, conceptSet, subset, nm) {
         dplyr::select("person_id", "event_date" = dplyr::all_of(start), "cohort_name") |>
         dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
     }) |>
-    purrr::compact() |>
+    purrr::compact()
+
+  if (length(records) == 0) {
+    records <- cdm$person |>
+      dplyr::select("person_id") |>
+      dplyr::filter(.data$person_id < 0L & .data$person_id > 0L) |>
+      dplyr::mutate(
+        event_date = as.Date(NA),
+        cohort_name = ""
+      ) |>
+      dplyr::compute(name = nm)
+    return(records)
+  }
+
+  records <- records |>
     purrr::reduce(dplyr::union_all) |>
     PatientProfiles::filterInObservation("event_date") |>
     dplyr::compute(name = nm)
