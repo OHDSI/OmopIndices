@@ -406,92 +406,67 @@ conceptEpisodes <- function(cdm, conceptSet, comp, subset, pref) {
   events <- getEvents(cdm, conceptSet, subset, nm)
 
   censor <- !is.null(comp$censor)
-  infinite <- is.infinite(comp$followUp)
+  followUp <- comp$followUp
+  infinite <- is.infinite(followUp)
 
-  # censor events
+  indexEvents <- events |>
+    dplyr::rename("start" = "event_date")
+
+  # end limit: end of observation or first censor event
+  limits <- cdm$observation_period |>
+    dplyr::select("person_id", "end" = "observation_period_end_date")
   if (censor) {
-    censorEvents <- events |>
+    censorDates <- events |>
       dplyr::filter(.data$cohort_name %in% !!comp$censor) |>
       dplyr::group_by(.data$person_id) |>
-      dplyr::summarise(
-        censor_date = min(.data$event_date, na.rm = TRUE),
-        .groups = "drop"
-      )
-  }
-
-  # index events
-  indexEvents <- events
-  if (censor) {
+      dplyr::summarise(censor_date = min(.data$event_date, na.rm = TRUE), .groups = "drop")
+    limits <- limits |>
+      dplyr::left_join(censorDates, by = "person_id") |>
+      dplyr::mutate(
+        end = dplyr::if_else(
+          is.na(.data$censor_date) | .data$end <= .data$censor_date,
+          .data$end,
+          .data$censor_date
+        )
+      ) |>
+      dplyr::select("person_id", "end")
     indexEvents <- indexEvents |>
       dplyr::filter(.data$cohort_name %in% !!comp$conceptSet)
   }
 
-  indexEvents <- indexEvents |>
-    dplyr::rename("start" = "event_date")
-
-  # infinite follow-up: first event per person and cohort
+  # episodes
   if (infinite) {
+    # only first event
     indexEvents <- indexEvents |>
       dplyr::group_by(.data$person_id, .data$cohort_name) |>
-      dplyr::summarise(
-        start = min(.data$start, na.rm = TRUE),
-        .groups = "drop"
-      )
+      dplyr::summarise(start = min(.data$start, na.rm = TRUE), .groups = "drop")
   }
-
-  # add observation period end date
   records <- indexEvents |>
-    dplyr::inner_join(
-      cdm$observation_period |>
-        dplyr::select("person_id", "end" = "observation_period_end_date"),
-      by = "person_id"
-    )
-
-  # finite follow-up
+    dplyr::inner_join(limits, by = "person_id")
   if (!infinite) {
+    followUp <- as.integer(followUp)
     records <- records |>
       dplyr::mutate(
-        follow_up = as.Date(clock::add_days(.data$start, !!comp$followUp)),
-        end = dplyr::if_else(
-          .data$follow_up < .data$end,
-          .data$follow_up,
-          .data$end
-        )
+        follow_up = as.Date(clock::add_days(.data$start, !!followUp)),
+        end = dplyr::if_else(.data$end < .data$follow_up, .data$end, .data$follow_up)
       )
   }
-
-  # censoring
-  if (censor) {
-    records <- records |>
-      dplyr::left_join(censorEvents, by = "person_id") |>
-      dplyr::mutate(
-        end = dplyr::if_else(
-          !is.na(.data$censor_date) & .data$censor_date < .data$end,
-          .data$censor_date,
-          .data$end
-        )
-      )
-  }
-
-  # valid records
   records <- records |>
     dplyr::filter(.data$start <= .data$end) |>
     dplyr::select("cohort_name", "person_id", "start", "end")
 
-  # create episodes
   name <- omopgenerics::uniqueTableName(prefix = pref)
   if (infinite) {
-    records <- records |>
-      dplyr::compute(name = name)
+    records <- dplyr::compute(records, name = name)
   } else {
-    records <- records |>
-      OmopConstructor::collapseRecords(
-        startDate = "start",
-        endDate = "end",
-        by = c("person_id", "cohort_name"),
-        gap = 1L,
-        name = name
-      )
+    records <- OmopConstructor::collapseRecords(
+      records,
+      startDate = "start",
+      endDate = "end",
+      by = c("person_id", "cohort_name"),
+      gap = 1L,
+      name = name
+    )
   }
 
   # drop events table
