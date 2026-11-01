@@ -247,13 +247,13 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
     dplyr::mutate(!!!q) |>
     dplyr::select(
       "person_id",
-      "cohort_start_date" = "bmi_date",
+      "start" = "bmi_date",
       "cohort_name"
     ) |>
     dplyr::compute(name = bmiTable) |>
     # add id group
     dplyr::group_by(.data$person_id) |>
-    dplyr::arrange(.data$cohort_start_date) |>
+    dplyr::arrange(.data$start) |>
     dplyr::mutate(id = as.integer(dplyr::row_number())) |>
     dplyr::ungroup() |>
     dplyr::compute(name = bmiTable)
@@ -268,21 +268,19 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
     # add start of next episode
     dplyr::left_join(
       bmiRecords |>
-        dplyr::select("person_id", "cohort_end_date" = "cohort_start_date", "id") |>
+        dplyr::select("person_id", "end" = "start", "id") |>
         dplyr::mutate(
-          cohort_end_date = as.Date(clock::add_days(.data$cohort_end_date, -1L)),
+          end = as.Date(clock::add_days(.data$end, -1L)),
           id = .data$id - 1L
         ),
       by = c("person_id", "id")
     ) |>
-    dplyr::mutate(cohort_end_date = dplyr::coalesce(
-      .data$cohort_end_date, .data$observation_period_end_date
-    )) |>
+    dplyr::mutate(end = dplyr::coalesce(.data$end, .data$observation_period_end_date)) |>
     dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip)) |>
     # erafy
     OmopConstructor::collapseRecords(
-      startDate = "cohort_start_date",
-      endDate = "cohort_end_date",
+      startDate = "start",
+      endDate = "end",
       by = c("person_id", "cohort_name"),
       gep = 1L,
       name = omopgenerics::uniqueTableName(prefix = pref)
