@@ -43,6 +43,7 @@ indexCohort <- function(cdm,
     subset <- cdm[[subsetCohort]] |>
       PatientProfiles::filterCohortId(cohortId = {{subsetCohortId}}) |>
       dplyr::distinct(.data$subject_id) |>
+      dplyr::rename("person_id" = "subject_id") |>
       dplyr::compute(name = omopgenerics::uniqueTableName(prefix = pref))
   } else {
     subset <- cdm$person |>
@@ -65,45 +66,67 @@ indexCohort <- function(cdm,
   }
 
   # join all episodes
-  nm <- omopgenerics::uniqueTableName()
+  episodeTable <- omopgenerics::uniqueTableName()
   episodes <- episodes |>
     purrr::reduce(dplyr::union_all) |>
-    dplyr::compute(name = nm)
+    dplyr::compute(name = episodeTable)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
   # apply points and categories
   pointsTable <- omopgenerics::uniqueTableName()
+  scoredTable <- omopgenerics::uniqueTableName()
   cdm <- omopgenerics::insertTable(cdm = cdm, name = pointsTable, table = points)
   episodes <- episodes |>
     dplyr::inner_join(cdm[[pointsTable]], by = "cohort_name") |>
     dplyr::select(!"cohort_name") |>
-    dplyr::compute(name = nm)
+    dplyr::compute(name = scoredTable)
+  cdm <- omopgenerics::dropSourceTable(cdm = cdm, name = episodeTable)
 
   # calculate points and categories
   nameStyle <- "points"
   q <- qCategories(categories) |>
     rlang::set_names("cohort_name") |>
     rlang::parse_exprs()
-  cdm[[name]] <- splitEpisodes(episodes, nm) |> # split in small episodes
+  splitTable <- omopgenerics::uniqueTableName()
+  aggregateTable <- omopgenerics::uniqueTableName()
+  aggregate <- splitEpisodes(episodes, splitTable) |> # split in small episodes
     dplyr::inner_join(
       episodes |>
         dplyr::select("person_id", "start", "end", "points"),
-      by = dplyr::join_by("person_id", cohort_start_date <= end, start <= cohort_end_date)
+      by = dplyr::join_by(
+        "person_id",
+        x$cohort_start_date <= y$end,
+        y$start <= x$cohort_end_date
+      )
     ) |>
     # calculate points per path
     dplyr::group_by(.data$person_id, .data$cohort_start_date, .data$cohort_end_date) |>
     dplyr::summarise(points = sum(.data$points, na.rm = TRUE), .groups = "drop") |>
     # add categories
     dplyr::mutate(!!!q) |>
-    dplyr::compute(name = nm) |>
-    # erafy
-    OmopConstructor::collapseRecords(
-      startDate = "cohort_start_date",
-      endDate = "cohort_end_date",
-      by = c("cohort_name"),
-      gap = 1L,
-      name = name
-    )
+    dplyr::select(!"points") |>
+    dplyr::compute(name = aggregateTable)
+  cdm <- omopgenerics::dropSourceTable(
+    cdm = cdm,
+    name = c(scoredTable, splitTable, pointsTable)
+  )
+
+  collapsedTable <- omopgenerics::uniqueTableName()
+  collapsed <- OmopConstructor::collapseRecords(
+    aggregate,
+    startDate = "cohort_start_date",
+    endDate = "cohort_end_date",
+    by = c("person_id", "cohort_name"),
+    gap = 1L,
+    name = collapsedTable
+  )
+  cdm[[name]] <- collapsed |>
+    dplyr::rename("subject_id" = "person_id") |>
+    dplyr::compute(name = name)
+  cdm <- omopgenerics::dropSourceTable(
+    cdm = cdm,
+    name = c(aggregateTable, collapsedTable)
+  )
 
   # create settings
   set <- dplyr::tibble(
@@ -127,9 +150,6 @@ indexCohort <- function(cdm,
       cohortAttritionRef = NULL,
       cohortCodelistRef = NULL # TODO add codelists??
     )
-
-  # drop tables
-  omopgenerics::dropSourceTable(cdm = cdm, name = c(nm, pointsTable))
 
   return(cdm[[name]])
 }
@@ -297,10 +317,10 @@ splitEpisodes <- function(episodes, nm) {
 
   # start dates
   startDates <- episodes |>
-    dplyr::select("person_id", "cohort_start_date") |>
+    dplyr::select("person_id", "cohort_start_date" = "start") |>
     dplyr::union_all(
       episodes |>
-        dplyr::select("person_id", "cohort_start_date" = "cohort_end_date") |>
+        dplyr::select("person_id", "cohort_start_date" = "end") |>
         dplyr::mutate(cohort_start_date = as.Date(clock::add_days(.data$cohort_start_date, 1L)))
     ) |>
     dplyr::distinct() |>
@@ -311,10 +331,10 @@ splitEpisodes <- function(episodes, nm) {
 
   # end dates
   endDates <- episodes |>
-    dplyr::select("person_id", "cohort_end_date") |>
+    dplyr::select("person_id", "cohort_end_date" = "end") |>
     dplyr::union_all(
       episodes |>
-        dplyr::select("person_id", "cohort_end_date" = "cohort_start_date") |>
+        dplyr::select("person_id", "cohort_end_date" = "start") |>
         dplyr::mutate(cohort_end_date = as.Date(clock::add_days(.data$cohort_end_date, -1L)))
     ) |>
     dplyr::distinct() |>
