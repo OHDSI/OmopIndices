@@ -231,6 +231,70 @@ components$electronic_frailty_index <- list(
   )
 )
 
+cohortComponents$electronic_frailty_index <- list(
+  list(
+    type = "concept",
+    conceptSet = c(
+      "activity_limitation", "anemia", "arthritis", "atrial_fibrillation",
+      "cerebrovascular_disease", "chronic_kidney_disease",  "diabetes", "dizziness",
+      "dyspnea", "falls", "foot_problem", "fragility_fracture",
+      "hearing_impairment", "heart_failure", "heart_valve_disorder", "housebound",
+      "hypertension", "hypotension_syncope", "ischemic_heart_disease",
+      "memory_cognitive_disorder", "mobility_problems", "osteoporosis",
+      "parkinsonism_tremor", "peptic_ulcer", "peripheral_vascular_disease",
+      "care_requirement", "respiratory_disease", "skin_ulcer", "sleep_disturbance",
+      "social_vulnerability", "thyroid_disease", "urinary_incontinence",
+      "urinary_system_disease", "visual_impairment", "weight_loss_anorexia"
+    ),
+    followUp = Inf
+  ),
+  list(
+    type = "polypharmacy",
+    window = c(-365L, 0L),
+    overlap = TRUE,
+    group = "ingredient drug_era",
+    categories = list("more than 5 ing" = c(5, Inf))
+  )
+)
+points$electronic_frailty_index <- list(
+  "activity_limitation" = 1/36,
+  "anemia" = 1/36,
+  "arthritis" = 1/36,
+  "atrial_fibrillation" = 1/36,
+  "cerebrovascular_disease" = 1/36,
+  "chronic_kidney_disease" = 1/36,
+  "diabetes" = 1/36,
+  "dizziness" = 1/36,
+  "dyspnea" = 1/36,
+  "falls" = 1/36,
+  "foot_problem" = 1/36,
+  "fragility_fracture" = 1/36,
+  "hearing_impairment" = 1/36,
+  "heart_failure" = 1/36,
+  "heart_valve_disorder" = 1/36,
+  "housebound" = 1/36,
+  "hypertension" = 1/36,
+  "hypotension_syncope" = 1/36,
+  "ischemic_heart_disease" = 1/36,
+  "memory_cognitive_disorder" = 1/36,
+  "mobility_problems" = 1/36,
+  "osteoporosis" = 1/36,
+  "parkinsonism_tremor" = 1/36,
+  "peptic_ulcer" = 1/36,
+  "peripheral_vascular_disease" = 1/36,
+  "care_requirement" = 1/36,
+  "respiratory_disease" = 1/36,
+  "skin_ulcer" = 1/36,
+  "sleep_disturbance" = 1/36,
+  "social_vulnerability" = 1/36,
+  "thyroid_disease" = 1/36,
+  "urinary_incontinence" = 1/36,
+  "urinary_system_disease" = 1/36,
+  "visual_impairment" = 1/36,
+  "weight_loss_anorexia" = 1/36,
+  "more than 5 ing" = 1/36
+)
+
 ## Electronic Frailty Index 2 ----
 efi2 <- c(
   activity_limitation = "0.15284 / 8.429",
