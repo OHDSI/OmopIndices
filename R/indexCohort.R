@@ -336,10 +336,8 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
   return(bmiRecords)
 }
 splitEpisodes <- function(episodes, nm) {
-  ip <- omopgenerics::tmpPrefix()
-
-  # start dates
-  startDates <- episodes |>
+  # split at every episode start and the day after every episode end
+  episodes |>
     dplyr::select("person_id", "cohort_start_date" = "start") |>
     dplyr::union_all(
       episodes |>
@@ -349,35 +347,12 @@ splitEpisodes <- function(episodes, nm) {
     dplyr::distinct() |>
     dplyr::group_by(.data$person_id) |>
     dplyr::arrange(.data$cohort_start_date) |>
-    dplyr::mutate(id = as.integer(dplyr::row_number())) |>
-    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
-
-  # end dates
-  endDates <- episodes |>
-    dplyr::select("person_id", "cohort_end_date" = "end") |>
-    dplyr::union_all(
-      episodes |>
-        dplyr::select("person_id", "cohort_end_date" = "start") |>
-        dplyr::mutate(cohort_end_date = as.Date(clock::add_days(.data$cohort_end_date, -1L)))
+    dplyr::mutate(
+      cohort_end_date = as.Date(clock::add_days(dplyr::lead(.data$cohort_start_date), -1L))
     ) |>
-    dplyr::distinct() |>
-    dplyr::group_by(.data$person_id) |>
-    dplyr::arrange(.data$cohort_end_date) |>
-    dplyr::mutate(id = as.integer(dplyr::row_number())) |>
-    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
-
-  # splitted episodes
-  episodes <- startDates |>
-    dplyr::inner_join(endDates, by = c("person_id", "id")) |>
-    dplyr::select(!"id") |>
+    dplyr::filter(!is.na(.data$cohort_end_date)) |>
+    dplyr::select("person_id", "cohort_start_date", "cohort_end_date") |>
     dplyr::compute(name = nm)
-
-  # drop tables
-  episodes |>
-    omopgenerics::cdmReference() |>
-    omopgenerics::dropSourceTable(name = dplyr::starts_with(ip))
-
-  return(episodes)
 }
 domainsData <- dplyr::tribble(
   ~"domain_id",    ~"table",               ~"concept",                ~"source",                         ~"start",                     ~"end",
