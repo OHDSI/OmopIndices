@@ -57,7 +57,7 @@ indexCohort <- function(cdm,
     if (comp$type == "age_group") {
       episodes[[i]] <- ageGroupEpisodes(cdm, comp$ageGroup, pref, subset)
     } else if (comp$type == "polypharmacy") {
-      # TODO
+      episodes[[i]] <- polypharmacyEpisodes(cdm, comp, subset, pref)
     } else if (comp$type == "bmi") {
       episodes[[i]] <- bmiEpisodes(cdm, comp$bmiGroup, pref, subset, conceptSet)
     } else if (comp$type == "concept") {
@@ -68,6 +68,7 @@ indexCohort <- function(cdm,
   # join all episodes
   episodeTable <- omopgenerics::uniqueTableName()
   episodes <- episodes |>
+    purrr::compact() |>
     purrr::reduce(dplyr::union_all) |>
     dplyr::compute(name = episodeTable)
 
@@ -506,6 +507,104 @@ conceptEpisodes <- function(cdm, conceptSet, comp, subset, pref) {
 
   # drop events table
   omopgenerics::dropSourceTable(cdm = cdm, name = nm)
+
+  return(records)
+}
+polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
+  # parameters
+  group <- comp$group
+  categories <- comp$categories
+  followUp <- comp$followUp
+
+  table <- if (identical(group, "ingredient drug_era")) "drug_era" else "drug_exposure"
+  join <- validateGroup(group, cdm)
+
+  # check table is empty
+  if (omopgenerics::isTableEmpty(cdm[[table]])) {
+    cli::cli_warn(c("!" = "{.pkg {table}} table is empty."))
+    return(NULL)
+  }
+
+  # subset to people of interest
+  records <- cdm[[table]] |>
+    dplyr::inner_join(subset, by = "person_id")
+
+  # join by groups
+  if (!is.character(join)) {
+    records <- records |>
+      dplyr::inner_join(join, by = "drug_concept_id")
+  }
+
+  records <- records |>
+    dplyr::select(
+      "person_id",
+      "start" = omopgenerics::omopColumns(table = table, field = "start_date"),
+      "end" = omopgenerics::omopColumns(table = table, field = "end_date"),
+      "group" = ifelse(is.character(join), "drug_concept_id", "group")
+    )
+
+  if (!is.null(followUp) && length(followUp) == 1L && !is.na(followUp) &&
+      is.finite(followUp) && followUp != 0) {
+    followUp <- as.integer(followUp)
+    records <- records |>
+      dplyr::mutate(end = as.Date(clock::add_days(.data$end, !!followUp)))
+  }
+
+  # collapse by group
+  nm1 <- omopgenerics::uniqueTableName()
+  records <- records |>
+    OmopConstructor::collapseRecords(
+      startDate = "start",
+      endDate = "end",
+      by = c("person_id", "group"),
+      name = nm1
+    )
+
+  # calculate number of categories
+  nameStyle <- "num_counts"
+  events <- records |>
+    dplyr::select("person_id", "date" = "start") |>
+    dplyr::mutate(flag = -1L) |>
+    dplyr::union_all(
+      records |>
+        dplyr::select("person_id", "date" = "end") |>
+        dplyr::mutate(flag = 1L)
+    ) |>
+    dplyr::group_by(.data$person_id) |>
+    dplyr::arrange(.data$date, .data$flag) |>
+    dplyr::mutate(
+      num_counts = -cumsum(.data$flag),
+      start = .data$date,
+      end = as.Date(clock::add_days(dplyr::lead(.data$date), -1L))
+    ) |>
+    dplyr::filter(!is.na(.data$end), .data$start <= .data$end) |>
+    dplyr::ungroup()
+
+  nameStyle <- "num_counts"
+  q <- qCategories(categories) |>
+    rlang::set_names("cohort_name")
+  events <- events |>
+    dplyr::mutate(!!!q)
+
+  events <- events |>
+    dplyr::select("person_id", "start", "end", "cohort_name")
+
+  nm2 <- omopgenerics::uniqueTableName()
+  records <- events |>
+    dplyr::compute(name = nm2)
+  omopgenerics::dropSourceTable(cdm = cdm, name = nm1)
+
+  # collapse by categories
+  records <- records |>
+    OmopConstructor::collapseRecords(
+      startDate = "start",
+      endDate = "end",
+      by = c("person_id", "cohort_name"),
+      gap = 1L,
+      name = omopgenerics::uniqueTableName(prefix = pref)
+    )
+
+  omopgenerics::dropSourceTable(cdm = cdm, name = nm2)
 
   return(records)
 }

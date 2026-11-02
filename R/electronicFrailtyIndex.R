@@ -108,3 +108,56 @@ addElectronicFrailtyIndex <- function(x,
     name = name
   )
 }
+
+#' Create a cohort of groups of the Electronic Frailty Index (eFI)
+#'
+#' eFI calculation is baed on Clegg et al. (2016) (\doi{10.1093/ageing/afw039})
+#'
+#' @inheritParams cohortDoc
+#' @param conceptSet
+#' `r documentationConceptSet(requiredConcepts$electronic_frailty_index)`
+#'
+#' @returns A cohort table.
+#'
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' library(omock)
+#' library(duckdb)
+#' library(OmopIndices)
+#'
+#' cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+#'
+#' # Using the internal concept sets:
+#' cdm$my_cohort <- electronicFrailtyIndexCohort(
+#'   cdm = cdm,
+#'   name = "my_cohort"
+#' )
+#'
+#' cdm$my_cohort
+#'
+#' settings(cdm$my_cohort)
+#' }
+#'
+electronicFrailtyIndexCohort <- function(cdm,
+                                         name,
+                                         categories = list(
+                                           "fit" = c(0, 0.12),
+                                           "mild" = c(0.12, 0.24),
+                                           "moderate" = c(0.24, 0.36),
+                                           "severe" = c(0.36, 1)
+                                         ),
+                                         conceptSet = getIndexCodelist("electronic_frailty_index"),
+                                         subsetCohort = NULL,
+                                         subsetCohortId = NULL) {
+  indexCohortFromKey(
+    cdm = cdm,
+    key = "electronic_frailty_index",
+    categories = categories,
+    name = name,
+    conceptSet = conceptSet,
+    subsetCohort = subsetCohort,
+    subsetCohortId = subsetCohortId
+  )
+}
