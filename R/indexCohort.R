@@ -32,7 +32,7 @@ indexCohort <- function(cdm,
   # input check
   cdm <- omopgenerics::validateCdmArgument(cdm = cdm, call = call)
   omopgenerics::assertList(categories, named = TRUE, class = "numeric", call = call)
-  name <- omopgenerics::validateNameArgument(name = name, cdm = cdm, call = call)
+  name <- omopgenerics::validateNameArgument(name = name, cdm = cdm, call = call, validation = "warning")
   neededConcepts <- neededConceptSet(cohortComponents)
   conceptSet <- validateConceptSet(conceptSet, neededConcepts, cdm, call = call)
   omopgenerics::assertCharacter(subsetCohort, null = TRUE, call = call)
@@ -70,6 +70,22 @@ indexCohort <- function(cdm,
   episodes <- episodes |>
     purrr::reduce(dplyr::union_all) |>
     dplyr::compute(name = episodeTable)
+
+  # baseline intervals ensure people without component events receive 0 points
+  baselineTable <- omopgenerics::uniqueTableName()
+  baseline <- subset |>
+    dplyr::inner_join(
+      cdm$observation_period |>
+        dplyr::select(
+          "person_id",
+          "start" = "observation_period_start_date",
+          "end" = "observation_period_end_date"
+        ),
+      by = "person_id"
+    ) |>
+    dplyr::mutate(points = 0L) |>
+    dplyr::select("person_id", "start", "end", "points") |>
+    dplyr::compute(name = baselineTable)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
   # apply points and categories
@@ -81,6 +97,13 @@ indexCohort <- function(cdm,
     dplyr::select(!"cohort_name") |>
     dplyr::compute(name = scoredTable)
   cdm <- omopgenerics::dropSourceTable(cdm = cdm, name = episodeTable)
+  combinedTable <- omopgenerics::uniqueTableName()
+  episodes <- dplyr::union_all(episodes, baseline) |>
+    dplyr::compute(name = combinedTable)
+  cdm <- omopgenerics::dropSourceTable(
+    cdm = cdm,
+    name = c(scoredTable, baselineTable)
+  )
 
   # calculate points and categories
   nameStyle <- "points"
@@ -108,7 +131,7 @@ indexCohort <- function(cdm,
     dplyr::compute(name = aggregateTable)
   cdm <- omopgenerics::dropSourceTable(
     cdm = cdm,
-    name = c(scoredTable, splitTable, pointsTable)
+    name = c(combinedTable, splitTable, pointsTable)
   )
 
   collapsedTable <- omopgenerics::uniqueTableName()
