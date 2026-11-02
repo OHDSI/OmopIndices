@@ -450,7 +450,11 @@ conceptEpisodes <- function(cdm, conceptSet, comp, subset, pref) {
     censorDates <- events |>
       dplyr::filter(.data$cohort_name %in% !!comp$censor) |>
       dplyr::group_by(.data$person_id) |>
-      dplyr::summarise(censor_date = min(.data$event_date, na.rm = TRUE), .groups = "drop")
+      dplyr::summarise(
+        censor_date = min(.data$event_date, na.rm = TRUE),
+        .groups = "drop"
+      ) |>
+      dplyr::mutate(censor_date = as.Date(clock::add_days(.data$censor_date, -1L)))
     limits <- limits |>
       dplyr::left_join(censorDates, by = "person_id") |>
       dplyr::mutate(
