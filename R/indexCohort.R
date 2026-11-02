@@ -79,13 +79,13 @@ indexCohort <- function(cdm,
       cdm$observation_period |>
         dplyr::select(
           "person_id",
-          "start" = "observation_period_start_date",
-          "end" = "observation_period_end_date"
+          "episode_start" = "observation_period_start_date",
+          "episode_end" = "observation_period_end_date"
         ),
       by = "person_id"
     ) |>
     dplyr::mutate(points = 0L) |>
-    dplyr::select("person_id", "start", "end", "points") |>
+    dplyr::select("person_id", "episode_start", "episode_end", "points") |>
     dplyr::compute(name = baselineTable)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
@@ -116,11 +116,11 @@ indexCohort <- function(cdm,
   aggregate <- splitEpisodes(episodes, splitTable) |> # split in small episodes
     dplyr::inner_join(
       episodes |>
-        dplyr::select("person_id", "start", "end", "points"),
+        dplyr::select("person_id", "episode_start", "episode_end", "points"),
       by = dplyr::join_by(
         "person_id",
-        x$cohort_start_date <= y$end,
-        y$start <= x$cohort_end_date
+        x$cohort_start_date <= y$episode_end,
+        y$episode_start <= x$cohort_end_date
       )
     ) |>
     # calculate points per path
@@ -239,12 +239,12 @@ ageGroupEpisodes <- function(cdm, ageGroup, pref, subset) {
       }
       q <- c(q, paste0('"', nm, '"')) |>
         rlang::parse_exprs() |>
-        rlang::set_names(c("start", "end", "cohort_name"))
+        rlang::set_names(c("episode_start", "episode_end", "cohort_name"))
 
       subset |>
         dplyr::mutate(!!!q) |>
-        dplyr::filter(.data$start <= .data$end) |>
-        dplyr::select("person_id", "start", "end", "cohort_name") |>
+        dplyr::filter(.data$episode_start <= .data$episode_end) |>
+        dplyr::select("person_id", "episode_start", "episode_end", "cohort_name") |>
         dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
     }) |>
     purrr::reduce(dplyr::union_all) |>
@@ -292,13 +292,13 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
     dplyr::mutate(!!!q) |>
     dplyr::select(
       "person_id",
-      "start" = "bmi_date",
+      "episode_start" = "bmi_date",
       "cohort_name"
     ) |>
     dplyr::compute(name = bmiTable) |>
     # add id group
     dplyr::group_by(.data$person_id) |>
-    dplyr::arrange(.data$start) |>
+    dplyr::arrange(.data$episode_start) |>
     dplyr::mutate(id = as.integer(dplyr::row_number())) |>
     dplyr::ungroup() |>
     dplyr::compute(name = bmiTable)
@@ -313,19 +313,19 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
     # add start of next episode
     dplyr::left_join(
       bmiRecords |>
-        dplyr::select("person_id", "end" = "start", "id") |>
+        dplyr::select("person_id", "episode_end" = "episode_start", "id") |>
         dplyr::mutate(
-          end = as.Date(clock::add_days(.data$end, -1L)),
+          episode_end = as.Date(clock::add_days(.data$episode_end, -1L)),
           id = .data$id - 1L
         ),
       by = c("person_id", "id")
     ) |>
-    dplyr::mutate(end = dplyr::coalesce(.data$end, .data$observation_period_end_date)) |>
+    dplyr::mutate(episode_end = dplyr::coalesce(.data$episode_end, .data$observation_period_end_date)) |>
     dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip)) |>
     # erafy
     OmopConstructor::collapseRecords(
-      startDate = "start",
-      endDate = "end",
+      startDate = "episode_start",
+      endDate = "episode_end",
       by = c("person_id", "cohort_name"),
       gap = 1L,
       name = omopgenerics::uniqueTableName(prefix = pref)
@@ -339,10 +339,10 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
 splitEpisodes <- function(episodes, nm) {
   # split at every episode start and the day after every episode end
   episodes |>
-    dplyr::select("person_id", "cohort_start_date" = "start") |>
+    dplyr::select("person_id", "cohort_start_date" = "episode_start") |>
     dplyr::union_all(
       episodes |>
-        dplyr::select("person_id", "cohort_start_date" = "end") |>
+        dplyr::select("person_id", "cohort_start_date" = "episode_end") |>
         dplyr::mutate(cohort_start_date = as.Date(clock::add_days(.data$cohort_start_date, 1L)))
     ) |>
     dplyr::distinct() |>
@@ -442,11 +442,11 @@ conceptEpisodes <- function(cdm, conceptSet, comp, subset, pref) {
   infinite <- is.infinite(followUp)
 
   indexEvents <- events |>
-    dplyr::rename("start" = "event_date")
+    dplyr::rename("episode_start" = "event_date")
 
   # end limit: end of observation or first censor event
   limits <- cdm$observation_period |>
-    dplyr::select("person_id", "end" = "observation_period_end_date")
+    dplyr::select("person_id", "episode_end" = "observation_period_end_date")
   if (censor) {
     censorDates <- events |>
       dplyr::filter(.data$cohort_name %in% !!comp$censor) |>
@@ -459,13 +459,13 @@ conceptEpisodes <- function(cdm, conceptSet, comp, subset, pref) {
     limits <- limits |>
       dplyr::left_join(censorDates, by = "person_id") |>
       dplyr::mutate(
-        end = dplyr::if_else(
-          is.na(.data$censor_date) | .data$end <= .data$censor_date,
-          .data$end,
+        episode_end = dplyr::if_else(
+          is.na(.data$censor_date) | .data$episode_end <= .data$censor_date,
+          .data$episode_end,
           .data$censor_date
         )
       ) |>
-      dplyr::select("person_id", "end")
+      dplyr::select("person_id", "episode_end")
     indexEvents <- indexEvents |>
       dplyr::filter(.data$cohort_name %in% !!comp$conceptSet)
   }
@@ -475,7 +475,7 @@ conceptEpisodes <- function(cdm, conceptSet, comp, subset, pref) {
     # only first event
     indexEvents <- indexEvents |>
       dplyr::group_by(.data$person_id, .data$cohort_name) |>
-      dplyr::summarise(start = min(.data$start, na.rm = TRUE), .groups = "drop")
+      dplyr::summarise(episode_start = min(.data$episode_start, na.rm = TRUE), .groups = "drop")
   }
   records <- indexEvents |>
     dplyr::inner_join(limits, by = "person_id")
@@ -483,13 +483,13 @@ conceptEpisodes <- function(cdm, conceptSet, comp, subset, pref) {
     followUp <- as.integer(followUp)
     records <- records |>
       dplyr::mutate(
-        follow_up = as.Date(clock::add_days(.data$start, !!followUp)),
-        end = dplyr::if_else(.data$end < .data$follow_up, .data$end, .data$follow_up)
+        follow_up = as.Date(clock::add_days(.data$episode_start, !!followUp)),
+        episode_end = dplyr::if_else(.data$episode_end < .data$follow_up, .data$episode_end, .data$follow_up)
       )
   }
   records <- records |>
-    dplyr::filter(.data$start <= .data$end) |>
-    dplyr::select("cohort_name", "person_id", "start", "end")
+    dplyr::filter(.data$episode_start <= .data$episode_end) |>
+    dplyr::select("cohort_name", "person_id", "episode_start", "episode_end")
 
   name <- omopgenerics::uniqueTableName(prefix = pref)
   if (infinite) {
@@ -497,8 +497,8 @@ conceptEpisodes <- function(cdm, conceptSet, comp, subset, pref) {
   } else {
     records <- OmopConstructor::collapseRecords(
       records,
-      startDate = "start",
-      endDate = "end",
+      startDate = "episode_start",
+      endDate = "episode_end",
       by = c("person_id", "cohort_name"),
       gap = 1L,
       name = name
@@ -538,8 +538,8 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
   records <- records |>
     dplyr::select(
       "person_id",
-      "start" = omopgenerics::omopColumns(table = table, field = "start_date"),
-      "end" = omopgenerics::omopColumns(table = table, field = "end_date"),
+      "episode_start" = omopgenerics::omopColumns(table = table, field = "start_date"),
+      "episode_end" = omopgenerics::omopColumns(table = table, field = "end_date"),
       "group" = ifelse(is.character(join), "drug_concept_id", "group")
     )
 
@@ -547,58 +547,58 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
       is.finite(followUp) && followUp != 0) {
     followUp <- as.integer(followUp)
     records <- records |>
-      dplyr::mutate(end = as.Date(clock::add_days(.data$end, !!followUp)))
+      dplyr::mutate(episode_end = as.Date(clock::add_days(.data$episode_end, !!followUp)))
   }
 
   # collapse by group
   nm1 <- omopgenerics::uniqueTableName()
   records <- records |>
     OmopConstructor::collapseRecords(
-      startDate = "start",
-      endDate = "end",
+      startDate = "episode_start",
+      endDate = "episode_end",
       by = c("person_id", "group"),
       name = nm1
     )
 
   # calculate number of categories
   nameStyle <- "num_counts"
-  events <- records |>
-    dplyr::select("person_id", "date" = "start") |>
+  records <- records |>
+    dplyr::select("person_id", "date" = "episode_start") |>
     dplyr::mutate(flag = -1L) |>
     dplyr::union_all(
       records |>
-        dplyr::select("person_id", "date" = "end") |>
+        dplyr::select("person_id", "date" = "episode_end") |>
         dplyr::mutate(flag = 1L)
     ) |>
     dplyr::group_by(.data$person_id) |>
     dplyr::arrange(.data$date, .data$flag) |>
     dplyr::mutate(
       num_counts = -cumsum(.data$flag),
-      start = .data$date,
-      end = as.Date(clock::add_days(dplyr::lead(.data$date), -1L))
+      episode_start = .data$date,
+      episode_end = as.Date(clock::add_days(dplyr::lead(.data$date), -1L))
     ) |>
-    dplyr::filter(!is.na(.data$end), .data$start <= .data$end) |>
+    dplyr::filter(!is.na(.data$episode_end), .data$episode_start <= .data$episode_end) |>
     dplyr::ungroup()
 
   nameStyle <- "num_counts"
   q <- qCategories(categories) |>
     rlang::set_names("cohort_name")
-  events <- events |>
+  records <- records |>
     dplyr::mutate(!!!q)
 
-  events <- events |>
-    dplyr::select("person_id", "start", "end", "cohort_name")
+  records <- records |>
+    dplyr::select("person_id", "episode_start", "episode_end", "cohort_name")
 
   nm2 <- omopgenerics::uniqueTableName()
-  records <- events |>
+  records <- records |>
     dplyr::compute(name = nm2)
   omopgenerics::dropSourceTable(cdm = cdm, name = nm1)
 
   # collapse by categories
   records <- records |>
     OmopConstructor::collapseRecords(
-      startDate = "start",
-      endDate = "end",
+      startDate = "episode_start",
+      endDate = "episode_end",
       by = c("person_id", "cohort_name"),
       gap = 1L,
       name = omopgenerics::uniqueTableName(prefix = pref)
