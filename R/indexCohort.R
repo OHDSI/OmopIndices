@@ -232,7 +232,7 @@ ageGroupEpisodes <- function(cdm, ageGroup, pref, subset) {
           "dplyr::if_else(
             .data$observation_period_end_date > as.Date(clock::add_days(.data$bd_%i, -1L)),
             as.Date(clock::add_days(.data$bd_%i, -1L)),
-            .data$observation_period_start_date
+            .data$observation_period_end_date
           )", ag[2] + 1, ag[2] + 1
         ))
       }
