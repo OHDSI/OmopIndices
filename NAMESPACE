@@ -12,10 +12,21 @@ export(addPolypharmacyCount)
 export(addSocioEconomicStatus)
 export(addTownsend)
 export(addUpdatedCharlsonIndex)
+export(attrition)
+export(charlsonCohort)
+export(cohortCodelist)
+export(cohortCount)
 export(getIndexCodelist)
+export(settings)
 export(tableName)
 importFrom(lifecycle,deprecated)
-importFrom(omopgenerics,tableName)
+importFrom(omopgenerics,
+  attrition,
+  cohortCodelist,
+  cohortCount,
+  settings,
+  tableName
+)
 importFrom(rlang,
   ":=",
   .data,
