@@ -14,3 +14,7 @@ omopgenerics::attrition
 #' @importFrom omopgenerics cohortCodelist
 #' @export
 omopgenerics::cohortCodelist
+
+#' @importFrom omopgenerics cohortCount
+#' @export
+omopgenerics::cohortCount

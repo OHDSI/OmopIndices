@@ -15,6 +15,7 @@ export(addUpdatedCharlsonIndex)
 export(attrition)
 export(charlsonCohort)
 export(cohortCodelist)
+export(cohortCount)
 export(getIndexCodelist)
 export(settings)
 export(tableName)
@@ -22,6 +23,7 @@ importFrom(lifecycle,deprecated)
 importFrom(omopgenerics,
   attrition,
   cohortCodelist,
+  cohortCount,
   settings,
   tableName
 )
