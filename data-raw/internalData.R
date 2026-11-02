@@ -250,7 +250,8 @@ cohortComponents$electronic_frailty_index <- list(
   ),
   list(
     type = "polypharmacy",
-    followUp = 0L,
+    window = c(-365L, 0L),
+    overlap = TRUE,
     group = "ingredient drug_era",
     categories = list("more than 5 ing" = c(5, Inf))
   )

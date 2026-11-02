@@ -514,7 +514,10 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
   # parameters
   group <- comp$group
   categories <- comp$categories
-  followUp <- comp$followUp
+  overlap <- comp$overlap
+  window <- comp$window
+  windowStart <- as.integer(window[1])
+  windowEnd <- as.integer(window[2])
 
   table <- if (identical(group, "ingredient drug_era")) "drug_era" else "drug_exposure"
   join <- validateGroup(group, cdm)
@@ -543,13 +546,6 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
       "group" = ifelse(is.character(join), "drug_concept_id", "group")
     )
 
-  if (!is.null(followUp) && length(followUp) == 1L && !is.na(followUp) &&
-      is.finite(followUp) && followUp != 0) {
-    followUp <- as.integer(followUp)
-    records <- records |>
-      dplyr::mutate(episode_end = as.Date(clock::add_days(.data$episode_end, !!followUp)))
-  }
-
   # collapse by group
   nm1 <- omopgenerics::uniqueTableName()
   records <- records |>
@@ -560,26 +556,90 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
       name = nm1
     )
 
-  # calculate number of categories
-  nameStyle <- "num_counts"
-  records <- records |>
-    dplyr::select("person_id", "date" = "episode_start") |>
-    dplyr::mutate(flag = -1L) |>
-    dplyr::union_all(
-      records |>
-        dplyr::select("person_id", "date" = "episode_end") |>
-        dplyr::mutate(flag = 1L)
-    ) |>
-    dplyr::group_by(.data$person_id) |>
-    dplyr::arrange(.data$date, .data$flag) |>
-    dplyr::mutate(
-      num_counts = -cumsum(.data$flag),
-      episode_start = .data$date,
-      episode_end = as.Date(clock::add_days(dplyr::lead(.data$date), -1L))
-    ) |>
-    dplyr::filter(!is.na(.data$episode_end), .data$episode_start <= .data$episode_end) |>
-    dplyr::ungroup()
+  concurrentName <- NULL
+  if (!overlap) {
+    # count distinct groups that intersect with window
+    if (windowEnd != 0L) {
+      records <- records |>
+        dplyr::mutate(
+          episode_start = as.Date(clock::add_days(.data$episode_start, !!(-windowEnd)))
+        )
+    }
+    if (windowStart != 0L) {
+      records <- records |>
+        dplyr::mutate(
+          episode_end = as.Date(clock::add_days(.data$episode_end, !!(-windowStart)))
+        )
+    }
+    if (windowStart != 0L || windowEnd != 0L) {
+      expandedName <- omopgenerics::uniqueTableName()
+      records <- records |>
+        OmopConstructor::collapseRecords(
+          startDate = "episode_start",
+          endDate = "episode_end",
+          by = c("person_id", "group"),
+          name = expandedName
+        )
+      omopgenerics::dropSourceTable(cdm = cdm, name = nm1)
+      nm1 <- expandedName
+    }
+    records <- polypharmacyCountIntervals(records)
+  } else {
+    concurrentName <- omopgenerics::uniqueTableName()
+    concurrent <- polypharmacyCountIntervals(records)
+    if (windowEnd != 0L) {
+      concurrent <- concurrent |>
+        dplyr::mutate(
+          episode_start = as.Date(clock::add_days(.data$episode_start, !!(-windowEnd)))
+        )
+    }
+    if (windowStart != 0L) {
+      concurrent <- concurrent |>
+        dplyr::mutate(
+          episode_end = as.Date(clock::add_days(.data$episode_end, !!(-windowStart)))
+        )
+    }
+    concurrent <- concurrent |>
+      dplyr::compute(name = concurrentName)
 
+    boundaries <- concurrent |>
+      dplyr::select("person_id", "event_date" = "episode_start") |>
+      dplyr::union_all(
+        concurrent |>
+          dplyr::mutate(event_date = as.Date(clock::add_days(.data$episode_end, 1L))) |>
+          dplyr::select("person_id", "event_date")
+      ) |>
+      dplyr::distinct()
+
+    records <- boundaries |>
+      dplyr::left_join(
+        concurrent,
+        by = dplyr::join_by(
+          "person_id",
+          x$event_date >= y$episode_start,
+          x$event_date <= y$episode_end
+        )
+      ) |>
+      dplyr::group_by(.data$person_id, .data$event_date) |>
+      dplyr::summarise(
+        num_counts = dplyr::coalesce(max(.data$num_counts), 0L),
+        .groups = "drop"
+      ) |>
+      dplyr::group_by(.data$person_id) |>
+      dplyr::arrange(.data$event_date) |>
+      dplyr::mutate(
+        episode_start = .data$event_date,
+        episode_end = as.Date(clock::add_days(dplyr::lead(.data$event_date), -1L))
+      ) |>
+      dplyr::filter(
+        !is.na(.data$episode_end),
+        .data$episode_start <= .data$episode_end,
+        .data$num_counts > 0L
+      ) |>
+      dplyr::ungroup()
+  }
+
+  # calculate categories from the count at each index date
   nameStyle <- "num_counts"
   q <- qCategories(categories) |>
     rlang::set_names("cohort_name")
@@ -592,6 +652,9 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
   nm2 <- omopgenerics::uniqueTableName()
   records <- records |>
     dplyr::compute(name = nm2)
+  if (!is.null(concurrentName)) {
+    omopgenerics::dropSourceTable(cdm = cdm, name = concurrentName)
+  }
   omopgenerics::dropSourceTable(cdm = cdm, name = nm1)
 
   # collapse by categories
@@ -607,4 +670,32 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
   omopgenerics::dropSourceTable(cdm = cdm, name = nm2)
 
   return(records)
+}
+
+polypharmacyCountIntervals <- function(records) {
+  records |>
+    dplyr::select("person_id", "event_date" = "episode_start") |>
+    dplyr::mutate(delta = 1L) |>
+    dplyr::union_all(
+      records |>
+        dplyr::mutate(event_date = as.Date(clock::add_days(.data$episode_end, 1L))) |>
+        dplyr::select("person_id", "event_date") |>
+        dplyr::mutate(delta = -1L)
+    ) |>
+    dplyr::group_by(.data$person_id, .data$event_date) |>
+    dplyr::summarise(delta = sum(.data$delta), .groups = "drop") |>
+    dplyr::group_by(.data$person_id) |>
+    dplyr::arrange(.data$event_date) |>
+    dplyr::mutate(
+      num_counts = cumsum(.data$delta),
+      episode_start = .data$event_date,
+      episode_end = as.Date(clock::add_days(dplyr::lead(.data$event_date), -1L))
+    ) |>
+    dplyr::filter(
+      !is.na(.data$episode_end),
+      .data$episode_start <= .data$episode_end,
+      .data$num_counts > 0L
+    ) |>
+    dplyr::select("person_id", "episode_start", "episode_end", "num_counts") |>
+    dplyr::ungroup()
 }
