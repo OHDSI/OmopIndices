@@ -65,7 +65,6 @@ test_that("check it works", {
                                                      "observation_period" = observation_period,
                                                      "condition_occurrence" = condition_occurrence,
                                                      "concept" = concept),
-                                     "cohort" = list("cohort" = cohort),
                                      "cdmName" = "mock")
 
   categories <- list("low" = c(0,2),
@@ -83,8 +82,8 @@ test_that("check it works", {
                    names(categories))
 
   expect_true(cdm[["new_cohort"]] |>
-    dplyr::filter(subject_id == 1L) |>
-    nrow() == 2)
+                dplyr::filter(subject_id == 1L) |>
+                nrow() == 2)
 
   expect_equal(
     cdm[["new_cohort"]] |>
@@ -121,14 +120,13 @@ test_that("check it works", {
                                                      "observation_period" = observation_period,
                                                      "condition_occurrence" = condition_occurrence,
                                                      "concept" = concept),
-                                     "cohort" = list("cohort" = cohort),
                                      "cdmName" = "mock")
 
   cdm[["new_cohort"]] <- updatedCharlsonCohort(cdm = cdm,
-                                           categories = categories,
-                                           name = "new_cohort",
-                                           ageAdjusted = FALSE,
-                                           conceptSet = conceptSet)
+                                               categories = categories,
+                                               name = "new_cohort",
+                                               ageAdjusted = FALSE,
+                                               conceptSet = conceptSet)
 
   expect_equal(
     cdm[["new_cohort"]] |>
@@ -147,5 +145,32 @@ test_that("check it works", {
       dplyr::pull("cohort_end_date"),
     as.Date(c("2020-12-20", "2020-12-21", "2025-01-01"))
   )
+
+  cohort <- dplyr::tibble(
+    "cohort_definition_id" = rep(1L, 2),
+    "subject_id" = c(1L, 2L),
+    "cohort_start_date" = c(rep(as.Date("2024-01-01"), 1), as.Date("2019-01-01")),
+    "cohort_end_date" = c(rep(as.Date("2024-01-01"), 1), as.Date("2019-01-01"))
+  )
+
+  # Subset to a cohort functionality ----
+  cdm <- omopgenerics::cdmFromTables("tables" = list("person" = person,
+                                                     "observation_period" = observation_period,
+                                                     "condition_occurrence" = condition_occurrence,
+                                                     "concept" = concept),
+                                     "cohortTables" = list("cohort" = cohort),
+                                     "cdmName" = "mock")
+
+  cdm[["new_cohort"]] <- updatedCharlsonCohort(cdm = cdm,
+                                               categories = categories,
+                                               name = "new_cohort",
+                                               ageAdjusted = FALSE,
+                                               subsetCohort = "cohort",
+                                               conceptSet = conceptSet)
+
+  expect_identical(cdm[["new_cohort"]] |>
+                     dplyr::distinct(subject_id) |>
+                     dplyr::pull("subject_id"),
+                   c(1L, 2L))
 
 })
