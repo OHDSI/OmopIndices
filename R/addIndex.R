@@ -16,8 +16,7 @@ addIndexFromKey <- function(x,
     categories = categories,
     nameStyle = nameStyle,
     name = name,
-    formula = formulas[[key]],
-    component = components[[key]],
+    definition = indexDefinitions[[key]],
     call = call
   )
 }
@@ -29,21 +28,25 @@ addIndexInternal <- function(x,
                              categories,
                              nameStyle,
                              name,
-                             formula,
-                             component,
+                             definition,
                              call) {
   # input validation
   x <- validateX(x, call = call)
   cdm <- omopgenerics::cdmReference(x)
   indexDate <- omopgenerics::validateColumn(indexDate, x, "date", call = call)
   window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE, call = call, empty = TRUE)
-  component <- overwriteWindow(component, window, call)
-  neededConcepts <- neededConceptSet(component)
+  neededConcepts <- getNeededConcepts(definition)
   conceptSet <- validateConceptSet(conceptSet, neededConcepts, cdm, call = call)
   nameStyle <- validateNameStyle(nameStyle, x, call = call)
   x <- omopgenerics::validateNewColumn(x, nameStyle, call = call)
   name <- validateName(name, call = call)
   omopgenerics::assertList(categories, named = TRUE, class = "numeric", null = TRUE, call = call)
+
+  # get components and formula from index definition
+  component <- getAddComponents(definition)
+  formula <- getFormula(definition)
+
+  component <- overwriteWindow(component, window, call)
 
   id <- omopgenerics::getPersonIdentifier(x)
   q <- formula |>
@@ -100,6 +103,8 @@ addIndexInternal <- function(x,
           indexDate = indexDate,
           window = comp$window,
           overlap = comp$overlap,
+          group = comp$group,
+          categories = comp$categories,
           name = nm
         )
     } else if (comp$type == "bmi") {

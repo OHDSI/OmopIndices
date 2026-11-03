@@ -6,7 +6,7 @@
 #' @inheritParams indexDateDoc
 #' @inheritParams windowDoc
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$hospital_frailty_risk_score)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$hospital_frailty_risk_score))`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc

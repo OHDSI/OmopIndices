@@ -8,7 +8,7 @@
 #' @inheritParams windowDoc
 #' @param ageAdjusted Logical; whether to include age adjustment in the
 #' Charlson Comorbidity Index.
-#' @param conceptSet `r documentationConceptSet(requiredConcepts$charlson)`
+#' @param conceptSet `r documentationConceptSet(getNeededConcepts(indexDefinitions$charlson))`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -99,7 +99,7 @@ addCharlsonIndex <- function(x,
 #' @inheritParams cohortDoc
 #' @param ageAdjusted Logical; whether to include age adjustment in the
 #' Charlson Comorbidity Index.
-#' @param conceptSet `r documentationConceptSet(requiredConcepts$charlson)`
+#' @param conceptSet `r documentationConceptSet(getNeededConcepts(indexDefinitions$charlson))`
 #'
 #' @returns A cohort table.
 #'

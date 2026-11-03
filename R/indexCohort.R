@@ -9,9 +9,8 @@ indexCohortFromKey <- function(cdm,
                                call = parent.frame()) {
   indexCohort(
     cdm = cdm,
-    points = points[[key]],
-    cohortComponents = cohortComponents[[key]],
-    categories = categories,
+    definition = indexDefinitions[[key]],
+    categories = compiled$categories,
     name = name,
     conceptSet = conceptSet,
     subsetCohort = subsetCohort,
@@ -21,8 +20,7 @@ indexCohortFromKey <- function(cdm,
 }
 
 indexCohort <- function(cdm,
-                        points,
-                        cohortComponents,
+                        definition,
                         categories,
                         name,
                         conceptSet,
@@ -36,6 +34,10 @@ indexCohort <- function(cdm,
   neededConcepts <- neededConceptSet(cohortComponents)
   conceptSet <- validateConceptSet(conceptSet, neededConcepts, cdm, call = call)
   omopgenerics::assertCharacter(subsetCohort, null = TRUE, call = call)
+
+  # get points and cohort components
+  points <- getPointsMatrix(definition)
+  cohortComponents <- getCohortComponents(definition)
 
   # get individuals of interest
   pref <- omopgenerics::tmpPrefix()
@@ -59,7 +61,7 @@ indexCohort <- function(cdm,
     } else if (comp$type == "polypharmacy") {
       episodes[[i]] <- polypharmacyEpisodes(cdm, comp, subset, pref)
     } else if (comp$type == "bmi") {
-      episodes[[i]] <- bmiEpisodes(cdm, comp$bmiGroup, pref, subset, conceptSet)
+      episodes[[i]] <- bmiEpisodes(cdm, comp$bmiGroup, pref, subset, conceptSet, comp$categoryExpression)
     } else if (comp$type == "concept") {
       episodes[[i]] <- conceptEpisodes(cdm, conceptSet, comp, subset, pref)
     }
@@ -67,10 +69,15 @@ indexCohort <- function(cdm,
 
   # join all episodes
   episodeTable <- omopgenerics::uniqueTableName()
-  episodes <- episodes |>
-    purrr::compact() |>
-    purrr::reduce(dplyr::union_all) |>
-    dplyr::compute(name = episodeTable)
+  episodes <- purrr::compact(episodes)
+  if (length(episodes)) {
+    episodes <- purrr::reduce(episodes, dplyr::union_all)
+  } else {
+    episodes <- subset |>
+      dplyr::filter(FALSE) |>
+      dplyr::mutate(episode_start = as.Date(NA), episode_end = as.Date(NA), cohort_name = NA_character_)
+  }
+  episodes <- dplyr::compute(episodes, name = episodeTable)
 
   # baseline intervals ensure people without component events receive 0 points
   baselineTable <- omopgenerics::uniqueTableName()
@@ -84,8 +91,8 @@ indexCohort <- function(cdm,
         ),
       by = "person_id"
     ) |>
-    dplyr::mutate(points = 0L) |>
-    dplyr::select("person_id", "episode_start", "episode_end", "points") |>
+    dplyr::mutate(points = 0L, score_group = "baseline") |>
+    dplyr::select("person_id", "episode_start", "episode_end", "points", "score_group") |>
     dplyr::compute(name = baselineTable)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
@@ -116,18 +123,21 @@ indexCohort <- function(cdm,
   aggregate <- splitEpisodes(episodes, splitTable) |> # split in small episodes
     dplyr::inner_join(
       episodes |>
-        dplyr::select("person_id", "episode_start", "episode_end", "points"),
+        dplyr::select("person_id", "episode_start", "episode_end", "points", "score_group"),
       by = dplyr::join_by(
         "person_id",
         x$cohort_start_date <= y$episode_end,
         y$episode_start <= x$cohort_end_date
       )
     ) |>
-    # calculate points per path
+    # Take the maximum active contribution within each scoring group, then sum.
+    dplyr::group_by(.data$person_id, .data$cohort_start_date, .data$cohort_end_date, .data$score_group) |>
+    dplyr::summarise(points = max(.data$points, na.rm = TRUE), .groups = "drop") |>
     dplyr::group_by(.data$person_id, .data$cohort_start_date, .data$cohort_end_date) |>
     dplyr::summarise(points = sum(.data$points, na.rm = TRUE), .groups = "drop") |>
     # add categories
     dplyr::mutate(!!!q) |>
+    dplyr::filter(!is.na(.data$cohort_name)) |>
     dplyr::select(!"points") |>
     dplyr::compute(name = aggregateTable)
   cdm <- omopgenerics::dropSourceTable(
@@ -255,7 +265,7 @@ ageGroupEpisodes <- function(cdm, ageGroup, pref, subset) {
 
   return(ageGroupRecords)
 }
-bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
+bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet, categoryExpression = NULL) {
   # internal prefix
   ip <- omopgenerics::tmpPrefix()
 
@@ -263,7 +273,10 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
   bmiTable <- omopgenerics::uniqueTableName(prefix = ip)
   bmiRecords <- tablesToSubset(conceptSet, cdm) |>
     getRecords(cdm, conceptSet, subset, c(-Inf, Inf), bmiTable) |>
-    subsetInObservation(TRUE, bmiTable)
+    subsetInObservation(TRUE, omopgenerics::uniqueTableName(prefix = ip)) |>
+    # Match addBMI's tie rule: keep the maximum when dates are identical.
+    dplyr::group_by(.data$person_id, .data$bmi_date) |>
+    dplyr::summarise(bmi = max(.data$bmi, na.rm = TRUE), .groups = "drop")
 
   # add observation periods
   subset <- subset |>
@@ -280,7 +293,7 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
 
   # construct bmi episodes
   nameStyle <- "bmi"
-  q <- qCategories(bmiGroup) |>
+  q <- (if (is.null(categoryExpression)) qCategories(bmiGroup) else categoryExpression) |>
     rlang::set_names("cohort_name") |>
     rlang::parse_exprs()
   bmiRecords <- subset |>
@@ -295,13 +308,13 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet) {
       "episode_start" = "bmi_date",
       "cohort_name"
     ) |>
-    dplyr::compute(name = bmiTable) |>
+    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip)) |>
     # add id group
     dplyr::group_by(.data$person_id) |>
     dplyr::arrange(.data$episode_start) |>
     dplyr::mutate(id = as.integer(dplyr::row_number())) |>
     dplyr::ungroup() |>
-    dplyr::compute(name = bmiTable)
+    dplyr::compute(name = omopgenerics::uniqueTableName(prefix = ip))
 
   bmiRecords <- bmiRecords |>
     # add end of observation
@@ -622,7 +635,7 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
       ) |>
       dplyr::group_by(.data$person_id, .data$event_date) |>
       dplyr::summarise(
-        num_counts = dplyr::coalesce(max(.data$num_counts), 0L),
+        num_counts = max(dplyr::coalesce(.data$num_counts, 0L), na.rm = TRUE),
         .groups = "drop"
       ) |>
       dplyr::group_by(.data$person_id) |>
@@ -642,7 +655,8 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
   # calculate categories from the count at each index date
   nameStyle <- "num_counts"
   q <- qCategories(categories) |>
-    rlang::set_names("cohort_name")
+    rlang::set_names("cohort_name") |>
+    rlang::parse_exprs()
   records <- records |>
     dplyr::mutate(!!!q)
 
@@ -683,7 +697,7 @@ polypharmacyCountIntervals <- function(records) {
         dplyr::mutate(delta = -1L)
     ) |>
     dplyr::group_by(.data$person_id, .data$event_date) |>
-    dplyr::summarise(delta = sum(.data$delta), .groups = "drop") |>
+    dplyr::summarise(delta = sum(.data$delta, na.rm = TRUE), .groups = "drop") |>
     dplyr::group_by(.data$person_id) |>
     dplyr::arrange(.data$event_date) |>
     dplyr::mutate(

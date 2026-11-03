@@ -11,7 +11,7 @@
 #' @inheritParams indexDateDoc
 #' @inheritParams windowDoc
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$electronic_frailty_index_2)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$electronic_frailty_index_2))`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc

@@ -7,7 +7,7 @@
 #' @param ageAdjusted Logical; whether to include age adjustment in the updated
 #' Charlson Comorbidity Index.
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$updated_charlson)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$updated_charlson))`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc

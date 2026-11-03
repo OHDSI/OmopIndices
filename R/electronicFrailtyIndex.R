@@ -6,7 +6,7 @@
 #' @inheritParams indexDateDoc
 #' @inheritParams windowDoc
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$electronic_frailty_index)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$electronic_frailty_index))`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -115,7 +115,7 @@ addElectronicFrailtyIndex <- function(x,
 #'
 #' @inheritParams cohortDoc
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$electronic_frailty_index)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$electronic_frailty_index))`
 #'
 #' @returns A cohort table.
 #'

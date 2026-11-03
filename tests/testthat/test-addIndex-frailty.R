@@ -17,7 +17,7 @@ test_that("electronic frailty index 2 uses addIndex", {
     omock::mockCohort()
   conceptSet <- getIndexCodelist("electronic_frailty_index_2")
   missing <- setdiff(
-    OmopIndices:::requiredConcepts$electronic_frailty_index_2,
+    getNeededConcepts(indexDefinitions$electronic_frailty_index_2),
     names(conceptSet)
   )
   conceptSet[missing] <- 0L

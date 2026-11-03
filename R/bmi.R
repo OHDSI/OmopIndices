@@ -52,7 +52,8 @@ addBMI <- function(x,
   window <- validateWindow(window)
   key <- "body_mass_index"
 
-  component <- components[[key]]
+  definition <- indexDefinitions[[key]]
+  component <- getAddComponents(definition)
   component[[1]]$window <- window
   component[[1]]$order <- order
   component[[1]]$inObservation <- inObservation
@@ -66,7 +67,7 @@ addBMI <- function(x,
     nameStyle = nameStyle,
     name = name,
     component = component,
-    formula = formulas[[key]],
+    formula = getFormulaFromIndexDefinition(definition),
     call = parent.frame()
   )
 }
