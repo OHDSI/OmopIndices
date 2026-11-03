@@ -85,15 +85,12 @@ addIndex <- function(x,
           categories = comp$categories,
           name = nm
         )
-    } else if (comp$type == "bmi") {
+    } else if (comp$type == "measurement") {
       index <- index |>
-        addBMIInternal(
+        addMeasurementInternal(
           indexDate = indexDate,
-          conceptSet = conceptSet["bmi"],
-          window = unlist(comp$window),
-          order = comp$order,
-          inObservation = if (is.null(comp$inObservation)) TRUE else comp$inObservation,
-          nameStyle = "bmi",
+          conceptSet = conceptSet,
+          comp = comp,
           name = nm
         )
     } else if (comp$type == "concept_flag") {

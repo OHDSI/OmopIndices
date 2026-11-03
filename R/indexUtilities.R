@@ -91,7 +91,21 @@ getAddComponents <- function(definition) {
       )
     })
 
-  c(defAgeGroups, defPoly, defConcept)
+  # measurements
+  defMeasurement <- definition[purrr::map_chr(definition, "type") == "measurement"] |>
+    purrr::map(\(x) {
+      list(
+        type = "measurement",
+        conceptSet = x$concept_set,
+        window = c(-x$follow_up, 0),
+        inObservation = x$in_observation %||% TRUE,
+        tie = x$tie %||% "max",
+        measurementGroups = x$measurement_groups,
+        nameStyle = componentName(x)
+      )
+    })
+
+  c(defAgeGroups, defPoly, defConcept, defMeasurement)
 }
 
 getPointsMatrix <- function(definition) {

@@ -252,12 +252,13 @@ bmiEpisodes <- function(cdm, bmiGroup, pref, subset, conceptSet, categoryExpress
 
   # get bmi records
   bmiTable <- omopgenerics::uniqueTableName(prefix = ip)
-  bmiRecords <- tablesToSubset(conceptSet, cdm) |>
-    getRecords(cdm, conceptSet, subset, c(-Inf, Inf), bmiTable) |>
-    subsetInObservation(TRUE, omopgenerics::uniqueTableName(prefix = ip)) |>
+  bmiRecords <- getMeasurementRecords(cdm, conceptSet$bmi, subset, c(-Inf, Inf), bmiTable) |>
+    dplyr::filter(!is.na(.data$value_as_number)) |>
+    PatientProfiles::filterInObservation(indexDate = "measurement_date") |>
     # Match addBMI's tie rule: keep the maximum when dates are identical.
-    dplyr::group_by(.data$person_id, .data$bmi_date) |>
-    dplyr::summarise(bmi = max(.data$bmi, na.rm = TRUE), .groups = "drop")
+    dplyr::group_by(.data$person_id, .data$measurement_date) |>
+    dplyr::summarise(bmi = max(.data$value_as_number, na.rm = TRUE), .groups = "drop") |>
+    dplyr::rename(bmi_date = "measurement_date")
 
   # add observation periods
   subset <- subset |>

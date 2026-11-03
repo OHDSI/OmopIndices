@@ -67,8 +67,12 @@
 # type* = "measurement"
 # concept_set* = codelist identifying measurement/observation records, e.g. BMI.
 # follow_up* = nonnegative days, or Inf.
+# Select the latest eligible record in c(-follow_up, 0) relative to the index
+# date, including both endpoints. addBMI exposes follow_up as lookbackDays.
+# in_observation = TRUE (default); restrict records to observation periods.
 # tie = "max" (default) or "min": resolves same-day ties. An explicit list of
 #   band labels can instead define priority for categorical measurements.
+#   Ties are resolved on the latest eligible date; the first listed label wins.
 # measurement_groups* = scoring bands (omit when score = "value"), each with:
 #   label* = unique band name.
 #   measurement_value = numeric range, with optional endpoint exclusions.
@@ -77,8 +81,8 @@
 #   selecting a record. Omission preserves the current BMI behaviour of no
 #   unit restriction. Different units are not automatically converted.
 #   score* = numeric contribution.
-#   Supply exactly at least one of measurement_value and measurement_concept per
-#   band.
+#   Supply at least one of measurement_value and measurement_concept per band.
+#   If both are supplied, both must match. Unmatched values contribute zero.
 #
 # Utility functions:
 #   getFormula(definition)          -- score expression for addIndex

@@ -163,7 +163,7 @@ days.
 
 ``` r
 clinical <- cdm$cohort |>
-  addBMI(window = c(-365, 0), order = "last") |>
+  addBMI(lookbackDays = 365) |>
   addPolypharmacy(window = c(-30, 0))
 
 clinical |>
