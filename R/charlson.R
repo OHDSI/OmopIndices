@@ -149,5 +149,3 @@ charlsonCohort <- function(cdm,
     subsetCohortId = subsetCohortId
   )
 }
-
-

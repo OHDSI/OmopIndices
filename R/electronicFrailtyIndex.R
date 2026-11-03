@@ -151,9 +151,9 @@ electronicFrailtyIndexCohort <- function(cdm,
                                          conceptSet = getIndexCodelist("electronic_frailty_index"),
                                          subsetCohort = NULL,
                                          subsetCohortId = NULL) {
-  indexCohortFromKey(
+  indexCohort(
     cdm = cdm,
-    key = "electronic_frailty_index",
+    definition = indexDefinitions[["electronic_frailty_index"]],
     categories = categories,
     name = name,
     conceptSet = conceptSet,

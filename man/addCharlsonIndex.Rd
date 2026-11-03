@@ -28,7 +28,7 @@ defines the index date.}
 \item{ageAdjusted}{Logical; whether to include age adjustment in the
 Charlson Comorbidity Index.}
 
-\item{conceptSet}{A named concept set supplied as a \code{codelist}, \code{codelist_with_details}, \code{concept_set_expression}, or named list of concept IDs. It must contain \code{myocardial_infarction}, \code{congestive_heart_failure}, \code{peripheral_vascular_disease}, \code{cerebrovascular_disease}, \code{dementia}, \code{chronic_pulmonary_disease}, \code{connective_tissue_disease}, \code{peptic_ulcer_disease}, \code{mild_liver_disease}, \code{diabetes_without_complication}, \code{hemiplegia}, \code{severe_chronic_kidney_disease}, \code{diabetes_with_complication}, \code{any_malignancy}, \code{moderate_or_severe_liver_disease}, \code{metastatic_solid_tumor}, \code{aids} as concepts. By default, internal codelists are used.}
+\item{conceptSet}{A named concept set supplied as a \code{codelist}, \code{codelist_with_details}, \code{concept_set_expression}, or named list of concept IDs. It must contain \code{aids}, \code{any_malignancy}, \code{cerebrovascular_disease}, \code{chronic_pulmonary_disease}, \code{congestive_heart_failure}, \code{connective_tissue_disease}, \code{dementia}, \code{diabetes_with_complication}, \code{diabetes_without_complication}, \code{hemiplegia}, \code{metastatic_solid_tumor}, \code{mild_liver_disease}, \code{moderate_or_severe_liver_disease}, \code{myocardial_infarction}, \code{peptic_ulcer_disease}, \code{peripheral_vascular_disease}, \code{severe_chronic_kidney_disease} as concepts. By default, internal codelists are used.}
 
 \item{window}{\code{NULL} to use the windows defined by the index components, or
 a numeric vector of length two, \code{c(min, max)}, to override the component
