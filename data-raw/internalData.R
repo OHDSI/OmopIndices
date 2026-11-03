@@ -123,6 +123,74 @@ cohortComponents$charlson_age_adjusted <- c(
     )
   ))
 )
+points$updated_charlson <- list(
+  congestive_heart_failure = 2L,
+  dementia = 2L,
+  chronic_pulmonary_disease = 1L,
+  connective_tissue_disease = 1L,
+  diabetes_with_complication = 1L,
+  hemiplegia = 2L,
+  severe_chronic_kidney_disease = 1L,
+  aids = 4L,
+  any_malignancy = 2L,
+  metastatic_solid_tumor = 6L,
+  mild_liver_disease = 2L,
+  moderate_or_severe_liver_disease = 4L
+)
+points$updated_charlson_age_adjusted <- c(
+  points$updated_charlson,
+  list(
+    '50 to 59' = 1L,
+    '60 to 69' = 2L,
+    '70 to 79' = 3L,
+    '80 or over' = 4L
+  )
+)
+cohortComponents$updated_charlson <- list(
+  list(
+    type = "concept",
+    conceptSet = c(
+      "congestive_heart_failure", "dementia", "chronic_pulmonary_disease",
+      "connective_tissue_disease", "diabetes_with_complication",
+      "hemiplegia", "severe_chronic_kidney_disease", "aids"
+    ),
+    followUp = Inf
+  ),
+  list(
+    type = "concept",
+    conceptSet = "any_malignancy",
+    followUp = Inf,
+    censor = "metastatic_solid_tumor"
+  ),
+  list(
+    type = "concept",
+    conceptSet = "metastatic_solid_tumor",
+    followUp = Inf
+  ),
+  list(
+    type = "concept",
+    conceptSet = "mild_liver_disease",
+    followUp = Inf,
+    censor = "moderate_or_severe_liver_disease"
+  ),
+  list(
+    type = "concept",
+    conceptSet = "moderate_or_severe_liver_disease",
+    followUp = Inf
+  )
+)
+cohortComponents$updated_charlson_age_adjusted <- c(
+  cohortComponents$updated_charlson,
+  list(list(
+    type = "age_group",
+    ageGroup = list(
+      "50 to 59" = c(50, 59),
+      "60 to 69" = c(60, 69),
+      "70 to 79" = c(70, 79),
+      "80 or over" = c(80, Inf)
+    )
+  ))
+)
 components$charlson <- list(
   list(
     type = "concept_flag",
@@ -483,3 +551,4 @@ usethis::use_data(
   internal = TRUE,
   overwrite = TRUE
 )
+

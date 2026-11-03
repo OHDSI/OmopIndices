@@ -81,5 +81,61 @@ addUpdatedCharlsonIndex <- function(x,
     nameStyle = nameStyle,
     name = name
   )
+}
 
+#' Create a cohort of groups of the updated Charlson Comorbidity Index (CCI)
+#'
+#' The updated CCI is based on Quan et al. (2011)
+#' (\doi{10.1093/aje/kwq433}).
+#'
+#' @inheritParams cohortDoc
+#' @param ageAdjusted Logical; whether to include age adjustment in the updated
+#' Charlson Comorbidity Index.
+#' @param conceptSet
+#' `r documentationConceptSet(requiredConcepts$updated_charlson)`
+#'
+#' @returns A cohort table.
+#'
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' library(omock)
+#' library(duckdb)
+#' library(OmopIndices)
+#' library(dplyr)
+#'
+#' cdm <- mockCdmFromDataset(datasetName = "GiBleed", source = "duckdb")
+#'
+#' cdm$my_cohort <- updatedCharlsonCohort(
+#'   cdm = cdm,
+#'   categories = list(
+#'     "none" = c(0, 0),
+#'     "mild" = c(1, 2),
+#'     "moderate" = c(3, 4),
+#'     "severe" = c(5, Inf)
+#'   ),
+#'   name = "my_cohort"
+#' )
+#'
+#' cdm$my_cohort
+#' settings(cdm$my_cohort)
+#' }
+updatedCharlsonCohort <- function(cdm,
+                                  categories,
+                                  name,
+                                  ageAdjusted = TRUE,
+                                  conceptSet = getIndexCodelist("updated_charlson"),
+                                  subsetCohort = NULL,
+                                  subsetCohortId = NULL) {
+  omopgenerics::assertLogical(ageAdjusted, length = 1)
+  indexCohortFromKey(
+    cdm = cdm,
+    key = ifelse(ageAdjusted, "updated_charlson_age_adjusted", "updated_charlson"),
+    categories = categories,
+    name = name,
+    conceptSet = conceptSet,
+    subsetCohort = subsetCohort,
+    subsetCohortId = subsetCohortId
+  )
 }

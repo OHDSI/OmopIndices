@@ -20,6 +20,7 @@ export(electronicFrailtyIndexCohort)
 export(getIndexCodelist)
 export(settings)
 export(tableName)
+export(updatedCharlsonCohort)
 importFrom(lifecycle,deprecated)
 importFrom(omopgenerics,
   attrition,
