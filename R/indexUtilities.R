@@ -51,7 +51,7 @@ getAddComponents <- function(definition) {
   # age groups
   defAgeGroups <- definition[purrr::map_chr(definition, "type") == "age_group"]
   if (length(defAgeGroups) > 0) {
-    names(defAgeGroups) <- purrr::map(defAgeGroups, "name_style")
+    names(defAgeGroups) <- purrr::map_chr(defAgeGroups, "name_style")
     defAgeGroups <- defAgeGroups |>
       purrr::map(\(x) {
         purrr::map(x$age_groups, "age_range") |>
@@ -85,7 +85,7 @@ getAddComponents <- function(definition) {
       list(
         type = "concept_flag",
         conceptSet = unique(purrr::map_chr(
-          defConcept[purrr::map_lgl(windows, \(w) identical(w, x))], componentName
+          defConcept[purrr::map_lgl(windows, \(w) identical(w, x))], "concept_set"
         )),
         window = x
       )

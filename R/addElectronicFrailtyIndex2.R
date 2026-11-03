@@ -32,9 +32,9 @@ addElectronicFrailtyIndex2 <- function(x,
                                        window = NULL,
                                        nameStyle = "efi2",
                                        name = tableName(x)) {
-  addIndexFromKey(
+  addIndex(
     x = x,
-    key = "electronic_frailty_index_2",
+    definition = indexDefinitions[["electronic_frailty_index_2"]],
     indexDate = indexDate,
     window = window,
     conceptSet = conceptSet,

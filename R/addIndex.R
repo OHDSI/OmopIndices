@@ -1,35 +1,13 @@
 
-addIndexFromKey <- function(x,
-                            key,
-                            indexDate,
-                            window,
-                            conceptSet,
-                            categories,
-                            nameStyle,
-                            name,
-                            call = parent.frame()) {
-  addIndexInternal(
-    x = x,
-    indexDate = indexDate,
-    window = window,
-    conceptSet = conceptSet,
-    categories = categories,
-    nameStyle = nameStyle,
-    name = name,
-    definition = indexDefinitions[[key]],
-    call = call
-  )
-}
-
-addIndexInternal <- function(x,
-                             indexDate,
-                             window,
-                             conceptSet,
-                             categories,
-                             nameStyle,
-                             name,
-                             definition,
-                             call) {
+addIndex <- function(x,
+                     definition,
+                     indexDate,
+                     window,
+                     conceptSet,
+                     categories,
+                     nameStyle,
+                     name,
+                     call = parent.frame()) {
   # input validation
   x <- validateX(x, call = call)
   cdm <- omopgenerics::cdmReference(x)

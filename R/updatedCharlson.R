@@ -71,9 +71,10 @@ addUpdatedCharlsonIndex <- function(x,
                              categories = NULL,
                              name = tableName(x)) {
   omopgenerics::assertLogical(ageAdjusted, length = 1)
-  addIndexFromKey(
+  key <- ifelse(ageAdjusted, "updated_charlson_age_adjusted", "updated_charlson")
+  addIndex(
     x = x,
-    key = ifelse(ageAdjusted, "updated_charlson_age_adjusted", "updated_charlson"),
+    definition = indexDefinitions[[key]],
     indexDate = indexDate,
     window = window,
     conceptSet = conceptSet,
