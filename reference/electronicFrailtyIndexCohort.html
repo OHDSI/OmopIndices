@@ -109,52 +109,13 @@ included.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating local <span style="color: #0000BB;">&lt;cdm_reference&gt;</span> object.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Inserting <span style="color: #0000BB;">&lt;cdm_reference&gt;</span> into <span style="color: #0000BB;">duckdb</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> duckdb keeps downloaded extensions and secrets in a temporary directory:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/RtmpHf7SHu/duckdb</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> /tmp/RtmpExwvuY/duckdb</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> This is removed when the R session ends.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Extensions are re-downloaded each session.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Secrets are lost.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Run duckdb(shared_home = TRUE) (or create ~/.duckdb) to keep them (suitable for most users).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> Run duckdb(shared_home = FALSE) to accept the temporary directory (and silence this message).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">ℹ</span> See ?duckdb_storage for details and alternatives.</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># This example uses custom concept sets.</span></span></span>
-<span class="r-in"><span><span class="va">customConceptSet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  activity_limitation <span class="op">=</span> <span class="fl">763723L</span>,</span></span>
-<span class="r-in"><span>  anemia <span class="op">=</span> <span class="fl">439777L</span>,</span></span>
-<span class="r-in"><span>  arthritis <span class="op">=</span> <span class="fl">4291025L</span>,</span></span>
-<span class="r-in"><span>  atrial_fibrillation <span class="op">=</span> <span class="fl">313217L</span>,</span></span>
-<span class="r-in"><span>  chronic_kidney_disease <span class="op">=</span> <span class="fl">46271022L</span>,</span></span>
-<span class="r-in"><span>  cerebrovascular_disease <span class="op">=</span> <span class="fl">381591L</span>,</span></span>
-<span class="r-in"><span>  dizziness <span class="op">=</span> <span class="fl">4223938L</span>,</span></span>
-<span class="r-in"><span>  dyspnea <span class="op">=</span> <span class="fl">312437L</span>,</span></span>
-<span class="r-in"><span>  falls <span class="op">=</span> <span class="fl">4059015L</span>,</span></span>
-<span class="r-in"><span>  foot_problem <span class="op">=</span> <span class="fl">4101512L</span>,</span></span>
-<span class="r-in"><span>  fragility_fracture <span class="op">=</span> <span class="fl">3170964L</span>,</span></span>
-<span class="r-in"><span>  hearing_impairment <span class="op">=</span> <span class="fl">4234647L</span>,</span></span>
-<span class="r-in"><span>  heart_failure <span class="op">=</span> <span class="fl">316139L</span>,</span></span>
-<span class="r-in"><span>  heart_valve_disorder <span class="op">=</span> <span class="fl">4281749L</span>,</span></span>
-<span class="r-in"><span>  housebound <span class="op">=</span> <span class="fl">4052962L</span>,</span></span>
-<span class="r-in"><span>  hypertension <span class="op">=</span> <span class="fl">319826L</span>,</span></span>
-<span class="r-in"><span>  hypotension_syncope <span class="op">=</span> <span class="fl">316447L</span>,</span></span>
-<span class="r-in"><span>  ischemic_heart_disease <span class="op">=</span> <span class="fl">4185932L</span>,</span></span>
-<span class="r-in"><span>  memory_cognitive_disorder <span class="op">=</span> <span class="fl">4304008L</span>,</span></span>
-<span class="r-in"><span>  mobility_problems <span class="op">=</span> <span class="fl">4053076L</span>,</span></span>
-<span class="r-in"><span>  osteoporosis <span class="op">=</span> <span class="fl">80502L</span>,</span></span>
-<span class="r-in"><span>  parkinsonism_tremor <span class="op">=</span> <span class="fl">4140090L</span>,</span></span>
-<span class="r-in"><span>  peptic_ulcer <span class="op">=</span> <span class="fl">4027663L</span>,</span></span>
-<span class="r-in"><span>  peripheral_vascular_disease <span class="op">=</span> <span class="fl">321052L</span>,</span></span>
-<span class="r-in"><span>  care_requirement <span class="op">=</span> <span class="fl">3661927L</span>,</span></span>
-<span class="r-in"><span>  respiratory_disease <span class="op">=</span> <span class="fl">317009L</span>,</span></span>
-<span class="r-in"><span>  skin_ulcer <span class="op">=</span> <span class="fl">4262920L</span>,</span></span>
-<span class="r-in"><span>  sleep_disturbance <span class="op">=</span> <span class="fl">435524L</span>,</span></span>
-<span class="r-in"><span>  social_vulnerability <span class="op">=</span> <span class="fl">4026161L</span>,</span></span>
-<span class="r-in"><span>  diabetes <span class="op">=</span> <span class="fl">201820L</span>,</span></span>
-<span class="r-in"><span>  thyroid_disease <span class="op">=</span> <span class="fl">4017052L</span>,</span></span>
-<span class="r-in"><span>  urinary_incontinence <span class="op">=</span> <span class="fl">197672L</span>,</span></span>
-<span class="r-in"><span>  urinary_system_disease <span class="op">=</span> <span class="fl">75865L</span>,</span></span>
-<span class="r-in"><span>  visual_impairment <span class="op">=</span> <span class="fl">4265433L</span>,</span></span>
-<span class="r-in"><span>  weight_loss_anorexia <span class="op">=</span> <span class="fl">436675L</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using the internal concept sets:</span></span></span>
 <span class="r-in"><span><span class="va">cdm</span><span class="op">$</span><span class="va">my_cohort</span> <span class="op">&lt;-</span> <span class="fu">electronicFrailtyIndexCohort</span><span class="op">(</span></span></span>
@@ -168,19 +129,19 @@ included.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cdm</span><span class="op">$</span><span class="va">my_cohort</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A query:  ?? x 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 2.0.0 [unknown@Linux 7.0.0-1017-azure:R 4.6.2//tmp/RtmpHf7SHu/file1a2d50e2a6e8.duckdb]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Database: DuckDB 2.0.0 [unknown@Linux 7.0.0-1017-azure:R 4.6.2//tmp/RtmpExwvuY/file1bc611adfa5.duckdb]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    cohort_definition_id subject_id cohort_start_date cohort_end_date</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>                    1         35 1960-03-22        1997-03-12     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>                    1        194 1980-03-20        2018-01-25     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>                    2        343 2005-09-09        2018-02-24     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>                    1        421 1965-06-16        2018-07-04     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>                    1        469 1935-11-30        2014-12-18     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>                    1        592 1969-11-28        2018-10-12     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>                    1        653 1953-01-31        2019-03-16     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>                    1        687 1967-01-21        2019-03-23     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>                    1        742 1925-03-17        2012-12-16     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>                    1        756 1965-08-04        2019-02-27     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>                    1         96 1924-12-27        1985-12-25     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>                    1        148 1978-10-15        2018-10-21     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>                    1        299 1961-12-09        2019-01-19     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>                    1        328 1978-10-29        2014-04-12     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>                    1        339 1982-08-14        2017-12-02     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>                    1        512 1954-02-20        2018-07-14     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>                    1        841 1952-01-16        2019-04-24     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>                    1        950 1970-05-24        2018-09-09     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>                    1       <span style="text-decoration: underline;">1</span>077 1946-08-16        2018-12-07     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>                    1       <span style="text-decoration: underline;">1</span>117 1935-11-23        2019-06-29     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/settings.html" class="external-link">settings</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">my_cohort</span><span class="op">)</span></span></span>
