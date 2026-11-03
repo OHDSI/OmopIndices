@@ -41,13 +41,6 @@ test_that("check it works", {
     "condition_end_date" = c(as.Date("2015-01-01"), rep(as.Date("2020-01-01"), 21)),
     "condition_type_concept_id" = NA_integer_)
 
-  cohort <- dplyr::tibble(
-    "cohort_definition_id" = c(rep(1L, 3), 2L),
-    "subject_id" = c(1L, 2L, 3L, 4L),
-    "cohort_start_date" = c(rep(as.Date("2024-01-01"), 3), as.Date("2019-01-01")),
-    "cohort_end_date" = c(rep(as.Date("2024-01-01"), 3), as.Date("2019-01-01"))
-  )
-
   observation_period = dplyr::tibble(
     "observation_period_id" = c(1L, 2L, 3L, 4L),
     "person_id" = c(1L, 2L, 3L, 4L),
@@ -103,5 +96,56 @@ test_that("check it works", {
     as.Date(c("2001-01-01", "2020-01-01", "2019-12-31", "2025-01-01"))
   )
 
+  # edge case (change groups on 2020-12-21, 2020-12-22, 2020-12-23) ----
+  categories <- list("low" = c(0,0),
+                     "moderate" = c(1, 2),
+                     "high" = c(3, Inf))
+  condition_occurrence <- dplyr::tibble(
+    "condition_occurrence_id" = seq(1L, 22L, 1L),
+    "person_id" = c(rep(1L, 3), rep(2L, 12), rep(3L, 6), rep(4L, 1)),
+    "condition_concept_id" = c(unlist(conceptSet[c("chronic_pulmonary_disease",
+                                                   "congestive_heart_failure",
+                                                   "dementia")]),
+                               unlist(conceptSet),
+                               unlist(conceptSet[c("diabetes_with_complication",
+                                                   "any_malignancy",
+                                                   "metastatic_solid_tumor",
+                                                   "mild_liver_disease",
+                                                   "moderate_or_severe_liver_disease",
+                                                   "hemiplegia")]),
+                               unlist(conceptSet[c("aids")])),
+    "condition_start_date" = c(as.Date("2020-12-21"), as.Date("2020-12-22"), as.Date("2020-12-23"), rep(as.Date("2020-01-01"), 19)),
+    "condition_end_date" = c(as.Date("2020-12-21"), as.Date("2020-12-22"), as.Date("2020-12-23"), rep(as.Date("2020-01-01"), 19)),
+    "condition_type_concept_id" = NA_integer_)
+  cdm <- omopgenerics::cdmFromTables("tables" = list("person" = person,
+                                                     "observation_period" = observation_period,
+                                                     "condition_occurrence" = condition_occurrence,
+                                                     "concept" = concept),
+                                     "cohort" = list("cohort" = cohort),
+                                     "cdmName" = "mock")
+
+  cdm[["new_cohort"]] <- updatedCharlsonCohort(cdm = cdm,
+                                           categories = categories,
+                                           name = "new_cohort",
+                                           ageAdjusted = FALSE,
+                                           conceptSet = conceptSet)
+
+  expect_equal(
+    cdm[["new_cohort"]] |>
+      dplyr::filter(subject_id == 1L) |>
+      dplyr::collect() |>
+      dplyr::arrange(cohort_definition_id) |>
+      dplyr::pull("cohort_start_date"),
+    as.Date(c("2001-01-01", "2020-12-21", "2020-12-22"))
+  )
+
+  expect_equal(
+    cdm[["new_cohort"]] |>
+      dplyr::filter(subject_id == 1L) |>
+      dplyr::collect() |>
+      dplyr::arrange(cohort_definition_id) |>
+      dplyr::pull("cohort_end_date"),
+    as.Date(c("2020-12-20", "2020-12-21", "2025-01-01"))
+  )
 
 })
