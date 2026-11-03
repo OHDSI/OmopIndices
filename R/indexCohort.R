@@ -643,6 +643,26 @@ polypharmacyEpisodes <- function(cdm, comp, subset, pref) {
     dplyr::mutate(!!!q)
 
   records <- records |>
+    # Rolling windows can extend beyond observation; retain only observed days.
+    dplyr::inner_join(
+      cdm$observation_period |>
+        dplyr::select("person_id", "observation_period_start_date", "observation_period_end_date"),
+      by = dplyr::join_by(
+        "person_id",
+        x$episode_start <= y$observation_period_end_date,
+        x$episode_end >= y$observation_period_start_date
+      )
+    ) |>
+    dplyr::mutate(
+      episode_start = dplyr::if_else(
+        .data$episode_start < .data$observation_period_start_date,
+        .data$observation_period_start_date, .data$episode_start
+      ),
+      episode_end = dplyr::if_else(
+        .data$episode_end > .data$observation_period_end_date,
+        .data$observation_period_end_date, .data$episode_end
+      )
+    ) |>
     dplyr::select("person_id", "episode_start", "episode_end", "cohort_name")
 
   nm2 <- omopgenerics::uniqueTableName()

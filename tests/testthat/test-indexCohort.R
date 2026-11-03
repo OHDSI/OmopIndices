@@ -174,3 +174,59 @@ test_that("check it works", {
                    c(1L, 2L))
 
 })
+
+test_that("polypharmacy cohort intervals stay within observation periods", {
+  start <- as.Date("2000-01-01")
+  cdm <- omopgenerics::cdmFromTables(
+    tables = list(
+      person = dplyr::tibble(
+        person_id = 1:5, gender_concept_id = 0L, year_of_birth = 1970L,
+        race_concept_id = 0L, ethnicity_concept_id = 0L
+      ),
+      observation_period = dplyr::tibble(
+        observation_period_id = 1:6, person_id = c(1L, 2L, 2L, 3L, 4L, 5L),
+        observation_period_start_date = start + c(0, 0, 20, 0, 0, 0),
+        observation_period_end_date = start + c(10, 10, 30, 10, 10, 10),
+        period_type_concept_id = 0L
+      ),
+      drug_era = dplyr::tibble(
+        drug_era_id = 1:20, person_id = rep(1:4, each = 5),
+        drug_concept_id = rep(1:5, times = 4),
+        drug_era_start_date = start + rep(c(5, -5, 20, -370), each = 5),
+        drug_era_end_date = start + rep(c(7, 3, 25, -366), each = 5),
+        drug_exposure_count = 1L, gap_days = 0L
+      )
+    ),
+    cdmName = "polypharmacy_observation"
+  ) |>
+    copyCdm()
+  on.exit(dropCreatedTables(cdm), add = TRUE)
+
+  # Use the eFI polypharmacy definition, including its 365-day follow-up.
+  definition <- purrr::keep(
+    indexDefinitions$electronic_frailty_index, \(x) x$type == "polypharmacy"
+  )
+  expected <- dplyr::tibble(
+    subject_id = c(1L, 1L, 2L, 2L, 3L, 4L, 5L),
+    cohort_definition_id = c(1L, 2L, 2L, 2L, 1L, 1L, 1L),
+    cohort_start_date = start + c(0, 5, 0, 20, 0, 0, 0),
+    cohort_end_date = start + c(4, 10, 10, 30, 10, 10, 10)
+  )
+
+  for (overlap in c(TRUE, FALSE)) {
+    definition[[1]]$overlap <- overlap
+    result <- indexCohort(
+      cdm = cdm, definition = definition,
+      categories = list(none = c(0, 0), polypharmacy = c(0.01, 1)),
+      name = "polypharmacy_cohort", conceptSet = list(),
+      subsetCohort = NULL, subsetCohortId = NULL
+    ) |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id, .data$cohort_start_date) |>
+      dplyr::select(dplyr::all_of(names(expected)))
+
+    for (column in names(expected)) {
+      expect_equal(result[[column]], expected[[column]])
+    }
+  }
+})
