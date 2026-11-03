@@ -139,9 +139,10 @@ charlsonCohort <- function(cdm,
                            subsetCohort = NULL,
                            subsetCohortId = NULL) {
   omopgenerics::assertLogical(ageAdjusted, length = 1)
-  indexCohortFromKey(
+  key <- ifelse(ageAdjusted, "charlson_age_adjusted", "charlson")
+  indexCohort(
     cdm = cdm,
-    key = ifelse(ageAdjusted, "charlson_age_adjusted", "charlson"),
+    definition = indexDefinitions[[key]],
     categories = categories,
     name = name,
     conceptSet = conceptSet,

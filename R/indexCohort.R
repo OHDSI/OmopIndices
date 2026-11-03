@@ -1,24 +1,4 @@
 
-indexCohortFromKey <- function(cdm,
-                               key,
-                               categories,
-                               name,
-                               conceptSet,
-                               subsetCohort,
-                               subsetCohortId,
-                               call = parent.frame()) {
-  indexCohort(
-    cdm = cdm,
-    definition = indexDefinitions[[key]],
-    categories = compiled$categories,
-    name = name,
-    conceptSet = conceptSet,
-    subsetCohort = subsetCohort,
-    subsetCohortId = {{subsetCohortId}},
-    call = call
-  )
-}
-
 indexCohort <- function(cdm,
                         definition,
                         categories,
@@ -31,7 +11,7 @@ indexCohort <- function(cdm,
   cdm <- omopgenerics::validateCdmArgument(cdm = cdm, call = call)
   omopgenerics::assertList(categories, named = TRUE, class = "numeric", call = call)
   name <- omopgenerics::validateNameArgument(name = name, cdm = cdm, call = call, validation = "warning")
-  neededConcepts <- neededConceptSet(cohortComponents)
+  neededConcepts <- getNeededConcepts(definition)
   conceptSet <- validateConceptSet(conceptSet, neededConcepts, cdm, call = call)
   omopgenerics::assertCharacter(subsetCohort, null = TRUE, call = call)
 
@@ -57,11 +37,11 @@ indexCohort <- function(cdm,
   for (i in seq_along(cohortComponents)) {
     comp <- cohortComponents[[i]]
     if (comp$type == "age_group") {
-      episodes[[i]] <- ageGroupEpisodes(cdm, comp$ageGroup, pref, subset)
+      episodes[[i]] <- ageGroupEpisodes(cdm, comp, pref, subset)
     } else if (comp$type == "polypharmacy") {
       episodes[[i]] <- polypharmacyEpisodes(cdm, comp, subset, pref)
     } else if (comp$type == "bmi") {
-      episodes[[i]] <- bmiEpisodes(cdm, comp$bmiGroup, pref, subset, conceptSet, comp$categoryExpression)
+      episodes[[i]] <- bmiEpisodes(cdm, comp, pref, subset, conceptSet)
     } else if (comp$type == "concept") {
       episodes[[i]] <- conceptEpisodes(cdm, conceptSet, comp, subset, pref)
     }
@@ -91,8 +71,8 @@ indexCohort <- function(cdm,
         ),
       by = "person_id"
     ) |>
-    dplyr::mutate(points = 0L, score_group = "baseline") |>
-    dplyr::select("person_id", "episode_start", "episode_end", "points", "score_group") |>
+    dplyr::mutate(points = 0L) |>
+    dplyr::select("person_id", "episode_start", "episode_end", "points") |>
     dplyr::compute(name = baselineTable)
   omopgenerics::dropSourceTable(cdm = cdm, name = dplyr::starts_with(pref))
 
@@ -101,7 +81,7 @@ indexCohort <- function(cdm,
   scoredTable <- omopgenerics::uniqueTableName()
   cdm <- omopgenerics::insertTable(cdm = cdm, name = pointsTable, table = points)
   episodes <- episodes |>
-    dplyr::inner_join(cdm[[pointsTable]], by = "cohort_name") |>
+    dplyr::inner_join(cdm[[pointsTable]], by = c("cohort_name" = "label")) |>
     dplyr::select(!"cohort_name") |>
     dplyr::compute(name = scoredTable)
   cdm <- omopgenerics::dropSourceTable(cdm = cdm, name = episodeTable)
@@ -123,16 +103,14 @@ indexCohort <- function(cdm,
   aggregate <- splitEpisodes(episodes, splitTable) |> # split in small episodes
     dplyr::inner_join(
       episodes |>
-        dplyr::select("person_id", "episode_start", "episode_end", "points", "score_group"),
+        dplyr::select("person_id", "episode_start", "episode_end", "points"),
       by = dplyr::join_by(
         "person_id",
         x$cohort_start_date <= y$episode_end,
         y$episode_start <= x$cohort_end_date
       )
     ) |>
-    # Take the maximum active contribution within each scoring group, then sum.
-    dplyr::group_by(.data$person_id, .data$cohort_start_date, .data$cohort_end_date, .data$score_group) |>
-    dplyr::summarise(points = max(.data$points, na.rm = TRUE), .groups = "drop") |>
+    # Sum the active contributions; grouped concepts have already been censored.
     dplyr::group_by(.data$person_id, .data$cohort_start_date, .data$cohort_end_date) |>
     dplyr::summarise(points = sum(.data$points, na.rm = TRUE), .groups = "drop") |>
     # add categories
@@ -188,7 +166,10 @@ indexCohort <- function(cdm,
   return(cdm[[name]])
 }
 
-ageGroupEpisodes <- function(cdm, ageGroup, pref, subset) {
+ageGroupEpisodes <- function(cdm, comp, pref, subset) {
+  # parameters
+  ageGroup <- comp$ageGroup
+
   # internal prefix
   ip <- omopgenerics::tmpPrefix()
 

@@ -129,8 +129,7 @@ getCohortComponents <- function(definition) {
       list(
         type = "age_group",
         ageGroup = purrr::map(x$age_groups, "age_range") |>
-          rlang::set_names(purrr::map_chr(x$age_groups, "label")),
-        scoreGroup = x$group
+          rlang::set_names(purrr::map_chr(x$age_groups, "label"))
       )
     })
 
@@ -155,42 +154,29 @@ getCohortComponents <- function(definition) {
         window = c(-x$follow_up, 0),
         overlap = x$overlap,
         group = x$drug_group,
-        categories = categories,
-        score = x$score,
-        scoreGroup = x$group
+        categories = categories
       )
     })
 
-  # concepts: retain definition order within each scoring group
-  defConcept <- definition[purrr::map_chr(definition, "type") == "concept"] |>
-    purrr::map(\(x) {
-      list(
+  # concepts: earlier components in the same group censor later ones
+  defConcept <- definition[purrr::map_chr(definition, "type") == "concept"]
+  defConcept <- defConcept |>
+    purrr::imap(\(x, i) {
+      comp <- list(
         type = "concept",
         conceptSet = x$concept_set,
-        followUp = x$follow_up,
-        label = if (is.null(x$label)) x$concept_set else x$label,
-        requireAgeRange = x$require_age_range,
-        scoreGroup = x$group
+        followUp = x$follow_up
       )
+      if (!is.null(x$group)) {
+        censor <- defConcept[seq_len(i - 1L)] |>
+          purrr::keep(\(previous) identical(previous$group, x$group)) |>
+          purrr::map_chr("concept_set")
+        if (length(censor) > 0) comp$censor <- censor
+      }
+      comp
     })
 
-  # measurements
-  defMeasurement <- definition[purrr::map_chr(definition, "type") == "measurement"] |>
-    purrr::map(\(x) {
-      list(
-        type = "measurement",
-        conceptSet = x$concept_set,
-        followUp = x$follow_up,
-        label = if (is.null(x$label)) x$concept_set else x$label,
-        tie = if (is.null(x$tie)) "max" else x$tie,
-        measurementGroups = x$measurement_groups,
-        score = x$score,
-        missingScore = x$missing_score,
-        scoreGroup = x$group
-      )
-    })
-
-  c(defAgeGroups, defPoly, defConcept, defMeasurement)
+  c(defAgeGroups, defPoly, defConcept)
 }
 
 getNeededConcepts <- function(definition) {
