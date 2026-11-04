@@ -41,11 +41,14 @@ included.}
 A cohort table.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 The updated CCI is based on Quan et al. (2011)
 (\doi{10.1093/aje/kwq433}).
 }
 \examples{
-\donttest{
+\dontrun{
 library(omock)
 library(duckdb)
 library(OmopIndices)

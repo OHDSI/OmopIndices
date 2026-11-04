@@ -91,6 +91,8 @@ addCharlsonIndex <- function(x,
 
 #' Create a cohort of groups of the Charlson Comorbidity Index (CCI)
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' CCI is based on
 #' Charlson et al. (1987) (\doi{10.1016/0021-9681(87)90171-8}) and
 #' Charlson et al. (1994) (\doi{10.1016/0895-4356(94)90129-5})
@@ -106,7 +108,7 @@ addCharlsonIndex <- function(x,
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(omock)
 #' library(duckdb)
 #' library(OmopIndices)

@@ -38,10 +38,13 @@ included.}
 A cohort table.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 eFI calculation is baed on Clegg et al. (2016) (\doi{10.1093/ageing/afw039})
 }
 \examples{
-\donttest{
+\dontrun{
 library(omock)
 library(duckdb)
 library(OmopIndices)

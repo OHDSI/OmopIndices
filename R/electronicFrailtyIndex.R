@@ -1,6 +1,7 @@
 
-#' Add Electronic Frailty Index (eFI) value based on
-#' Clegg et al. (2016) (\doi{10.1093/ageing/afw039})
+#' Add Electronic Frailty Index (eFI)
+#'
+#' eFI calculation is baed on Clegg et al. (2016) (\doi{10.1093/ageing/afw039})
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
@@ -111,6 +112,8 @@ addElectronicFrailtyIndex <- function(x,
 
 #' Create a cohort of groups of the Electronic Frailty Index (eFI)
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' eFI calculation is baed on Clegg et al. (2016) (\doi{10.1093/ageing/afw039})
 #'
 #' @inheritParams cohortDoc
@@ -122,7 +125,7 @@ addElectronicFrailtyIndex <- function(x,
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(omock)
 #' library(duckdb)
 #' library(OmopIndices)
