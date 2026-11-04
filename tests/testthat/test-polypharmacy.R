@@ -115,6 +115,20 @@ test_that("polypharmacy returns zeros for empty drug eras and rejects multiple w
   )
 
   expect_warning(
+    recategorised <- cdm$my_cohort_categories |>
+      addPolypharmacy(
+        window = c(0, 79),
+        categories = list(low = c(0, 1), high = c(2, Inf)),
+        name = "cohort_recategorised"
+      ),
+    "overwritten"
+  )
+  expect_identical(
+    recategorised |> dplyr::collect() |> dplyr::pull("polypharmacy_categories"),
+    c("high", "high")
+  )
+
+  expect_warning(
     cdm$my_cohort_deprecated <- cdm$my_cohort |>
       addPolypharmacyCount(
         indexDate = "cohort_start_date",
@@ -302,9 +316,49 @@ test_that("polypharmacy returns zeros for empty drug eras and rejects multiple w
     "Only one window is allowed"
   )
 
+  # Scored components return band labels for the index formula to use.
+  definition <- list(list(
+    type = "polypharmacy", name_style = "drug_band", follow_up = 0,
+    overlap = FALSE, drug_group = "ingredient drug_era",
+    drug_groups = list(
+      list(label = "none", drug_range = c(0, 0), score = 0),
+      list(label = "multiple", drug_range = c(2, Inf), score = 0.5)
+    )
+  ))
+  scored <- addIndex(
+    cdm$my_cohort, definition, "cohort_start_date", c(0, 79), NULL,
+    NULL, "drug_score", "cohort_drug_score"
+  )
+  expect_equal(
+    scored |>
+      dplyr::collect() |>
+      dplyr::arrange(.data$subject_id) |>
+      dplyr::pull("drug_score"),
+    c(0.5, 0.5)
+  )
+
   # empty drug era
   cdm$drug_era <- cdm$drug_era |>
     dplyr::filter(.data$person_id == 0)
+  expect_warning(
+    result <- addPolypharmacy(
+      cdm$my_cohort, categories = list(none = c(0, 0)), name = "cohort_empty"
+    ),
+    "table is empty"
+  )
+  expect_identical(
+    result |> dplyr::collect() |> dplyr::pull("polypharmacy_categories"),
+    c("none", "none")
+  )
+  expect_warning(
+    scored <- addIndex(
+      cdm$my_cohort, definition, "cohort_start_date", NULL, NULL,
+      NULL, "drug_score", "cohort_drug_score"
+    ),
+    "table is empty"
+  )
+  expect_equal(scored |> dplyr::collect() |> dplyr::pull("drug_score"), c(0, 0))
+
   expect_warning(
     result <- cdm$my_cohort |>
       addPolypharmacy(),

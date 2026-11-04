@@ -71,8 +71,11 @@ getAddComponents <- function(definition) {
         window = c(-x$follow_up, 0),
         overlap = x$overlap,
         group = x$drug_group,
-        categories = purrr::map(x$drug_groups, "drug_range") |>
-          rlang::set_names(purrr::map_chr(x$drug_groups, "label"))
+        categories = if (!is.null(x$drug_groups)) {
+          purrr::map(x$drug_groups, "drug_range") |>
+            rlang::set_names(purrr::map_chr(x$drug_groups, "label"))
+        },
+        nameStyle = componentName(x)
       )
     })
 

@@ -57,29 +57,37 @@ addPolypharmacy <- function(x,
                             categories = NULL,
                             nameStyle = "polypharmacy",
                             name = tableName(x)) {
-  # input check
-  x <- omopgenerics::validateCdmTable(table = x)
-  personId <- omopgenerics::getPersonIdentifier(x = x)
-  indexDate <- omopgenerics::validateColumn(column = indexDate, x = x, type = "date")
-  window <- omopgenerics::validateWindowArgument(window = window)
+  window <- validateWindow(window)
   omopgenerics::assertLogical(overlap, length = 1)
-  if (length(window) > 1) {
-    cli::cli_abort(c(x = "Only one window is allowed."))
-  }
   omopgenerics::assertCharacter(x = nameStyle, length = 1)
   nameStyle <- omopgenerics::toSnakeCase(x = nameStyle)
-  if (is.na(name)) {
-    name <- NULL
-  }
-  omopgenerics::assertList(categories, named = TRUE, class = "numeric", null = TRUE)
 
-  if (nameStyle %in% colnames(x)) {
-    cli::cli_warn(c("!" = "column {.var {nameStyle}} will be overwritten."))
-    x <- x |>
-      dplyr::select(!dplyr::all_of(nameStyle))
-  }
+  definition <- list(list(
+    type = "polypharmacy",
+    name_style = "polypharmacy",
+    follow_up = 0,
+    overlap = overlap,
+    drug_group = group,
+    score = "value"
+  ))
 
+  addIndex(
+    x = x,
+    definition = definition,
+    indexDate = indexDate,
+    window = window,
+    conceptSet = NULL,
+    categories = categories,
+    nameStyle = nameStyle,
+    name = name
+  )
+}
+
+addPolypharmacyInternal <- function(x, indexDate, window, overlap, group,
+                                   categories, nameStyle, name) {
+  personId <- omopgenerics::getPersonIdentifier(x)
   cdm <- omopgenerics::cdmReference(table = x)
+  window <- unlist(window, use.names = FALSE)
 
   table <- ifelse(group == "ingredient drug_era", "drug_era", "drug_exposure")
   join <- validateGroup(group, cdm)
@@ -95,7 +103,7 @@ addPolypharmacy <- function(x,
       dplyr::compute(name = name)
     if (!is.null(categories)) {
       qc <- qCategories(categories) |>
-        rlang::set_names(paste0(nameStyle, "_categories")) |>
+        rlang::set_names(nameStyle) |>
         rlang::parse_exprs()
       x <- x |>
         dplyr::mutate(!!!qc) |>
@@ -117,8 +125,8 @@ addPolypharmacy <- function(x,
     rlang::set_names(nm = c(personId, ids))
   nm1 <- omopgenerics::uniqueTableName(prefix = pref)
   nm2 <- omopgenerics::uniqueTableName(prefix = pref)
-  win1 <- window[[1]][1]
-  win2 <- window[[1]][2]
+  win1 <- window[1]
+  win2 <- window[2]
 
   # join by groups
   records <- cdm[[table]]
@@ -201,7 +209,7 @@ addPolypharmacy <- function(x,
 
   if (!is.null(categories)) {
     qc <- qCategories(categories) |>
-      rlang::set_names(paste0(nameStyle, "_categories")) |>
+      rlang::set_names(nameStyle) |>
       rlang::parse_exprs()
     x <- x |>
       dplyr::mutate(!!!qc) |>

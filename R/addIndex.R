@@ -16,7 +16,11 @@ addIndex <- function(x,
   neededConcepts <- getNeededConcepts(definition)
   conceptSet <- validateConceptSet(conceptSet, neededConcepts, cdm, call = call)
   nameStyle <- validateNameStyle(nameStyle, x, call = call)
-  x <- omopgenerics::validateNewColumn(x, nameStyle, call = call)
+  outputColumns <- nameStyle
+  if (!is.null(categories)) {
+    outputColumns <- c(outputColumns, paste0(nameStyle, "_categories"))
+  }
+  x <- omopgenerics::validateNewColumn(x, outputColumns, call = call)
   name <- validateName(name, call = call)
   omopgenerics::assertList(categories, named = TRUE, class = "numeric", null = TRUE, call = call)
 
@@ -77,12 +81,13 @@ addIndex <- function(x,
         )
     } else if (comp$type == "polypharmacy") {
       index <- index |>
-        addPolypharmacy(
+        addPolypharmacyInternal(
           indexDate = indexDate,
           window = comp$window,
           overlap = comp$overlap,
           group = comp$group,
           categories = comp$categories,
+          nameStyle = comp$nameStyle,
           name = nm
         )
     } else if (comp$type == "measurement") {
@@ -147,13 +152,11 @@ addIndex <- function(x,
   }
 
   # apply categories
-  outputColumns <- nameStyle
   if (!is.null(categories)) {
     qc <- qCategories(categories) |>
       rlang::set_names(paste0(nameStyle, "_categories")) |>
       rlang::parse_exprs()
     q <- c(q, qc)
-    outputColumns <- c(outputColumns, paste0(nameStyle, "_categories"))
   }
 
   # apply formula
