@@ -1,49 +1,34 @@
 
-addIndexFromKey <- function(x,
-                            key,
-                            indexDate,
-                            window,
-                            conceptSet,
-                            categories,
-                            nameStyle,
-                            name,
-                            call = parent.frame()) {
-  addIndexInternal(
-    x = x,
-    indexDate = indexDate,
-    window = window,
-    conceptSet = conceptSet,
-    categories = categories,
-    nameStyle = nameStyle,
-    name = name,
-    formula = formulas[[key]],
-    component = components[[key]],
-    call = call
-  )
-}
-
-addIndexInternal <- function(x,
-                             indexDate,
-                             window,
-                             conceptSet,
-                             categories,
-                             nameStyle,
-                             name,
-                             formula,
-                             component,
-                             call) {
+addIndex <- function(x,
+                     definition,
+                     indexDate,
+                     window,
+                     conceptSet,
+                     categories,
+                     nameStyle,
+                     name,
+                     call = parent.frame()) {
   # input validation
   x <- validateX(x, call = call)
   cdm <- omopgenerics::cdmReference(x)
   indexDate <- omopgenerics::validateColumn(indexDate, x, "date", call = call)
   window <- omopgenerics::validateWindowArgument(window, snakeCase = FALSE, call = call, empty = TRUE)
-  component <- overwriteWindow(component, window, call)
-  neededConcepts <- neededConceptSet(component)
+  neededConcepts <- getNeededConcepts(definition)
   conceptSet <- validateConceptSet(conceptSet, neededConcepts, cdm, call = call)
   nameStyle <- validateNameStyle(nameStyle, x, call = call)
-  x <- omopgenerics::validateNewColumn(x, nameStyle, call = call)
+  outputColumns <- nameStyle
+  if (!is.null(categories)) {
+    outputColumns <- c(outputColumns, paste0(nameStyle, "_categories"))
+  }
+  x <- omopgenerics::validateNewColumn(x, outputColumns, call = call)
   name <- validateName(name, call = call)
   omopgenerics::assertList(categories, named = TRUE, class = "numeric", null = TRUE, call = call)
+
+  # get components and formula from index definition
+  component <- getAddComponents(definition)
+  formula <- getFormula(definition)
+
+  component <- overwriteWindow(component, window, call)
 
   id <- omopgenerics::getPersonIdentifier(x)
   q <- formula |>
@@ -96,21 +81,21 @@ addIndexInternal <- function(x,
         )
     } else if (comp$type == "polypharmacy") {
       index <- index |>
-        addPolypharmacy(
+        addPolypharmacyInternal(
           indexDate = indexDate,
           window = comp$window,
           overlap = comp$overlap,
+          group = comp$group,
+          categories = comp$categories,
+          nameStyle = comp$nameStyle,
           name = nm
         )
-    } else if (comp$type == "bmi") {
+    } else if (comp$type == "measurement") {
       index <- index |>
-        addBMIInternal(
+        addMeasurementInternal(
           indexDate = indexDate,
-          conceptSet = conceptSet["bmi"],
-          window = unlist(comp$window),
-          order = comp$order,
-          inObservation = if (is.null(comp$inObservation)) TRUE else comp$inObservation,
-          nameStyle = "bmi",
+          conceptSet = conceptSet,
+          comp = comp,
           name = nm
         )
     } else if (comp$type == "concept_flag") {
@@ -167,13 +152,11 @@ addIndexInternal <- function(x,
   }
 
   # apply categories
-  outputColumns <- nameStyle
   if (!is.null(categories)) {
     qc <- qCategories(categories) |>
       rlang::set_names(paste0(nameStyle, "_categories")) |>
       rlang::parse_exprs()
     q <- c(q, qc)
-    outputColumns <- c(outputColumns, paste0(nameStyle, "_categories"))
   }
 
   # apply formula

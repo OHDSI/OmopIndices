@@ -14,6 +14,9 @@ validateWindow <- function(window, call = parent.frame()) {
   return(window[[1]])
 }
 validateConceptSet <- function(conceptSet, nms, cdm, call = parent.frame()) {
+  if (length(nms) == 0) {
+    return(omopgenerics::emptyCodelist())
+  }
   conceptSet <- omopgenerics::validateConceptSetArgument(conceptSet, cdm, call = call)
   notPresent <- nms[!nms %in% names(conceptSet)]
   if (length(notPresent) > 0) {

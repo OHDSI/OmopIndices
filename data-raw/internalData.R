@@ -1,276 +1,376 @@
+# Index definitions ----
+# One definition supplies the components, scoring and temporal rules used by
+# both addIndex() and indexCohort(). The four component types below cover the
+# current indices.
+#
+# An index is defined by a list of components (elements). Each component/element
+# has a type, and the settings for that type. *marks a required field.
+#
+# SHARED RULES
+# - Components contribute independently and their scores are summed. Within
+#   each group = "name", only the FIRST ACTIVE component in definition order
+#   contributes. Earlier components take precedence regardless of their score;
+#   this is list order, not the order in which events occurred. If no component
+#   in a group is active, the group contributes zero. An active component with
+#   score zero still takes precedence over later components in its group.
+#   For example, define diabetes with complications before diabetes without
+#   complications to select its score when both are active. Put the preferred
+#   liver and cancer components first in their respective groups as well.
+# - Scored components use finite, nonnegative numeric scores. Numeric sources
+#   can instead use score = "value" to return the selected value/count, as in
+#   standalone BMI and polypharmacy. In this mode, omit the scoring bands.
+# - Bands are lists of named fields, not positional vectors. Each band has a
+#   label, a range and a score. Ranges include both endpoints by default;
+#   lower_inclusive / upper_inclusive = FALSE makes an endpoint exclusive.
+#   Use nonoverlapping bands; unmatched values contribute zero in scored mode.
+#
+# **concept**
+# type* = "concept"
+# concept_set* = name of the codelist identifying qualifying events.
+# score* = numeric contribution, e.g. "1L" or "0.15".
+# follow_up* = nonnegative days, or Inf.
+# group = optional scoring group; the first active component in the group wins.
+# require_age_range = c(5, Inf), optional inclusive age range AT THE EVENT.
+#   For example, a diagnosis recorded before age 5 never becomes eligible just
+#   because the person later turns 5.
+# Each qualifying event contributes once while active; repeated diagnoses do
+# not add points. With follow_up = 730, an event on day d is active through
+# d + 730 inclusive. With Inf, the component persists without expiry.
+#
+# **age_group**
+# type* = "age_group"
+# age_groups* = list of bands, each with:
+#   label* = unique band name, e.g. "50 to 59".
+#   age_range* = inclusive range of completed years, e.g. c(50, 59).
+#   score* = numeric contribution.
+# Age is evaluated on the scoring date, not on a diagnosis date. A person is
+# in c(50, 59) from their 50th birthday until the day before their 60th birthday.
+# Unlisted ages contribute zero.
+#
+# **polypharmacy**
+# type* = "polypharmacy"
+# overlap* = TRUE/FALSE:
+#   TRUE: maximum number of distinct drug groups simultaneously active at any
+#   time; FALSE: number of distinct drug groups with exposure
+#   intersecting the window, even if they were never simultaneous.
+# follow_up* = nonnegative days. This defines the rolling assessment.
+# drug_group* = grouping for the drug concept, e.g. "ingredient drug_era",
+#   "ingredient drug_exposure", "concept_id", or an ATC level.
+# drug_groups* = scoring bands (omit when score = "value"), each with:
+#   label* = unique band name.
+#   drug_range* = inclusive count range, e.g. c(5, 9) or c(10, Inf).
+#   score* = numeric contribution.
+# drug_group controls how drugs are counted; drug_groups maps the resulting
+# count to points.
+#
+# **measurement**
+# type* = "measurement"
+# concept_set* = codelist identifying measurement/observation records, e.g. BMI.
+# follow_up* = nonnegative days, or Inf.
+# Select the latest eligible record in c(-follow_up, 0) relative to the index
+# date, including both endpoints. addBMI exposes follow_up as lookbackDays.
+# in_observation = TRUE (default); restrict records to observation periods.
+# tie = "max" (default) or "min": resolves same-day ties. An explicit list of
+#   band labels can instead define priority for categorical measurements.
+#   Ties are resolved on the latest eligible date; the first listed label wins.
+# measurement_groups* = scoring bands (omit when score = "value"), each with:
+#   label* = unique band name.
+#   measurement_value = numeric range, with optional endpoint exclusions.
+#   measurement_concept = codelist name for categorical value_as_concept_id.
+#   measurement_unit = optional accepted unit concept ID(s), applied before
+#   selecting a record. Omission preserves the current BMI behaviour of no
+#   unit restriction. Different units are not automatically converted.
+#   score* = numeric contribution.
+#   Supply at least one of measurement_value and measurement_concept per band.
+#   If both are supplied, both must match. Unmatched values contribute zero.
+#
+# Utility functions:
+#   getFormula(definition)          -- score expression for addIndex
+#   getAddComponents(definition)    -- input extraction for addIndex
+#   getPointsMatrix(definition)     -- fixed points and scoring groups
+#   getCohortComponents(definition) -- time intervals for indexCohort
+#   getNeededConcepts(definition)   -- required codelist names
+#
+# TODO: adapt and validate these contracts before exposing general addIndex /
+# indexCohort functions or public constructors for index definitions.
 
-# Create cdm for descendants and concept names ----
-cdm <- omock::mockCdmFromDataset(datasetName = "delphi-100k")
+indexDefinitions <- list()
 
-# Indices definitions ----
-## Empty objects to save  -----
-formulas <- list()
-components <- list()
-requiredConcepts <- list()
-points <- list()
-cohortComponents <- list()
-
-## Charlson Index ----
-requiredConcepts$charlson <- c(
-  "myocardial_infarction", "congestive_heart_failure",
-  "peripheral_vascular_disease", "cerebrovascular_disease",
-  "dementia", "chronic_pulmonary_disease",
-  "connective_tissue_disease", "peptic_ulcer_disease", "mild_liver_disease",
-  "diabetes_without_complication", "hemiplegia",
-  "severe_chronic_kidney_disease", "diabetes_with_complication",
-  "any_malignancy", "moderate_or_severe_liver_disease",
-  "metastatic_solid_tumor", "aids"
-)
-formulas$charlson <- "dplyr::case_when(
-  .data$diabetes_with_complication == 1L ~ 2L,
-  .data$diabetes_without_complication == 1L ~ 1L,
-  .default = 0L
-) +
-dplyr::case_when(
-  .data$metastatic_solid_tumor == 1L ~ 6L,
-  .data$any_malignancy == 1L ~ 2L,
-  .default = 0L
-) +
-dplyr::case_when(
-  .data$moderate_or_severe_liver_disease == 1L ~ 3L,
-  .data$mild_liver_disease == 1L ~ 1L,
-  .default = 0L
-) +
-.data$myocardial_infarction + .data$congestive_heart_failure +
-.data$peripheral_vascular_disease + .data$cerebrovascular_disease +
-.data$dementia + .data$chronic_pulmonary_disease + .data$connective_tissue_disease +
-.data$peptic_ulcer_disease +
-2 * .data$hemiplegia + 2 * .data$severe_chronic_kidney_disease + 6 * .data$aids"
-formulas$charlson_age_adjusted <- paste0(
-  "dplyr::case_when(
-    .data$age_group == '0 to 49' ~ 0L,
-    .data$age_group == '50 to 59' ~ 1L,
-    .data$age_group == '60 to 69' ~ 2L,
-    .data$age_group == '70 to 79' ~ 3L,
-    .data$age_group == '80 or over' ~ 4L
-  ) + ",
-  formulas$charlson
-)
-points$charlson <- list(
-  diabetes_with_complication = 2L,
-  diabetes_without_complication = 1L,
-  metastatic_solid_tumor = 6L,
-  any_malignancy = 2L,
-  moderate_or_severe_liver_disease = 3L,
-  mild_liver_disease = 1L,
-  myocardial_infarction = 1L,
-  congestive_heart_failure = 1L,
-  peripheral_vascular_disease = 1L,
-  cerebrovascular_disease = 1L,
-  dementia = 1L,
-  chronic_pulmonary_disease = 1L,
-  connective_tissue_disease = 1L,
-  peptic_ulcer_disease = 1L,
-  hemiplegia = 2L,
-  severe_chronic_kidney_disease = 2L,
-  aids = 6L
-)
-points$charlson_age_adjusted <- c(
-  points$charlson,
+## Charlson ----
+indexDefinitions$charlson <- list(
   list(
-    '50 to 59' = 1L,
-    '60 to 69' = 2L,
-    '70 to 79' = 3L,
-    '80 or over' = 4L
+    type = "concept",
+    concept_set = "myocardial_infarction",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "congestive_heart_failure",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "peripheral_vascular_disease",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "cerebrovascular_disease",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "dementia",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "chronic_pulmonary_disease",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "connective_tissue_disease",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "peptic_ulcer_disease",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "moderate_or_severe_liver_disease",
+    follow_up = Inf,
+    score = 3L,
+    group = "liver"
+  ),
+  list(
+    type = "concept",
+    concept_set = "mild_liver_disease",
+    follow_up = Inf,
+    score = 1L,
+    group = "liver"
+  ),
+  list(
+    type = "concept",
+    concept_set = "diabetes_with_complication",
+    follow_up = Inf,
+    score = 2L,
+    group = "diabetes"
+  ),
+  list(
+    type = "concept",
+    concept_set = "diabetes_without_complication",
+    follow_up = Inf,
+    score = 1L,
+    group = "diabetes"
+  ),
+  list(
+    type = "concept",
+    concept_set = "hemiplegia",
+    follow_up = Inf,
+    score = 2L
+  ),
+  list(
+    type = "concept",
+    concept_set = "severe_chronic_kidney_disease",
+    follow_up = Inf,
+    score = 2L
+  ),
+  list(
+    type = "concept",
+    concept_set = "metastatic_solid_tumor",
+    follow_up = Inf,
+    score = 6L,
+    group = "cancer"
+  ),
+  list(
+    type = "concept",
+    concept_set = "any_malignancy",
+    follow_up = Inf,
+    score = 2L,
+    group = "cancer"
+  ),
+  list(
+    type = "concept",
+    concept_set = "aids",
+    follow_up = Inf,
+    score = 6L
   )
 )
-cohortComponents$charlson <- list(
+
+## Age adjusted Charlson ----
+indexDefinitions$charlson_age_adjusted <- c(
+  indexDefinitions$charlson,
   list(
-    type = "concept",
-    conceptSet = c(
-      "diabetes_with_complication", "metastatic_solid_tumor",
-      "moderate_or_severe_liver_disease", "myocardial_infarction",
-      "congestive_heart_failure", "peripheral_vascular_disease",
-      "cerebrovascular_disease", "dementia", "chronic_pulmonary_disease",
-      "connective_tissue_disease", "peptic_ulcer_disease", "hemiplegia",
-      "severe_chronic_kidney_disease", "aids"
-    ),
-    followUp = Inf
-  ),
-  list(
-    type = "concept",
-    conceptSet = "diabetes_without_complication",
-    followUp = Inf,
-    censor = "diabetes_with_complication"
-  ),
-  list(
-    type = "concept",
-    conceptSet = "any_malignancy",
-    followUp = Inf,
-    censor = "metastatic_solid_tumor"
-  ),
-  list(
-    type = "concept",
-    conceptSet = "mild_liver_disease",
-    followUp = Inf,
-    censor = "moderate_or_severe_liver_disease"
-  )
-)
-cohortComponents$charlson_age_adjusted <- c(
-  cohortComponents$charlson,
-  list(list(
-    type = "age_group",
-    ageGroup = list(
-     "50 to 59" = c(50, 59),
-     "60 to 69" = c(60, 69),
-     "70 to 79" = c(70, 79),
-     "80 or over" = c(80, Inf)
+    list(
+      type = "age_group",
+      name_style = "age_group",
+      age_groups = list(
+        list(
+          label = "50 to 59",
+          age_range = c(50, 59),
+          score = 1L
+        ),
+        list(
+          label = "60 to 69",
+          age_range = c(60, 69),
+          score = 2L
+        ),
+        list(
+          label = "70 to 79",
+          age_range = c(70, 79),
+          score = 3L
+        ),
+        list(
+          label = "80 or over",
+          age_range = c(80, Inf),
+          score = 4L
+        )
+      )
     )
-  ))
-)
-points$updated_charlson <- list(
-  congestive_heart_failure = 2L,
-  dementia = 2L,
-  chronic_pulmonary_disease = 1L,
-  connective_tissue_disease = 1L,
-  diabetes_with_complication = 1L,
-  hemiplegia = 2L,
-  severe_chronic_kidney_disease = 1L,
-  aids = 4L,
-  any_malignancy = 2L,
-  metastatic_solid_tumor = 6L,
-  mild_liver_disease = 2L,
-  moderate_or_severe_liver_disease = 4L
-)
-points$updated_charlson_age_adjusted <- c(
-  points$updated_charlson,
-  list(
-    '50 to 59' = 1L,
-    '60 to 69' = 2L,
-    '70 to 79' = 3L,
-    '80 or over' = 4L
   )
-)
-cohortComponents$updated_charlson <- list(
-  list(
-    type = "concept",
-    conceptSet = c(
-      "congestive_heart_failure", "dementia", "chronic_pulmonary_disease",
-      "connective_tissue_disease", "diabetes_with_complication",
-      "hemiplegia", "severe_chronic_kidney_disease", "aids"
-    ),
-    followUp = Inf
-  ),
-  list(
-    type = "concept",
-    conceptSet = "any_malignancy",
-    followUp = Inf,
-    censor = "metastatic_solid_tumor"
-  ),
-  list(
-    type = "concept",
-    conceptSet = "metastatic_solid_tumor",
-    followUp = Inf
-  ),
-  list(
-    type = "concept",
-    conceptSet = "mild_liver_disease",
-    followUp = Inf,
-    censor = "moderate_or_severe_liver_disease"
-  ),
-  list(
-    type = "concept",
-    conceptSet = "moderate_or_severe_liver_disease",
-    followUp = Inf
-  )
-)
-cohortComponents$updated_charlson_age_adjusted <- c(
-  cohortComponents$updated_charlson,
-  list(list(
-    type = "age_group",
-    ageGroup = list(
-      "50 to 59" = c(50, 59),
-      "60 to 69" = c(60, 69),
-      "70 to 79" = c(70, 79),
-      "80 or over" = c(80, Inf)
-    )
-  ))
-)
-components$charlson <- list(
-  list(
-    type = "concept_flag",
-    conceptSet = requiredConcepts$charlson,
-    window = c(-Inf, 0)
-  )
-)
-components$charlson_age_adjusted <- c(
-  components$charlson,
-  list(list(
-    type = "age_group",
-    ageGroup = list(
-      "0 to 49" = c(0, 49), "50 to 59" = c(50, 59),
-      "60 to 69" = c(60, 69), "70 to 79" = c(70, 79),
-      "80 or over" = c(80, Inf)
-    )
-  ))
 )
 
-## Updated Charlson Index ----
-requiredConcepts$updated_charlson <- c(
-  "congestive_heart_failure", "dementia", "chronic_pulmonary_disease",
-  "connective_tissue_disease", "mild_liver_disease", "hemiplegia",
-  "severe_chronic_kidney_disease", "diabetes_with_complication",
-  "any_malignancy", "moderate_or_severe_liver_disease",
-  "metastatic_solid_tumor", "aids"
-)
-formulas$updated_charlson <- "dplyr::case_when(
-  .data$metastatic_solid_tumor == 1L ~ 6L,
-  .data$any_malignancy == 1L ~ 2L,
-  .default = 0L
-) +
-dplyr::case_when(
-  .data$moderate_or_severe_liver_disease == 1L ~ 4L,
-  .data$mild_liver_disease == 1L ~ 2L,
-  .default = 0L
-) +
-2 * .data$congestive_heart_failure + 2 * .data$dementia +
-.data$chronic_pulmonary_disease + .data$connective_tissue_disease +
-.data$diabetes_with_complication + 2 * .data$hemiplegia +
-.data$severe_chronic_kidney_disease + 4 * .data$aids"
-formulas$updated_charlson_age_adjusted <- paste0(
-  "dplyr::case_when(
-    .data$age_group == '0 to 49' ~ 0L,
-    .data$age_group == '50 to 59' ~ 1L,
-    .data$age_group == '60 to 69' ~ 2L,
-    .data$age_group == '70 to 79' ~ 3L,
-    .data$age_group == '80 or over' ~ 4L
-  ) +",
-  formulas$updated_charlson
-)
-components$updated_charlson <- list(
+## Updated Charlson ----
+indexDefinitions$updated_charlson <- list(
   list(
-    type = "concept_flag",
-    conceptSet = requiredConcepts$updated_charlson,
-    window = c(-Inf, 0)
+    type = "concept",
+    concept_set = "congestive_heart_failure",
+    follow_up = Inf,
+    score = 2L
+  ),
+  list(
+    type = "concept",
+    concept_set = "dementia",
+    follow_up = Inf,
+    score = 2L
+  ),
+  list(
+    type = "concept",
+    concept_set = "chronic_pulmonary_disease",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "connective_tissue_disease",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "moderate_or_severe_liver_disease",
+    follow_up = Inf,
+    score = 4L,
+    group = "liver"
+  ),
+  list(
+    type = "concept",
+    concept_set = "mild_liver_disease",
+    follow_up = Inf,
+    score = 2L,
+    group = "liver"
+  ),
+  list(
+    type = "concept",
+    concept_set = "diabetes_with_complication",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "hemiplegia",
+    follow_up = Inf,
+    score = 2L
+  ),
+  list(
+    type = "concept",
+    concept_set = "severe_chronic_kidney_disease",
+    follow_up = Inf,
+    score = 1L
+  ),
+  list(
+    type = "concept",
+    concept_set = "metastatic_solid_tumor",
+    follow_up = Inf,
+    score = 6L,
+    group = "cancer"
+  ),
+  list(
+    type = "concept",
+    concept_set = "any_malignancy",
+    follow_up = Inf,
+    score = 2L,
+    group = "cancer"
+  ),
+  list(
+    type = "concept",
+    concept_set = "aids",
+    follow_up = Inf,
+    score = 4L
   )
 )
-components$updated_charlson_age_adjusted <- c(
-  components$updated_charlson,
-  components$charlson_age_adjusted[length(components$charlson_age_adjusted)]
+
+## Age adjusted updated Charlson ----
+indexDefinitions$updated_charlson_age_adjusted <- c(
+  indexDefinitions$updated_charlson,
+  list(
+    list(
+      type = "age_group",
+      name_style = "age_group",
+      age_groups = list(
+        list(
+          label = "50 to 59",
+          age_range = c(50, 59),
+          score = 1L
+        ),
+        list(
+          label = "60 to 69",
+          age_range = c(60, 69),
+          score = 2L
+        ),
+        list(
+          label = "70 to 79",
+          age_range = c(70, 79),
+          score = 3L
+        ),
+        list(
+          label = "80 or over",
+          age_range = c(80, Inf),
+          score = 4L
+        )
+      )
+    )
+  )
 )
 
 ## Hospital Frailty Risk Score ----
 hfrsData <- readr::read_csv(
-  file = "inst/hospital_frailty_risk_score.csv",
+  "inst/hospital_frailty_risk_score.csv",
   col_types = c(concept_set = "c", points = "d", icd10_code = "c", icd_description = "c")
 )
-requiredConcepts$hospital_frailty_risk_score <- hfrsData$concept_set
-formulas$hospital_frailty_risk_score <- paste0(hfrsData$points, " * .data$", hfrsData$concept_set, collapse = " + ")
-components$hospital_frailty_risk_score <- list(
-  list(
-    type = "concept_flag",
-    conceptSet = requiredConcepts$hospital_frailty_risk_score,
-    window = c(-730, 0)
-  )
-)
+indexDefinitions$hospital_frailty_risk_score <- hfrsData |>
+  purrr::pmap(\(concept_set, points, ...) {
+    list(
+      type = "concept",
+      concept_set = concept_set,
+      follow_up = 730,
+      score = points
+    )
+  })
 
 ## Electronic Frailty Index ----
-requiredConcepts$electronic_frailty_index <- c(
+indexDefinitions$electronic_frailty_index <- c(
   "activity_limitation", "anemia", "arthritis", "atrial_fibrillation",
   "cerebrovascular_disease", "chronic_kidney_disease",  "diabetes", "dizziness",
   "dyspnea", "falls", "foot_problem", "fragility_fracture",
@@ -281,173 +381,100 @@ requiredConcepts$electronic_frailty_index <- c(
   "care_requirement", "respiratory_disease", "skin_ulcer", "sleep_disturbance",
   "social_vulnerability", "thyroid_disease", "urinary_incontinence",
   "urinary_system_disease", "visual_impairment", "weight_loss_anorexia"
-)
-formulas$electronic_frailty_index <- paste0(
-  paste0("1/36 * .data$", requiredConcepts$electronic_frailty_index, collapse = " + "),
-  " + dplyr::if_else(.data$polypharmacy >= 5, 1/36, 0)"
-)
-components$electronic_frailty_index <- list(
-  list(
-    type = "concept_flag",
-    conceptSet = requiredConcepts$electronic_frailty_index,
-    window = c(-Inf, 0)
-  ),
-  list(
+) |>
+  purrr::map(\(x) {
+    list(
+      type = "concept",
+      concept_set = x,
+      follow_up = Inf,
+      score = 1/36
+    )
+  }) |>
+  c(list(list(
     type = "polypharmacy",
-    window = c(-365, 0),
-    overlap = TRUE
-  )
-)
-
-cohortComponents$electronic_frailty_index <- list(
-  list(
-    type = "concept",
-    conceptSet = c(
-      "activity_limitation", "anemia", "arthritis", "atrial_fibrillation",
-      "cerebrovascular_disease", "chronic_kidney_disease",  "diabetes", "dizziness",
-      "dyspnea", "falls", "foot_problem", "fragility_fracture",
-      "hearing_impairment", "heart_failure", "heart_valve_disorder", "housebound",
-      "hypertension", "hypotension_syncope", "ischemic_heart_disease",
-      "memory_cognitive_disorder", "mobility_problems", "osteoporosis",
-      "parkinsonism_tremor", "peptic_ulcer", "peripheral_vascular_disease",
-      "care_requirement", "respiratory_disease", "skin_ulcer", "sleep_disturbance",
-      "social_vulnerability", "thyroid_disease", "urinary_incontinence",
-      "urinary_system_disease", "visual_impairment", "weight_loss_anorexia"
-    ),
-    followUp = Inf
-  ),
-  list(
-    type = "polypharmacy",
-    window = c(-365L, 0L),
+    name_style = "polypharmacy_categories",
     overlap = TRUE,
-    group = "ingredient drug_era",
-    categories = list("more than 5 ing" = c(5, Inf))
-  )
-)
-points$electronic_frailty_index <- list(
-  "activity_limitation" = 1/36,
-  "anemia" = 1/36,
-  "arthritis" = 1/36,
-  "atrial_fibrillation" = 1/36,
-  "cerebrovascular_disease" = 1/36,
-  "chronic_kidney_disease" = 1/36,
-  "diabetes" = 1/36,
-  "dizziness" = 1/36,
-  "dyspnea" = 1/36,
-  "falls" = 1/36,
-  "foot_problem" = 1/36,
-  "fragility_fracture" = 1/36,
-  "hearing_impairment" = 1/36,
-  "heart_failure" = 1/36,
-  "heart_valve_disorder" = 1/36,
-  "housebound" = 1/36,
-  "hypertension" = 1/36,
-  "hypotension_syncope" = 1/36,
-  "ischemic_heart_disease" = 1/36,
-  "memory_cognitive_disorder" = 1/36,
-  "mobility_problems" = 1/36,
-  "osteoporosis" = 1/36,
-  "parkinsonism_tremor" = 1/36,
-  "peptic_ulcer" = 1/36,
-  "peripheral_vascular_disease" = 1/36,
-  "care_requirement" = 1/36,
-  "respiratory_disease" = 1/36,
-  "skin_ulcer" = 1/36,
-  "sleep_disturbance" = 1/36,
-  "social_vulnerability" = 1/36,
-  "thyroid_disease" = 1/36,
-  "urinary_incontinence" = 1/36,
-  "urinary_system_disease" = 1/36,
-  "visual_impairment" = 1/36,
-  "weight_loss_anorexia" = 1/36,
-  "more than 5 ing" = 1/36
-)
+    follow_up = 365,
+    drug_group = "ingredient drug_era",
+    drug_groups = list(
+      list(
+        label = "5 or more",
+        drug_range = c(5, Inf),
+        score = 1/36
+      )
+    )
+  )))
 
 ## Electronic Frailty Index 2 ----
-efi2 <- c(
-  activity_limitation = "0.15284 / 8.429",
-  alcohol_harmful_intake = "0.23107 / 8.429",
-  alcohol_missing = "0.13175 / 8.429",
-  alcohol_previous_harmful_higher = "1.36434 / 8.429",
-  atrial_fibrillation = "0.13025 / 8.429",
-  cancer = "0.2406 / 8.429",
-  cognitive_impairment = "0.10985 / 8.429",
-  copd = "0.11683 / 8.429",
-  dementia = "0.41715 / 8.429",
-  dressing_grooming_problems = "0.05422 / 8.429",
-  environment_problems = "0.11886 / 8.429",
-  falls = "0.62743 / 8.429",
-  fracture = "0.07353 / 8.429",
-  fragility_fracture = "0.17425 / 8.429",
-  heart_failure = "0.11086 / 8.429",
-  housebound = "0.33254 / 8.429",
-  hypotension_syncope = "0.18253 / 8.429",
-  liver_problems = "0.23787 / 8.429",
-  medication_management_problems = "0.32125 / 8.429",
-  memory_concerns = "0.11915 / 8.429",
-  mobility_problems = "0.46836 / 8.429",
-  motor_neuron_disease = "0.35347 / 8.429",
-  palliative_care = "0.5145 / 8.429",
-  parkinsonism_tremor = "0.03537 / 8.429",
-  peptic_ulcer = "0.05427 / 8.429",
-  peripheral_vascular_disease = "0.02672 / 8.429",
-  care_requirement = "0.21428 / 8.429",
-  respiratory_disease = "0.01049 / 8.429",
-  seizures = "0.02885 / 8.429",
-  self_harm = "0.009 / 8.429",
-  skin_ulcer = "0.21935 / 8.429",
-  smoker_current = "0.10291 / 8.429",
-  social_vulnerability = "0.23585 / 8.429",
-  stroke = "0.10565 / 8.429",
-  transient_ischemic_attack = "0.02305 / 8.429",
-  weight_loss_anorexia = "0.19256 / 8.429"
-)
-requiredConcepts$electronic_frailty_index_2 <- c(names(efi2), "bmi")
-formulas$electronic_frailty_index_2 <- paste0(
-  paste0(unname(efi2), " * .data$", names(efi2), collapse = " + "),
-  " + dplyr::case_when(
-    is.na(.data$bmi) ~ 0.25318 / 8.429,
-    .data$bmi < 18.5  ~ 0.4417 / 8.429,
-    .default = 0
-  ) + dplyr::case_when(
-    .data$polypharmacy >= 10 ~ 0.50801 / 8.429,
-    .data$polypharmacy >= 5 ~ 0.32301 / 8.429,
-    .default = 0
-  )"
-)
-components$electronic_frailty_index_2 <- list(
-  list(
-    type = "concept_flag",
-    conceptSet = names(efi2),
-    window = c(-Inf, 0)
-  ),
-  list(
-    type = "bmi",
-    conceptSet = "bmi",
-    window = c(-Inf, 0),
-    order = "last"
-  ),
-  list(
-    type = "polypharmacy",
-    window = c(-365, 0),
-    overlap = TRUE
-  )
-)
+# efi2 <- c(
+#   activity_limitation = 0.15284 / 8.429,
+#   alcohol_harmful_intake = 0.23107 / 8.429,
+#   alcohol_missing = 0.13175 / 8.429,
+#   alcohol_previous_harmful_higher = 1.36434 / 8.429,
+#   atrial_fibrillation = 0.13025 / 8.429,
+#   cancer = 0.2406 / 8.429,
+#   cognitive_impairment = 0.10985 / 8.429,
+#   copd = 0.11683 / 8.429,
+#   dementia = 0.41715 / 8.429,
+#   dressing_grooming_problems = 0.05422 / 8.429,
+#   environment_problems = 0.11886 / 8.429,
+#   falls = 0.62743 / 8.429,
+#   fracture = 0.07353 / 8.429,
+#   fragility_fracture = 0.17425 / 8.429,
+#   heart_failure = 0.11086 / 8.429,
+#   housebound = 0.33254 / 8.429,
+#   hypotension_syncope = 0.18253 / 8.429,
+#   liver_problems = 0.23787 / 8.429,
+#   medication_management_problems = 0.32125 / 8.429,
+#   memory_concerns = 0.11915 / 8.429,
+#   mobility_problems = 0.46836 / 8.429,
+#   motor_neuron_disease = 0.35347 / 8.429,
+#   palliative_care = 0.5145 / 8.429,
+#   parkinsonism_tremor = 0.03537 / 8.429,
+#   peptic_ulcer = 0.05427 / 8.429,
+#   peripheral_vascular_disease = 0.02672 / 8.429,
+#   care_requirement = 0.21428 / 8.429,
+#   respiratory_disease = 0.01049 / 8.429,
+#   seizures = 0.02885 / 8.429,
+#   self_harm = 0.009 / 8.429,
+#   skin_ulcer = 0.21935 / 8.429,
+#   smoker_current = 0.10291 / 8.429,
+#   social_vulnerability = 0.23585 / 8.429,
+#   stroke = 0.10565 / 8.429,
+#   transient_ischemic_attack = 0.02305 / 8.429,
+#   weight_loss_anorexia = 0.19256 / 8.429
+# )
+#
+# indexDefinitions$electronic_frailty_index_2 <- list(
+#   components = c(
+#     conceptComponents(as.list(efi2)),
+#     list(
+#       bmi = list(
+#         type = "bmi", window = c(-Inf, 0), order = "last",
+#         score = list(
+#           missing = list(missing = TRUE, score = 0.25318 / 8.429),
+#           underweight = list(range = c(-Inf, 18.5), upperInclusive = FALSE,
+#                              score = 0.4417 / 8.429)
+#         )
+#       ),
+#       polypharmacy = list(
+#         type = "polypharmacy", window = c(-365, 0), overlap = TRUE,
+#         drugGroup = "ingredient drug_era",
+#         score = list(
+#           ten_or_more = list(range = c(10, Inf), score = 0.50801 / 8.429),
+#           five_to_nine = list(range = c(5, 9), score = 0.32301 / 8.429)
+#         )
+#       )
+#     )
+#   ),
+#   groupRule = "maximum",
+#   ageAdjustment = NULL
+# )
 
-## Body Mass Index ----
-requiredConcepts$body_mass_index <- "bmi"
-formulas$body_mass_index <- ".data$bmi"
-components$body_mass_index <- list(
-  list(
-    type = "bmi",
-    conceptSet = "bmi",
-    window = c(-Inf, 0),
-    order = "last",
-    inObservation = TRUE
-  )
-)
+requiredConcepts <- purrr::map(indexDefinitions, getNeededConcepts)
 
 # Internal concepts ----
+cdm <- omock::mockCdmFromDataset(datasetName = "delphi-100k")
 internalConcepts <- list()
 
 ## Charlson Index concepts ----
@@ -514,10 +541,6 @@ internalConcepts$electronic_frailty_index_2 <- list.files(
   ) |>
   dplyr::union_all(internalConcepts$body_mass_index)
 
-## Prepare points dataframe ----
-points <- points |>
-  purrr::map(\(x) dplyr::tibble(cohort_name = names(x), points = unlist(x)))
-
 ## Prepare internal concepts ----
 internalConcepts <- internalConcepts |>
   dplyr::bind_rows(.id = "index") |>
@@ -540,15 +563,7 @@ if (nrow(x) > 0) {
 # check missing definitions
 # check extra definitions
 
-# Save internal data ----
+# Save canonical definitions and internal concepts
 usethis::use_data(
-  requiredConcepts,
-  formulas,
-  components,
-  points,
-  cohortComponents,
-  internalConcepts,
-  internal = TRUE,
-  overwrite = TRUE
+  indexDefinitions, internalConcepts, internal = TRUE, overwrite = TRUE
 )
-

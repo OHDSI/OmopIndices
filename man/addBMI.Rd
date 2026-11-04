@@ -8,8 +8,7 @@ addBMI(
   x,
   conceptSet = getIndexCodelist("body_mass_index"),
   indexDate = "cohort_start_date",
-  window = c(-Inf, 0),
-  order = "last",
+  lookbackDays = Inf,
   nameStyle = "bmi",
   categories = NULL,
   inObservation = TRUE,
@@ -25,11 +24,8 @@ addBMI(
 \item{indexDate}{A character string naming the \code{Date} column in \code{x} that
 defines the index date.}
 
-\item{window}{A numeric vector of length two, \code{c(min, max)}, defining the window for \code{BMI} in days relative to \code{indexDate}. Use \code{-Inf} or \code{Inf} for an unbounded lower or upper limit.}
-
-\item{order}{A character string specifying how to select among multiple BMI
-measurements within the window: \code{last} (latest), \code{first} (earliest), \code{max}
-(highest), or \code{min} (lowest).}
+\item{lookbackDays}{Nonnegative number of days to look back from \code{indexDate},
+including both endpoints. The default, \code{Inf}, uses all prior measurements.}
 
 \item{nameStyle}{A character string specifying the name of the new column.}
 
@@ -45,7 +41,8 @@ observation period.}
 \code{NULL}, a temporary table is created.}
 }
 \value{
-The table \code{x} with a new column containing the selected BMI value.
+The table \code{x} with a new column containing the latest eligible BMI
+value. When several values occur on that day, the maximum is used.
 }
 \description{
 Add Body Mass Index measurement
@@ -66,7 +63,7 @@ cdm$cohort <- conceptCohort(
 )
 
 cdm$cohort |>
-  addBMI(window = c(-365, 0), order = "last") |>
+  addBMI(lookbackDays = 365) |>
   select(subject_id, cohort_start_date, bmi) |>
   glimpse()
 }

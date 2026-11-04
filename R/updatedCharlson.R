@@ -7,7 +7,7 @@
 #' @param ageAdjusted Logical; whether to include age adjustment in the updated
 #' Charlson Comorbidity Index.
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$updated_charlson)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$updated_charlson))`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -71,9 +71,10 @@ addUpdatedCharlsonIndex <- function(x,
                              categories = NULL,
                              name = tableName(x)) {
   omopgenerics::assertLogical(ageAdjusted, length = 1)
-  addIndexFromKey(
+  key <- ifelse(ageAdjusted, "updated_charlson_age_adjusted", "updated_charlson")
+  addIndex(
     x = x,
-    key = ifelse(ageAdjusted, "updated_charlson_age_adjusted", "updated_charlson"),
+    definition = indexDefinitions[[key]],
     indexDate = indexDate,
     window = window,
     conceptSet = conceptSet,
@@ -92,7 +93,7 @@ addUpdatedCharlsonIndex <- function(x,
 #' @param ageAdjusted Logical; whether to include age adjustment in the updated
 #' Charlson Comorbidity Index.
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$updated_charlson)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$updated_charlson))`
 #'
 #' @returns A cohort table.
 #'
@@ -129,9 +130,10 @@ updatedCharlsonCohort <- function(cdm,
                                   subsetCohort = NULL,
                                   subsetCohortId = NULL) {
   omopgenerics::assertLogical(ageAdjusted, length = 1)
-  indexCohortFromKey(
+  key <- ifelse(ageAdjusted, "updated_charlson_age_adjusted", "updated_charlson")
+  indexCohort(
     cdm = cdm,
-    key = ifelse(ageAdjusted, "updated_charlson_age_adjusted", "updated_charlson"),
+    definition = indexDefinitions[[key]],
     categories = categories,
     name = name,
     conceptSet = conceptSet,

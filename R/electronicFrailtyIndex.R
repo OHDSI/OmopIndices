@@ -6,7 +6,7 @@
 #' @inheritParams indexDateDoc
 #' @inheritParams windowDoc
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$electronic_frailty_index)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$electronic_frailty_index))`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -97,9 +97,9 @@ addElectronicFrailtyIndex <- function(x,
                                       window = NULL,
                                       nameStyle = "efi",
                                       name = tableName(x)) {
-  addIndexFromKey(
+  addIndex(
     x = x,
-    key = "electronic_frailty_index",
+    definition = indexDefinitions[["electronic_frailty_index"]],
     indexDate = indexDate,
     window = window,
     conceptSet = conceptSet,
@@ -115,7 +115,7 @@ addElectronicFrailtyIndex <- function(x,
 #'
 #' @inheritParams cohortDoc
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$electronic_frailty_index)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$electronic_frailty_index))`
 #'
 #' @returns A cohort table.
 #'
@@ -151,9 +151,9 @@ electronicFrailtyIndexCohort <- function(cdm,
                                          conceptSet = getIndexCodelist("electronic_frailty_index"),
                                          subsetCohort = NULL,
                                          subsetCohortId = NULL) {
-  indexCohortFromKey(
+  indexCohort(
     cdm = cdm,
-    key = "electronic_frailty_index",
+    definition = indexDefinitions[["electronic_frailty_index"]],
     categories = categories,
     name = name,
     conceptSet = conceptSet,

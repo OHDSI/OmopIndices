@@ -6,7 +6,7 @@
 #' @inheritParams indexDateDoc
 #' @inheritParams windowDoc
 #' @param conceptSet
-#' `r documentationConceptSet(requiredConcepts$hospital_frailty_risk_score)`
+#' `r documentationConceptSet(getNeededConcepts(indexDefinitions$hospital_frailty_risk_score))`
 #' @inheritParams categoriesDoc
 #' @inheritParams nameStyleDoc
 #' @inheritParams nameDoc
@@ -48,9 +48,9 @@ addHospitalFrailtyRiskScore <- function(x,
                                         window = NULL,
                                         nameStyle = "hfrs",
                                         name = tableName(x)) {
-  addIndexFromKey(
+  addIndex(
     x = x,
-    key = "hospital_frailty_risk_score",
+    definition = indexDefinitions[["hospital_frailty_risk_score"]],
     indexDate = indexDate,
     window = window,
     conceptSet = conceptSet,

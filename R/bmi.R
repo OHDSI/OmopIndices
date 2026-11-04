@@ -3,11 +3,9 @@
 #'
 #' @inheritParams xDoc
 #' @inheritParams indexDateDoc
-#' @param window `r documentationWindow("BMI")`
+#' @param lookbackDays Nonnegative number of days to look back from `indexDate`,
+#' including both endpoints. The default, `Inf`, uses all prior measurements.
 #' @param conceptSet `r documentationConceptSet("bmi")`
-#' @param order A character string specifying how to select among multiple BMI
-#' measurements within the window: `last` (latest), `first` (earliest), `max`
-#' (highest), or `min` (lowest).
 #' @param categories A named list of numeric vectors, each containing the lower
 #' and upper bounds of a BMI interval. An additional column named by appending
 #' `_categories` to `nameStyle` is added, and missing BMI values are labelled
@@ -16,7 +14,8 @@
 #' @inheritParams inObservationDoc
 #' @inheritParams nameDoc
 #'
-#' @returns The table `x` with a new column containing the selected BMI value.
+#' @returns The table `x` with a new column containing the latest eligible BMI
+#' value. When several values occur on that day, the maximum is used.
 #' @export
 #'
 #' @examples
@@ -35,7 +34,7 @@
 #' )
 #'
 #' cdm$cohort |>
-#'   addBMI(window = c(-365, 0), order = "last") |>
+#'   addBMI(lookbackDays = 365) |>
 #'   select(subject_id, cohort_start_date, bmi) |>
 #'   glimpse()
 #' }
@@ -43,156 +42,31 @@
 addBMI <- function(x,
                    conceptSet = getIndexCodelist("body_mass_index"),
                    indexDate = "cohort_start_date",
-                   window = c(-Inf, 0),
-                   order = "last",
+                   lookbackDays = Inf,
                    nameStyle = "bmi",
                    categories = NULL,
                    inObservation = TRUE,
                    name = tableName(x)) {
-  window <- validateWindow(window)
-  key <- "body_mass_index"
+  omopgenerics::assertNumeric(lookbackDays, min = 0, length = 1)
+  omopgenerics::assertLogical(inObservation, length = 1)
 
-  component <- components[[key]]
-  component[[1]]$window <- window
-  component[[1]]$order <- order
-  component[[1]]$inObservation <- inObservation
+  definition <- list(list(
+    type = "measurement",
+    concept_set = "bmi",
+    follow_up = lookbackDays,
+    in_observation = inObservation,
+    tie = "max",
+    score = "value"
+  ))
 
-  addIndexInternal(
+  addIndex(
     x = x,
+    definition = definition,
     indexDate = indexDate,
     window = NULL,
     conceptSet = conceptSet,
     categories = categories,
     nameStyle = nameStyle,
-    name = name,
-    component = component,
-    formula = formulas[[key]],
-    call = parent.frame()
+    name = name
   )
-}
-
-addBMIInternal <- function(x,
-                           indexDate,
-                           conceptSet,
-                           window,
-                           order,
-                           inObservation,
-                           nameStyle,
-                           name) {
-  omopgenerics::assertChoice(order, c("first", "last", "min", "max"), length = 1)
-  omopgenerics::assertLogical(inObservation, length = 1)
-
-  id <- omopgenerics::getPersonIdentifier(x)
-  cdm <- omopgenerics::cdmReference(x)
-  records <- x |>
-    dplyr::select(dplyr::all_of(c(person_id = id, index_date = indexDate))) |>
-    dplyr::distinct()
-
-  bmiTable <- omopgenerics::uniqueTableName()
-  on.exit(omopgenerics::dropSourceTable(cdm = cdm, name = bmiTable))
-  bmiRecords <- tablesToSubset(conceptSet, cdm) |>
-    getRecords(cdm, conceptSet, records, window, bmiTable) |>
-    subsetInObservation(inObservation, bmiTable) |>
-    subsetRecords(order, bmiTable)
-
-  sel <- c("person_id", "index_date", "bmi") |>
-    rlang::set_names(c(id, indexDate, nameStyle))
-  x |>
-    dplyr::left_join(
-      bmiRecords |>
-        dplyr::select(dplyr::all_of(sel)),
-      by = c(id, indexDate)
-    ) |>
-    dplyr::compute(name = name)
-}
-tablesToSubset <- function(conceptSet, cdm) {
-  cdm$concept |>
-    dplyr::filter(.data$concept_id %in% .env$conceptSet$bmi) |>
-    dplyr::distinct(.data$domain_id) |>
-    dplyr::pull() |>
-    tolower() |>
-    purrr::keep(\(x) x %in% c("measurement", "observation"))
-}
-getRecords <- function(tables, cdm, conceptSet, records, window, nm) {
-  if (length(tables) == 0) {
-    cdm[[nm]] <- cdm$person |>
-      dplyr::select("person_id") |>
-      dplyr::filter(.data$person_id < 0) |>
-      dplyr::mutate(
-        index_date = as.Date(NA_character_),
-        bmi_date = as.Date(NA_character_),
-        bmi = NA_real_
-      ) |>
-      dplyr::compute(name = nm)
-    return(cdm[[nm]])
-  }
-  tables |>
-    purrr::map(\(x) {
-      date <- omopgenerics::omopColumns(table = x, field = "start_date")
-      concept <- omopgenerics::omopColumns(table = x, field = "standard_concept")
-      rec <- cdm[[x]] |>
-        dplyr::filter(
-          .data[[concept]] %in% .env$conceptSet$bmi & !is.na(.data$value_as_number)
-        ) |>
-        dplyr::select(dplyr::all_of(c(
-          "person_id", bmi_date = date, bmi = "value_as_number"
-        ))) |>
-        dplyr::inner_join(records, by = "person_id")
-      if (!all(is.infinite(window))) {
-        rec <- rec |>
-          dplyr::mutate(date_diff = clock::date_count_between(
-            start = .data$index_date, end = .data$bmi_date, precision = "day"
-          )) |>
-          filterWindow(diff = "date_diff", window = window)
-      }
-      return(rec)
-    }) |>
-    purrr::reduce(dplyr::union_all) |>
-    dplyr::compute(name = nm)
-}
-subsetRecords <- function(x, order, nm) {
-  for (ord in order) {
-    q <- switch (
-      order,
-      "first" = ".data$bmi_date == min(.data$bmi_date, na.rm = TRUE)",
-      "last" = ".data$bmi_date == max(.data$bmi_date, na.rm = TRUE)",
-      "min" = ".data$bmi == min(.data$bmi, na.rm = TRUE)",
-      "max" = ".data$bmi == max(.data$bmi, na.rm = TRUE)"
-    ) |>
-      rlang::parse_expr()
-    x <- x |>
-      dplyr::group_by(.data$person_id, .data$index_date) |>
-      dplyr::filter(!!q) |>
-      dplyr::distinct() |>
-      dplyr::compute(name = nm)
-  }
-
-  # check multiple records
-  multiple <- x |>
-    dplyr::group_by(.data$person_id, .data$index_date) |>
-    dplyr::summarise(n = dplyr::n(), .groups = "drop") |>
-    dplyr::filter(.data$n > 1) |>
-    dplyr::tally() |>
-    dplyr::pull()
-
-  if (multiple > 0) {
-    mes <- "Multiple records observed despite the `order` argument, maximum value will be keept to ensure 1 record per `person` and `indexDate`"
-    cli::cli_inform(c("!" = mes))
-    cli::cli_warn(c("!" = mes))
-    x <- x |>
-      dplyr::group_by(.data$person_id, .data$index_date) |>
-      dplyr::filter(.data$bmi == max(.data$bmi, na.rm = TRUE)) |>
-      dplyr::distinct() |>
-      dplyr::compute(name = nm)
-  }
-
-  return(x)
-}
-subsetInObservation <- function(x, inObservation, nm) {
-  if (inObservation) {
-    x <- x |>
-      PatientProfiles::filterInObservation(indexDate = "bmi_date") |>
-      dplyr::compute(name = nm)
-  }
-  return(x)
 }

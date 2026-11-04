@@ -71,53 +71,32 @@ test_that("addBMI selects and categorises BMI measurements", {
   )
 
   # A custom concept set is also accepted.
-  cdm$cohort_bmi_first <- cdm$cohort1 |>
-    addBMI(
-      conceptSet = bmi,
-      order = "first",
-      nameStyle = "bmi_first",
-      name = "cohort_bmi_first"
-    )
+  cdm$cohort_bmi_custom <- cdm$cohort1 |>
+    addBMI(conceptSet = bmi, nameStyle = "bmi_custom", name = "cohort_bmi_custom")
   expect_equal(
-    collect_bmi(cdm$cohort_bmi_first, "bmi_first"),
-    c(30, NA_real_, NA_real_)
-  )
-
-  cdm$cohort_bmi_min <- cdm$cohort1 |>
-    addBMI(
-      conceptSet = bmi,
-      order = "min",
-      nameStyle = "bmi_min",
-      name = "cohort_bmi_min"
-    )
-  expect_equal(
-    collect_bmi(cdm$cohort_bmi_min, "bmi_min"),
-    c(20, NA_real_, NA_real_)
-  )
-
-  cdm$cohort_bmi_max <- cdm$cohort1 |>
-    addBMI(
-      conceptSet = bmi,
-      order = "max",
-      nameStyle = "bmi_max",
-      name = "cohort_bmi_max"
-    )
-  expect_equal(
-    collect_bmi(cdm$cohort_bmi_max, "bmi_max"),
-    c(30, NA_real_, NA_real_)
-  )
-
-  cdm$cohort_bmi_window <- cdm$cohort1 |>
-    addBMI(
-      conceptSet = bmi,
-      window = c(-5, 0),
-      nameStyle = "bmi_window",
-      name = "cohort_bmi_window"
-    )
-  expect_equal(
-    collect_bmi(cdm$cohort_bmi_window, "bmi_window"),
+    collect_bmi(cdm$cohort_bmi_custom, "bmi_custom"),
     c(25, NA_real_, NA_real_)
   )
+
+  cdm$cohort_bmi_lookback <- cdm$cohort1 |>
+    addBMI(
+      conceptSet = bmi,
+      lookbackDays = 5,
+      nameStyle = "bmi_lookback",
+      name = "cohort_bmi_lookback"
+    )
+  expect_equal(
+    collect_bmi(cdm$cohort_bmi_lookback, "bmi_lookback"),
+    c(25, NA_real_, NA_real_)
+  )
+
+  cdm$cohort_bmi_today <- cdm$cohort1 |>
+    addBMI(conceptSet = bmi, lookbackDays = 0, name = "cohort_bmi_today")
+  expect_equal(
+    collect_bmi(cdm$cohort_bmi_today, "bmi"),
+    c(25, NA_real_, NA_real_)
+  )
+  expect_error(addBMI(cdm$cohort1, lookbackDays = -1), "lookbackDays")
 
   cdm$cohort_bmi_outside_observation <- cdm$cohort1 |>
     addBMI(
@@ -154,7 +133,7 @@ test_that("addBMI selects and categorises BMI measurements", {
     c("overweight", "missing", "missing")
   )
 
-  # If multiple records fall on the selected day, addBMI warns and keeps the
+  # If multiple records fall on the selected day, addBMI keeps the
   # maximum value so the result remains one row per person and index date.
   cdm$measurement <- cdm$measurement |>
     dplyr::mutate(
@@ -169,16 +148,12 @@ test_that("addBMI selects and categorises BMI measurements", {
         .data$value_as_number
       )
     )
-  expect_warning(
-    cdm$cohort_bmi_same_day <- cdm$cohort1 |>
-      addBMI(
-        conceptSet = bmi,
-        order = "last",
-        nameStyle = "bmi_same_day",
-        name = "cohort_bmi_same_day"
-      ),
-    "Multiple records observed despite the `order` argument"
-  )
+  cdm$cohort_bmi_same_day <- cdm$cohort1 |>
+    addBMI(
+      conceptSet = bmi,
+      nameStyle = "bmi_same_day",
+      name = "cohort_bmi_same_day"
+    )
   expect_equal(
     collect_bmi(cdm$cohort_bmi_same_day, "bmi_same_day"),
     c(26, NA_real_, NA_real_)
