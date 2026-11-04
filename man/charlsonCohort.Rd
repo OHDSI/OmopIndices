@@ -41,6 +41,9 @@ included.}
 A cohort table.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
 CCI is based on
 Charlson et al. (1987) (\doi{10.1016/0021-9681(87)90171-8}) and
 Charlson et al. (1994) (\doi{10.1016/0895-4356(94)90129-5})
