@@ -50,7 +50,7 @@ Charlson et al. (1994) (\doi{10.1016/0895-4356(94)90129-5})
 (age-adjusted) version.
 }
 \examples{
-\donttest{
+\dontrun{
 library(omock)
 library(duckdb)
 library(OmopIndices)

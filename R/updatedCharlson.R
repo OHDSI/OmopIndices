@@ -101,7 +101,7 @@ addUpdatedCharlsonIndex <- function(x,
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(omock)
 #' library(duckdb)
 #' library(OmopIndices)

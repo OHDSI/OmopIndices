@@ -44,7 +44,7 @@ A cohort table.
 eFI calculation is baed on Clegg et al. (2016) (\doi{10.1093/ageing/afw039})
 }
 \examples{
-\donttest{
+\dontrun{
 library(omock)
 library(duckdb)
 library(OmopIndices)

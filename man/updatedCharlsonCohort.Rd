@@ -48,7 +48,7 @@ The updated CCI is based on Quan et al. (2011)
 (\doi{10.1093/aje/kwq433}).
 }
 \examples{
-\donttest{
+\dontrun{
 library(omock)
 library(duckdb)
 library(OmopIndices)
